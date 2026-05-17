@@ -32,7 +32,7 @@
 
     <p class="text-lg italic text-ink-light leading-relaxed">A podcast series covering every layer of security required to build, deploy, and operate a production legal technology SaaS product. From first principles of threat modelling through to SOC 2 audits and incident response runbooks &mdash; each episode is a self-contained 7-minute deep dive that builds on the last. For educational purposes only &mdash; does not constitute legal or security advice. <a href="./about.html" class="text-red hover:text-red-soft transition-colors not-italic font-medium">About &rarr;</a></p>
 
-    <p class="mt-4 font-sans text-sm text-ink-muted">5 episodes published &middot; 52 planned &middot; 11 modules &middot; ~6 hours</p>
+    <p class="mt-4 font-sans text-sm text-ink-muted">5 episodes published &middot; 62 planned &middot; 12 modules &middot; ~7.5 hours</p>
 </div>
 
 <section class="py-10">
@@ -105,6 +105,150 @@
         </div>
     </div>
 </a>
+
+    </div>
+</section>
+
+<!-- Full Course Outline -->
+<section class="py-10 border-t border-rule">
+    <h2 class="text-2xl font-bold mb-2">Full Course Outline</h2>
+    <p class="text-sm text-ink-muted mb-8 font-sans">62 episodes across 12 modules &mdash; from first principles to production deployment.</p>
+
+    <div class="space-y-8">
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-red mb-3">Module 1 &mdash; Foundations (5 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-light font-sans" start="1">
+                <li class="font-medium text-ink">What Is a Threat Model?</li>
+                <li class="font-medium text-ink">The STRIDE Framework</li>
+                <li class="font-medium text-ink">Attack Surfaces in Legal Tech</li>
+                <li class="font-medium text-ink">Defence in Depth</li>
+                <li class="font-medium text-ink">The CIA Triad Meets Legal Privilege</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 2 &mdash; How the Web Works (1 ep)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="6">
+                <li>How Web Apps Actually Work</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 3 &mdash; Application Security (6 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="7">
+                <li>Input Validation and Sanitisation</li>
+                <li>SQL Injection and ORM Safety</li>
+                <li>Cross-Site Scripting (XSS)</li>
+                <li>File Upload Security</li>
+                <li>Webhook Security and SSRF</li>
+                <li>Browser Security Headers</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 4 &mdash; Transport &amp; Network Security (3 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="13">
+                <li>TLS and HTTPS from Scratch</li>
+                <li>API Gateway Patterns and Rate Limiting</li>
+                <li>Service-to-Service Authentication</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 5 &mdash; Authentication (7 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="16">
+                <li>Email Security for SaaS</li>
+                <li>Password Hashing Done Right</li>
+                <li>JWT Anatomy and Pitfalls</li>
+                <li>Session Management</li>
+                <li>OAuth 2.0 and OpenID Connect</li>
+                <li>Multi-Factor Authentication</li>
+                <li>SSO, SAML and Enterprise Identity</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 6 &mdash; Authorization &amp; Access Control (5 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="23">
+                <li>RBAC &mdash; Roles, Permissions and Scopes</li>
+                <li>ABAC and Policy Engines</li>
+                <li>Ethical Walls and Matter-Scoped Access</li>
+                <li>Zero Trust Architecture</li>
+                <li>Multi-Tenant Data Isolation</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 7 &mdash; Data Protection &amp; Encryption (5 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="28">
+                <li>Encryption at Rest vs. in Transit</li>
+                <li>Key Management and Rotation</li>
+                <li>Secrets Management</li>
+                <li>PII Handling and Anonymisation</li>
+                <li>Database Security Hardening</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 8 &mdash; AI-Specific Security (8 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="33">
+                <li>Prompt Injection Attacks</li>
+                <li>RAG Poisoning and Document Trust Tiers</li>
+                <li>Embedding Security and Vector Database Isolation</li>
+                <li>Model Inversion and Membership Inference</li>
+                <li>Governed Writes and Human-in-the-Loop</li>
+                <li>LLM API Key Isolation and Inference Gateways</li>
+                <li>Redaction Pipelines for Cloud AI</li>
+                <li>Local vs. Cloud AI &mdash; Security Boundaries</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 9 &mdash; Audit, Logging &amp; Provenance (4 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="41">
+                <li>Audit Log Design</li>
+                <li>Hash-Chained Immutable Logs</li>
+                <li>Provenance Chains for AI Outputs</li>
+                <li>Correlation IDs and Distributed Tracing</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 10 &mdash; Infrastructure &amp; Deployment (8 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="45">
+                <li>Docker Security and Container Hardening</li>
+                <li>CI/CD Pipeline Security</li>
+                <li>Supply Chain Security &mdash; Dependencies, SBOM and Build Provenance</li>
+                <li>Environment Configuration and Secure Defaults</li>
+                <li>Cloud IAM and Least Privilege</li>
+                <li>Developer Workstation Security</li>
+                <li>Trusting the AI Developer &mdash; Verifying Agent-Generated Code</li>
+                <li>Day Zero &mdash; Bootstrapping Security for a New Project</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 11 &mdash; Monitoring &amp; Incident Response (6 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="53">
+                <li>Monitoring and Alerting Design</li>
+                <li>Incident Response Playbooks</li>
+                <li>Disaster Recovery and Business Continuity</li>
+                <li>Security Testing in Your Development Process</li>
+                <li>Access Reviews and Least Privilege Audits</li>
+                <li>Insider Threats and Employee Access</li>
+            </ol>
+        </div>
+
+        <div>
+            <p class="font-sans text-xs tracking-widest uppercase text-ink-muted mb-3">Module 12 &mdash; Compliance &amp; Governance (4 eps)</p>
+            <ol class="list-decimal list-inside space-y-1 text-sm text-ink-muted font-sans" start="59">
+                <li>GDPR, PDPA and Data Protection Compliance</li>
+                <li>SOC 2, Penetration Testing and Security Certification</li>
+                <li>Customer Trust and Security Reviews</li>
+                <li>Security Roadmapping &mdash; From Here to Production</li>
+            </ol>
+        </div>
 
     </div>
 </section>
