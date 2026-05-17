@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 2 — The STRIDE Framework — Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 2 &middot; Module 1 &middot; Foundations</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">The STRIDE Framework</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 9:14 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-02-the-stride-framework.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>9:14</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-02-the-stride-framework.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">STRIDE is a 27-year-old threat classification framework that still dominates industry practice. In this episode, Alice and Dan walk through all six categories &mdash; Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege &mdash; applying each to a legal document review workflow. They explore why Repudiation matters more in legal tech than anywhere else, and how to turn STRIDE findings into prioritised backlog items.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Six Threats, One Mnemonic</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">STRIDE is a threat classification framework <a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">created by Loren Kohnfelder and Praerit Garg at Microsoft in 1999</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> as part of the Security Development Lifecycle. The acronym encodes six categories of threat &mdash; Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege &mdash; giving engineers a structured vocabulary for answering &ldquo;what can go wrong?&rdquo; at every element of a system diagram.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Twenty-seven years later, <a href="https://owasp.org/www-community/Threat_Modeling_Process" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">STRIDE remains the most widely adopted threat classification in industry</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup> Adam Shostack turned the six categories into the <a href="https://shostack.org/games/elevation-of-privilege" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Elevation of Privilege card game</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup> &mdash; 78 cards, one per threat scenario &mdash; making threat identification accessible to non-security engineers.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">STRIDE Mapped to Security Properties</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each STRIDE category violates a specific security property. The classic CIA triad covers three; STRIDE extends coverage to <a href="https://en.wikipedia.org/wiki/STRIDE_(security)" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authentication, Non-repudiation, and Authorization</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup> &mdash; the full CIANA+ model.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Category</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Violates</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Legal Tech Consequence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold"><strong>S</strong>poofing</td><td class="px-4 py-3">Authentication</td><td class="px-4 py-3">Attacker impersonates a partner to access privileged case files</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold"><strong>T</strong>ampering</td><td class="px-4 py-3">Integrity</td><td class="px-4 py-3">Contract redline history altered post-signature</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold"><strong>R</strong>epudiation</td><td class="px-4 py-3">Non-repudiation</td><td class="px-4 py-3">User denies approving document disclosure; no audit proof exists</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold"><strong>I</strong>nformation Disclosure</td><td class="px-4 py-3">Confidentiality</td><td class="px-4 py-3">Privileged documents leak into non-privileged search results</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold"><strong>D</strong>enial of Service</td><td class="px-4 py-3">Availability</td><td class="px-4 py-3">E-discovery platform unreachable during a filing deadline</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold"><strong>E</strong>levation of Privilege</td><td class="px-4 py-3">Authorization</td><td class="px-4 py-3">Paralegal account escalates to partner-level matter access</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Key insight callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Key insight:</strong> The CIA triad alone misses three of STRIDE&rsquo;s six categories. If your security review only asks &ldquo;is it confidential, integral, and available?&rdquo; you will <a href="https://csrc.nist.gov/pubs/sp/800/154/ipd" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">miss authentication, non-repudiation, and authorization threats entirely</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">STRIDE Analysis of a Document Review Workflow</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Consider a typical AI-assisted document review pipeline: a lawyer uploads a contract, the system runs AI analysis, a human reviews the results, and the final output is exported to a client portal. <a href="https://learn.microsoft.com/en-us/training/modules/tm-create-a-threat-model-using-foundational-data-flow-diagram-elements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data flow diagrams make trust boundaries visible</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup> &mdash; and trust boundaries are where threats concentrate.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Stage</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">S</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">T</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">R</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">I</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">D</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">E</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Upload</td><td class="px-4 py-3">Forged identity submits docs</td><td class="px-4 py-3">File modified in transit</td><td class="px-4 py-3">No proof who uploaded</td><td class="px-4 py-3">Filename leaks matter info</td><td class="px-4 py-3">Oversized files exhaust storage</td><td class="px-4 py-3">Unauthenticated upload endpoint</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">AI Analysis</td><td class="px-4 py-3">&mdash;</td><td class="px-4 py-3">Prompt injection alters analysis</td><td class="px-4 py-3">No log of what AI processed</td><td class="px-4 py-3">AI accesses cross-tenant docs</td><td class="px-4 py-3">Model overload blocks reviews</td><td class="px-4 py-3">AI runs with admin DB creds</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Human Review</td><td class="px-4 py-3">Session hijack</td><td class="px-4 py-3">Edits without audit trail</td><td class="px-4 py-3">Reviewer denies approving</td><td class="px-4 py-3">Review screen leaks</td><td class="px-4 py-3">Reviewer locked out at deadline</td><td class="px-4 py-3">Reviewer escalates permissions</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Export</td><td class="px-4 py-3">Recipient spoofed</td><td class="px-4 py-3">Export tampered</td><td class="px-4 py-3">No proof of delivery</td><td class="px-4 py-3">Bundle contains extra docs</td><td class="px-4 py-3">Export service unavailable</td><td class="px-4 py-3">Export bypasses ACL</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why Repudiation Matters More in Legal Tech</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In e-commerce, repudiation means a customer disputes a charge. In legal tech, repudiation means a lawyer claims they never approved a privilege designation &mdash; and you cannot prove otherwise. <a href="https://www.lawpay.com/about/blog/protection-of-client-information-what-aba-opinion-477r-means-for-you/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 477R</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup> requires lawyers to make &ldquo;reasonable efforts&rdquo; to prevent unauthorised disclosure. If your system cannot prove <em>who</em> did <em>what</em> and <em>when</em>, you have failed that standard.</p>
+
+    <!-- Case study callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Case study &mdash; Orrick, Herrington &amp; Sutcliffe (2023):</strong> <a href="https://www.msba.org/site/site/content/News-and-Publications/News/General-News/Law_Firm_Settles_Data_Breach_Lawsuit_A_Warning_for_Legal_Professionals.aspx" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Unauthorized access went undetected from November 2022 to March 2023</a>,<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup> affecting 637,620 individuals. The firm paid $8 million to settle the class action. A core allegation: inadequate logging and detection &mdash; a repudiation and information disclosure failure.</p>
+    </div>
+
+    <h3 style="margin-top:2rem;margin-bottom:1rem;" class="text-xl font-bold">Anti-Repudiation Controls</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Control</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Implementation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Immutable audit logs</td><td class="px-4 py-3">Append-only log store; cryptographic hash chaining; no admin delete</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Trusted timestamps</td><td class="px-4 py-3">RFC 3161 or equivalent; server clock alone is insufficient</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Digital signatures on approvals</td><td class="px-4 py-3">Reviewer cryptographically signs privilege designations</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Segregation of log access</td><td class="px-4 py-3">Operators who manage the system cannot modify audit records</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Retention aligned to limitation</td><td class="px-4 py-3">Legal matters litigate years later; logs must survive</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">From STRIDE Findings to Backlog Items</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A threat model produces threats. Threats must become tickets. Rank by two axes &mdash; impact and likelihood:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold"></th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">High Likelihood</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Low Likelihood</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">High Impact</td><td class="px-4 py-3">Fix immediately (Sprint 0)</td><td class="px-4 py-3">Schedule this quarter</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Low Impact</td><td class="px-4 py-3">Schedule next sprint</td><td class="px-4 py-3">Document and accept</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon 2024 DBIR</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-12" class="hover:text-red-soft">12</a></sup> found that privilege misuse rose to the second most common breach pattern. <a href="https://www.verizon.com/business/resources/reports/2024-dbir-executive-summary.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Internal actors represented 35% of breaches in 2024</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-13" class="hover:text-red-soft">13</a></sup>, up from 20% the prior year. Elevation of Privilege findings deserve higher priority than teams historically assign.</p>
+
+    <!-- Practical tip -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Practical tip:</strong> Run STRIDE on one workflow per sprint. A 30-minute session yields 15&ndash;25 threats. Triage immediately. Three sprints in, you have systematic coverage of your highest-risk flows &mdash; and a backlog that reflects actual threats rather than compliance checkboxes.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">STRIDE gives you a repeatable lens for finding threats. Apply it to every element of your data flow diagram &mdash; processes, data stores, data flows, trust boundaries &mdash; and you surface threats that &ldquo;best practice&rdquo; checklists miss. For legal tech, Repudiation deserves special attention: your system must prove who did what, when, with cryptographic certainty. Without that, a breach is not just a data loss &mdash; it is an unprovable one.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Last episode we introduced threat modelling &mdash; the four questions, the whiteboard, the thirty-minute exercise. Today we&rsquo;re going deep on the framework that makes question two work. STRIDE.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Six categories of threat. One mnemonic. Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege. Microsoft created it in 1999 &mdash; Loren Kohnfelder and Praerit Garg &mdash; and it&rsquo;s still the most widely used threat classification in the industry twenty-seven years later.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Why has it lasted so long? Frameworks come and go in security.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because it&rsquo;s simple enough to remember in a meeting and comprehensive enough to catch real threats. Each letter maps to a specific security property being violated. Spoofing violates authentication. Tampering violates integrity. Repudiation violates non-repudiation. Information Disclosure violates confidentiality. Denial of Service violates availability. Elevation of Privilege violates authorization.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So it extends the classic CIA triad &mdash; Confidentiality, Integrity, Availability.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. CIA covers three of the six. STRIDE adds authentication, non-repudiation, and authorization. If your security review only asks &ldquo;is it confidential, integral, and available&rdquo; &mdash; you&rsquo;re missing half the threat surface.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> OK. Let&rsquo;s make this concrete. Walk me through a STRIDE analysis of something a legal tech team would actually build.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> A document review workflow. Four stages. A lawyer uploads a contract. An AI service analyses it &mdash; flags risky clauses, identifies parties, extracts dates. A human reviewer checks the AI&rsquo;s work and makes privilege designations. Then the reviewed output gets exported to a client portal or opposing counsel.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And at each stage, you ask all six STRIDE questions?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Every single one. Let&rsquo;s start at upload. Spoofing &mdash; can someone submit documents without authenticating? If your upload endpoint accepts files without a valid session, an attacker can pollute a matter&rsquo;s document set. Tampering &mdash; can the file be modified between the lawyer&rsquo;s browser and your server? Without TLS pinning or content verification, a man-in-the-middle could alter the document. Repudiation &mdash; if a document gets uploaded, can you prove who did it? If there&rsquo;s no audit log tied to a verified identity, you cannot.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s only three letters and we&rsquo;ve already found serious issues at a single stage.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And we&rsquo;re not done. Information Disclosure &mdash; does the upload response leak metadata? Think filenames, matter IDs, other clients&rsquo; document counts in error messages. I&rsquo;ve seen APIs return &ldquo;matter M-2847 already has 312 documents&rdquo; in a 409 conflict response. That tells an attacker which matters exist and how active they are. Denial of Service &mdash; can someone upload a 50-gigabyte file and exhaust your storage or tie up your parser for hours? Elevation of Privilege &mdash; does the upload endpoint check that the authenticated user actually has write access to that specific matter, or just that they&rsquo;re logged in somewhere in the system?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Six questions, six potential threats, one workflow stage. Multiply that across all four stages and you get...</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Twenty-four threat cells. Not all of them will be relevant &mdash; some you&rsquo;ll mark as not applicable. But the discipline of asking forces you to consider threats you&rsquo;d otherwise miss. The AI analysis stage is particularly interesting. Spoofing might not apply directly, but Elevation of Privilege absolutely does &mdash; if your AI service connects to the database with admin credentials instead of scoped, read-only access to the specific document being processed, that&rsquo;s an elevation of privilege built into your architecture.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Now, you mentioned earlier that you wanted to talk about repudiation specifically. Why does it matter more in legal tech than in, say, e-commerce?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> In e-commerce, repudiation means a customer disputes a charge. You eat the cost of a refund. Annoying. In legal tech, repudiation means a lawyer claims they never approved a privilege designation &mdash; and you can&rsquo;t prove otherwise. An associate denies reviewing a document before it was produced to opposing counsel. A client says they never authorised disclosure of settlement terms.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Those are existential-level problems in a legal context. Not &ldquo;we lost a customer&rdquo; &mdash; more like &ldquo;we caused a malpractice suit.&rdquo;</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And the ABA has something to say about this.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Of course they do.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> ABA Formal Opinion 477R requires lawyers to make &ldquo;reasonable efforts&rdquo; to prevent unauthorised disclosure. But here&rsquo;s the thing &mdash; if your system cannot prove who did what and when, you&rsquo;ve failed that standard even if no data actually leaked. The failure isn&rsquo;t the breach. The failure is the inability to demonstrate what happened. That&rsquo;s a repudiation failure.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Give me a real-world example.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Orrick, Herrington and Sutcliffe. 2023. Unauthorized access went undetected from November 2022 to March 2023 &mdash; four months. 637,000 individuals affected. Eight million dollar settlement. One of the core allegations? Inadequate logging and detection. They couldn&rsquo;t prove the scope of the breach because they couldn&rsquo;t prove who accessed what. That&rsquo;s information disclosure compounded by repudiation failure.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So what does anti-repudiation actually look like in practice?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Five things. Immutable audit logs &mdash; append-only, cryptographically hash-chained, no admin can delete entries. Trusted timestamps &mdash; server clock isn&rsquo;t sufficient; you need RFC 3161 or equivalent. Digital signatures on approvals &mdash; when a reviewer designates a document as privileged, they sign that action cryptographically. Segregation of log access &mdash; the people who run the system cannot modify the audit trail. And retention aligned to limitation periods &mdash; legal matters can litigate years later; your logs need to survive that long.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s a significant engineering investment.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is. Which brings us to the practical question &mdash; you&rsquo;ve done your STRIDE analysis, you&rsquo;ve found twenty-four threats across your workflow. How do you turn that into a backlog your team can actually execute?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Prioritisation.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Two axes. Impact and likelihood. High impact, high likelihood &mdash; that&rsquo;s Sprint Zero, fix it before you ship. High impact, low likelihood &mdash; schedule it this quarter. Low impact, high likelihood &mdash; next sprint. Low impact, low likelihood &mdash; document it, accept it consciously, move on.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And the Verizon data breach report has some relevant stats here.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The 2024 DBIR found that privilege misuse &mdash; which maps directly to Elevation of Privilege in STRIDE &mdash; rose to the second most common breach pattern. Internal actors represented 35 percent of breaches, up from 20 percent the prior year. So if your team has been deprioritising EoP findings because &ldquo;our people are trusted&rdquo; &mdash; the data says otherwise.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So to summarise &mdash; STRIDE gives you a repeatable lens. Six questions at every element of your data flow diagram. For legal tech, Repudiation deserves special attention because provability is as important as prevention. And the output isn&rsquo;t a report that sits on a shelf &mdash; it&rsquo;s backlog items ranked by impact and likelihood.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> One workflow per sprint. Thirty minutes. Fifteen to twenty-five threats identified. Triage immediately. Three sprints in, you have systematic coverage of your highest-risk flows.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Attack Surfaces in Legal Tech. Every endpoint, every dependency, every integration an adversary can touch.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft, &ldquo;Threats &mdash; Threat Modeling Tool,&rdquo; Azure Security Documentation</a> &mdash; STRIDE developed by Kohnfelder &amp; Garg, 1999</li>
+        <li id="fn-2"><a href="https://owasp.org/www-community/Threat_Modeling_Process" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;Threat Modeling Process&rdquo;</a></li>
+        <li id="fn-3"><a href="https://www.microsoft.com/en-us/securityengineering/sdl/threatmodeling" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Security Development Lifecycle, &ldquo;Threat Modeling&rdquo;</a></li>
+        <li id="fn-4"><a href="https://shostack.org/games/elevation-of-privilege" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Adam Shostack, &ldquo;Elevation of Privilege Game&rdquo;</a> &mdash; 78 cards across STRIDE suits; Creative Commons licensed</li>
+        <li id="fn-5"><a href="https://en.wikipedia.org/wiki/STRIDE_(security)" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Wikipedia, &ldquo;STRIDE model&rdquo;</a> &mdash; maps each category to a security property</li>
+        <li id="fn-6"><a href="https://csrc.nist.gov/pubs/sp/800/154/ipd" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-154 (Draft), &ldquo;Guide to Data-Centric System Threat Modeling,&rdquo; March 2016</a></li>
+        <li id="fn-7"><a href="https://learn.microsoft.com/en-us/training/modules/tm-create-a-threat-model-using-foundational-data-flow-diagram-elements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Learn, &ldquo;Create a Threat Model Using Data-Flow Diagram Elements&rdquo;</a></li>
+        <li id="fn-8"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;Threat Modeling Cheat Sheet&rdquo;</a></li>
+        <li id="fn-9"><a href="https://www.lawpay.com/about/blog/protection-of-client-information-what-aba-opinion-477r-means-for-you/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 477R, &ldquo;Securing Communication of Protected Client Information,&rdquo; May 2017</a></li>
+        <li id="fn-10"><a href="https://www.msba.org/site/site/content/News-and-Publications/News/General-News/Law_Firm_Settles_Data_Breach_Lawsuit_A_Warning_for_Legal_Professionals.aspx" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Maryland State Bar Association, &ldquo;Law Firm Settles Data Breach Lawsuit&rdquo;</a> &mdash; Orrick breach; $8M settlement</li>
+        <li id="fn-11"><a href="https://csrc.nist.gov/pubs/sp/800/154/ipd" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-154, &ldquo;Guide to Data-Centric System Threat Modeling&rdquo;</a></li>
+        <li id="fn-12"><a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, <em>2024 Data Breach Investigations Report</em></a> &mdash; privilege misuse rose to 2nd most common pattern</li>
+        <li id="fn-13"><a href="https://www.verizon.com/business/resources/reports/2024-dbir-executive-summary.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, &ldquo;2024 DBIR Executive Summary&rdquo;</a> &mdash; internal actors 35% of breaches</li>
+        <li id="fn-14"><a href="https://owasp.org/www-project-threat-dragon/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;Threat Dragon&rdquo;</a> &mdash; open-source threat modeling tool</li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-01-what-is-a-threat-model.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 1 &mdash; What Is a Threat Model?</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-03-attack-surfaces-in-legal-tech.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 3 &mdash; Attack Surfaces in Legal Tech</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

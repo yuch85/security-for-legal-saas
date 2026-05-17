@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 5 — The CIA Triad Meets Legal Privilege — Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 5 &middot; Module 1 &middot; Foundations</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">The CIA Triad Meets Legal Privilege</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 8:45 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-05-the-cia-triad-meets-legal-privilege.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>8:45</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-05-the-cia-triad-meets-legal-privilege.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Confidentiality, integrity, and availability mean something heavier when your data carries attorney-client privilege. In this episode, Alice and Dan reframe the CIA triad for legal tech &mdash; where a confidentiality breach can permanently waive privilege, a single tampered clause can shift millions in liability, and platform downtime during a filing deadline constitutes professional negligence. They walk through the Panama Papers, the DLA Piper NotPetya attack, and the four-layer architecture required to prove privilege was never compromised.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Three Letters That Carry Different Weight in a Law Firm</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The CIA triad &mdash; Confidentiality, Integrity, Availability &mdash; is the foundational model of information security. <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> and <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO 27001</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup> structure their frameworks around these three properties. But in legal technology, each carries consequences that generic security guidance never anticipates.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Confidentiality: When a Breach Waives Privilege</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.law.cornell.edu/rules/fre/rule_502" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Attorney-client privilege</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup> protects communications made in confidence for the purpose of obtaining legal advice. Once privilege is waived &mdash; including through inadvertent disclosure &mdash; the protection can be lost permanently. Federal Rule of Evidence 502 provides a safety net, but only where the holder took &ldquo;reasonable steps to prevent disclosure.&rdquo; Your platform architecture <em>is</em> the reasonable steps.</p>
+
+    <!-- Panama Papers callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Case study &mdash; Mossack Fonseca (2016):</strong> The <a href="https://en.wikipedia.org/wiki/Panama_Papers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Panama Papers breach exposed 11.5 million documents</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup> &mdash; 2.6 terabytes of privileged attorney-client communications covering 214,488 offshore entities. The firm&rsquo;s flat network architecture allowed complete exfiltration. Mossack Fonseca closed permanently.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.americanbar.org/products/ecd/chapter/348777154/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 477R</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup> requires lawyers to undertake &ldquo;reasonable efforts&rdquo; to prevent unauthorised access. A legal SaaS platform that stores privileged communications inherits this obligation architecturally.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Integrity: Where One Changed Byte Shifts Millions</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2024.1306058/full" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Courts require authentication of digital evidence</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup> under rules like FRE 901. If your platform cannot cryptographically prove a document&rsquo;s integrity chain from upload through every access event, neither party can rely on the platform&rsquo;s version as authoritative.</p>
+
+    <!-- Key principle callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Key principle:</strong> In legal tech, integrity means not just detecting tampering &mdash; it means <em>proving non-tampering</em> to a standard that satisfies judicial scrutiny. Cryptographic hash chains, immutable audit logs, and version control with signed commits are the minimum viable integrity architecture.</p>
+    </div>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Integrity Threat</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Legal Consequence</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Required Control</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Silent document modification</td><td class="px-4 py-3">Contract disputes, inadmissible evidence</td><td class="px-4 py-3">SHA-256 hash at ingest + mutation logging</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Metadata manipulation</td><td class="px-4 py-3">Spoliation sanctions, adverse inferences</td><td class="px-4 py-3">Immutable metadata store</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Audit log tampering</td><td class="px-4 py-3">Inability to prove chain of custody</td><td class="px-4 py-3">Append-only, hash-chained logs</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Version history deletion</td><td class="px-4 py-3">Destruction of exculpatory evidence</td><td class="px-4 py-3">Write-once storage with legal hold</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Availability: When Downtime Is Negligence</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://caretlegal.com/blog/malpractice-for-missed-deadlines-a-litigators-constant-fear/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Missed filing deadlines remain the number one source of legal malpractice claims</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup> Courts rarely excuse late filings regardless of the reason. The statute of limitations doesn&rsquo;t pause because your cloud provider had an outage.</p>
+
+    <!-- DLA Piper callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Case study &mdash; DLA Piper (2017):</strong> The <a href="https://blog.knowbe4.com/notpetya-froze-business-at-global-law-firm-dla-piper" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NotPetya attack paralysed DLA Piper</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup> for over two weeks. No email for four days. <a href="https://www.itnews.com.au/news/dla-piper-paid-15000-hours-of-it-overtime-after-notpetya-attack-490495" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">15,000 hours of IT overtime</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup> to rebuild the entire infrastructure from scratch. Flat network architecture let the malware propagate across forty countries in minutes.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Privilege-Preserving Architecture: Beyond Encryption</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Encryption prevents data from being read. But privilege requires something stronger: the ability to prove that unauthorised access <em>never occurred</em>. Four layers are required:</p>
+
+    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li><strong>Encryption</strong> (necessary but insufficient) &mdash; AES-256 at rest, TLS 1.3 in transit, per-tenant keys. Prevents reading. Does not prove non-access.</li>
+        <li><strong>Access attestation</strong> &mdash; Every access event cryptographically signed with accessor&rsquo;s identity, timestamp, and document hash.</li>
+        <li><strong>Negative proof capability</strong> &mdash; Hash-chained audit logs where gaps are structurally impossible. Demonstrates that between time A and time B, only authorised accesses occurred.</li>
+        <li><strong>Compartmentalisation</strong> &mdash; Architectural enforcement that one compromised component cannot reach privileged data in another compartment.</li>
+    </ol>
+
+    <!-- Grubman callout -->
+    <div style="margin:1.5rem 0;" class="border-2 border-amber-500 bg-amber-50 px-5 py-5 rounded-lg">
+        <h3 style="margin-top:0;margin-bottom:0.75rem;" class="text-lg font-bold text-ink">The Compartmentalisation Failure</h3>
+        <p class="text-base leading-relaxed text-ink-light">The <a href="https://variety.com/2020/digital/news/entertainment-law-firm-hacked-data-breach-lady-gaga-madonna-bruce-springsteen-1234602737/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Grubman Shire Meiselas &amp; Sacks breach (2020)</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-11" class="hover:text-red-soft">11</a></sup> demonstrated what happens without compartmentalisation: REvil exfiltrated 756 GB of privileged client data in a single operation. No internal segmentation prevented lateral movement. $42 million ransom demand.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The CIA triad is not three separate problems. In legal technology, they are three facets of one obligation: maintaining the trust that allows lawyers to use your platform for their most sensitive work. The standard is not &ldquo;was the data encrypted?&rdquo; The standard is &ldquo;can you prove to a court that privilege was never compromised?&rdquo;</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 5 &mdash; The CIA Triad Meets Legal Privilege. Alice, the CIA triad is probably the most fundamental concept in information security. Confidentiality, integrity, availability. But I suspect you&rsquo;re going to tell me it means something different when you&rsquo;re building for lawyers.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Not different. Heavier. The same three properties, but each one carries legal consequences that generic security guidance never accounts for. A confidentiality breach in legal tech doesn&rsquo;t just expose data &mdash; it can permanently waive attorney-client privilege. That&rsquo;s not a fine. That&rsquo;s a case collapsing.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Walk me through that. How does a technical security failure translate into a legal privilege waiver?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Attorney-client privilege protects communications made in confidence for the purpose of obtaining legal advice. The keyword is &ldquo;confidence.&rdquo; If those communications are disclosed &mdash; even inadvertently &mdash; the protection can be lost. Federal Rule of Evidence 502 provides a safety net, but only if the privilege holder took &ldquo;reasonable steps to prevent disclosure.&rdquo; Your platform architecture is the reasonable steps. If it&rsquo;s inadequate, the disclosure isn&rsquo;t treated as an accident. It&rsquo;s treated as a waiver.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the firm&rsquo;s choice of technology platform becomes evidence in the privilege waiver analysis.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And we have real-world examples of what happens when that architecture fails. Mossack Fonseca &mdash; the Panama Papers. Eleven point five million privileged attorney-client documents exfiltrated. Two point six terabytes. Their flat network architecture meant one breach point gave access to everything. The firm closed permanently. Not because of the scandal &mdash; because no client could ever trust them with privileged information again.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> The confidentiality failure destroyed the entire value proposition. What about integrity &mdash; the second leg of the triad?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> In generic SaaS, integrity means your data is accurate. In legal tech, integrity means you can prove to a judge that a document has not been tampered with since it entered your system. Courts require authentication of digital evidence. If your contract management platform can&rsquo;t demonstrate an unbroken chain of custody &mdash; cryptographic hashes at ingest, signed audit logs for every access, immutable version history &mdash; then neither party can rely on your platform&rsquo;s version as authoritative.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Give me a concrete scenario.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> A royalty agreement on your platform. Someone changes the definition of &ldquo;net revenue&rdquo; to &ldquo;gross revenue&rdquo; in a single clause. That one word change could shift millions in payment obligations. If your platform only stores the current version with no integrity proof of what the original said and who changed it and when &mdash; you&rsquo;ve just created a situation where a multi-million dollar dispute has no reliable documentary evidence.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s terrifying. And the third leg &mdash; availability. Uptime, right?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Uptime with teeth. Missed filing deadlines are the number one source of legal malpractice claims. Courts don&rsquo;t care why a filing was late. The statute of limitations doesn&rsquo;t pause because your cloud provider had an outage. The filing fails, the case dies, the malpractice suit begins. Your platform&rsquo;s availability during a filing window isn&rsquo;t an SLA metric &mdash; it&rsquo;s a negligence question.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> DLA Piper learned this the hard way.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> June 2017. NotPetya hit DLA Piper &mdash; one of the largest law firms on the planet. Every Windows server, globally, taken down. No email for four days. Fifteen thousand hours of IT overtime to rebuild the entire infrastructure from scratch. Their flat network architecture &mdash; same structural weakness as Mossack Fonseca &mdash; let the malware propagate across forty countries in minutes. If any court deadlines fell in those two weeks of paralysis, the platform failure would have constituted negligence regardless of what caused it.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So we&rsquo;ve got three properties, each with legal-specific consequences that are dramatically more severe than in standard SaaS. Let&rsquo;s talk solutions. Starting with confidentiality &mdash; is encryption enough?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> No. And this is the critical insight most teams miss. Encryption prevents data from being read. But privilege requires something stronger: the ability to prove that unauthorised access never occurred. Those are two fundamentally different security properties. Opposing counsel&rsquo;s forensic team will not ask &ldquo;was the data encrypted?&rdquo; They will ask &ldquo;can you prove no unauthorised person accessed this document between these dates?&rdquo;</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> How do you prove a negative like that?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Four layers. First &mdash; encryption. AES-256 at rest, TLS 1.3 in transit, per-tenant keys. Necessary but insufficient. Second &mdash; access attestation. Every access event cryptographically signed with the accessor&rsquo;s identity, timestamp, and document hash. Third &mdash; negative proof capability. Hash-chained audit logs where gaps are structurally impossible, not merely unlikely. Fourth &mdash; compartmentalisation. Architectural enforcement that one compromised component cannot reach privileged data in another compartment.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> The Grubman Shire breach in 2020 is a perfect example of missing that fourth layer.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> REvil exfiltrated 756 gigabytes of privileged celebrity client data in a single operation. Contracts, NDAs, personal correspondence &mdash; everything from Lady Gaga to Bruce Springsteen. No internal segmentation prevented lateral movement. Once in, everything was reachable. Forty-two million dollar ransom demand. The firm had encryption. What they didn&rsquo;t have was compartmentalisation.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So to summarise &mdash; the CIA triad in legal tech is really about three legal standards wearing technical clothing.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Confidentiality means preserving privilege &mdash; proving reasonable steps under FRE 502 and ABA Opinion 477R. Integrity means proving non-tampering to a judicial authentication standard. Availability means guaranteeing access during legal deadlines to avoid negligence. Generic security gets you partway there. Legal-specific architecture gets you the rest of the way.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And here&rsquo;s what strikes me &mdash; these three aren&rsquo;t independent. A breach of any one can cascade. An availability failure during discovery could look like spoliation &mdash; an integrity problem. An integrity failure in access logs undermines your ability to prove confidentiality was maintained.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&rsquo;s the interconnection most teams discover too late. Your integrity controls protect your confidentiality claims. Your availability guarantees protect against integrity challenges. Build for all three simultaneously, or you&rsquo;ll find the one you neglected is the one opposing counsel targets.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Practical takeaway for someone building legal SaaS right now?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Ask yourself one question about every architectural decision: &ldquo;Can I prove this to a court?&rdquo; Not &ldquo;is this secure?&rdquo; &mdash; that&rsquo;s table stakes. &ldquo;Can I demonstrate, with cryptographic evidence, that privilege was maintained, documents were not tampered with, and the system was available when it needed to be?&rdquo; If the answer is no, you have a gap that no amount of encryption alone will close.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode starts Module 2 &mdash; Transport and Network Security. We&rsquo;re going to take TLS and HTTPS completely apart. How the handshake works, why certificate management matters, and what actually happens when your browser shows that little padlock icon.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST, <em>Cybersecurity Framework (CSF) 2.0</em>, February 2024</a></li>
+        <li id="fn-2"><a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO/IEC 27001:2022, <em>Information Security Management Systems</em></a></li>
+        <li id="fn-3"><a href="https://www.law.cornell.edu/rules/fre/rule_502" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Federal Rules of Evidence, Rule 502: Attorney-Client Privilege; Limitations on Waiver</a></li>
+        <li id="fn-4"><a href="https://en.wikipedia.org/wiki/Panama_Papers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ICIJ, &ldquo;The Panama Papers,&rdquo; 2016</a> &mdash; 11.5 million documents; 2.6 TB exfiltrated</li>
+        <li id="fn-5"><a href="https://www.americanbar.org/products/ecd/chapter/348777154/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 477R, &ldquo;Securing Communication of Protected Client Information,&rdquo; May 2017</a></li>
+        <li id="fn-6"><a href="https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2024.1306058/full" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Frontiers in Blockchain, &ldquo;Blockchain in the courtroom,&rdquo; 2024</a></li>
+        <li id="fn-7">Vermont (12 V.S.A. 1913), Arizona (A.R.S. 44-7061), Illinois (Blockchain Technology Act, 205 ILCS 730) &mdash; state legislation recognising blockchain records</li>
+        <li id="fn-8"><a href="https://caretlegal.com/blog/malpractice-for-missed-deadlines-a-litigators-constant-fear/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CARET Legal, &ldquo;Malpractice for Missed Deadlines&rdquo;</a> &mdash; #1 source of legal malpractice claims</li>
+        <li id="fn-9"><a href="https://blog.knowbe4.com/notpetya-froze-business-at-global-law-firm-dla-piper" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">KnowBe4, &ldquo;NotPetya Froze Business At DLA Piper,&rdquo; 2017</a></li>
+        <li id="fn-10"><a href="https://www.itnews.com.au/news/dla-piper-paid-15000-hours-of-it-overtime-after-notpetya-attack-490495" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">iTnews, &ldquo;DLA Piper paid 15,000 hours of IT overtime,&rdquo; 2018</a></li>
+        <li id="fn-11"><a href="https://variety.com/2020/digital/news/entertainment-law-firm-hacked-data-breach-lady-gaga-madonna-bruce-springsteen-1234602737/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Variety, &ldquo;Entertainment Law Firm Hacked,&rdquo; May 2020</a> &mdash; REvil; 756 GB exfiltrated; $42M ransom</li>
+        <li id="fn-12"><a href="https://btlj.org/wp-content/uploads/2023/04/0001-37-1-Wexler.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Wexler, &ldquo;Verification Dilemmas and Zero-Knowledge Proofs,&rdquo; Berkeley Technology Law Journal, 2023</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-04-defence-in-depth.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 4 &mdash; Defence in Depth</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <span class="group inline-flex items-center text-ink-muted">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 6 &mdash; Coming Soon</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 4 — Defence in Depth — Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 4 &middot; Module 1 &middot; Foundations</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Defence in Depth</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 8:10 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-04-defence-in-depth.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>8:10</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-04-defence-in-depth.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Medieval castle builders understood that a single wall eventually falls. In this episode, Alice and Dan translate the castle model into modern security architecture &mdash; six independent layers from network perimeter through audit logging. They examine the Okta breach to show why delegating an entire layer to one provider is a single point of failure, and walk through a SQL injection cascade that demonstrates the difference between architecture with depth and architecture without it.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">One Wall Is Never Enough</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://csrc.nist.gov/glossary/term/defense_in_depth" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST defines defence in depth</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup> as &ldquo;an information security strategy integrating people, technology, and operations capabilities to establish variable barriers across multiple layers.&rdquo; The principle: no single control is trusted to hold.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Castle Model</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Castle Layer</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Modern Equivalent</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Geographic position</td><td class="px-4 py-3">Network architecture &amp; segmentation</td><td class="px-4 py-3">Slows attackers, makes approach visible</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Town walls</td><td class="px-4 py-3">Network perimeter (firewall, WAF)</td><td class="px-4 py-3">Filters obvious threats</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Moat &amp; drawbridge</td><td class="px-4 py-3">Authentication layer</td><td class="px-4 py-3">Controls who crosses into trusted space</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Outer wall</td><td class="px-4 py-3">Application-level controls</td><td class="px-4 py-3">Stops common application attacks</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Inner wall</td><td class="px-4 py-3">Authorization &amp; access control</td><td class="px-4 py-3">Ensures users see only their data</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Keep (the vault)</td><td class="px-4 py-3">Encryption + audit logging</td><td class="px-4 py-3">Last-resort protection after full compromise</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The critical insight: <a href="https://devguide.owasp.org/en/02-foundations/03-security-principles/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">each layer is designed assuming the layer in front has already fallen</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
+
+    <!-- Key principle callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Key principle:</strong> Each layer must function independently. If your authorisation check depends on authentication being correct, and authentication depends on the WAF blocking forged tokens, you have one layer pretending to be three. <a href="https://learn.microsoft.com/en-us/security/zero-trust/zero-trust-overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft&rsquo;s Zero Trust framework</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup> formalises this as &ldquo;verify explicitly&rdquo; &mdash; every layer authenticates and authorises independently.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Single-Provider Trap</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In October 2023, <a href="https://www.beyondtrust.com/blog/entry/okta-support-unit-breach-update" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">attackers compromised Okta&rsquo;s customer support system</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup> by stealing session tokens from uploaded HAR files. The breach <a href="https://www.cloudskope.com/breaches/okta-breach-2023" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">cascaded to 134 customers</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup> including 1Password, BeyondTrust, and Cloudflare.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Single-Provider Risk</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Defence-in-Depth Mitigation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Auth provider breached &rarr; all tenants exposed</td><td class="px-4 py-3">Independent authorization checks at data layer</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">WAF bypassed &rarr; application defenceless</td><td class="px-4 py-3">Application-level input validation regardless of WAF</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Cloud KMS compromised &rarr; all data readable</td><td class="px-4 py-3">Application-layer encryption with separate keys</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Logging service tampered &rarr; no audit trail</td><td class="px-4 py-3">Local hash-chained copies + out-of-band verification</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Case Study: SQL Injection Meets Plaintext Keys</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.cloudsek.com/blog/how-a-single-sql-injection-exposed-45-databases-240-s3-buckets-and-entire-cloud-infrastructure" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CloudSEK documented a case</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup> where a single SQL injection exposed 45 databases, 240+ S3 buckets, and an entire AWS infrastructure because IAM credentials were stored as plaintext in the database. In the <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa21-055a" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Accellion FTA breach (2021)</a>,<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-11" class="hover:text-red-soft">11</a></sup> attackers used SQL injection to retrieve encryption tokens, transforming a web vulnerability into full access to encrypted file transfers. <a href="https://cloud.google.com/blog/topics/threat-intelligence/accellion-fta-exploited-for-data-theft-and-extortion" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Law firms were among the victims</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-12" class="hover:text-red-soft">12</a></sup></p>
+
+    <!-- Design test callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Design test:</strong> Take any single component in your architecture and assume an attacker has full control of it. If that single compromise gives access to all client data, you lack depth. Re-architect until single-component compromise yields only partial access, detectable anomalies, and recoverable state.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Defence in depth is not about buying more security products. It is about architectural discipline: ensuring that the failure of any single layer does not cascade to total compromise. <a href="https://www.isaca.org/resources/news-and-trends/isaca-now-blog/2025/beyond-the-moat-modern-defense-in-depth-strategies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISACA&rsquo;s 2025 guidance</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-13" class="hover:text-red-soft">13</a></sup> emphasises that the medieval castle model has evolved but the principle endures: heterogeneous, independent layers, each designed to function when the layer above has fallen.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 4 &mdash; Defence in Depth. Alice, I want to start with castles.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Medieval castles. Not a metaphor I&rsquo;m forcing &mdash; this is literally where the concept comes from. Castle builders understood that a single wall, no matter how thick, eventually falls. So they built five or six layers. The hill slowed the approach. The town walls forced a fight. The moat stopped siege engines. The outer wall caught the first wave. The inner wall &mdash; taller, with archers looking down &mdash; caught whoever made it through. And the keep, the innermost vault, had its own barred doors even when the courtyard was secure.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Each layer assumes the one before it has already been breached.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&rsquo;s the key insight. The inner wall isn&rsquo;t redundant &mdash; it&rsquo;s designed to function when the outer wall has fallen. In cybersecurity, NIST defines defence in depth the same way: variable barriers across multiple layers, each operating independently. CISA published an advisory in July 2024 after their red team compromised a federal agency specifically because the organisation lacked layered defences beyond the perimeter.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So what does this look like translated into a legal SaaS application?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Six layers. Layer one &mdash; network perimeter. Your WAF filters known attack patterns, SQL injection signatures, XSS payloads. Layer two &mdash; application-level input validation. Even if the WAF passes something novel, parameterised queries and strict type checking reject it. Layer three &mdash; authentication. Multi-factor, session rotation, modern password hashing. Layer four &mdash; authorisation enforced at the data layer, not just the API route. Matter-scoped isolation so lawyers only see their assigned cases. Layer five &mdash; encryption. Data at rest, data in transit, and for privileged documents, application-layer encryption with keys the infrastructure provider cannot access. Layer six &mdash; immutable audit logging that records every access and failed attempt.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And the critical point is each of those has to work independently.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> If your authorisation depends on authentication being correct, and authentication depends on the WAF blocking forged tokens, you have one layer pretending to be three. Microsoft&rsquo;s Zero Trust framework calls this &ldquo;verify explicitly&rdquo; &mdash; every layer authenticates and authorises on its own. Assume the layer above you has been completely compromised. Can you still protect the data?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Which brings us to an uncomfortable question. A lot of SaaS products delegate entire layers to a single provider. Authentication to Okta, encryption to AWS KMS, monitoring to one vendor. What happens when the provider itself gets breached?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> October 2023. Attackers stole session tokens from Okta&rsquo;s customer support system &mdash; they were in uploaded diagnostic files. Because Okta handled authentication for thousands of organisations, the breach cascaded downstream. 1Password, BeyondTrust, Cloudflare &mdash; 134 customers affected. If your entire authentication layer is that one provider with nothing behind it, their breach is your breach.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So what&rsquo;s the mitigation? You can&rsquo;t not use managed services.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> You can use them &mdash; but you layer behind them. Even after Okta confirms identity, your authorisation layer independently verifies that user should access that specific matter. Even after AWS KMS decrypts at the infrastructure level, your application-layer encryption protects the most sensitive documents with separately managed keys. A compromised provider gives the attacker one layer, not all of them.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> This is the &ldquo;assume breach&rdquo; mentality I&rsquo;ve been hearing about.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Core tenet of Zero Trust. You design every component assuming adjacent components are compromised. The question isn&rsquo;t &ldquo;can this be breached?&rdquo; &mdash; everything can be breached. The question is &ldquo;when this component is breached, what else falls?&rdquo; If the answer is everything, you have a depth problem.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s make this concrete. You mentioned a case study &mdash; plaintext API keys in a database.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Classic scenario. A legal document management system stores API keys for court e-filing services, cloud storage providers, maybe an AI service &mdash; all in a database table as plaintext strings. CloudSEK documented a real case where a single SQL injection exposed not just the application database but 45 other databases, 240 S3 buckets, and an entire AWS cloud setup. The SQL injection gave access to IAM credentials stored in the database, which gave access to everything else.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So a web application bug becomes full cloud account takeover.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because there was no depth. The Accellion FTA breach in 2021 &mdash; same pattern. Attackers used SQL injection to retrieve encryption tokens from the database. A web vulnerability became a decryption capability. Law firms were among the victims. If those tokens had been in a hardware security module instead of a queryable table, the SQL injection would have yielded ciphertext. Useless without physical HSM access.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Walk me through the difference. Same initial attack &mdash; SQL injection hits the search endpoint. Without depth versus with depth.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Without depth: attacker queries the keys table, gets plaintext credentials, authenticates to cloud storage, downloads the entire client document corpus. One vulnerability, total compromise. With depth: attacker hits the same injection, queries the keys table &mdash; but gets encrypted blobs because keys are HSM-wrapped. Can&rsquo;t use them. Meanwhile, the anomalous query pattern triggers an audit alert. Security team catches it in hours, patches the injection, rotates credentials. Same entry point. Radically different blast radius.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Because the encryption layer didn&rsquo;t trust the application layer to be secure.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And the audit layer didn&rsquo;t trust any of the other layers to prevent the breach. Each one assumed everything above it had already failed and asked &mdash; given that assumption, what can I still protect? That&rsquo;s defence in depth. Not three products from the same vendor checking the same thing three times. Independent layers, different trust assumptions, heterogeneous controls.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> For a legal SaaS team hearing this &mdash; what&rsquo;s the one thing they should do tomorrow morning?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Pick your most sensitive data asset. Probably privileged client communications. Trace the path from the internet to that data. Count the independent layers an attacker must defeat &mdash; not bypass, defeat independently &mdash; to reach it. If the number is less than three, you have work to do. If any single component compromise gives access to everything, you have urgent work to do.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Defence in depth &mdash; the principle that kept crown jewels safe for centuries, applied to the data your clients trust you to protect. Next episode, we&rsquo;re covering the CIA Triad Meets Legal Privilege &mdash; confidentiality, integrity, and availability through the lens of professional duty.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://www.atmosera.com/blog/defense-in-depth-a-castle-analogy/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Atmosera, &ldquo;Defense in Depth: A Castle Analogy&rdquo;</a></li>
+        <li id="fn-2"><a href="https://csrc.nist.gov/glossary/term/defense_in_depth" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST, &ldquo;Defense-in-Depth &mdash; Glossary&rdquo;</a></li>
+        <li id="fn-3"><a href="https://www.researchgate.net/publication/260319190_Using_the_Castle_Metaphor_to_Communicate_Basic_Concepts_in_Cybersecurity_Education" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Gondree &amp; Peterson, &ldquo;Using the Castle Metaphor,&rdquo; ResearchGate, 2013</a></li>
+        <li id="fn-4"><a href="https://devguide.owasp.org/en/02-foundations/03-security-principles/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Developer Guide, &ldquo;Principles of Security&rdquo;</a></li>
+        <li id="fn-5"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-193a" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA, &ldquo;Red Team Advisory,&rdquo; AA24-193A, July 2024</a></li>
+        <li id="fn-6"><a href="https://learn.microsoft.com/en-us/security/zero-trust/zero-trust-overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft, &ldquo;What is Zero Trust?&rdquo;</a></li>
+        <li id="fn-7"><a href="https://www.beyondtrust.com/blog/entry/okta-support-unit-breach-update" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondTrust, &ldquo;Okta Support Unit Breach Update,&rdquo; 2023</a></li>
+        <li id="fn-8"><a href="https://www.cloudskope.com/breaches/okta-breach-2023" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloudskope, &ldquo;Okta Breach 2023&rdquo;</a> &mdash; 134 downstream customers affected</li>
+        <li id="fn-9"><a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, <em>2024 DBIR</em></a> &mdash; stolen credentials in 38% of breaches</li>
+        <li id="fn-10"><a href="https://www.cloudsek.com/blog/how-a-single-sql-injection-exposed-45-databases-240-s3-buckets-and-entire-cloud-infrastructure" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CloudSEK, &ldquo;How a Single SQL Injection Exposed 45 Databases&rdquo;</a></li>
+        <li id="fn-11"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa21-055a" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA, &ldquo;Exploitation of Accellion FTA,&rdquo; Advisory AA21-055A</a></li>
+        <li id="fn-12"><a href="https://cloud.google.com/blog/topics/threat-intelligence/accellion-fta-exploited-for-data-theft-and-extortion" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google Cloud / Mandiant, &ldquo;Accellion FTA Exploited for Data Theft&rdquo;</a></li>
+        <li id="fn-13"><a href="https://www.isaca.org/resources/news-and-trends/isaca-now-blog/2025/beyond-the-moat-modern-defense-in-depth-strategies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISACA, &ldquo;Beyond the Moat: Modern Defense-in-Depth Strategies,&rdquo; 2025</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-03-attack-surfaces-in-legal-tech.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 3 &mdash; Attack Surfaces in Legal Tech</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-05-the-cia-triad-meets-legal-privilege.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 5 &mdash; The CIA Triad Meets Legal Privilege</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

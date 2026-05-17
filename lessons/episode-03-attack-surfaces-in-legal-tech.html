@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 3 — Attack Surfaces in Legal Tech — Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 3 &middot; Module 1 &middot; Foundations</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Attack Surfaces in Legal Tech</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 8:44 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-03-attack-surfaces-in-legal-tech.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>8:44</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-03-attack-surfaces-in-legal-tech.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">An attack surface is every point where an attacker can get in or pull data out. In this episode, Alice and Dan map the seven major surfaces of a legal AI SaaS platform &mdash; from the web application layer through document ingestion, LLM integrations, and internal admin tools. They examine why adversary-supplied documents make legal tech uniquely dangerous, walk through the Proskauer Rose incident, and outline practical reduction strategies.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Every Entry Point Is a Promise to Attackers</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An attack surface is the sum total of all points where an unauthorised user can attempt to enter or extract data from a system. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP defines it as</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> &ldquo;all of the different points where an attacker could get into a system, and where they could get data out.&rdquo; <a href="https://csf.tools/reference/nist-sp-800-53/r5/sa/sa-15/sa-15-5/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-53 control SA-15(5)</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup> frames attack surface reduction as &ldquo;giving attackers less opportunity to exploit weaknesses.&rdquo;</p>
+
+    <!-- Key stat callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Key stat:</strong> Exploitation of vulnerabilities as an initial access vector <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">increased 180% in the 2024 Verizon DBIR</a>,<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup> driven primarily by web application flaws.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Anatomy of a Legal Tech Attack Surface</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Attack Surface</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Entry Points</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Primary Threat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Web Application</td><td class="px-4 py-3">Login pages, document viewers, admin panels</td><td class="px-4 py-3">Credential stuffing, XSS, session hijacking</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">API Layer</td><td class="px-4 py-3">REST/GraphQL endpoints, webhooks, OAuth callbacks</td><td class="px-4 py-3">BOLA, injection, broken authentication</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Database</td><td class="px-4 py-3">Connection strings, query interfaces, backups</td><td class="px-4 py-3">SQL injection, credential theft</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Object Storage</td><td class="px-4 py-3">S3/Blob buckets, pre-signed URLs, CDN origins</td><td class="px-4 py-3">Misconfiguration, over-permissive ACLs</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">LLM Integrations</td><td class="px-4 py-3">Prompt endpoints, RAG pipelines, embeddings</td><td class="px-4 py-3">Prompt injection, data poisoning</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Email Systems</td><td class="px-4 py-3">SMTP relay, IMAP ingestion, OAuth tokens</td><td class="px-4 py-3">Phishing relay, token theft</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Document Ingestion</td><td class="px-4 py-3">Upload endpoints, file parsers, format converters</td><td class="px-4 py-3">Malicious payloads, parser exploits, XXE</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Document Ingestion Pipeline: Your Most Dangerous Surface</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most SaaS applications receive trusted input from their own users. Legal tech receives adversary-supplied content as a core workflow. Opposing counsel sends contracts. Third parties attach evidence. Clients forward hostile correspondence.</p>
+
+    <!-- Case study callout -->
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Case study &mdash; PDF exploits:</strong> <a href="https://www.threatlocker.com/blog/one-click-pdf-exploits" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2023-26369 demonstrated</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup> that a crafted PDF could achieve arbitrary code execution through a heap-based buffer overflow. Apache Tika has faced <a href="https://gbhackers.com/apache-tika-core-flaw-allows-attackers-to-exploit-systems-with-malicious-pdf-uploads/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">XXE injection through XFA content embedded in PDFs</a>,<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup> allowing attackers to access local files and internal network resources from the parser itself.</p>
+    </div>
+
+    <h3 style="margin-top:2rem;margin-bottom:1rem;" class="text-xl font-bold">What Makes Legal Document Ingestion Uniquely Dangerous</h3>
+
+    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li><strong>The sender is often adversarial by design.</strong> In litigation, opposing counsel has a direct interest in the outcome.</li>
+        <li><strong>Documents traverse the entire stack.</strong> An uploaded contract touches web server, object storage, parser, AI pipeline, database, and notifications.</li>
+        <li><strong>Content becomes trusted input downstream.</strong> Once parsed, document text feeds into search indexes, AI models, and reporting.</li>
+        <li><strong>Format complexity creates parser attack surface.</strong> DOCX files are ZIP archives containing XML. PDFs can embed JavaScript and arbitrary binary streams.</li>
+    </ol>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Distinctive Threat Profile of Legal Tech</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.lawpay.com/about/blog/protection-of-client-information-what-aba-opinion-477r-means-for-you/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 477R</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup> requires lawyers to make reasonable efforts to prevent unauthorised access to client information. The platform bears professional-conduct-grade obligations. A <a href="https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BOLA vulnerability</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup> &mdash; number one on the OWASP API Security Top 10, roughly 40% of API attacks &mdash; in a legal platform exposes privileged communications belonging to non-users who never consented to the platform handling their information.</p>
+
+    <!-- Proskauer callout -->
+    <div style="margin:1.5rem 0;" class="border-2 border-amber-500 bg-amber-50 px-5 py-5 rounded-lg">
+        <h3 style="margin-top:0;margin-bottom:0.75rem;" class="text-lg font-bold text-ink">The Proskauer Rose Incident</h3>
+        <p class="text-base leading-relaxed text-ink-light">In April 2023, <a href="https://techcrunch.com/2023/04/06/proskauer-confidential-client-data/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Proskauer Rose exposed approximately 184,000 files</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup> containing private M&amp;A documents, NDAs, and financial deals on an unsecured Microsoft Azure cloud server for six months. Indexed by GrayHatWarfare and accessible to anyone with the URL. One misconfigured object storage bucket &mdash; one row in the attack surface table &mdash; causing catastrophic privilege breach across hundreds of matters.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">LLM Integration: The Newest Attack Surface</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications (2025)</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup> catalogues risks specific to language model integrations. The fundamental problem: LLMs cannot reliably distinguish data from instructions. When your AI processes a contract from opposing counsel, the contract&rsquo;s content is data &mdash; but the LLM may treat embedded text as instructions.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Internal Attack Surfaces: The Admin Panel Problem</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.halcyon.ai/ransomware-alerts/inc-ransom-group-mounts-rapid-campaign-against-law-firms" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">INC Ransomware&rsquo;s 2024 campaign against law firms</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup> exploited vulnerabilities in remote management tools &mdash; Citrix, Fortinet, SimpleHelp &mdash; to gain initial access. They didn&rsquo;t attack the main application. They attacked the admin tools.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Attack Surface Reduction: Least Exposure</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Action</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">What It Eliminates</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Disable unused API endpoints</td><td class="px-4 py-3">Orphaned routes with stale auth</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Remove default admin panels from production</td><td class="px-4 py-3">Predictable URL attack surface</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Restrict object storage to private + pre-signed URLs</td><td class="px-4 py-3">Public bucket enumeration</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Network-segment AI inference services</td><td class="px-4 py-3">Lateral movement from LLM to DMS</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3 font-semibold">Enforce allowlist-only file formats</td><td class="px-4 py-3">Parser exploit surface for exotic formats</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3 font-semibold">Require VPN/zero-trust for all internal tools</td><td class="px-4 py-3">Network-exposed admin interfaces</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://processbolt.com/insights/blog/why-law-firm-data-breaches-are-skyrocketing-in-2024/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Ransomware attacks on law firms increased 30% in Q1 2024</a>,<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-13" class="hover:text-red-soft">13</a></sup> with average demands exceeding $500,000. The cheapest defence is removing things attackers could target. You can&rsquo;t exploit a service that isn&rsquo;t running.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Map every surface. Reduce what you can. Isolate what remains so that breaching one surface doesn&rsquo;t give access to others. Legal tech has an attack surface unlike any other vertical &mdash; your users receive adversary-supplied content by design, your data carries professional-conduct obligations, and your AI integrations create novel exploitation pathways.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 3 &mdash; Attack Surfaces in Legal Tech. Alice, last time we walked through STRIDE as a framework. Today we&rsquo;re mapping what you actually apply it to.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Right. An attack surface is every point where an attacker can try to get in or pull data out. OWASP defines it as all the different points where an attacker could enter a system and where they could get data out. For a typical legal AI SaaS, that surface is enormous compared to most web applications.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Walk me through it. What does the surface look like for, say, a contract review platform?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Seven major surfaces. First, the web application itself &mdash; login pages, document viewers, admin panels. Second, the API layer &mdash; REST endpoints, webhook receivers, OAuth callbacks. Third, the database &mdash; connection strings, query interfaces. Fourth, object storage &mdash; your S3 buckets or Azure Blob containers where documents live. Fifth, LLM integrations &mdash; prompt endpoints, RAG pipelines, embedding services. Sixth, email systems &mdash; SMTP relay, IMAP ingestion for receiving documents via email. Seventh, and this is the critical one &mdash; the document ingestion pipeline.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Why is document ingestion the critical one? Every SaaS has file uploads.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because in legal tech, the person sending you documents is often your adversary. Literally. In litigation, opposing counsel sends contracts, evidence, filings. In M&amp;A, the counterparty sends due diligence materials. These aren&rsquo;t trusted users uploading their own files. These are parties who may have a direct financial interest in compromising your system or extracting information from it.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s a completely different threat model from a photo-sharing app where users upload their own pictures.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And the uploaded document doesn&rsquo;t just sit in one place. It traverses the entire stack. The web server receives it, object storage holds it, the document parser extracts text &mdash; and parsers are a massive attack surface because PDFs can embed JavaScript, DOCX files are ZIP archives containing XML, and any parser vulnerability becomes remote code execution from a file upload. Then that parsed text feeds into your AI pipeline, your search index, your database.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So a malicious payload in a document could potentially touch every component in your architecture.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> In 2023, researchers demonstrated that a crafted PDF could achieve arbitrary code execution through a heap buffer overflow in Adobe&rsquo;s parser. Apache Tika &mdash; which half the Java world uses for document extraction &mdash; had an XXE injection flaw through XFA content embedded in PDFs. An attacker could access local files and internal network resources from the document parser itself. And that&rsquo;s just the parser layer. Once the text is extracted, if it feeds into an LLM, you have prompt injection. The document&rsquo;s content becomes instructions the AI follows.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right &mdash; we covered that in episode one. The AI can&rsquo;t distinguish between data and instructions. But let&rsquo;s talk about something else that makes legal tech distinctive. The confidentiality angle.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is fundamental. Most SaaS handles data belonging to the user. Legal tech handles data belonging to the user&rsquo;s clients &mdash; who are often in conflict with other parties who may also use your platform. Think about an e-discovery platform. Both sides of a lawsuit might be on the same service. A multi-tenancy isolation failure isn&rsquo;t just a data breach &mdash; it&rsquo;s a privilege waiver. Attorney-client privilege, once breached, may be permanently waived.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And there are professional conduct obligations here too.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> ABA Formal Opinion 477R requires lawyers to make reasonable efforts to prevent unauthorised access to client information. That means the platform bears professional-conduct-grade obligations. A BOLA vulnerability &mdash; Broken Object Level Authorisation, number one on the OWASP API Security Top Ten, roughly 40 percent of all API attacks &mdash; in a legal platform doesn&rsquo;t just expose user data. It exposes privileged communications belonging to non-users who never consented to your platform handling their information.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Give me a real-world example of this going wrong.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Proskauer Rose, April 2023. One of the largest law firms in the world. A third-party vendor configured a Microsoft Azure storage container without proper access controls. 184,000 files &mdash; M&amp;A documents, NDAs, financial deals, confidential client data &mdash; sat publicly accessible for six months. Indexed by GrayHatWarfare, available to anyone who knew where to look. One misconfigured object storage bucket. That&rsquo;s one row in our attack surface table causing catastrophic damage across hundreds of client matters.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> One misconfiguration. Six months. 184,000 files. That&rsquo;s terrifying. What about the internal surfaces &mdash; the ones people tend to forget about?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Admin panels, database management UIs, CI/CD pipelines, monitoring dashboards. These are security boundaries because they have elevated privileges. Create users, modify permissions, deploy code, access raw data. But teams often treat them as internal-only and therefore safe. The INC Ransomware group&rsquo;s campaign against law firms in 2024 specifically targeted remote management tools &mdash; Citrix, Fortinet, SimpleHelp. They didn&rsquo;t attack the main application. They attacked the admin tools.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Because once you&rsquo;re inside an admin interface, you typically have the keys to everything.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Every internal tool exposed to the network without its own authentication boundary is attack surface. Compromise one developer&rsquo;s laptop through phishing and you&rsquo;re on the internal network with access to anything that trusts the network perimeter as its only security layer.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> OK, so we&rsquo;ve mapped this enormous surface. How do we reduce it?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The principle is least exposure. NIST SP 800-53 codifies this as attack surface reduction &mdash; implementing least privilege, deprecating unsafe functions, reducing entry points, eliminating vulnerable APIs. Practically? Disable every API endpoint you&rsquo;re not actively using. Remove default admin panels from production. Make object storage private-only with pre-signed URLs. Network-segment your AI inference services so a compromised LLM can&rsquo;t reach your document management system. Enforce allowlists for upload file formats &mdash; if you only need PDF and DOCX, reject everything else at the boundary. Require VPN or zero-trust verification for every internal tool.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Every unnecessary open port is liability without benefit.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&rsquo;s the mental model. Ransomware attacks on law firms increased 30 percent in Q1 2024, with average demands exceeding half a million dollars. The cheapest defense is removing things attackers could target. You can&rsquo;t exploit a service that isn&rsquo;t running. You can&rsquo;t access a port that isn&rsquo;t open. You can&rsquo;t abuse an endpoint that doesn&rsquo;t exist.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Map, reduce, isolate.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Map every surface &mdash; web app, API, database, storage, AI, email, document ingestion, admin tools. Reduce what you can eliminate. Isolate what remains so that breaching one surface doesn&rsquo;t give you access to others.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And that isolation idea &mdash; that&rsquo;s exactly what we&rsquo;ll dig into next time. Episode 4: Defence in Depth. Layering controls so when one boundary falls, the attacker hits another wall.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;Attack Surface Analysis Cheat Sheet&rdquo;</a></li>
+        <li id="fn-2"><a href="https://csf.tools/reference/nist-sp-800-53/r5/sa/sa-15/sa-15-5/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-53 Rev. 5, Control SA-15(5): Attack Surface Reduction</a></li>
+        <li id="fn-3"><a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, <em>2024 Data Breach Investigations Report</em></a> &mdash; 180% increase in vulnerability exploitation</li>
+        <li id="fn-4"><a href="https://www.threatlocker.com/blog/one-click-pdf-exploits" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ThreatLocker, &ldquo;CVE-2023-26369: One-click PDF exploits&rdquo;</a></li>
+        <li id="fn-5"><a href="https://gbhackers.com/apache-tika-core-flaw-allows-attackers-to-exploit-systems-with-malicious-pdf-uploads/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GBHackers, &ldquo;Apache Tika Core Flaw&rdquo;</a> &mdash; XXE injection through XFA content</li>
+        <li id="fn-6"><a href="https://www.lawpay.com/about/blog/protection-of-client-information-what-aba-opinion-477r-means-for-you/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 477R, &ldquo;Securing Communication of Protected Client Information&rdquo;</a></li>
+        <li id="fn-7"><a href="https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;API1: Broken Object Level Authorization&rdquo;</a> &mdash; ~40% of API attacks</li>
+        <li id="fn-8"><a href="https://techcrunch.com/2023/04/06/proskauer-confidential-client-data/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">TechCrunch, &ldquo;Proskauer exposed clients&rsquo; confidential M&amp;A data,&rdquo; April 2023</a> &mdash; 184,000 files</li>
+        <li id="fn-9"><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;Top 10 for Large Language Model Applications (2025)&rdquo;</a></li>
+        <li id="fn-10"><a href="https://www.halcyon.ai/ransomware-alerts/inc-ransom-group-mounts-rapid-campaign-against-law-firms" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Halcyon, &ldquo;INC Ransom Group Mounts Rapid Campaign Against Law Firms,&rdquo; 2024</a></li>
+        <li id="fn-11"><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/exposure-management/attack-surface-reduction/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CrowdStrike, &ldquo;What is Attack Surface Reduction?&rdquo;</a></li>
+        <li id="fn-12"><a href="https://www.cisa.gov/resources-tools/resources/primary-mitigations-reduce-cyber-threats-operational-technology" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA, &ldquo;Primary Mitigations to Reduce Cyber Threats&rdquo;</a></li>
+        <li id="fn-13"><a href="https://processbolt.com/insights/blog/why-law-firm-data-breaches-are-skyrocketing-in-2024/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ProcessBolt, &ldquo;Why Law Firm Data Breaches Are Skyrocketing in 2024&rdquo;</a> &mdash; 30% increase; $500K average demands</li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-02-the-stride-framework.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 2 &mdash; The STRIDE Framework</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-04-defence-in-depth.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 4 &mdash; Defence in Depth</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>
