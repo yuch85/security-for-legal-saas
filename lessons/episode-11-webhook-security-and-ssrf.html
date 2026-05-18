@@ -263,34 +263,6 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your webhook endpoints are trust boundaries &mdash; they accept data from external systems and trigger internal actions. SSRF turns your server&rsquo;s network position against you. In legal SaaS, where integrations with courts, payment systems, and opposing counsel are unavoidable, these attack surfaces cannot be eliminated &mdash; only hardened through signature verification, URL validation, network controls, and continuous monitoring.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Browser Security Headers</strong> &mdash; where we&rsquo;ll see how CORS misconfigurations and missing headers turn your client&rsquo;s browser into an attack vector.</p>
-
-    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Sources and Further Reading</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;A10:2021 &mdash; Server-Side Request Forgery (SSRF),&rdquo; OWASP Top 10, 2021. https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Brian Krebs, &ldquo;What We Can Learn from the Capital One Hack,&rdquo; KrebsOnSecurity, August 2019. SSRF against AWS IMDS exposed 106 million records. https://krebsonsecurity.com/2019/08/what-we-can-learn-from-the-capital-one-hack/</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> AWS, &ldquo;Configure the Instance Metadata Service,&rdquo; EC2 User Guide. IMDSv2 requires session tokens to mitigate SSRF. https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> PortSwigger, &ldquo;Server-side request forgery (SSRF),&rdquo; Web Security Academy. https://portswigger.net/web-security/ssrf</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> nickytonline, &ldquo;ssrf-req-filter,&rdquo; GitHub. Node.js library for SSRF-safe HTTP requests. https://github.com/nickytonline/ssrf-req-filter</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> GitHub, &ldquo;Validating webhook deliveries,&rdquo; GitHub Docs. HMAC-SHA256 verification pattern. https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Stripe, &ldquo;Check webhook signatures,&rdquo; Stripe Docs. Timestamp + HMAC verification. https://stripe.com/docs/webhooks/signatures</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Google Cloud, &ldquo;VPC firewall rules overview.&rdquo; Egress filtering for outbound request control. https://cloud.google.com/vpc/docs/firewalls</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Stripe, &ldquo;Stripe&rsquo;s IP addresses,&rdquo; Stripe Docs. Published IP ranges for webhook allowlisting. https://stripe.com/docs/ips</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Tyler Technologies, &ldquo;Odyssey Case Management.&rdquo; Court e-filing integration platform. https://www.tylertech.com/solutions/courts-public-safety/odyssey</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;Server-Side Request Forgery Prevention Cheat Sheet.&rdquo; Language-specific SSRF defences. https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Svix, &ldquo;Webhook Testing,&rdquo; Svix Resources. Testing webhook signature verification. https://www.svix.com/resources/faq/webhook-testing/</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><em>Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</em></p>
 </article>
 
 <!-- Transcript -->

@@ -340,36 +340,6 @@ const result = await prisma.$queryRaw`
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL injection is a solved problem at the code level &mdash; parameterised queries eliminate it entirely for value-position injection. Yet it persists because developers use raw queries for &ldquo;just this one complex case,&rdquo; because ORMs offer unsafe escape hatches, and because second-order injection hides in code paths nobody thought to check. <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Use the ORM. Parameterise the exceptions. Treat stored data as untrusted. Test regularly.</a></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Cross-Site Scripting (XSS)</strong> &mdash; when the attacker&rsquo;s code runs in your users&rsquo; browsers, with access to their sessions, their documents, and their privileged data.</p>
-
-    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Sources and Further Reading</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP Top 10:2021, &ldquo;A03 Injection.&rdquo; https://owasp.org/Top10/A03_2021-Injection/</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> NVD, CVE-2023-34362. MOVEit Transfer SQL injection, CVSS 9.8. https://nvd.nist.gov/vuln/detail/CVE-2023-34362</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> PortSwigger, &ldquo;SQL Injection.&rdquo; Comprehensive tutorial and lab exercises. https://portswigger.net/web-security/sql-injection</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> HackerOne, &ldquo;Top 10 Most Impactful Vulnerability Categories,&rdquo; 2023. https://www.hackerone.com/resources/reporting/top-10-vulnerabilities</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;SQL Injection Prevention Cheat Sheet.&rdquo; https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;Query Parameterization Cheat Sheet.&rdquo; https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Prisma, &ldquo;Raw database access.&rdquo; Documentation on safe and unsafe raw query methods. https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> ESLint, &ldquo;Rules Reference.&rdquo; Custom rule configuration for code quality. https://eslint.org/docs/latest/rules/</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;SQL Injection.&rdquo; Attack description including second-order injection. https://owasp.org/www-community/attacks/SQL_Injection</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP Web Security Testing Guide, &ldquo;Testing for SQL Injection.&rdquo; https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> sqlmap, automated SQL injection detection and exploitation tool. https://sqlmap.org/</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP ZAP (Zed Attack Proxy), open-source web application security scanner. https://www.zaproxy.org/</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> PostgreSQL Documentation, &ldquo;Row Security Policies.&rdquo; https://www.postgresql.org/docs/current/ddl-rowsecurity.html</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><em>Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</em></p>
 </article>
 
 <!-- Transcript -->
