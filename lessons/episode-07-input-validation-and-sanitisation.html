@@ -78,7 +78,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Gatekeeper Problem</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every piece of data that enters your legal SaaS application arrives through a gate. A form field, an API parameter, a file upload, a webhook payload. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Input validation is the practice of ensuring that data conforms to expected formats, types, and ranges before your application processes it</a>.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every piece of data that enters your legal SaaS application arrives through a gate. A form field, an API (Application Programming Interface &mdash; the way software components communicate with each other) parameter, a file upload, a webhook payload. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Input validation is the practice of ensuring that data conforms to expected formats, types, and ranges before your application processes it</a>.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Get this wrong, and you enable every injection attack that follows — SQL injection, XSS, command injection, path traversal. <a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 2023 OWASP Top 10 lists injection as A03</a>, and virtually every injection vulnerability begins with insufficient input validation.</p>
 
@@ -142,7 +142,7 @@
         </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/logic-flaws" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Client-side validation is never a security control</a>. An attacker can disable JavaScript, modify the DOM, or bypass the browser entirely with direct API calls. Every validation the client performs must be repeated on the server, independently.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/logic-flaws" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Client-side validation is never a security control</a>. An attacker can disable JavaScript, modify the DOM (Document Object Model &mdash; the browser&rsquo;s internal representation of a webpage that JavaScript can read and modify), or bypass the browser entirely with direct API calls. Every validation the client performs must be repeated on the server, independently.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Boundary validation</strong> means validating data every time it crosses a trust boundary — not just at initial input. A value that was safe when received might become dangerous after transformation. If you URL-decode user input and then use it in a database query, you must validate <em>after</em> decoding, not before.</p>
 
@@ -196,7 +196,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Schema Validation with ORMs</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern legal SaaS typically uses an ORM (Object-Relational Mapper — a library that generates database queries from application code, preventing direct SQL) like Prisma, SQLAlchemy, or TypeORM. ORMs provide schema-level validation as a byproduct of their type system:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern legal SaaS typically uses an ORM (Object-Relational Mapper &mdash; a library that lets you write database queries in your programming language instead of raw SQL, the standard language for querying databases) like Prisma, SQLAlchemy, or TypeORM. ORMs provide schema-level validation as a byproduct of their type system:</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.prisma.io/docs/concepts/components/prisma-schema" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma's schema validation</a> enforces types at the application boundary:</p>
 

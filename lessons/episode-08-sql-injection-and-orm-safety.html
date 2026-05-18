@@ -90,11 +90,9 @@
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Vulnerable Pattern: String Concatenation</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL injection exploits the mixing of code and data in database queries. When user input is concatenated directly into a SQL string, the database cannot distinguish between the developer's intended query structure and attacker-supplied SQL.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL (Structured Query Language) is the standard language for querying and managing databases &mdash; it is how your application asks the database for data. SQL injection exploits the mixing of code and data in these database queries. When user input is concatenated directly into a SQL string, the database cannot distinguish between the developer&rsquo;s intended query structure and attacker-supplied SQL.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If <code>user_input</code> is <code>' OR '1'='1</code>:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The query now returns every row in the table. The attacker has bypassed all access control.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Here is how the attack works step by step. Your application builds a query like: <code>SELECT * FROM matters WHERE citation = '[user input here]'</code>. If <code>user_input</code> is a normal citation like <code>[2024] SGCA 15</code>, the query works as intended. But if <code>user_input</code> is <code>' OR '1'='1</code>, the query becomes: <code>SELECT * FROM matters WHERE citation = '' OR '1'='1'</code>. The injected <code>OR '1'='1'</code> is always true &mdash; one always equals one &mdash; so the database returns <strong class="text-ink">every row in the table</strong> instead of the one the user was authorised to see. The attacker has bypassed all access control with a few characters of input.</p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Escalation: From Data Theft to Full Compromise</h3>
 
@@ -145,7 +143,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">ORM Safety and Its Limits</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern ORMs — <a href="https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma</a>, SQLAlchemy, TypeORM, Django ORM — use parameterised queries by default. When you use the ORM's query builder, you're generally safe:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern ORMs (Object-Relational Mappers, as we covered in Episode 7 &mdash; libraries that let you write database queries in your programming language instead of raw SQL) &mdash; <a href="https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma</a>, SQLAlchemy, TypeORM, Django ORM &mdash; use parameterised queries by default. When you use the ORM's query builder, you're generally safe:</p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Raw Query Escape Hatch</h3>
 
