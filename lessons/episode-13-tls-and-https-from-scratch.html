@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 13 &mdash; TLS and HTTPS from Scratch &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 13 &middot; Module 4 &middot; Transport</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">TLS and HTTPS from Scratch</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 8:11 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-13-tls-and-https-from-scratch.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>8:11</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-13-tls-and-https-from-scratch.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Every developer knows they need HTTPS. Few understand what happens behind the padlock. Alice and Dan take TLS apart &mdash; the 1.3 handshake, forward secrecy, certificate lifecycle, Let&rsquo;s Encrypt automation, cipher suite selection, and why supporting TLS 1.0 for a legacy court system should never degrade your entire application&rsquo;s security posture.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS — Episode 13: TLS and HTTPS from Scratch</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Illusion of "Just Add HTTPS"</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every developer knows their application needs HTTPS. Few understand what that actually means at a protocol level — which cipher suites are negotiated, how certificate validation works, what happens when certificates expire at 2am on a Friday, and why TLS 1.0 connections from a court's legacy system represent a genuine security risk. <a href="https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">TLS is the single most important transport security mechanism on the internet</a>, and for legal SaaS carrying privileged communications, getting it right is non-negotiable.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.ssllabs.com/ssl-pulse/">SSL Labs' SSL Pulse survey</a> consistently finds that approximately 25-30% of surveyed sites still have TLS configuration issues — from supporting deprecated protocols to using weak cipher suites. These aren't obscure services; they include enterprise SaaS platforms handling sensitive data.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal tech specifically, the data in transit includes attorney-client privileged communications, litigation strategy documents, client financial records, and court filings. A TLS misconfiguration doesn't just expose data — it potentially waives privilege and triggers regulatory obligations.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">How TLS Actually Works</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Handshake (TLS 1.3)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc8446" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">TLS 1.3</a>, finalised in 2018, reduced the handshake from two round-trips to one:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Step</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Client</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Server</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">1</td><td class="px-4 py-3">ClientHello: supported cipher suites + key share</td><td class="px-4 py-3"></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">2</td><td class="px-4 py-3"></td><td class="px-4 py-3">ServerHello: chosen cipher, certificate, key share</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">3</td><td class="px-4 py-3">Verify certificate chain → derive session keys</td><td class="px-4 py-3"></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">4</td><td class="px-4 py-3">Application data (encrypted)</td><td class="px-4 py-3">Application data (encrypted)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The critical security properties:</p>
+
+    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Forward secrecy</strong> — <a href="https://www.cloudflare.com/learning/ssl/what-is-perfect-forward-secrecy/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Ephemeral Diffie-Hellman key exchange</a> means even if the server's private key is later compromised, past sessions cannot be decrypted</li>
+        <li><strong class="text-ink">Authenticated encryption</strong> — Only AEAD cipher suites (AES-GCM, ChaCha20-Poly1305) are permitted in TLS 1.3</li>
+        <li><strong class="text-ink">No legacy baggage</strong> — RSA key exchange, CBC mode ciphers, MD5, SHA-1 — all removed</li>
+    </ul>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Certificate Validation</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When your browser connects to <code>app.lawfirm.com</code>, the server presents a certificate chain. <a href="https://letsencrypt.org/docs/faq/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The browser validates</a>:</p>
+
+    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li>The certificate is signed by a trusted Certificate Authority (CA)</li>
+        <li>The certificate hasn't expired</li>
+        <li>The domain name matches the certificate's Subject Alternative Name</li>
+        <li>The certificate hasn't been revoked (via CRL or OCSP)</li>
+    </ol>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If any check fails, the connection is refused. This is why expired certificates cause outages — not warnings, outages.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Let's Encrypt and Automated Certificates</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://letsencrypt.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Let's Encrypt</a> fundamentally changed TLS deployment by providing free, automated certificates with a 90-day validity period. The short lifetime is a feature — it forces automation and limits the window if a private key is compromised.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Automation with Certbot/ACME</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Component</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><a href="https://datatracker.ietf.org/doc/html/rfc8555" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ACME protocol</a></td><td class="px-4 py-3">Standardised certificate issuance automation</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Certbot / acme.sh</td><td class="px-4 py-3">Client tools that handle challenge-response and renewal</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">HTTP-01 challenge</td><td class="px-4 py-3">Prove domain control by serving a file at <code>/.well-known/acme-challenge/</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">DNS-01 challenge</td><td class="px-4 py-3">Prove control by creating a DNS TXT record (required for wildcards)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Best practice:</strong> Configure automated renewal with at least 30 days before expiry. Monitor certificate expiry dates with alerting. A certificate that expires at 3am during a court filing deadline is not a theoretical risk — it's a <a href="https://www.thesslstore.com/blog/lets-encrypt-certificate-expiration/">known failure mode</a>.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Common Misconfigurations</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Supporting Deprecated Protocols</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc8996" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">TLS 1.0 and 1.1 were deprecated by RFC 8996 in 2021</a>. Known vulnerabilities include BEAST, POODLE, and Lucky 13. Yet some legal SaaS platforms maintain support for legacy court systems that haven't upgraded.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">The risk:</strong> An attacker performing a downgrade attack forces the connection to TLS 1.0 and exploits known vulnerabilities. <a href="https://www.openssl.org/~bodo/ssl-poodle.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">POODLE</a> demonstrated this by recovering encrypted content one byte at a time.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">The fix:</strong> Disable TLS 1.0 and 1.1 entirely. If a court system requires them, use a dedicated proxy with network-level isolation — don't expose your entire application to downgrade attacks for one integration.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Weak Cipher Suites</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Avoid</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Use Instead</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">RC4 (biased keystream)</td><td class="px-4 py-3">AES-256-GCM</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">DES/3DES (64-bit block)</td><td class="px-4 py-3">ChaCha20-Poly1305</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">CBC mode without encrypt-then-MAC</td><td class="px-4 py-3">AEAD suites only</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">RSA key exchange (no forward secrecy)</td><td class="px-4 py-3">ECDHE key exchange</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Mixed Content</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Loading HTTP resources (scripts, stylesheets, images) on an HTTPS page. <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Modern browsers block mixed active content</a> (scripts, iframes) but may allow mixed passive content (images). A single HTTP-loaded script gives an attacker full control of the page.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">4. Certificate Expiry</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.theverge.com/2020/2/3/21120248/microsoft-teams-down-outage-certificate-expired" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">In 2020, Microsoft Teams suffered a global outage because a certificate expired</a>. The fix took hours. For legal SaaS with filing deadlines, hours of downtime can mean missed court dates.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">TLS 1.3: Why It Matters</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc8446" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">TLS 1.3</a> isn't just faster — it's fundamentally more secure:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Feature</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">TLS 1.2</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">TLS 1.3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Handshake round-trips</td><td class="px-4 py-3">2</td><td class="px-4 py-3">1</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Forward secrecy</td><td class="px-4 py-3">Optional (depends on cipher)</td><td class="px-4 py-3">Mandatory</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Cipher suites</td><td class="px-4 py-3">300+ (many insecure)</td><td class="px-4 py-3">5 (all secure)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">0-RTT resumption</td><td class="px-4 py-3">No</td><td class="px-4 py-3">Yes (with replay caveats)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">CBC mode</td><td class="px-4 py-3">Permitted</td><td class="px-4 py-3">Removed</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">RSA key exchange</td><td class="px-4 py-3">Permitted</td><td class="px-4 py-3">Removed</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">0-RTT resumption caveat:</strong> <a href="https://blog.cloudflare.com/introducing-0-rtt/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">0-RTT data is replayable</a>. For legal SaaS, never allow state-changing operations (document sharing, payment processing) in 0-RTT — only idempotent reads.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Testing with SSL Labs</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Qualys SSL Labs Server Test</a> is the industry standard for TLS configuration assessment. It grades your configuration A through F and identifies specific issues.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">What an A+ Grade Requires</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Criterion</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Requirement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Protocol support</td><td class="px-4 py-3">TLS 1.2+ only (TLS 1.3 preferred)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Key exchange</td><td class="px-4 py-3">ECDHE with P-256 or X25519</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Cipher strength</td><td class="px-4 py-3">128-bit+ AEAD only</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Certificate</td><td class="px-4 py-3">SHA-256+, 2048-bit+ RSA or P-256 ECDSA</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">HSTS</td><td class="px-4 py-3">Configured with long max-age</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">No known vulnerabilities</td><td class="px-4 py-3">BEAST, POODLE, Heartbleed, ROBOT all patched</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Run this test after every infrastructure change. Automate it in your deployment pipeline — <a href="https://testssl.sh/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">testssl.sh</a> provides a command-line alternative for CI/CD integration.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal-Specific TLS Considerations</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Court Integration Endpoints</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Some court e-filing systems run legacy TLS configurations. When integrating:</p>
+
+    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li>Never downgrade your main application's TLS to accommodate them</li>
+        <li>Use a dedicated outbound proxy with strict network isolation</li>
+        <li>Log all connections to legacy endpoints for audit purposes</li>
+        <li>Maintain a deprecation timeline and communicate it to court IT</li>
+    </ul>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Client Portal Certificate Pinning</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For high-value clients (large litigation, M&A), consider <a href="https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">certificate pinning</a> in custom client applications — ensuring the app only accepts your specific certificate, not any CA-signed certificate for your domain.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">TLS is not a checkbox — it's a living configuration that requires monitoring, testing, and maintenance. Certificates expire, cipher suites become deprecated, and protocol vulnerabilities are discovered. For legal SaaS, where a single intercepted communication can waive attorney-client privilege, your TLS configuration is as critical as your authentication system. Test it today. Automate the testing. Alert on degradation.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">API Gateway Patterns and Rate Limiting</strong> — where we'll see how a single enforcement point protects your entire API surface.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 13 &mdash; TLS and HTTPS from Scratch. Alice, every developer knows they need HTTPS. What don&rsquo;t they know?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> They don&rsquo;t know what&rsquo;s actually happening when that padlock appears. They don&rsquo;t know which cipher suites &mdash; the sets of encryption algorithms &mdash; their server negotiates. They don&rsquo;t know whether their configuration provides forward secrecy. And they definitely don&rsquo;t know what happens when their certificate expires at 3am on the night before a court filing deadline.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s start with the basics. What is TLS actually doing?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> TLS &mdash; Transport Layer Security &mdash; provides three things. Authentication &mdash; proving the server is who it claims to be. Confidentiality &mdash; encrypting the data so nobody between client and server can read it. Integrity &mdash; ensuring data isn&rsquo;t modified in transit. The handshake establishes all three before any application data flows.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Walk me through what happens when a browser connects to a legal SaaS application over HTTPS.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> TLS 1.3 &mdash; the current version, finalised in 2018. The client sends a ClientHello containing its supported cipher suites and a key share. The server picks a cipher suite, sends back its certificate and its own key share. The client validates the certificate chain &mdash; is it signed by a trusted CA, is the domain correct, has it expired, has it been revoked. If everything checks out, both sides derive session keys from the combined key shares. One round trip. Application data flows encrypted.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s faster than previous versions?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> TLS 1.2 took two round trips. TLS 1.3 also removed all the insecure options &mdash; no more RSA key exchange, no CBC mode ciphers, no MD5 or SHA-1. The protocol only allows five cipher suites, all of them using AEAD &mdash; authenticated encryption with associated data, which provides both confidentiality and tamper-proofing in one operation. You literally cannot negotiate an insecure configuration in TLS 1.3.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about forward secrecy? I hear that term a lot.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Forward secrecy means that even if your server&rsquo;s private key is compromised tomorrow, every past session remains secure. This works because each connection uses ephemeral &mdash; temporary &mdash; Diffie-Hellman key pairs. The session keys are derived from these ephemeral keys, not from the server&rsquo;s long-term key. Once the connection closes, the ephemeral keys are discarded. In TLS 1.3, forward secrecy is mandatory. In TLS 1.2, it depends on the cipher suite &mdash; RSA key exchange doesn&rsquo;t provide it.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s talk about certificates. Let&rsquo;s Encrypt made them free &mdash; what&rsquo;s the catch?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> No catch, but a responsibility. Let&rsquo;s Encrypt certificates expire every 90 days. That short lifetime is intentional &mdash; it forces automation and limits the damage window if a key is compromised. The ACME protocol automates the entire process &mdash; domain validation, certificate issuance, installation, renewal. Tools like Certbot handle this. But you must set up monitoring. If renewal fails silently and the certificate expires, your application goes down hard. Browsers don&rsquo;t show a degraded warning anymore &mdash; they block access entirely.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Real-world example of that going wrong?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Microsoft Teams. February 2020. A certificate expired and the entire service went down globally. For hours. Now imagine that happening to your e-filing platform on a court deadline. The filing doesn&rsquo;t go through because browsers refuse to connect. Your client&rsquo;s motion is late. Opposing counsel moves for default judgement. And the root cause was &mdash; nobody set up a renewal alert.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What are the common misconfigurations you see in legal SaaS deployments?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Four big ones. First &mdash; still supporting TLS 1.0 or 1.1. These were formally deprecated in 2021. They have known vulnerabilities &mdash; BEAST, POODLE, Lucky 13. An attacker can force a downgrade and exploit them. Disable completely. Second &mdash; weak cipher suites. RC4, DES, 3DES, CBC mode without proper MAC &mdash; all exploitable. Only allow AEAD ciphers. Third &mdash; mixed content. Your HTTPS page loads a script over HTTP. That single HTTP script gives a man-in-the-middle full control of the page. Fourth &mdash; no HSTS header, so the browser doesn&rsquo;t enforce HTTPS and a network attacker can SSL-strip the connection.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about legacy court systems? Some of them haven&rsquo;t upgraded their TLS in years.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Never downgrade your main application to accommodate them. Instead &mdash; dedicated outbound proxy with strict network isolation. That proxy speaks TLS 1.0 to the legacy court system and TLS 1.3 to your application internally. Log every connection. Maintain a deprecation timeline. Communicate to court IT that their configuration has a hard deadline. Your security posture doesn&rsquo;t degrade because one integration partner is behind.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> How should teams test their TLS configuration?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Qualys SSL Labs Server Test. Free, web-based, gives you a letter grade A through F with specific findings. An A+ requires TLS 1.2 or higher only, ECDHE key exchange &mdash; Elliptic Curve Diffie-Hellman Ephemeral, the modern method for securely agreeing on encryption keys &mdash; AEAD ciphers, valid SHA-256 certificate, and HSTS configured. For CI/CD integration, testssl.sh runs from the command line &mdash; you can fail a deployment if the TLS grade drops below A.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about TLS 1.3&rsquo;s zero round-trip resumption? I&rsquo;ve heard that has security tradeoffs.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It does. 0-RTT lets a returning client send application data in the very first packet &mdash; before the handshake completes. Great for performance. But that data is replayable. An attacker who captures a 0-RTT request can replay it. For legal SaaS &mdash; never allow state-changing operations in 0-RTT. Document sharing, payment processing, filing submissions &mdash; these must require the full handshake. Only idempotent reads should use 0-RTT.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Any other legal-specific considerations?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Certificate pinning for high-value client applications. If you build a dedicated portal for a major litigation client, you can pin your specific certificate in the app &mdash; so even if an attacker compromises a CA and issues a fraudulent certificate for your domain, the pinned app rejects it. This is high-assurance territory, appropriate for clients where the stakes justify the operational complexity.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> The summary here &mdash; TLS isn&rsquo;t set-and-forget.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It&rsquo;s a living configuration. Certificates expire. Cipher suites get deprecated. Protocol vulnerabilities are discovered. Test regularly. Automate renewal. Monitor continuously. For legal SaaS carrying privileged communications, your TLS configuration is as critical as your authentication system.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; API Gateway Patterns and Rate Limiting. How a single enforcement point protects your entire API surface from abuse.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloudflare, "What is Transport Layer Security (TLS)?" TLS protocol overview</a></li>
+        <li id="fn-2"><a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Qualys SSL Labs, "SSL Server Test" and "SSL Pulse." Industry-standard TLS configuration grading</a></li>
+        <li id="fn-3"><a href="https://datatracker.ietf.org/doc/html/rfc8446" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF RFC 8446, "The Transport Layer Security (TLS) Protocol Version 1.3," August 2018</a></li>
+        <li id="fn-4"><a href="https://www.cloudflare.com/learning/ssl/what-is-perfect-forward-secrecy/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloudflare, "What is Perfect Forward Secrecy?" Ephemeral key exchange explained</a></li>
+        <li id="fn-5"><a href="https://letsencrypt.org/docs/faq/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Let's Encrypt, "Documentation and FAQ." Free automated certificates via ACME</a></li>
+        <li id="fn-6"><a href="https://datatracker.ietf.org/doc/html/rfc8555" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF RFC 8555, "Automatic Certificate Management Environment (ACME)," March 2019</a></li>
+        <li id="fn-7"><a href="https://www.thesslstore.com/blog/lets-encrypt-certificate-expiration/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The SSL Store, "Let's Encrypt Certificate Expiration." Monitoring and renewal best practices</a></li>
+        <li id="fn-8"><a href="https://datatracker.ietf.org/doc/html/rfc8996" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF RFC 8996, "Deprecating TLS 1.0 and TLS 1.1," March 2021</a></li>
+        <li id="fn-9"><a href="https://www.openssl.org/~bodo/ssl-poodle.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Bodo Möller et al., "This POODLE Bites: Exploiting the SSL 3.0 Fallback," October 2014</a></li>
+        <li id="fn-10"><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MDN Web Docs, "Mixed content." Browser handling of HTTP resources on HTTPS pages</a></li>
+        <li id="fn-11"><a href="https://www.theverge.com/2020/2/3/21120248/microsoft-teams-down-outage-certificate-expired" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Verge, "Microsoft Teams went down because of an expired certificate," February 2020</a></li>
+        <li id="fn-12"><a href="https://blog.cloudflare.com/introducing-0-rtt/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloudflare, "Introducing Zero Round Trip Time Resumption (0-RTT)." Performance vs. replay tradeoffs</a></li>
+        <li id="fn-13"><a href="https://testssl.sh/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">testssl.sh — Command-line TLS testing tool for CI/CD</a></li>
+        <li id="fn-14"><a href="https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Certificate and Public Key Pinning." Pinning guidance for high-security applications</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-12-browser-security-headers.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 12 &mdash; Browser Security Headers</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <span class="group inline-flex items-center text-ink-muted">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 14 &mdash; Coming Soon</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 12 &mdash; Browser Security Headers &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 12 &middot; Module 3 &middot; App Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Browser Security Headers</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 7:59 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-12-browser-security-headers.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>7:59</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-12-browser-security-headers.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Your browser will execute JavaScript from any origin, embed your pages in iframes, and send credentials to any domain &mdash; unless you tell it not to. Alice and Dan walk through CORS, CSRF, Content Security Policy, X-Frame-Options, and HSTS &mdash; the headers that turn your users&rsquo; browsers from liability into defence.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS — Episode 12: Browser Security Headers</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Browser as Battleground</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your legal SaaS application runs in your users' browsers. Those browsers will happily execute JavaScript from any origin, embed your pages in iframes, and send credentials to any domain — unless you explicitly tell them not to. <a href="https://owasp.org/www-project-secure-headers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Browser security headers are instructions from your server to the browser</a>, declaring what is and isn't permitted. Get them wrong, and you've handed attackers a proxy inside your user's authenticated session.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.verizon.com/business/resources/reports/dbir/">The 2023 Verizon DBIR found that web application attacks constituted 26% of all breaches</a>, with credential theft and session hijacking as primary objectives. Properly configured security headers eliminate entire classes of these attacks.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal tech — where a single authenticated session may access privileged case files, billing data, and client communications — browser-level protections are not optional polish. They are the last line of defence when everything else fails.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">CORS: Who Gets to Read Your Responses</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Cross-Origin Resource Sharing (CORS) controls which external origins can make requests to your API and read the responses. <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Same-Origin Policy</a> blocks cross-origin reads by default — CORS relaxes it selectively.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Misconfiguration That Opens Everything</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Configuration</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Risk Level</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>Access-Control-Allow-Origin: *</code></td><td class="px-4 py-3">Critical (with credentials)</td><td class="px-4 py-3">Any website can read your API responses</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Reflecting the Origin header back</td><td class="px-4 py-3">Critical</td><td class="px-4 py-3">Attacker's domain gets access automatically</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>Access-Control-Allow-Credentials: true</code> + wildcard</td><td class="px-4 py-3">Critical</td><td class="px-4 py-3"><a href="https://fetch.spec.whatwg.org/#cors-protocol-and-credentials" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Explicitly forbidden by spec</a> but some servers try</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Specific trusted origins only</td><td class="px-4 py-3">Correct</td><td class="px-4 py-3">Only your own domains can read responses</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Real-world example:</strong> <a href="https://portswigger.net/research/exploiting-cors-misconfigurations-for-bitcoins-and-bounties">PortSwigger research demonstrated</a> that CORS misconfigurations in production applications allowed attackers to steal user data cross-origin by simply reflecting the attacker's Origin header in the Access-Control-Allow-Origin response.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">For legal SaaS:</strong> If your document API reflects any Origin header and includes <code>Access-Control-Allow-Credentials: true</code>, an attacker's website can silently read your user's privileged case documents while they have an active session.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Correct Implementation</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Maintain a strict allowlist of permitted origins. Validate the incoming <code>Origin</code> header against this list. Only echo back origins that match exactly. Never use regex patterns that can be bypassed (e.g., <code>*.lawfirm.com</code> matching <code>evil-lawfirm.com</code>).</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">CSRF: Forged Actions in Your User's Name</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Cross-Site Request Forgery tricks a user's browser into making state-changing requests to your application using their existing session cookies. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The browser automatically attaches cookies to same-site requests</a> — the attacker doesn't need to steal credentials.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Attack Scenario in Legal Tech</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A lawyer visits a malicious page (perhaps linked in an email from opposing counsel). The page contains a hidden form that submits to your application's API:</p>
+
+    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li><code>POST /api/matters/{id}/share</code> — shares a privileged case with an external email</li>
+        <li><code>POST /api/documents/{id}/access</code> — grants document access to a new user</li>
+        <li><code>POST /api/billing/transfer</code> — initiates a trust account transfer</li>
+    </ul>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Defence Layers</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Defence</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">How It Works</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">CSRF tokens</strong></td><td class="px-4 py-3">Server generates a random token per session; form submissions must include it. Attacker's page cannot read it (Same-Origin Policy).</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong class="text-ink">SameSite cookies</strong></td><td class="px-4 py-3"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition"><code>SameSite=Lax</code></a> (default in modern browsers) blocks cookies on cross-site POST requests. <code>Strict</code> blocks them on all cross-site requests.</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">Origin/Referer validation</strong></td><td class="px-4 py-3">Verify the <code>Origin</code> or <code>Referer</code> header on state-changing requests matches your domain.</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong class="text-ink">Custom request headers</strong></td><td class="px-4 py-3">Require a custom header (e.g., <code>X-Requested-With</code>) that simple cross-origin forms cannot set.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The SameSite cookie attribute</a> has dramatically improved the baseline — Chrome, Firefox, and Edge all default to <code>Lax</code>. But explicit CSRF tokens remain necessary for older browser support and defence-in-depth.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Content Security Policy (CSP)</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CSP tells the browser exactly which sources of content are permitted</a> — scripts, styles, images, fonts, frames, and more. A strict CSP is the most effective defence against Cross-Site Scripting (XSS).</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">CSP for Legal SaaS</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Directive</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>script-src 'self' 'nonce-{random}'</code></td><td class="px-4 py-3">Only execute scripts from your domain or with a per-request nonce</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>frame-ancestors 'none'</code></td><td class="px-4 py-3">Prevent your app from being embedded in iframes (replaces X-Frame-Options)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>form-action 'self'</code></td><td class="px-4 py-3">Forms can only submit to your own origin</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>base-uri 'self'</code></td><td class="px-4 py-3">Prevents <code><base></code> tag injection that redirects relative URLs</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-2 border-amber-500 bg-amber-50 px-5 py-5 rounded-lg">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Deployment tip:</strong> Start with <code>Content-Security-Policy-Report-Only</code> to collect violation reports without breaking functionality. <a href="https://report-uri.com/">Report URI</a> or your own endpoint receives JSON reports of what would have been blocked. Tighten over weeks, then enforce.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">X-Frame-Options and Clickjacking</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">X-Frame-Options prevents your application from being embedded in an iframe</a> on an attacker's page. Without it, an attacker overlays transparent iframes of your app over a decoy page — the user thinks they're clicking a harmless button but actually clicking "Share Document" or "Approve Transfer" in your application.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS: <code>X-Frame-Options: DENY</code> (or use the equivalent <code>frame-ancestors 'none'</code> in CSP). There is almost never a legitimate reason to allow external framing of a legal application.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">HSTS: Forcing HTTPS</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HTTP Strict Transport Security (HSTS)</a> tells browsers to only connect to your domain over HTTPS — never HTTP. This prevents SSL stripping attacks where a man-in-the-middle downgrades the connection.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://hstspreload.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Submitting to the HSTS preload list</a> hardcodes your domain into browser source code — HTTPS is enforced even on the first visit, before any header is received.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Headers as Defence-in-Depth</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">No single header stops all attacks. The security model is layered:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Attack</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Primary Defence</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Header Backup</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">XSS</td><td class="px-4 py-3">Input sanitisation + output encoding</td><td class="px-4 py-3">CSP blocks inline script execution</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Clickjacking</td><td class="px-4 py-3">Frame-busting JS</td><td class="px-4 py-3">X-Frame-Options / CSP frame-ancestors</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">MITM downgrade</td><td class="px-4 py-3">TLS configuration</td><td class="px-4 py-3">HSTS forces HTTPS</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Session hijacking</td><td class="px-4 py-3">Secure cookie flags</td><td class="px-4 py-3">SameSite + CSP prevents exfiltration vectors</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Data theft via embedding</td><td class="px-4 py-3">Authentication</td><td class="px-4 py-3">CORS blocks cross-origin reads</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Automated Scanning</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Don't rely on manual header checks. <a href="https://observatory.mozilla.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Observatory</a> grades your site's security headers and provides specific remediation guidance. <a href="https://securityheaders.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SecurityHeaders.com</a> by Scott Helme offers instant analysis with explanations for each missing or misconfigured header.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Run these scans in CI/CD — a deployment that removes a security header should fail the pipeline, not reach production.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Browser security headers are cheap to implement and expensive to forget. A single misconfigured CORS policy can expose every privileged document your users access. A missing CSP allows injected scripts to exfiltrate session tokens. For legal SaaS, where the browser session is the gateway to attorney-client privilege, these headers are not optimisation — they are infrastructure.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">TLS and HTTPS from Scratch</strong> — certificates, cipher suites, and why "just add HTTPS" involves more decisions than you'd expect.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 12 &mdash; Browser Security Headers. Alice, this is the alphabet soup episode. CORS, CSRF, CSP, HSTS. Why should a legal tech developer care about HTTP headers?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because your application runs in your user&rsquo;s browser, and the browser will do incredibly dangerous things unless you explicitly tell it not to. By default, it&rsquo;ll execute JavaScript from any origin, send credentials to any domain, let your app be embedded in iframes on malicious pages, and connect over plain HTTP if asked. Security headers are your instructions to the browser &mdash; here&rsquo;s what&rsquo;s permitted, everything else is blocked.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s start with CORS. I see developers wrestling with this constantly &mdash; usually by setting Access-Control-Allow-Origin to star and calling it done.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Which is exactly the wrong answer. CORS &mdash; Cross-Origin Resource Sharing &mdash; controls which external websites can make requests to your API and read the responses. The browser&rsquo;s Same-Origin Policy blocks cross-origin reads by default. CORS selectively relaxes that. When you set Allow-Origin to star, you&rsquo;re saying any website on the internet can read responses from your API.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And for legal SaaS specifically?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> If your document API reflects any Origin header back in Access-Control-Allow-Origin and includes Allow-Credentials: true, an attacker&rsquo;s website can silently read your user&rsquo;s privileged case files while they have an active session open in another tab. The lawyer visits a malicious link &mdash; maybe something that looked like a court notice &mdash; and in the background, JavaScript on that page is pulling their client&rsquo;s merger documents through your API using their existing session cookie.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> The fix being &mdash; only allow origins you explicitly trust?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Maintain a strict allowlist. Validate the incoming Origin header against that list. Only echo back exact matches. And never use regex patterns that can be tricked &mdash; something like &ldquo;anything ending in lawfirm.com&rdquo; will match &ldquo;evil-lawfirm.com&rdquo; too.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> OK, next &mdash; CSRF. Cross-Site Request Forgery. How is that different from CORS issues?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> CORS is about reading responses. CSRF is about triggering actions. The attack: a user visits a malicious page while logged into your application. That page contains a hidden form that submits to your API &mdash; maybe POST to /api/matters/share with an attacker-controlled email. The browser automatically attaches the user&rsquo;s session cookie because it&rsquo;s a same-site request from the browser&rsquo;s perspective. Your server sees a valid authenticated request and executes it.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the attacker never steals credentials &mdash; they just use the user&rsquo;s existing session.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. For legal tech, the actions available through CSRF are devastating. Share a privileged case file with an external party. Grant document access. Approve a trust account transfer. Change notification settings so alerts go to an attacker-controlled email. All performed with the lawyer&rsquo;s own authenticated session.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Defences?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three layers. First &mdash; SameSite cookies. Set your session cookie to SameSite=Lax at minimum, which blocks cookies on cross-site POST requests. Modern browsers default to Lax, but be explicit. Second &mdash; CSRF tokens. Generate a random token per session, include it in every form and AJAX request, validate server-side. The attacker&rsquo;s page can&rsquo;t read this token because of the Same-Origin Policy. Third &mdash; validate the Origin or Referer header on all state-changing requests.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> CSP next. Content Security Policy. I know this one has a reputation for being hard to deploy.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is the single most effective defence against XSS &mdash; cross-site scripting. CSP tells the browser exactly which sources of content are allowed. If an attacker injects a script tag through an XSS vulnerability, but your CSP says &ldquo;only execute scripts from my own domain with a specific nonce&rdquo; &mdash; the injected script simply doesn&rsquo;t run. The browser blocks it.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What does a good CSP look like for a legal SaaS app?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Start with default-src self &mdash; nothing loads from external sources unless explicitly permitted. Script-src self with a per-request nonce &mdash; no inline scripts without the nonce, no eval. Frame-ancestors none &mdash; your app can&rsquo;t be embedded in iframes. Form-action self &mdash; forms can only submit to your own origin. This blocks both XSS payload execution and clickjacking in one header.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> You mentioned it&rsquo;s hard to deploy. Why?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because most applications have inline scripts, third-party analytics, CDN-loaded libraries, and embedded widgets that a strict CSP will break. The solution &mdash; start with Content-Security-Policy-Report-Only. Same syntax, but violations get reported instead of blocked. Collect reports for a few weeks, identify legitimate sources, add them to your allowlist, then switch to enforcement mode. Iterate, don&rsquo;t deploy blind.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about X-Frame-Options and HSTS?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> X-Frame-Options: DENY prevents your app from being embedded in iframes. Without it, an attacker overlays a transparent iframe of your application over a decoy page. The user thinks they&rsquo;re clicking &ldquo;Download Cat Photo&rdquo; but they&rsquo;re actually clicking &ldquo;Share Case File&rdquo; in your invisible iframe. For legal SaaS &mdash; there&rsquo;s almost never a legitimate reason to allow external framing.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And HSTS?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> HTTP Strict Transport Security tells the browser to only connect over HTTPS &mdash; never HTTP. Without it, a man-in-the-middle on the network can downgrade the connection and intercept everything. Set max-age to at least one year, include subdomains, and submit to the HSTS preload list so enforcement starts on the very first visit, before any header is received.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> These headers feel like they should be set-and-forget. Are they?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> They should be, but they drift. A developer adds a new third-party integration and weakens the CSP. Someone removes HSTS during debugging and forgets to restore it. A new subdomain launches without headers configured. The solution &mdash; scan in CI/CD &mdash; your Continuous Integration and Continuous Deployment pipeline, the automated system that builds, tests, and deploys your code. Mozilla Observatory and SecurityHeaders.com both provide automated grading. A deployment that removes a security header should fail the pipeline.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> The mental model here is defence-in-depth?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Precisely. No single header stops all attacks. CSP catches XSS that input sanitisation missed. SameSite cookies catch CSRF that missing tokens would allow. HSTS catches TLS downgrades that certificate configuration alone can&rsquo;t prevent. Each layer covers gaps in the others. For legal SaaS, where a single compromised session exposes attorney-client privilege, you want every layer active.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; TLS and HTTPS from Scratch. Certificates, cipher suites, and the decisions hiding behind &ldquo;just add HTTPS.&rdquo;</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://owasp.org/www-project-secure-headers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Secure Headers Project." Comprehensive reference for HTTP security headers</a></li>
+        <li id="fn-2"><a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, <em>2023 Data Breach Investigations Report</em>. Web application attacks in 26% of breaches</a></li>
+        <li id="fn-3"><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MDN Web Docs, "Same-origin policy." Foundation of browser security model</a></li>
+        <li id="fn-4"><a href="https://fetch.spec.whatwg.org/#cors-protocol-and-credentials" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">WHATWG, "Fetch Standard — CORS protocol and credentials." Spec-level CORS credential rules</a></li>
+        <li id="fn-5"><a href="https://portswigger.net/research/exploiting-cors-misconfigurations-for-bitcoins-and-bounties" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">James Kettle, "Exploiting CORS misconfigurations for Bitcoins and bounties," PortSwigger Research</a></li>
+        <li id="fn-6"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Cross-Site Request Forgery Prevention Cheat Sheet."</a></li>
+        <li id="fn-7"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MDN Web Docs, "SameSite cookies." Browser cookie isolation by site context</a></li>
+        <li id="fn-8"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MDN Web Docs, "Content Security Policy (CSP)."</a></li>
+        <li id="fn-9"><a href="https://report-uri.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Report URI, "CSP Reporting." Hosted CSP violation report collection</a></li>
+        <li id="fn-10"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MDN Web Docs, "X-Frame-Options." Clickjacking prevention header</a></li>
+        <li id="fn-11"><a href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "HTTP Strict Transport Security Cheat Sheet."</a></li>
+        <li id="fn-12"><a href="https://hstspreload.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HSTS Preload List Submission. Hardcode HTTPS enforcement into browsers</a></li>
+        <li id="fn-13"><a href="https://observatory.mozilla.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Observatory. Automated security header grading</a></li>
+        <li id="fn-14"><a href="https://securityheaders.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Scott Helme, SecurityHeaders.com. Instant header analysis tool</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-11-webhook-security-and-ssrf.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 11 &mdash; Webhook Security and SSRF</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-13-tls-and-https-from-scratch.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 13 &mdash; TLS and HTTPS from Scratch</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

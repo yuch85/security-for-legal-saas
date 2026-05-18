@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Episode 6 — How Web Apps Actually Work — Security for Legal SaaS</title>
+    <title>Episode 6 &mdash; How Web Apps Actually Work &mdash; Security for Legal SaaS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -67,32 +67,33 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">Every time a lawyer clicks &ldquo;Open Case File,&rdquo; an invisible conversation happens between browser and server &mdash; HTTP requests, session cookies, API endpoints, trust boundaries. In this episode, Alice and Dan take apart the machinery that every legal SaaS product runs on. They explain the request/response cycle, why the server can never trust the client, how session state works (and fails), why every API endpoint is a separate attack surface, and what makes the browser simultaneously a user&rsquo;s agent and a hostile execution environment. Understanding this conversation is the foundation of every security control that follows.</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">Every time a lawyer clicks &ldquo;Open Case File,&rdquo; an invisible HTTP conversation happens. In this episode, Alice and Dan break down requests and responses, cookies and sessions, REST APIs and the browser trust boundary &mdash; the foundational mechanics that every security control in this series builds upon.</p>
 </div>
 
 <!-- Article -->
 <article class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
 
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS — Episode 6: How Web Apps Actually Work</strong></p>
+
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Invisible Machine</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every time a lawyer clicks &ldquo;Open Case File&rdquo; in their practice management system, an invisible conversation happens. The browser sends a request across the internet, a server processes it, and a response comes back &mdash; all in under 300 milliseconds. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding this conversation is the foundation of every security control that follows</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every time a lawyer clicks "Open Case File" in their practice management system, an invisible conversation happens. The browser sends a request across the internet, a server processes it, and a response comes back — all in under 300 milliseconds. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding this conversation is the foundation of every security control that follows</a>.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most legal SaaS vulnerabilities exploit gaps in this conversation. The browser trusts the server to send safe content. The server trusts the browser to send valid requests. Attackers exploit both assumptions.</p>
 
-    <!-- Key stat callout -->
     <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
-        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Key stat:</strong> <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Web applications were the attack vector in 26% of all breaches in 2023</a>,<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup> making them the single most exploited category according to the Verizon DBIR.</p>
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.verizon.com/business/resources/reports/dbir/">Web applications were the attack vector in 26% of all breaches in 2023</a>, making them the single most exploited category according to the Verizon DBIR.</p>
     </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Request/Response Cycle</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.rfc-editor.org/rfc/rfc9110" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HTTP (Hypertext Transfer Protocol)</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup> is the language browsers and servers speak. Every interaction follows the same pattern:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.rfc-editor.org/rfc/rfc9110" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HTTP (Hypertext Transfer Protocol)</a> is the language browsers and servers speak. Every interaction follows the same pattern:</p>
 
     <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
-        <li><strong>Client sends a request</strong> &mdash; a method (GET, POST, PUT, DELETE), a path (<code class="text-sm bg-rule px-1.5 py-0.5 rounded">/api/cases/12345</code>), headers, and optionally a body</li>
-        <li><strong>Server processes it</strong> &mdash; authenticates the user, validates the input, queries data, applies business logic</li>
-        <li><strong>Server returns a response</strong> &mdash; a status code (200 OK, 403 Forbidden, 500 Internal Server Error), headers, and a body</li>
+        <li><strong class="text-ink">Client sends a request</strong> — a method (GET, POST, PUT, DELETE), a path (<code>/api/cases/12345</code>), headers, and optionally a body</li>
+        <li><strong class="text-ink">Server processes it</strong> — authenticates the user, validates the input, queries data, applies business logic</li>
+        <li><strong class="text-ink">Server returns a response</strong> — a status code (200 OK, 403 Forbidden, 500 Internal Server Error), headers, and a body</li>
     </ol>
 
     <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
@@ -113,22 +114,21 @@
         </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every request carries headers &mdash; metadata about the request. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security-critical headers include <code class="text-sm">Authorization</code> (who you are), <code class="text-sm">Content-Type</code> (what you&rsquo;re sending), and <code class="text-sm">Origin</code> (where the request came from)</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup> Attackers routinely manipulate these.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every request carries headers — metadata about the request. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security-critical headers include <code>Authorization</code> (who you are), <code>Content-Type</code> (what you're sending), and <code>Origin</code> (where the request came from)</a>. Attackers routinely manipulate these.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Clients, Servers, and the Trust Problem</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <strong>client</strong> is anything sending requests &mdash; a browser, a mobile app, a command-line tool, or an attacker&rsquo;s script. The <strong>server</strong> is the system that processes them.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <strong class="text-ink">client</strong> is anything sending requests — a browser, a mobile app, a command-line tool, or an attacker's script. The <strong class="text-ink">server</strong> is the system that processes them.</p>
 
-    <!-- Critical principle callout -->
     <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
-        <p class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Critical principle:</strong> The server cannot trust anything the client sends. HTTP requests can be crafted, modified, or replayed by anyone with a network connection. <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/README" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP&rsquo;s Testing Guide</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup> emphasises that every client-supplied value &mdash; URLs, headers, cookies, form fields, hidden fields &mdash; must be treated as potentially malicious.</p>
+        <p class="text-base leading-relaxed text-ink-light"><strong>Critical principle:</strong> The server cannot trust anything the client sends. HTTP requests can be crafted, modified, or replayed by anyone with a network connection. <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/README">OWASP's Testing Guide</a> emphasises that every client-supplied value — URLs, headers, cookies, form fields, hidden fields — must be treated as potentially malicious.</p>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In legal SaaS, this matters acutely. A matter management system might send the matter ID in the URL: <code class="text-sm bg-rule px-1.5 py-0.5 rounded">GET /api/matters/4521/documents</code>. If the server only checks &ldquo;is this user logged in?&rdquo; without checking &ldquo;does this user have access to matter 4521?&rdquo;, any authenticated user can enumerate and access every matter by changing the number. <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">This is Insecure Direct Object Reference (IDOR), consistently in the OWASP Top 10</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In legal SaaS, this matters acutely. A matter management system might send the matter ID in the URL: <code>GET /api/matters/4521/documents</code>. If the server only checks "is this user logged in?" without checking "does this user have access to matter 4521?", any authenticated user can enumerate and access every matter by changing the number. <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">This is Insecure Direct Object Reference (IDOR), consistently in the OWASP Top 10</a>.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Cookies, Sessions, and State</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">HTTP is <strong>stateless</strong> &mdash; each request is independent. The server doesn&rsquo;t inherently know that request #47 comes from the same user as request #46. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cookies solve this by storing a session identifier in the browser</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup> that gets sent with every subsequent request.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">HTTP is <strong class="text-ink">stateless</strong> — each request is independent. The server doesn't inherently know that request #47 comes from the same user as request #46. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cookies solve this by storing a session identifier in the browser</a> that gets sent with every subsequent request.</p>
 
     <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
         <table class="w-full text-base text-ink-light border border-rule">
@@ -147,31 +147,22 @@
         </table>
     </div>
 
-    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-lg font-bold">Session Security Requirements</h3>
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Session Security Requirements</h3>
 
     <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
-        <li><strong>HttpOnly flag</strong> &mdash; prevents JavaScript from reading the cookie (mitigates XSS token theft)</li>
-        <li><strong>Secure flag</strong> &mdash; cookie only sent over HTTPS</li>
-        <li><strong>SameSite attribute</strong> &mdash; restricts cross-origin cookie sending (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#samesitesamesite-value" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">mitigates CSRF attacks</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup>)</li>
-        <li><strong>Short expiry + rotation</strong> &mdash; limits the window of stolen session exploitation</li>
+        <li><strong class="text-ink">HttpOnly flag</strong> — prevents JavaScript from reading the cookie (mitigates XSS token theft)</li>
+        <li><strong class="text-ink">Secure flag</strong> — cookie only sent over HTTPS</li>
+        <li><strong class="text-ink">SameSite attribute</strong> — restricts cross-origin cookie sending (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#samesitesamesite-value" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">mitigates CSRF attacks</a>)</li>
+        <li><strong class="text-ink">Short expiry + rotation</strong> — limits the window of stolen session exploitation</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-63B</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup> recommends session timeouts proportional to the sensitivity of the data. For legal SaaS handling privileged communications, session durations should be aggressive &mdash; 15&ndash;30 minutes of inactivity.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-63B</a> recommends session timeouts proportional to the sensitivity of the data. For legal SaaS handling privileged communications, session durations should be aggressive — 15-30 minutes of inactivity.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">APIs: REST, JSON, and Endpoints</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern legal SaaS is typically a single-page application (SPA) communicating with a <strong>REST API</strong>. The browser loads once, then sends JSON requests to API endpoints for data.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern legal SaaS is typically a single-page application (SPA) communicating with a <strong class="text-ink">REST API</strong>. The browser loads once, then sends JSON requests to API endpoints for data.</p>
 
-    <!-- Code block -->
-    <div style="margin:1.5rem 0;" class="bg-ink text-paper rounded-lg overflow-x-auto">
-        <pre class="px-5 py-4 text-sm font-mono leading-relaxed"><code>POST /api/v2/matters/4521/documents HTTP/1.1
-Authorization: Bearer eyJhbGciOiJSUzI1NiI...
-Content-Type: application/json
-
-{"title": "Expert Report Draft", "category": "privileged"}</code></pre>
-    </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/API-Security/editions/2023/en/0x11-t10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The OWASP API Security Top 10</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup> identifies the most critical API risks:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/API-Security/editions/2023/en/0x11-t10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The OWASP API Security Top 10</a> identifies the most critical API risks:</p>
 
     <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
         <table class="w-full text-base text-ink-light border border-rule">
@@ -183,54 +174,55 @@ Content-Type: application/json
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3">Broken Object Level Auth</td><td class="px-4 py-3">Accessing other users&rsquo; objects via ID manipulation</td><td class="px-4 py-3">Reading opposing party&rsquo;s documents</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Broken Authentication</td><td class="px-4 py-3">Weak token handling, credential stuffing</td><td class="px-4 py-3">Unauthorised access to entire firm&rsquo;s data</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Broken Object Level Auth</td><td class="px-4 py-3">Accessing other users' objects via ID manipulation</td><td class="px-4 py-3">Reading opposing party's documents</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Broken Authentication</td><td class="px-4 py-3">Weak token handling, credential stuffing</td><td class="px-4 py-3">Unauthorised access to entire firm's data</td></tr>
                 <tr class="border-t border-rule"><td class="px-4 py-3">Unrestricted Resource Consumption</td><td class="px-4 py-3">No rate limiting on endpoints</td><td class="px-4 py-3">Automated bulk exfiltration of case files</td></tr>
                 <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Broken Function Level Auth</td><td class="px-4 py-3">Calling admin endpoints as a regular user</td><td class="px-4 py-3">Paralegal invoking partner-only case closure</td></tr>
             </tbody>
         </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every API endpoint is an attack surface. <a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Each must independently verify authentication and authorisation</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-11" class="hover:text-red-soft">11</a></sup> &mdash; never assume that because the frontend only shows certain buttons, the backend is protected.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every API endpoint is an attack surface. <a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Each must independently verify authentication and authorisation</a> — never assume that because the frontend only shows certain buttons, the backend is protected.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Browser as Trust Boundary</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The browser is simultaneously the user&rsquo;s agent and a hostile execution environment. It runs code from your server, but also code from third-party scripts, browser extensions, and potentially injected content.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The browser is simultaneously the user's agent and a hostile execution environment. It runs code from your server, but also code from third-party scripts, browser extensions, and potentially injected content.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Same-Origin Policy (SOP)</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-12" class="hover:text-red-soft">12</a></sup> is the browser&rsquo;s fundamental security model: scripts from <code class="text-sm bg-rule px-1.5 py-0.5 rounded">https://legalapp.com</code> cannot read responses from <code class="text-sm bg-rule px-1.5 py-0.5 rounded">https://bankofamerica.com</code>. Without SOP, any website could steal data from any other website you&rsquo;re logged into.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Same-Origin Policy (SOP)</a> is the browser's fundamental security model: scripts from <code>https://legalapp.com</code> cannot read responses from <code>https://bankofamerica.com</code>. Without SOP, any website could steal data from any other website you're logged into.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cross-Origin Resource Sharing (CORS)</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-13" class="hover:text-red-soft">13</a></sup> relaxes SOP in controlled ways. Misconfigured CORS &mdash; particularly <code class="text-sm bg-rule px-1.5 py-0.5 rounded">Access-Control-Allow-Origin: *</code> on authenticated endpoints &mdash; is a common vulnerability that allows any website to read your API responses.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cross-Origin Resource Sharing (CORS)</a> relaxes SOP in controlled ways. Misconfigured CORS — particularly <code>Access-Control-Allow-Origin: *</code> on authenticated endpoints — is a common vulnerability that allows any website to read your API responses.</p>
 
-    <!-- Browser trust issues callout -->
     <div style="margin:1.5rem 0;" class="border-2 border-amber-500 bg-amber-50 px-5 py-5 rounded-lg">
         <h3 style="margin-top:0;margin-bottom:0.75rem;" class="text-lg font-bold text-ink">Legal SaaS Browser Trust Issues</h3>
-        <ul style="margin-left:1rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
-            <li><strong>Browser extensions</strong> &mdash; a malicious extension can read DOM content of your legal SaaS, including privileged documents displayed on screen</li>
-            <li><strong>Third-party scripts</strong> &mdash; analytics, chat widgets, and error tracking scripts have full DOM access. <a href="https://www.imperva.com/blog/magecart-supply-chain-attacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Supply chain attacks via compromised third-party scripts</a><sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-14" class="hover:text-red-soft">14</a></sup> have hit thousands of websites</li>
-            <li><strong>Local storage</strong> &mdash; tokens stored in localStorage are accessible to any JavaScript on the page, including injected scripts</li>
-            <li><strong>DevTools</strong> &mdash; any user can inspect network traffic, modify requests, and replay them. Client-side validation is UX, not security</li>
-        </ul>
+        <p class="text-base leading-relaxed text-ink-light"><ul>
+<li><strong>Browser extensions</strong> — a malicious extension can read DOM content of your legal SaaS, including privileged documents displayed on screen</li>
+<li><strong>Third-party scripts</strong> — analytics, chat widgets, and error tracking scripts have full DOM access. <a href="https://www.imperva.com/blog/magecart-supply-chain-attacks/">Supply chain attacks via compromised third-party scripts</a> have hit thousands of websites</li>
+<li><strong>Local storage</strong> — tokens stored in localStorage are accessible to any JavaScript on the page, including injected scripts</li>
+<li><strong>DevTools</strong> — any user can inspect network traffic, modify requests, and replay them. Client-side validation is UX, not security</li>
+</ul></p>
     </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Putting It Together: A Legal SaaS Request</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When a lawyer opens a privileged document in your SaaS platform, here is what actually happens:</p>
 
-    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-2 text-base leading-relaxed text-ink-light">
-        <li>Browser sends <code class="text-sm bg-rule px-1.5 py-0.5 rounded">GET /api/matters/4521/docs/789</code> with session cookie</li>
+    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li>Browser sends <code>GET /api/matters/4521/docs/789</code> with session cookie</li>
         <li>Server validates session cookie (authentication)</li>
         <li>Server checks: does this user have access to matter 4521? (authorisation)</li>
-        <li>Server checks: does this user&rsquo;s role allow document reads? (function-level auth)</li>
+        <li>Server checks: does this user's role allow document reads? (function-level auth)</li>
         <li>Server retrieves document from storage</li>
-        <li>Server sets response headers: <code class="text-sm bg-rule px-1.5 py-0.5 rounded">Content-Type</code>, <code class="text-sm bg-rule px-1.5 py-0.5 rounded">X-Content-Type-Options: nosniff</code>, <code class="text-sm bg-rule px-1.5 py-0.5 rounded">Content-Security-Policy</code></li>
+        <li>Server sets response headers: <code>Content-Type</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Content-Security-Policy</code></li>
         <li>Browser receives and renders the document</li>
     </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every step is a potential failure point. Skip step 3, and you have IDOR. Skip step 6, and you&rsquo;re vulnerable to content-type sniffing attacks. Return the document without proper <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Content-Disposition headers</a>,<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-15" class="hover:text-red-soft">15</a></sup> and the browser might execute embedded scripts instead of displaying a PDF.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every step is a potential failure point. Skip step 3, and you have IDOR. Skip step 6, and you're vulnerable to content-type sniffing attacks. Return the document without proper <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Content-Disposition headers</a>, and the browser might execute embedded scripts instead of displaying a PDF.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Web applications are conversations between untrusted parties over an untrusted network. The browser cannot be trusted to send valid requests. The server cannot assume requests come from legitimate clients. <a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Every security control in the episodes that follow &mdash; input validation, injection prevention, access control &mdash; builds on this foundation</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-16" class="hover:text-red-soft">16</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Web applications are conversations between untrusted parties over an untrusted network. The browser cannot be trusted to send valid requests. The server cannot assume requests come from legitimate clients. <a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Every security control in the episodes that follow — input validation, injection prevention, access control — builds on this foundation</a>.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Input Validation and Sanitisation</strong> — where we examine how to verify that what the client sends is actually what you expect, before it touches your business logic.</p>
 </article>
 
 <!-- Transcript -->
@@ -268,7 +260,7 @@ Content-Type: application/json
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> OK, let&rsquo;s talk about state. HTTP is stateless &mdash; the server doesn&rsquo;t remember you between requests. How does it know I&rsquo;m still logged in?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Cookies. When you authenticate, the server creates a session &mdash; either a server-side record with a random ID, or a signed token like a JWT &mdash; and sends it back as a cookie. Your browser stores it and attaches it to every subsequent request to that domain. The server reads the cookie and says, &ldquo;ah, that&rsquo;s the lawyer from Morrison &amp; Partners who logged in four minutes ago.&rdquo;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Cookies. When you authenticate, the server creates a session &mdash; either a server-side record with a random ID, or a signed token like a JWT &mdash; and sends it back as a cookie. Your browser stores it and attaches it to every subsequent request to that domain. The server reads the cookie and says, &ldquo;ah, that&rsquo;s the lawyer from Morrison & Partners who logged in four minutes ago.&rdquo;</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And if someone steals that cookie?</p>
 
@@ -308,6 +300,8 @@ Content-Type: application/json
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
 
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
     </article>
@@ -317,22 +311,22 @@ Content-Type: application/json
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li id="fn-1"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, &ldquo;An overview of HTTP&rdquo;</a> &mdash; foundation reference for HTTP protocol mechanics</li>
-        <li id="fn-2"><a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, <em>2023 Data Breach Investigations Report</em></a> &mdash; web applications as attack vector in 26% of breaches</li>
-        <li id="fn-3"><a href="https://www.rfc-editor.org/rfc/rfc9110" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF RFC 9110, &ldquo;HTTP Semantics,&rdquo; June 2022</a> &mdash; the current HTTP standard</li>
-        <li id="fn-4"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, &ldquo;HTTP Headers&rdquo;</a> &mdash; reference for security-critical headers</li>
-        <li id="fn-5"><a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/README" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Web Security Testing Guide, &ldquo;Information Gathering&rdquo;</a></li>
-        <li id="fn-6"><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10:2021, &ldquo;A01 Broken Access Control&rdquo;</a></li>
-        <li id="fn-7"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, &ldquo;HTTP Cookies&rdquo;</a></li>
-        <li id="fn-8"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#samesitesamesite-value" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, &ldquo;Set-Cookie SameSite attribute&rdquo;</a></li>
-        <li id="fn-9"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-63B, &ldquo;Digital Identity Guidelines: Authentication and Lifecycle Management&rdquo;</a></li>
+        <li id="fn-1"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "An overview of HTTP." Foundation reference for HTTP protocol mechanics</a></li>
+        <li id="fn-2"><a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, <em>2023 Data Breach Investigations Report</em>. Web applications as attack vector in 26% of breaches</a></li>
+        <li id="fn-3"><a href="https://www.rfc-editor.org/rfc/rfc9110" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF RFC 9110, "HTTP Semantics," June 2022. The current HTTP standard</a></li>
+        <li id="fn-4"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "HTTP Headers." Reference for security-critical headers</a></li>
+        <li id="fn-5"><a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/README" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Web Security Testing Guide, "Information Gathering."</a></li>
+        <li id="fn-6"><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10:2021, "A01 Broken Access Control."</a></li>
+        <li id="fn-7"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "HTTP Cookies."</a></li>
+        <li id="fn-8"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#samesitesamesite-value" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "Set-Cookie SameSite attribute."</a></li>
+        <li id="fn-9"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-63B, "Digital Identity Guidelines: Authentication and Lifecycle Management."</a></li>
         <li id="fn-10"><a href="https://owasp.org/API-Security/editions/2023/en/0x11-t10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP API Security Top 10:2023</a></li>
-        <li id="fn-11"><a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;REST Security Cheat Sheet&rdquo;</a></li>
-        <li id="fn-12"><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, &ldquo;Same-origin policy&rdquo;</a></li>
-        <li id="fn-13"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, &ldquo;Cross-Origin Resource Sharing (CORS)&rdquo;</a></li>
-        <li id="fn-14"><a href="https://www.imperva.com/blog/magecart-supply-chain-attacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Imperva, &ldquo;Magecart and Supply Chain Attacks&rdquo;</a> &mdash; third-party script compromise affecting thousands of sites</li>
-        <li id="fn-15"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, &ldquo;Content-Disposition header&rdquo;</a></li>
-        <li id="fn-16"><a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Application Security Verification Standard (ASVS)</a> &mdash; comprehensive security requirements framework</li>
+        <li id="fn-11"><a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "REST Security Cheat Sheet."</a></li>
+        <li id="fn-12"><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "Same-origin policy."</a></li>
+        <li id="fn-13"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "Cross-Origin Resource Sharing (CORS)."</a></li>
+        <li id="fn-14"><a href="https://www.imperva.com/blog/magecart-supply-chain-attacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Imperva, "Magecart and Supply Chain Attacks." Third-party script compromise affecting thousands of sites</a></li>
+        <li id="fn-15"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "Content-Disposition header."</a></li>
+        <li id="fn-16"><a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Application Security Verification Standard (ASVS). Comprehensive security requirements framework</a></li>
     </ol>
 </section>
 
@@ -350,15 +344,15 @@ Content-Type: application/json
             </a>
         </div>
         <div class="text-right">
-            <span class="group inline-flex items-center text-ink-muted">
+            <a href="episode-07-input-validation-and-sanitisation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
                 <div class="text-right">
                     <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 7 &mdash; Coming Soon</p>
+                    <p class="text-lg font-semibold">Episode 7 &mdash; Input Validation and Sanitisation</p>
                 </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-            </span>
+            </a>
         </div>
     </div>
 </nav>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 11 &mdash; Webhook Security and SSRF &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 11 &middot; Module 3 &middot; App Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Webhook Security and SSRF</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 7:54 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-11-webhook-security-and-ssrf.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>7:54</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-11-webhook-security-and-ssrf.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Webhooks are how modern SaaS integrations communicate &mdash; and every endpoint is a door you&rsquo;ve deliberately opened. Alice and Dan cover SSRF attacks, the Capital One breach, HMAC signature verification, DNS rebinding, and why legal integrations with courts and payment processors demand layered defences.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS — Episode 11: Webhook Security and SSRF</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">When Your Server Becomes the Attacker's Proxy</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Webhooks are how modern SaaS integrations communicate — your e-filing system notifies your case management platform that a submission was accepted, your payment processor confirms a retainer deposit, your e-discovery vendor signals that a production set is ready. Each webhook endpoint is a door you've opened in your perimeter. <a href="https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Server-Side Request Forgery (SSRF) exploits that door by tricking your server into making requests to internal resources the attacker cannot reach directly</a>.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> SSRF entered the <a href="https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/">OWASP Top 10 in 2021</a> as a standalone category after years of increasingly severe real-world exploits — including the <a href="https://web.archive.org/web/2019*/https://krebsonsecurity.com/2019/08/what-we-can-learn-from-the-capital-one-hack/">Capital One breach where SSRF against AWS metadata endpoints exposed 106 million records</a>.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In legal SaaS, the attack surface is particularly dangerous because integrations with courts, regulators, and counterparties are not optional — they are the product. You cannot simply block all outbound requests.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SSRF: Your Server as the Attacker's Puppet</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SSRF occurs when an attacker can influence a URL that your server-side code fetches. The server dutifully makes the request using its own network position — behind your firewall, on your VPC, with access to internal metadata endpoints and private services.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Attack Pattern</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Step</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">What Happens</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">1</td><td class="px-4 py-3">Attacker sends a webhook registration or callback URL pointing to an internal resource</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">2</td><td class="px-4 py-3">Your server fetches the URL (e.g., validating a webhook, downloading a referenced document)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">3</td><td class="px-4 py-3">Internal service responds to your server as if it were a legitimate internal request</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">4</td><td class="px-4 py-3">Attacker receives the response or observes side effects</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://krebsonsecurity.com/2019/08/what-we-can-learn-from-the-capital-one-hack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Capital One breach (2019) demonstrated this precisely</a> — an SSRF vulnerability allowed an attacker to query the AWS Instance Metadata Service (IMDS) at <code>169.254.169.254</code>, retrieve IAM role credentials, and exfiltrate 106 million customer records from S3.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS responded by introducing IMDSv2</a>, which requires a PUT request with a hop-limited token — but your application code must still validate URLs before fetching them.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">DNS Rebinding: Bypassing Allowlists</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Even if you validate that a URL resolves to a public IP before fetching it, <a href="https://portswigger.net/web-security/ssrf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DNS rebinding attacks</a> can defeat this check. The attacker controls a DNS server that returns a public IP on the first lookup (passing your validation) and an internal IP on the second lookup (when your server actually connects).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigation:</strong> Resolve the DNS once, pin the IP, validate it is not in RFC 1918/link-local/loopback ranges, and connect to that specific IP with the original hostname in the Host header. Libraries like <a href="https://github.com/nickytonline/ssrf-req-filter" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ssrf-req-filter</a> implement this pattern.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Webhook Signature Verification</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every inbound webhook must prove it came from the expected sender. Without verification, any attacker who discovers your endpoint URL can forge webhook payloads — creating fake payment confirmations, fraudulent filing receipts, or spoofed e-discovery notifications.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The HMAC Pattern</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The industry standard is <a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HMAC-SHA256 signature verification</a>, as implemented by GitHub, Stripe, and most modern platforms:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Component</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Shared secret</td><td class="px-4 py-3">Pre-exchanged key between sender and receiver</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Signature header</td><td class="px-4 py-3">HMAC-SHA256(secret, raw_body) sent with each request</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Timestamp header</td><td class="px-4 py-3">When the webhook was generated</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Replay window</td><td class="px-4 py-3">Reject webhooks older than 5 minutes</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Critical implementation detail:</strong> Compute the HMAC over the <em>raw request body bytes</em>, not a parsed-and-reserialized version. JSON key reordering, whitespace changes, or encoding differences will produce a different hash. <a href="https://stripe.com/docs/webhooks/signatures">Stripe's documentation</a> explicitly warns about this.</p>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Timestamp Validation and Replay Prevention</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://stripe.com/docs/webhooks/signatures" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Stripe's webhook security model</a> includes a timestamp in the signed payload. Your verification must:</p>
+
+    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li>Extract the timestamp from the signature header</li>
+        <li>Reject if the timestamp is more than 5 minutes old (configurable tolerance)</li>
+        <li>Include the timestamp in the HMAC computation so it cannot be modified independently</li>
+    </ol>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Without timestamp checks, an attacker who intercepts a valid webhook can replay it indefinitely — triggering duplicate payment confirmations or reprocessing already-handled filings.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Allowlisting Outbound Destinations</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When your server makes outbound requests (fetching documents, calling external APIs, delivering webhooks), restrict where it can connect.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Defence in Depth for Outbound Requests</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Layer</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Control</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Application</td><td class="px-4 py-3">URL validation — reject private IPs, localhost, metadata endpoints</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">DNS</td><td class="px-4 py-3">Pin resolved IPs; reject RFC 1918, 169.254.0.0/16, ::1</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Network</td><td class="px-4 py-3">Egress firewall rules — allowlist specific CIDR ranges per integration</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Cloud</td><td class="px-4 py-3"><a href="https://cloud.google.com/vpc/docs/firewalls" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">VPC egress policies</a> or AWS Security Groups restricting outbound</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal integrations specifically, your allowlist is often well-defined: court e-filing endpoints have published IP ranges, payment processors provide webhook IP lists (<a href="https://stripe.com/docs/ips" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Stripe publishes theirs</a>), and e-discovery platforms document their callback infrastructure.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Integration Attack Scenarios</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">E-Filing Systems</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Court e-filing integrations (like <a href="https://www.tylertech.com/solutions/courts-public-safety/odyssey" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Tyler Technologies Odyssey</a>) require your system to accept callbacks confirming submission status. An attacker who compromises or impersonates this callback can mark fraudulent filings as "accepted" in your system.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigations:</strong> Verify webhook signatures, cross-reference filing IDs against your submission log, implement out-of-band confirmation for critical filings.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Payment Processors</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Retainer deposit confirmations arrive via webhooks. <a href="https://stripe.com/docs/webhooks/signatures" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Stripe's documentation on webhook security</a> exists because the consequences of forged payment notifications are direct financial loss.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">E-Discovery Platforms</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When a production set is ready for download, the e-discovery platform sends a notification with a URL. If that URL is attacker-controlled, your server fetches malicious content or leaks credentials in the request headers.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Hardening Checklist</h2>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Implementation checklist:</strong>
+
+1. ☐ Validate all webhook signatures using HMAC-SHA256 with constant-time comparison
+2. ☐ Reject webhooks with timestamps older than 5 minutes
+3. ☐ Maintain idempotency keys to prevent replay attacks
+4. ☐ Validate and pin DNS for all outbound fetches — reject private/link-local ranges
+5. ☐ Implement egress firewall rules at the network layer
+6. ☐ <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html">Enable IMDSv2</a> on all cloud instances
+7. ☐ Log all inbound webhooks with source IP, signature validity, and processing outcome
+8. ☐ Use <a href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">OWASP's SSRF Prevention Cheat Sheet</a> as your implementation reference</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Testing Your Defences</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/ssrf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger's SSRF lab series</a> provides hands-on practice exploiting and defending against SSRF. For webhook testing, tools like <a href="https://www.svix.com/resources/faq/webhook-testing/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Svix's webhook testing utilities</a> let you simulate signature failures, timestamp manipulation, and replay attacks in a controlled environment.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The OWASP SSRF Prevention Cheat Sheet</a> provides language-specific guidance for URL validation, including edge cases like IPv6-mapped IPv4 addresses and URL parser differentials.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your webhook endpoints are trust boundaries — they accept data from external systems and trigger internal actions. SSRF turns your server's network position against you. In legal SaaS, where integrations with courts, payment systems, and opposing counsel are unavoidable, these attack surfaces cannot be eliminated — only hardened through signature verification, URL validation, network controls, and continuous monitoring.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Browser Security Headers</strong> — where we'll see how CORS misconfigurations and missing headers turn your client's browser into an attack vector.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 11 &mdash; Webhook Security and SSRF. Alice, webhooks are everywhere in modern SaaS. Payment confirmations, e-filing status updates, e-discovery notifications. What&rsquo;s the security concern?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Every webhook endpoint is a door you&rsquo;ve deliberately opened in your perimeter. You&rsquo;re saying: external systems, please send me HTTP requests containing data I&rsquo;ll act on. The two threats we&rsquo;re covering today are &mdash; one, someone forging those inbound webhooks to trigger actions in your system. And two, SSRF &mdash; server-side request forgery &mdash; where an attacker tricks your server into making requests to places it shouldn&rsquo;t.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s start with SSRF. Give me the basic attack pattern.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Your server fetches URLs as part of its normal operation. Maybe it&rsquo;s downloading a document referenced in a webhook, or validating a callback URL during integration setup. The attacker provides a URL that points to an internal resource &mdash; your cloud metadata endpoint, an internal admin panel, a database that&rsquo;s only accessible within your VPC &mdash; your Virtual Private Cloud, the isolated private network your services run in. Your server fetches it happily because from its perspective, it&rsquo;s just making an HTTP request.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And the most famous example of this going wrong?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Capital One, 2019. An SSRF vulnerability let an attacker query the AWS Instance Metadata Service at 169.254.169.254. That endpoint hands out temporary IAM credentials &mdash; Identity and Access Management keys that grant permissions to cloud resources &mdash; to any process on the instance. The attacker got those credentials and used them to exfiltrate 106 million customer records from S3. A single SSRF. One hundred million records.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s why SSRF made the OWASP Top 10 as its own category in 2021.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And for legal SaaS, the attack surface is particularly nasty because you can&rsquo;t just block all outbound requests. Your system needs to talk to court e-filing APIs, payment processors, e-discovery platforms. Those integrations are the product.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So how do you defend against it?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Layers. At the application level &mdash; validate every URL before fetching. Resolve DNS, check the resulting IP isn&rsquo;t in private ranges &mdash; no 10.x, no 172.16-31.x, no 192.168.x, no 169.254.x, no localhost. Pin the resolved IP so a DNS rebinding attack can&rsquo;t swap it between validation and connection. At the network level &mdash; egress firewall rules that only allow outbound connections to known-good CIDR ranges &mdash; CIDR being the notation for specifying blocks of IP addresses. At the cloud level &mdash; enable IMDSv2 &mdash; the newer version of the cloud Instance Metadata Service &mdash; on every instance, which requires a token that SSRF typically can&rsquo;t obtain.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What&rsquo;s DNS rebinding? That sounds like it bypasses the IP validation you just described.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It does, if you&rsquo;re not careful. The attacker controls a DNS server. First lookup returns a public IP &mdash; passes your validation. Second lookup &mdash; when your server actually connects &mdash; returns 169.254.169.254 or whatever internal target they want. The fix is: resolve once, pin the IP, validate it, and connect to that specific IP address. Don&rsquo;t let the DNS resolve again between check and use.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> OK, now the other side &mdash; inbound webhook forgery. How do you verify a webhook is legitimate?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> HMAC signature verification. The sending platform and your system share a secret key, established during integration setup. Every webhook request includes a signature header &mdash; that&rsquo;s the HMAC-SHA256 of the raw request body computed with the shared secret. You recompute the HMAC on your side and compare. If they match, the sender possessed the secret. Use constant-time comparison to prevent timing attacks.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And the timestamp piece?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Critical. Without timestamps, a valid webhook can be replayed forever. Stripe&rsquo;s model is the gold standard &mdash; the timestamp is included in the signed payload, so it can&rsquo;t be modified independently. You reject any webhook where the timestamp is more than five minutes from your server&rsquo;s clock. That gives you a narrow window for network delays while preventing replay attacks.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What happens in legal tech specifically if webhook verification is missing?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Scenario one &mdash; your e-filing integration accepts unverified callbacks. An attacker sends a forged &ldquo;filing accepted&rdquo; notification for a document that was actually rejected by the court. The lawyer thinks their motion was filed. It wasn&rsquo;t. They miss the deadline. Scenario two &mdash; payment processor webhooks. A forged &ldquo;payment received&rdquo; notification marks a retainer as funded when no money actually moved. The firm starts work on an unfunded matter.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Both of those are genuinely harmful. Not theoretical at all.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And scenario three &mdash; e-discovery. A notification arrives saying a production set is ready for download at a specific URL. If that URL is attacker-controlled, either your server fetches malicious content, or the request headers you send &mdash; which might include auth tokens &mdash; get captured by the attacker. That&rsquo;s the SSRF connection. The webhook is the entry point; the outbound fetch is the exploit.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the two threats are actually deeply connected.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> They compound each other. Unverified inbound webhooks can contain URLs that trigger SSRF when your server processes them. You need both controls &mdash; verify the webhook came from who it claims, and validate any URLs in the payload before fetching them.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What&rsquo;s the practical implementation look like? Give me the checklist.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Five things. One &mdash; every webhook endpoint verifies HMAC signatures with constant-time comparison. Two &mdash; timestamps checked, reject anything outside a five-minute window. Three &mdash; idempotency keys &mdash; unique identifiers stored so replayed webhooks are detected and ignored. Four &mdash; any URL in a webhook payload goes through DNS resolution, IP validation, and egress allowlisting before your server fetches it. Five &mdash; log everything. Source IP, signature validity, processing result. When something goes wrong, the logs are how you reconstruct what happened.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And for teams building on cloud infrastructure?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> IMDSv2 on every instance &mdash; non-negotiable. VPC egress rules restricting outbound traffic to known integration endpoints. And if you&rsquo;re using a webhook delivery platform like Svix or a managed gateway, let it handle the signature verification infrastructure so your application code doesn&rsquo;t have to reimplement crypto primitives.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode we&rsquo;re covering browser security headers &mdash; CORS, CSRF, CSP &mdash; the alphabet soup that protects your users&rsquo; browsers.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Where misconfigured headers turn your client&rsquo;s browser into the attack vector. Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "A10:2021 — Server-Side Request Forgery (SSRF)," OWASP Top 10, 2021</a></li>
+        <li id="fn-2"><a href="https://krebsonsecurity.com/2019/08/what-we-can-learn-from-the-capital-one-hack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Brian Krebs, "What We Can Learn from the Capital One Hack," KrebsOnSecurity, August 2019. SSRF against AWS IMDS exposed 106 million records</a></li>
+        <li id="fn-3"><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS, "Configure the Instance Metadata Service," EC2 User Guide. IMDSv2 requires session tokens to mitigate SSRF</a></li>
+        <li id="fn-4"><a href="https://portswigger.net/web-security/ssrf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger, "Server-side request forgery (SSRF)," Web Security Academy</a></li>
+        <li id="fn-5"><a href="https://github.com/nickytonline/ssrf-req-filter" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">nickytonline, "ssrf-req-filter," GitHub. Node.js library for SSRF-safe HTTP requests</a></li>
+        <li id="fn-6"><a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GitHub, "Validating webhook deliveries," GitHub Docs. HMAC-SHA256 verification pattern</a></li>
+        <li id="fn-7"><a href="https://stripe.com/docs/webhooks/signatures" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Stripe, "Check webhook signatures," Stripe Docs. Timestamp + HMAC verification</a></li>
+        <li id="fn-8"><a href="https://cloud.google.com/vpc/docs/firewalls" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google Cloud, "VPC firewall rules overview." Egress filtering for outbound request control</a></li>
+        <li id="fn-9"><a href="https://stripe.com/docs/ips" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Stripe, "Stripe's IP addresses," Stripe Docs. Published IP ranges for webhook allowlisting</a></li>
+        <li id="fn-10"><a href="https://www.tylertech.com/solutions/courts-public-safety/odyssey" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Tyler Technologies, "Odyssey Case Management." Court e-filing integration platform</a></li>
+        <li id="fn-11"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Server-Side Request Forgery Prevention Cheat Sheet." Language-specific SSRF defences</a></li>
+        <li id="fn-12"><a href="https://www.svix.com/resources/faq/webhook-testing/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Svix, "Webhook Testing," Svix Resources. Testing webhook signature verification</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <span class="group inline-flex items-center text-ink-muted">
+                <svg class="w-5 h-5 mr-3 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 10 &mdash; File Upload Security</p>
+                </div>
+            </span>
+        </div>
+        <div class="text-right">
+            <a href="episode-12-browser-security-headers.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 12 &mdash; Browser Security Headers</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

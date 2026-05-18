@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 7 &mdash; Input Validation and Sanitisation &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 7 &middot; Module 3 &middot; App Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Input Validation and Sanitisation</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 8:39 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-07-input-validation-and-sanitisation.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>8:39</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-07-input-validation-and-sanitisation.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Every piece of data entering your legal SaaS arrives through a gate. Alice and Dan cover allowlists versus denylists, server-side versus client-side validation, domain-specific patterns for legal citations, and why silent sanitisation masks the attacks you need to see.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS — Episode 7: Input Validation and Sanitisation</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Gatekeeper Problem</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every piece of data that enters your legal SaaS application arrives through a gate. A form field, an API parameter, a file upload, a webhook payload. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Input validation is the practice of ensuring that data conforms to expected formats, types, and ranges before your application processes it</a>.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Get this wrong, and you enable every injection attack that follows — SQL injection, XSS, command injection, path traversal. <a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 2023 OWASP Top 10 lists injection as A03</a>, and virtually every injection vulnerability begins with insufficient input validation.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key principle:</strong> Input validation is your first line of defence, but not your only one. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">OWASP advises</a> treating validation as defence-in-depth — layer it with parameterised queries, output encoding, and architectural controls.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Allowlists vs Denylists</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The most fundamental decision in validation design: do you define what's allowed, or what's forbidden?</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Approach</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Definition</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">Allowlist</strong> (positive validation)</td><td class="px-4 py-3">Only explicitly permitted patterns pass</td><td class="px-4 py-3">Court ID must match <code>[A-Z]{2}\d{4}/\d{4}</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong class="text-ink">Denylist</strong> (negative validation)</td><td class="px-4 py-3">Block known-bad patterns, allow everything else</td><td class="px-4 py-3">Strip <code><script></code> tags from input</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP unequivocally recommends allowlisting</a>: "Input validation should be applied using an allowlist approach, not a denylist." Denylists fail because:</p>
+
+    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li>Attackers find bypasses you didn't anticipate (encoding, Unicode normalisation, case variations)</li>
+        <li>The set of malicious inputs is infinite; the set of valid inputs is finite</li>
+        <li><a href="https://portswigger.net/web-security/essential-skills/obfuscating-attacks-using-encodings" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Every major WAF bypass technique exploits denylist gaps</a></li>
+    </ul>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Legal SaaS example:</strong> A case reference field that strips angle brackets (<code>&lt;</code> and <code>&gt;</code>) to prevent XSS can be bypassed with event handlers: <code>onerror=alert(1)</code> embedded in an image tag using backtick substitution. An allowlist that requires the pattern <code>[A-Z]{2}\s?\d{1,5}/\d{4}</code> rejects everything malicious by definition — only valid case references pass.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Boundary Validation</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Where should validation happen? <a href="https://owasp.org/www-community/Threat_Modeling" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The answer is at every trust boundary</a> — but the mandatory boundary is the server.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Validation Stack</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Layer</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Enforces Security?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Client-side (browser)</td><td class="px-4 py-3">UX feedback, reduce round-trips</td><td class="px-4 py-3">No — attacker bypasses trivially</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">API gateway / middleware</td><td class="px-4 py-3">Schema validation, rate limiting</td><td class="px-4 py-3">Partially — coarse-grained</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Application layer (server)</td><td class="px-4 py-3">Business rule validation</td><td class="px-4 py-3"><strong class="text-ink">Yes</strong> — primary enforcement point</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Database layer</td><td class="px-4 py-3">Type constraints, foreign keys</td><td class="px-4 py-3">Yes — last-resort constraint</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/logic-flaws" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Client-side validation is never a security control</a>. An attacker can disable JavaScript, modify the DOM, or bypass the browser entirely with direct API calls. Every validation the client performs must be repeated on the server, independently.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Boundary validation</strong> means validating data every time it crosses a trust boundary — not just at initial input. A value that was safe when received might become dangerous after transformation. If you URL-decode user input and then use it in a database query, you must validate <em>after</em> decoding, not before.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal-Specific Input Patterns</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal SaaS handles distinctive input types that demand domain-specific validation rules:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Input Type</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Expected Format</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Validation Approach</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Singapore case citation</td><td class="px-4 py-3"><code> SGCA 15</code></td><td class="px-4 py-3">Regex: <code>\[\d{4}\]\s+[A-Z]{2,6}\s+\d{1,5}</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">UK neutral citation</td><td class="px-4 py-3"><code> UKSC 42</code></td><td class="px-4 py-3">Regex: <code>\[\d{4}\]\s+[A-Z]{2,6}\s+\d{1,5}</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">US case docket</td><td class="px-4 py-3"><code>1:23-cv-04521</code></td><td class="px-4 py-3">Regex: <code>\d{1,2}:\d{2}-[a-z]{2,3}-\d{4,6}</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Court identifier</td><td class="px-4 py-3"><code>SGCA</code>, <code>SGHC</code>, <code>UKSC</code></td><td class="px-4 py-3">Allowlist of known court codes</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Statute reference</td><td class="px-4 py-3"><code>s 34(1)(a)</code></td><td class="px-4 py-3">Pattern with known section formats</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Date fields</td><td class="px-4 py-3">ISO 8601 or jurisdiction-specific</td><td class="px-4 py-3">Strict date parsing, range validation</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Client matter number</td><td class="px-4 py-3">Firm-specific format</td><td class="px-4 py-3">Configurable regex per firm tenant</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cwe.mitre.org/data/definitions/20.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CWE-20 (Improper Input Validation)</a> is the root weakness behind dozens of more specific vulnerabilities. For legal identifiers, always validate against the jurisdiction's actual format specification — not a loose pattern that happens to work for your test data.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Server-Side Validation Is Mandatory</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The OWASP Application Security Verification Standard (ASVS)</a> Level 1 requires:</p>
+
+    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li>All input validation is performed server-side</li>
+        <li>Input validation failures result in request rejection (not silent sanitisation)</li>
+        <li>Structured data is strongly typed and validated against schemas</li>
+        <li>Unstructured data is sanitised with allowlists of permitted characters</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Why not just sanitise?</strong> Sanitisation (modifying input to make it safe) is riskier than rejection because:</p>
+
+    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li>You might miss an encoding your sanitiser doesn't handle</li>
+        <li>Modified input might have unintended meaning in business context</li>
+        <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Silent sanitisation masks attacks — you should log and alert on validation failures</a></li>
+    </ol>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The safe pattern: validate first (reject if invalid), then sanitise where necessary for specific output contexts (HTML encoding, SQL parameterisation).</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Schema Validation with ORMs</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern legal SaaS typically uses an ORM (Object-Relational Mapper — a library that generates database queries from application code, preventing direct SQL) like Prisma, SQLAlchemy, or TypeORM. ORMs provide schema-level validation as a byproduct of their type system:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.prisma.io/docs/concepts/components/prisma-schema" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma's schema validation</a> enforces types at the application boundary:</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Best practice:</strong> Use <a href="https://zod.dev/">Zod</a> (TypeScript) or <a href="https://docs.pydantic.dev/">Pydantic</a> (Python) as a validation layer between your API endpoints and your ORM. These schema validation libraries catch malformed input before it reaches your business logic:
+
+<pre><code>const CaseInput = z.object({
+  citation: z.string().regex(/^\[\d{4}\]\s+[A-Z]{2,6}\s+\d{1,5}$/),
+  courtCode: z.enum(['SGCA', 'SGHC', 'SGDC', 'UKSC', 'EWCA']),
+  filedAt: z.string().datetime(),
+});</code></pre></p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Common Validation Failures in Legal Tech</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Failure Mode</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Consequence</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Fix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Trusting client-side validation</td><td class="px-4 py-3">Injection attacks bypass browser checks</td><td class="px-4 py-3">Duplicate all validation server-side</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Validating before decoding</td><td class="px-4 py-3">Encoded payloads bypass checks</td><td class="px-4 py-3">Canonicalise first, validate second</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Type coercion assumptions</td><td class="px-4 py-3"><code>"0" == false</code> in JS, bypasses boolean checks</td><td class="px-4 py-3">Use strict type checking</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Missing length limits</td><td class="px-4 py-3">Buffer overflows, DoS via megabyte-sized inputs</td><td class="px-4 py-3">Enforce max lengths on all string inputs</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Unicode normalisation gaps</td><td class="px-4 py-3">Homoglyph attacks, normalisation-based bypasses</td><td class="px-4 py-3"><a href="https://unicode.org/reports/tr15/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Normalise to NFC before validation</a></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Allowing null bytes</td><td class="px-4 py-3">Null byte injection truncates strings in C-based systems</td><td class="px-4 py-3">Reject null bytes unconditionally</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/essential-skills/obfuscating-attacks-using-encodings" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger's research on encoding-based bypasses</a> demonstrates that sophisticated attackers routinely exploit the gap between what validators check and what interpreters execute. Double-encoding, Unicode escapes, and mixed encoding schemes bypass denylists consistently.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Validation as Logging Trigger</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Logging Cheat Sheet</a> recommends logging all input validation failures. In legal SaaS, a sudden spike in validation failures on a case search endpoint could indicate:</p>
+
+    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li>An attacker probing for injection vulnerabilities</li>
+        <li>A compromised account running automated exfiltration scripts</li>
+        <li>A fuzzing tool mapping your attack surface</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Log the failure, the input (sanitised for the log itself), the source IP, and the authenticated user. Feed this into your SIEM (Security Information and Event Management — the system that aggregates and analyses security logs). <a href="https://csrc.nist.gov/publications/detail/sp/800-92/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-92</a> provides guidance on log management for security monitoring.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Input validation is where security begins — the point where untrusted data from the outside world meets your application's internal logic. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Allowlist over denylist. Server-side over client-side. Reject over sanitise. Log over ignore.</a> Combined with schema validation from ORMs and runtime validators like Zod or Pydantic, you create multiple layers of defence before data reaches your business logic.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">SQL Injection and ORM Safety</strong> — what happens when input validation fails and untrusted data reaches your database queries.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 7 &mdash; Input Validation and Sanitisation. Alice, last episode we covered how web apps communicate. Today we&rsquo;re at the front gate. Data comes in from the outside world. How do we decide what gets through?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is the single most impactful security practice you can implement. Every injection attack &mdash; SQL injection, cross-site scripting, command injection &mdash; starts with invalid input that your application processed without checking. Input validation is asking: does this data look like what I expected?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So give me the fundamental decision. How do you define &ldquo;valid&rdquo;?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Two approaches. An allowlist says &ldquo;only these specific patterns are permitted.&rdquo; A denylist says &ldquo;block these known-bad patterns, allow everything else.&rdquo; OWASP is unequivocal: use allowlists. Always.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Why is the denylist approach so dangerous?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because the set of malicious inputs is infinite. You block script tags? The attacker uses event handlers. You block angle brackets? They use Unicode equivalents. You block single quotes? They use double encoding. Every WAF bypass technique in existence exploits denylist gaps. But an allowlist that says &ldquo;a Singapore case citation must match the pattern bracket, four digits, bracket, space, two to six uppercase letters, space, one to five digits&rdquo; &mdash; that rejects everything that isn&rsquo;t a valid citation. Including every possible attack payload.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s elegant for structured data. But what about free-text fields? A lawyer&rsquo;s case notes, for instance.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Free text is harder, which is why validation alone isn&rsquo;t sufficient. For free-text, you validate what you can &mdash; character encoding must be UTF-8, length must be under your maximum, no null bytes. Then you rely on output encoding and parameterised queries to handle the content safely. Validation is your first layer, not your only layer.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Where does validation need to happen? I&rsquo;ve seen debates about client-side versus server-side.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> There&rsquo;s no debate. Server-side is mandatory. Client-side is optional UX polish. An attacker can disable JavaScript, modify the DOM, or bypass the browser entirely by calling your API directly with curl. If your only validation is in the browser, you have no validation.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So why do client-side at all?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> User experience. Immediate feedback when a lawyer types an invalid case number. Fewer wasted round-trips to the server. But it&rsquo;s never security &mdash; it&rsquo;s convenience. The server must independently validate everything, regardless of what the client claims to have checked.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Legal SaaS has some distinctive input types. Case citations, court codes, statute references. How do you handle those?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Domain-specific allowlists. A Singapore case citation follows the pattern bracket-year-bracket, court code, case number. You can define that as a regex and reject anything that doesn&rsquo;t match. Court identifiers &mdash; SGCA, SGHC, UKSC, EWCA &mdash; are a finite set. That&rsquo;s a strict allowlist, an enum. Statute references have known patterns per jurisdiction. The key insight is that legal data is often highly structured, which makes it easier to validate strictly than general web input.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about the tooling layer? I hear a lot about Zod, Pydantic, schema validators.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> These are runtime schema validators that sit between your API endpoint and your business logic. Zod for TypeScript, Pydantic for Python. You define a schema &mdash; this field is a string matching this regex, that field is an enum of these values, this date must be in the past &mdash; and the library validates incoming data against it automatically. If validation fails, the request is rejected before your business logic ever sees it.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And ORMs add another layer?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Yes. Your ORM &mdash; Object-Relational Mapper, the library that generates database queries from your code &mdash; its schema defines type constraints, length limits, foreign key relationships, and enum restrictions at the database layer. Between Zod at the API boundary and Prisma at the database boundary, malformed data has to pass through two independently defined validation layers. That&rsquo;s defence in depth.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> One thing I want to clarify &mdash; validation versus sanitisation. They&rsquo;re different?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Critically different. Validation checks whether input conforms to expectations and rejects it if it doesn&rsquo;t. Sanitisation modifies input to make it safe &mdash; stripping dangerous characters, encoding special characters. The safer pattern is validate first, reject if invalid. Only sanitise when you have a legitimate business reason to accept input that contains characters meaningful in another context.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Why is sanitisation riskier than rejection?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three reasons. First, your sanitiser might miss an encoding it doesn&rsquo;t handle. Second, modified input might have unintended meaning &mdash; you strip characters from a case citation and now it references the wrong case. Third, silent sanitisation masks attacks. If an input field is receiving SQL injection attempts, you want to know about it. Logging a validation rejection gives you visibility. Silently cleaning the input hides the attack.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That connects to monitoring, right? Validation failures as security signals?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Absolutely. A sudden spike in validation failures on your case search endpoint could mean an attacker is probing for injection vulnerabilities. Or a compromised account is running automated scripts. Log every validation failure &mdash; the endpoint, the rejected input sanitised for the log, the source IP, the authenticated user. Feed that into your SIEM &mdash; your Security Information and Event Management system. OWASP recommends this explicitly in their logging cheat sheet.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about the ordering problem? I&rsquo;ve seen validators that check input before it&rsquo;s decoded.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Classic mistake. If you validate before URL-decoding, an attacker sends %3Cscript%3E &mdash; your validator sees percent signs, not angle brackets, and passes it through. Then your application decodes it, and now you have a script tag in your data. The rule is canonicalise first &mdash; decode, normalise Unicode to NFC, resolve any encoding layers &mdash; then validate. Always validate the final form of the data, not an intermediate representation.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Any other common mistakes in the legal tech context?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Missing length limits is huge. Without them, an attacker can submit a 50-megabyte string as a case note and crash your parser or exhaust server memory. Type coercion in JavaScript &mdash; where the string &ldquo;0&rdquo; equals false &mdash; leads to bypass conditions in boolean checks. And null byte injection &mdash; inserting a zero byte that some C-based libraries interpret as a string terminator, causing truncation in file paths or database queries. Reject null bytes unconditionally in any web input.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the summary: allowlist over denylist, server-side is mandatory, validate before your business logic sees data, log failures as security signals, and canonicalise before you validate.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And remember &mdash; validation stops the obviously wrong. The next episodes cover what happens when subtly wrong data gets through. Parameterised queries, output encoding, content security policies &mdash; those are your deeper defences.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; SQL Injection and ORM Safety. What happens when untrusted input reaches your database queries. The granddaddy of injection attacks.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Input Validation Cheat Sheet." Primary reference for validation strategies</a></li>
+        <li id="fn-2"><a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10:2021, "A03 Injection."</a></li>
+        <li id="fn-3"><a href="https://portswigger.net/web-security/essential-skills/obfuscating-attacks-using-encodings" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger, "Obfuscating attacks using encodings." Research on encoding-based validation bypasses</a></li>
+        <li id="fn-4"><a href="https://owasp.org/www-community/Threat_Modeling" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Threat Modeling." Trust boundaries as validation points</a></li>
+        <li id="fn-5"><a href="https://portswigger.net/web-security/logic-flaws" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger, "Business logic vulnerabilities." Client-side validation bypasses</a></li>
+        <li id="fn-6"><a href="https://cwe.mitre.org/data/definitions/20.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MITRE CWE-20, "Improper Input Validation." Root cause classification</a></li>
+        <li id="fn-7"><a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Application Security Verification Standard (ASVS). Server-side validation requirements</a></li>
+        <li id="fn-8"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Logging Cheat Sheet." Logging validation failures for security monitoring</a></li>
+        <li id="fn-9"><a href="https://www.prisma.io/docs/concepts/components/prisma-schema" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma, "Prisma Schema." Type-safe schema validation at the ORM layer</a></li>
+        <li id="fn-10"><a href="https://zod.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zod, TypeScript-first schema validation library</a></li>
+        <li id="fn-11"><a href="https://docs.pydantic.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Pydantic, Python data validation using type annotations</a></li>
+        <li id="fn-12"><a href="https://unicode.org/reports/tr15/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Unicode Technical Report #15, "Unicode Normalization Forms."</a></li>
+        <li id="fn-13"><a href="https://csrc.nist.gov/publications/detail/sp/800-92/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-92, "Guide to Computer Security Log Management."</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-06-how-web-apps-actually-work.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 6 &mdash; How Web Apps Actually Work</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-08-sql-injection-and-orm-safety.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 8 &mdash; SQL Injection and ORM Safety</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

