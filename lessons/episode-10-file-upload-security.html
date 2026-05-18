@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 10 &mdash; File Upload Security &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 10 &middot; Module 3 &middot; App Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">File Upload Security</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; 10:11 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-10-file-upload-security.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>10:11</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-10-file-upload-security.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Every uploaded file is an opaque blob of bytes crossing a trust boundary. Alice and Dan cover polyglot files, zip bombs, magic byte validation, sandboxed processing pipelines, storage isolation, and the specific attack vectors in PDF, DOCX, and TIFF formats that make legal SaaS &mdash; where the document management system <em>is</em> the product &mdash; uniquely exposed.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 10: File Upload Security</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Every Upload Is a Payload</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">File uploads are the most dangerous feature in any web application. A file is an opaque blob of bytes that your server must receive, store, and potentially process. <a href="https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP identifies unrestricted file upload as a critical web application vulnerability</a> because it can lead to remote code execution, cross-site scripting, denial of service, and complete system compromise.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, file uploads are unavoidable. Lawyers upload contracts, pleadings, evidence, exhibits, expert reports. The document management system is the product. <a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">You cannot eliminate file uploads &mdash; you must make them safe</a>.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key principle:</strong> A file&rsquo;s extension and Content-Type header are claims made by the uploader. <a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Neither can be trusted</a>. Validation must examine the file&rsquo;s actual content &mdash; its magic bytes, structure, and embedded elements.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Dangerous File Types</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Direct Execution Threats</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">File Type</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Danger</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Attack Scenario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>.php</code>, <code>.asp</code>, <code>.jsp</code></td><td class="px-4 py-3">Server-side execution</td><td class="px-4 py-3">Upload web shell, access via URL, execute arbitrary commands</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>.html</code>, <code>.svg</code></td><td class="px-4 py-3">Client-side execution</td><td class="px-4 py-3">Stored XSS when served from same origin</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>.exe</code>, <code>.bat</code>, <code>.ps1</code></td><td class="px-4 py-3">OS execution</td><td class="px-4 py-3">Social engineering: &ldquo;Download this exhibit&rdquo;</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>.jar</code>, <code>.class</code></td><td class="px-4 py-3">Java execution</td><td class="px-4 py-3">Bypass server-side restrictions via deserialization</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Polyglot Files</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A polyglot is a file that is simultaneously valid as multiple file types. <a href="https://portswigger.net/research/bypassing-csp-using-polyglot-jpegs" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Researchers have demonstrated files that are valid JPEGs and valid JavaScript</a>, valid PDFs and valid ZIP archives, and valid images that contain hidden HTML.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Attack:</strong> Upload a polyglot JPEG/JavaScript file. The server validates it as an image (magic bytes match JPEG). When served with an incorrect Content-Type or without <code>X-Content-Type-Options: nosniff</code>, the browser interprets it as JavaScript &mdash; executing the attacker&rsquo;s code.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Archive Bombs (Zip Bombs)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://en.wikipedia.org/wiki/Zip_bomb" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A zip bomb is a compressed file that expands to an enormous size</a> &mdash; gigabytes or terabytes. The classic <code>42.zip</code> is 42KB compressed but expands to 4.5 petabytes across nested archives.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS impact:</strong> If your system automatically extracts uploaded archives (common for bulk evidence uploads), a zip bomb exhausts disk space and memory, causing denial of service. Nested archives amplify the effect exponentially.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Script-Containing Documents</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Format</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Script Capability</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">PDF</td><td class="px-4 py-3">JavaScript (Acrobat), Launch actions</td><td class="px-4 py-3">Auto-execute on open; phishing overlays</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">DOCX</td><td class="px-4 py-3">VBA macros, ActiveX controls, DDE</td><td class="px-4 py-3">Remote code execution via macro-enabled documents</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">XLSX</td><td class="px-4 py-3">Macros, external data connections, DDE</td><td class="px-4 py-3">Data exfiltration via external cell references</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">SVG</td><td class="px-4 py-3">Inline JavaScript, event handlers</td><td class="px-4 py-3">XSS when rendered in browser</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">HTML/MHTML</td><td class="px-4 py-3">Full JavaScript execution</td><td class="px-4 py-3">Complete web application in a single file</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Magic Byte Validation</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://en.wikipedia.org/wiki/List_of_file_signatures" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Every file format has a characteristic byte sequence at the beginning &mdash; its magic bytes or file signature</a>. Validating these is more reliable than checking file extensions:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Format</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Magic Bytes (hex)</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Offset</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">PDF</td><td class="px-4 py-3"><code>25 50 44 46</code> (<code>%PDF</code>)</td><td class="px-4 py-3">0</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">DOCX/XLSX/PPTX</td><td class="px-4 py-3"><code>50 4B 03 04</code> (ZIP header)</td><td class="px-4 py-3">0</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">JPEG</td><td class="px-4 py-3"><code>FF D8 FF</code></td><td class="px-4 py-3">0</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">PNG</td><td class="px-4 py-3"><code>89 50 4E 47 0D 0A 1A 0A</code></td><td class="px-4 py-3">0</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">TIFF</td><td class="px-4 py-3"><code>49 49 2A 00</code> (LE) or <code>4D 4D 00 2A</code> (BE)</td><td class="px-4 py-3">0</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">GIF</td><td class="px-4 py-3"><code>47 49 46 38</code> (<code>GIF8</code>)</td><td class="px-4 py-3">0</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Warning:</strong> Magic byte validation alone is insufficient for security. Polyglot files have valid magic bytes for their cover format. A polyglot JPEG has valid JPEG magic bytes while also containing executable JavaScript. Magic bytes confirm format but do not guarantee safety. You must also <a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">validate internal structure and strip dangerous elements</a>.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Sandboxed Processing</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Files must be processed in isolation &mdash; never in your application&rsquo;s main execution context. <a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP recommends processing uploads in sandboxed environments</a>:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Stage</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Control</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Quarantine</td><td class="px-4 py-3">Separate storage, no direct URL access</td><td class="px-4 py-3">Prevent execution before validation</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Sandbox</td><td class="px-4 py-3">Container/VM with no network, limited filesystem</td><td class="px-4 py-3">Contain exploitation of parser vulnerabilities</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Validation</td><td class="px-4 py-3">Magic bytes + structure check + virus scan</td><td class="px-4 py-3">Confirm file is what it claims</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Transformation</td><td class="px-4 py-3">Re-encode images, flatten PDFs, strip macros</td><td class="px-4 py-3">Remove embedded threats</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Validated storage</td><td class="px-4 py-3">Immutable object storage with random names</td><td class="px-4 py-3">Prevent path traversal and overwrite</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">File parsing libraries have vulnerabilities. <a href="https://imagetragick.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ImageMagick&rsquo;s &ldquo;ImageTragick&rdquo; (CVE-2016-3714)</a> allowed remote code execution via crafted images. <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-36664" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Ghostscript has had multiple RCE vulnerabilities</a> in PDF processing. If your processing runs in a sandboxed container with no network access and minimal filesystem permissions, exploitation is contained.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Storage Isolation</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If uploaded files are stored in a directory served by your web server, an attacker who uploads a PHP file can access it via URL and achieve remote code execution. <a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Store files outside the web root</a> and serve them through a controlled endpoint that sets appropriate headers.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Requirement</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Implementation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Random filenames</td><td class="px-4 py-3">UUID or content-hash; never user-supplied names</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Separate origin</td><td class="px-4 py-3">Serve from <code>files.legalapp.com</code>, not <code>app.legalapp.com</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Content-Disposition: attachment</td><td class="px-4 py-3">Forces download instead of inline rendering</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">X-Content-Type-Options: nosniff</td><td class="px-4 py-3">Prevents MIME sniffing</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">No execution permissions</td><td class="px-4 py-3">Storage directory has no execute bits</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Access control on retrieval</td><td class="px-4 py-3">Verify user authorisation before serving each file</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud object storage (AWS S3, GCS, Azure Blob)</a> provides inherent isolation &mdash; files cannot be &ldquo;executed&rdquo; by the storage service. Use pre-signed URLs with short expiry for authorised access.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Document Format Attack Vectors</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">PDF Attacks</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">PDFs are the most common document format in legal practice and one of the most complex file formats in existence. <a href="https://www.iso.org/standard/75839.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The PDF specification (ISO 32000)</a> supports JavaScript, launch actions, embedded files, external references, and form submission &mdash; all exploitable vectors.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigation:</strong> Process uploaded PDFs through a sanitisation pipeline that strips JavaScript, actions, and embedded files. <a href="https://qpdf.sourceforge.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Tools like QPDF</a> can linearise and sanitise PDFs. For preview, render to images using a sandboxed PDF renderer.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">DOCX Attack Vectors</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">DOCX files are ZIP archives containing XML. Attack vectors include VBA macros, external template references (NTLM hash theft), DDE command execution, embedded OLE objects, and XXE if your parser resolves external entities. <a href="https://learn.microsoft.com/en-us/microsoft-365/security/intelligence/macro-malware" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft acknowledges that macro-based malware remains one of the most common initial access vectors</a>.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigation:</strong> Strip macros from all uploaded DOCX files. Reject <code>.docm</code> and <code>.xlsm</code> extensions entirely. Parse DOCX XML with external entities disabled. Block external template references.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">TIFF Attack Vectors</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">TIFF files &mdash; common in legal scanning workflows &mdash; have <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-1916" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">historically been vulnerable to buffer overflow attacks</a> in parsing libraries. Process them in your sandbox, keep the library updated, and consider re-encoding to PNG for storage.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Upload Validation Checklist</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Check</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Implementation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">File size limit</td><td class="px-4 py-3">Reject before full upload (Content-Length check + streaming limit)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Extension allowlist</td><td class="px-4 py-3">Only <code>.pdf</code>, <code>.docx</code>, <code>.xlsx</code>, <code>.tiff</code>, <code>.png</code>, <code>.jpg</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Magic byte validation</td><td class="px-4 py-3">Confirm header bytes match claimed type</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">MIME type verification</td><td class="px-4 py-3">Use <code>libmagic</code>, not user-supplied Content-Type</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Virus scan</td><td class="px-4 py-3">ClamAV or cloud AV API on quarantined file</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Archive depth limit</td><td class="px-4 py-3">Max 2 levels of nesting for ZIP/RAR</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Macro stripping</td><td class="px-4 py-3">Remove VBA/DDE from Office documents</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">PDF sanitisation</td><td class="px-4 py-3">Strip JavaScript, actions, embedded files</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Image re-encoding</td><td class="px-4 py-3">Decode and re-encode to strip embedded payloads</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Filename sanitisation</td><td class="px-4 py-3">Replace with UUID; never use user-supplied filename in paths</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">File uploads combine the highest risk with the highest business necessity in legal SaaS. Every document from a client or opposing party is potentially adversarial content crossing a trust boundary. <a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The defence is layered: validate format, scan for malware, process in sandboxes, store in isolation, serve with restrictive headers, and never trust the client&rsquo;s claims about what the file contains</a>. Your document management system is only as secure as your file upload pipeline.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Webhook Security and SSRF</strong> &mdash; when your server makes requests on behalf of external services, and attackers exploit that trust.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 10 &mdash; File Upload Security. Alice, legal tech is fundamentally a document management business. Lawyers upload files constantly. Contracts, pleadings, exhibits, evidence packages. So what&rsquo;s the threat here?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Every uploaded file is an opaque blob of bytes crossing a trust boundary into your system. The file claims to be a PDF. The Content-Type header says application/pdf. A MIME type &mdash; Multipurpose Internet Mail Extensions type &mdash; is just a label declaring the file&rsquo;s format. The extension says .pdf. But none of that is verified until you examine the actual bytes. A file is whatever its content makes it &mdash; not whatever the uploader claims it is.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the extension and MIME type are essentially just labels the attacker controls?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. An attacker can rename a PHP web shell to evidence.pdf, set the Content-Type to application/pdf, and upload it. If your server stores it in a web-accessible directory and serves it based on extension alone, they navigate to the URL and the web server executes it as PHP. They now have remote code execution on your server.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That sounds almost too simple. Surely modern applications don&rsquo;t make that mistake?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The basic version is less common now. But the attack has evolved. Polyglot files &mdash; files that are simultaneously valid as multiple types. A file that has valid JPEG magic bytes at the start, passes image validation, but also contains executable JavaScript. Served without the right headers, the browser may interpret it as a script instead of an image. PortSwigger demonstrated bypassing Content Security Policy using polyglot JPEGs.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And then there are archive bombs?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Zip bombs. A 42-kilobyte ZIP file that expands to 4.5 petabytes across nested layers. If your legal SaaS automatically extracts uploaded archives &mdash; which is common for bulk evidence ingestion &mdash; that expansion exhausts disk space, memory, or both. Your entire platform goes down. Denial of service from a single 42KB upload.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> OK, so what&rsquo;s the validation approach? You said magic bytes?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Magic bytes are the first line of defence. Every file format has a characteristic byte sequence at the beginning. PDF starts with percent-P-D-F. JPEG starts with FF-D8-FF. PNG has an 8-byte signature. DOCX files are actually ZIP archives, so they start with PK-03-04. You read the first few bytes and confirm they match the claimed format. The python-magic library wraps libmagic, which identifies files by content rather than extension.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> But you said polyglots have valid magic bytes for their cover format. So magic bytes alone aren&rsquo;t enough.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Correct. Magic bytes confirm format identity but not safety. A polyglot JPEG has valid JPEG magic bytes. A PDF with embedded JavaScript has valid PDF magic bytes. You need deeper structural validation. For images &mdash; decode and re-encode. If you receive an image, run it through your image library, decode it to raw pixels, then encode it as a new JPEG or PNG. Any embedded payloads in the original file&rsquo;s metadata or trailing data are destroyed in the re-encoding. What you store is a clean image you generated, not the attacker&rsquo;s file.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about documents? You can&rsquo;t re-encode a contract PDF without potentially losing content.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> For PDFs, you sanitise. Strip JavaScript &mdash; legal documents have no legitimate need for executable code. Strip launch actions, embedded files, form submission URLs. QPDF can linearise and clean PDFs. For DOCX files &mdash; strip VBA macros unconditionally. Reject macro-enabled formats like .docm and .xlsm at the allowlist level. Parse the internal XML with external entities disabled to prevent XXE &mdash; XML External Entity &mdash; attacks, where the parser is tricked into loading files or resources it shouldn&rsquo;t. Remove external template references that could phone home or steal NTLM hashes.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s a lot of processing. How do you do it safely? What if the parsing library itself has vulnerabilities?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Which it will. ImageMagick had ImageTragick in 2016 &mdash; remote code execution via crafted images. Ghostscript had an RCE in 2023 via PDF processing. LibTIFF has had buffer overflows. The answer is sandboxed processing. Every uploaded file goes through a pipeline: quarantine storage first &mdash; the file sits where it can&rsquo;t be accessed via URL. Then a worker process in an isolated container &mdash; no network access, limited filesystem, minimal permissions &mdash; performs all validation and transformation. If the processing triggers a vulnerability, the attacker gets control of an empty sandbox with no access to your application or data.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Containers specifically? Or VMs?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Either works. The principle is isolation. A container with no network namespace, a read-only filesystem except for its working directory, dropped capabilities, and seccomp filtering is sufficient for most threat models. If you&rsquo;re processing files from nation-state adversaries &mdash; which some legal firms do &mdash; VM isolation via Firecracker or gVisor provides stronger boundaries.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Once a file passes validation, how do you store it?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three rules. First &mdash; random filenames. Generate a UUID or content hash. Never use the user-supplied filename in your filesystem path. User-supplied filenames can contain path traversal sequences &mdash; dot-dot-slash &mdash; that overwrite system files. Second &mdash; store outside the web root. Files should never be directly accessible via URL. Serve them through a controlled endpoint that checks authorisation before each retrieval. Third &mdash; serve from a different origin. If your app lives at app.legalapp.com, serve files from files.legalapp.com. Same-origin policy prevents any script in a served file from accessing your application&rsquo;s cookies or DOM.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about the response headers when serving files?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Critical. Content-Disposition: attachment forces the browser to download rather than render inline &mdash; so even if the file contains HTML or scripts, it won&rsquo;t execute in the browser context. X-Content-Type-Options: nosniff prevents the browser from guessing a file type different from the Content-Type you set. And always set an explicit, correct Content-Type based on your server-side detection, not the stored original claim.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s talk about legal-specific formats. PDFs are the obvious one.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> PDFs are probably the most complex file format in common use. The specification &mdash; ISO 32000 &mdash; supports JavaScript execution, launching external applications, embedded files, form submission to external URLs, and encrypted payloads. A PDF from opposing counsel could track when and where it was opened via an external reference &mdash; a digital tracking pixel. It could exploit a reader vulnerability for code execution. It could contain a phishing overlay that mimics your firm&rsquo;s login page.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And DOCX files?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> DOCX is a ZIP archive containing XML files. VBA macros are the classic vector &mdash; arbitrary code execution if the user enables macros. But there are subtler attacks. External template references &mdash; the document silently loads a template from a remote server when opened, sending the user&rsquo;s NTLM hash &mdash; a Windows authentication credential &mdash; in the authentication handshake. DDE fields &mdash; Dynamic Data Exchange &mdash; can execute system commands without macros. Even the XML itself can contain XXE payloads if your parser resolves external entities.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And TIFF? Those are common in legal scanning workflows.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Multi-page TIFFs are standard output from document scanners used in legal firms. The libtiff library has had recurring buffer overflow vulnerabilities &mdash; malformed TIFF headers crash the parser in exploitable ways. Process them in your sandbox, keep the library updated, and consider re-encoding to PNG for storage if you don&rsquo;t need the multi-page container format.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the complete picture: allowlist permitted extensions, validate magic bytes, scan for malware, process in an isolated sandbox, strip dangerous elements format by format, store with random names outside the web root, serve from a separate origin with restrictive headers, and check authorisation on every retrieval.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Every step matters. Skip the sandbox and a parser vulnerability gives the attacker your server. Skip the separate origin and a polyglot gives them XSS. Skip the authorisation check on retrieval and any authenticated user can download any document. File upload security is the entire pipeline &mdash; not any single check.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Webhook Security and SSRF. What happens when your server makes outbound requests on behalf of external services, and attackers exploit that trust relationship.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Unrestricted File Upload." Vulnerability classification and impacts</a></li>
+        <li id="fn-2"><a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "File Upload Cheat Sheet." Comprehensive upload security guidance</a></li>
+        <li id="fn-3"><a href="https://portswigger.net/research/bypassing-csp-using-polyglot-jpegs" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger Research, "Bypassing CSP using polyglot JPEGs"</a></li>
+        <li id="fn-4"><a href="https://en.wikipedia.org/wiki/Zip_bomb" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Wikipedia, "Zip bomb." Archive decompression attacks</a></li>
+        <li id="fn-5"><a href="https://en.wikipedia.org/wiki/List_of_file_signatures" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Wikipedia, "List of file signatures." Magic bytes reference</a></li>
+        <li id="fn-6"><a href="https://imagetragick.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ImageTragick, CVE-2016-3714. Remote code execution via image processing</a></li>
+        <li id="fn-7"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-36664" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NVD, CVE-2023-36664. Ghostscript RCE via crafted PDF files</a></li>
+        <li id="fn-8"><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS, "Amazon S3 Security Best Practices"</a></li>
+        <li id="fn-9"><a href="https://www.iso.org/standard/75839.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO 32000-2:2020, "Document management &mdash; Portable document format"</a></li>
+        <li id="fn-10"><a href="https://qpdf.sourceforge.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">QPDF, "PDF transformation and inspection tool"</a></li>
+        <li id="fn-11"><a href="https://learn.microsoft.com/en-us/microsoft-365/security/intelligence/macro-malware" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft, "Macro malware." Macro-based attack vectors</a></li>
+        <li id="fn-12"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-1916" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NVD, CVE-2023-1916. LibTIFF buffer overflow vulnerability</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-09-cross-site-scripting.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 9 &mdash; Cross-Site Scripting</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-11-webhook-security-and-ssrf.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 11 &mdash; Webhook Security and SSRF</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>
