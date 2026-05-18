@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">In [Episode 37](../ep37/article.md), we established that AI should draft and humans should approve. This episode focuses on the infrastructure connecting your legal AI to the cloud providers that power it &mdash; specifically, the API keys that authenticate every request and the gateways that should sit between your application and those providers. An API key &mdash; which we introduced back in [Episode 3](../ep03/article.md) as a programmatic credential that proves your application&#39;s identity to a service </p>
+    <p class="text-lg leading-relaxed italic text-ink-light">In Episode 37, we established that AI should draft and humans should approve. This episode focuses on the infrastructure connecting your legal AI to the cloud providers that power it &mdash; specifically, the API keys that authenticate every request and the gateways that should sit between your application and those providers. An API key &mdash; which we introduced back in Episode 3 as a programmatic credential that proves your application&#39;s identity to a service &mdash; is the single token that authorises your a</p>
 </div>
 
 <!-- Article -->
@@ -76,33 +76,49 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 38: LLM API Key Isolation and Inference Gateways</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">One Key to Rule Them All &mdash; and That&#39;s the Problem</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 37](../ep37/article.md), we established that AI should draft and humans should approve. This episode focuses on the infrastructure connecting your legal AI to the cloud providers that power it &mdash; specifically, the API keys that authenticate every request and the gateways that should sit between your application and those providers.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 37, we established that AI should draft and humans should approve. This episode focuses on the infrastructure connecting your legal AI to the cloud providers that power it &mdash; specifically, the API keys that authenticate every request and the gateways that should sit between your application and those providers.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An API key &mdash; which we introduced back in [Episode 3](../ep03/article.md) as a programmatic credential that proves your application&#39;s identity to a service &mdash; is the single token that authorises your application to call an LLM provider like OpenAI, Anthropic, or Google. If that key is stolen, the attacker has everything they need to run up your bill, exfiltrate your prompts and responses, and potentially access any data flowing through the API.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An API key &mdash; which we introduced back in Episode 3 as a programmatic credential that proves your application&#39;s identity to a service &mdash; is the single token that authorises your application to call an LLM provider like OpenAI, Anthropic, or Google. If that key is stolen, the attacker has everything they need to run up your bill, exfiltrate your prompts and responses, and potentially access any data flowing through the API.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The LLMjacking Threat</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;LLMjacking&quot; is a term coined by the Sysdig Threat Research Team to describe attackers stealing cloud credentials to hijack access to large language model services.[^1] It follows the pattern of cryptojacking (stealing compute for cryptocurrency mining) and proxyjacking (reselling stolen bandwidth), but the economics are different &mdash; and worse.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;LLMjacking&quot; is a term coined by the Sysdig Threat Research Team to describe attackers stealing cloud credentials to hijack access to large language model services. It follows the pattern of cryptojacking (stealing compute for cryptocurrency mining) and proxyjacking (reselling stolen bandwidth), but the economics are different &mdash; and worse.</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Attack</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What&#39;s Stolen</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical Cost to Victim</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Cryptojacking</strong></td>
+                <td class="py-3 px-4">GPU/CPU cycles</td>
+                <td class="py-3 px-4">Electricity + cloud compute bills</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Proxyjacking</strong></td>
+                <td class="py-3 px-4">Network bandwidth</td>
+                <td class="py-3 px-4">Bandwidth overages</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">LLMjacking</strong></td>
+                <td class="py-3 px-4">LLM API access</td>
+                <td class="py-3 px-4">$100,000+ per day at scale</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Attack | What&#39;s Stolen | Typical Cost to Victim |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Sysdig documented a 376% increase in credential theft specifically targeting AI services between Q4 2025 and Q1 2026. The financial impact is staggering: one startup&#39;s monthly OpenAI bill went from $400 to $67,000 after their API key was exposed in a public GitHub repository for 11 days.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|--------------|----------------------|</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: LiteLLM Supply Chain Compromise (March 2026).</strong> LiteLLM &mdash; the most popular open-source LLM proxy in the Python ecosystem, with approximately 97 million monthly downloads &mdash; was compromised when attackers hijacked the maintainer&#39;s PyPI account. Version 1.82.8 included a malicious file that silently exfiltrated cloud credentials, SSH keys, and Kubernetes secrets. Because LiteLLM runs as a centralised API gateway, compromising it yielded not just cloud credentials but LLM API keys for OpenAI, Anthropic, Azure AI, and others simultaneously.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cryptojacking</strong> | GPU/CPU cycles | Electricity + cloud compute bills |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Proxyjacking</strong> | Network bandwidth | Bandwidth overages |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">LLMjacking</strong> | LLM API access | $100,000+ per day at scale |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Sysdig documented a 376% increase in credential theft specifically targeting AI services between Q4 2025 and Q1 2026.[^2] The financial impact is staggering: one startup&#39;s monthly OpenAI bill went from $400 to $67,000 after their API key was exposed in a public GitHub repository for 11 days.[^3]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: LiteLLM Supply Chain Compromise (March 2026).</strong> LiteLLM &mdash; the most popular open-source LLM proxy in the Python ecosystem, with approximately 97 million monthly downloads &mdash; was compromised when attackers hijacked the maintainer&#39;s PyPI account. Version 1.82.8 included a malicious file that silently exfiltrated cloud credentials, SSH keys, and Kubernetes secrets. Because LiteLLM runs as a centralised API gateway, compromising it yielded not just cloud credentials but LLM API keys for OpenAI, Anthropic, Azure AI, and others simultaneously.[^4]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: Microsoft v. Storm-2139 (January 2025).</strong> Microsoft filed a civil lawsuit against a criminal syndicate called Storm-2139 that had industrialised LLMjacking across Azure, OpenAI, AWS Bedrock, Anthropic, Google Vertex AI, and Mistral. The syndicate built a custom tool called de3u that allowed users to generate images using stolen Azure API keys, with features designed to circumvent content safety filters.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: Microsoft v. Storm-2139 (January 2025).</strong> Microsoft filed a civil lawsuit against a criminal syndicate called Storm-2139 that had industrialised LLMjacking across Azure, OpenAI, AWS Bedrock, Anthropic, Google Vertex AI, and Mistral. The syndicate built a custom tool called de3u that allowed users to generate images using stolen Azure API keys, with features designed to circumvent content safety filters.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why Law Firms Are Particularly Vulnerable</h2>
 
@@ -111,24 +127,46 @@
         <li><strong class="text-ink">High-value prompts.</strong> Legal prompts contain privileged information, case strategy, client names, and confidential deal terms. A stolen key doesn&#39;t just cost money &mdash; it exposes every prompt and response flowing through it.</li>
         <li><strong class="text-ink">Long-lived keys.</strong> Many firms set up API keys once and forget them. Unlike passwords, API keys rarely expire by default, and few organisations rotate them regularly.</li>
         <li><strong class="text-ink">Shared across environments.</strong> Development, staging, and production environments often share a single API key &mdash; meaning a key leaked from a developer&#39;s laptop compromises the production system.</li>
-        <li><strong class="text-ink">Embedded in code.</strong> Despite decades of warnings, API keys still appear in source code, configuration files, and CI/CD pipelines. GitHub&#39;s secret scanning detects [millions of leaked secrets annually](https://github.blog/security/secret-scanning/).[^6]</li>
-    </ul>
+        <li><strong class="text-ink">Embedded in code.</strong> Despite decades of warnings, API keys still appear in source code, configuration files, and CI/CD pipelines. GitHub&#39;s secret scanning detects <a href="https://github.blog/security/secret-scanning/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">millions of leaked secrets annually</a>.</li>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Per-Environment Key Isolation</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The first principle: every environment gets its own API key. Development, staging, and production must never share credentials.</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Environment</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Scope</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Budget Limit</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Monitoring</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Development</strong></td>
+                <td class="py-3 px-4">Individual developer sandboxes</td>
+                <td class="py-3 px-4">$50/day hard cap</td>
+                <td class="py-3 px-4">Alert on any production model usage</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Staging</strong></td>
+                <td class="py-3 px-4">Shared test environment</td>
+                <td class="py-3 px-4">$200/day hard cap</td>
+                <td class="py-3 px-4">Alert on usage exceeding test patterns</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Production</strong></td>
+                <td class="py-3 px-4">Production application only</td>
+                <td class="py-3 px-4">Based on projected usage + 20% buffer</td>
+                <td class="py-3 px-4">Real-time anomaly detection</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Environment | Key Scope | Budget Limit | Monitoring |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------------|-----------|-------------|------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Development</strong> | Individual developer sandboxes | $50/day hard cap | Alert on any production model usage |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Staging</strong> | Shared test environment | $200/day hard cap | Alert on usage exceeding test patterns |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Production</strong> | Production application only | Based on projected usage + 20% buffer | Real-time anomaly detection |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each key should have the minimum permissions required. If your production application only calls GPT-4 for contract review, the production key should not have access to DALL-E, Whisper, or other models. This limits the blast radius if a key is compromised.[^7]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each key should have the minimum permissions required. If your production application only calls GPT-4 for contract review, the production key should not have access to DALL-E, Whisper, or other models. This limits the blast radius if a key is compromised.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Inference Gateway Pattern</h2>
 
@@ -151,24 +189,51 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">What the Gateway Enforces</h3>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Without Gateway</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">With Gateway</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Authentication</strong></td>
+                <td class="py-3 px-4">Application holds raw API key</td>
+                <td class="py-3 px-4">Application authenticates to gateway; gateway holds the provider key</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Rate limiting</strong></td>
+                <td class="py-3 px-4">Provider&#39;s default limits only</td>
+                <td class="py-3 px-4">Custom per-user, per-team, per-matter limits</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Budget controls</strong></td>
+                <td class="py-3 px-4">Monthly bill surprise</td>
+                <td class="py-3 px-4">Hard spending caps with real-time tracking</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Logging</strong></td>
+                <td class="py-3 px-4">Whatever the provider retains</td>
+                <td class="py-3 px-4">Full prompt/response logging under your control</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">PII scanning</strong></td>
+                <td class="py-3 px-4">None</td>
+                <td class="py-3 px-4">Pre-flight redaction before data reaches the provider</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Key rotation</strong></td>
+                <td class="py-3 px-4">Manual, risky</td>
+                <td class="py-3 px-4">Gateway-level rotation; applications never see the provider key</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Control | Without Gateway | With Gateway |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|----------------|--------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Authentication</strong> | Application holds raw API key | Application authenticates to gateway; gateway holds the provider key |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Rate limiting</strong> | Provider&#39;s default limits only | Custom per-user, per-team, per-matter limits |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Budget controls</strong> | Monthly bill surprise | Hard spending caps with real-time tracking |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Logging</strong> | Whatever the provider retains | Full prompt/response logging under your control |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">PII scanning</strong> | None | Pre-flight redaction before data reaches the provider |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Key rotation</strong> | Manual, risky | Gateway-level rotation; applications never see the provider key |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The critical architectural point: your application code never holds the LLM provider&#39;s API key. It authenticates to the gateway using internal credentials (a service token, mTLS certificate, or OAuth client credentials &mdash; patterns we covered in [Episode 15](../ep15/article.md) and [Episode 20](../ep20/article.md)). The gateway holds and manages the provider key. If your application is compromised, the attacker gets an internal token that only works through your gateway &mdash; not a raw OpenAI key they can use from anywhere.[^8]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The critical architectural point: your application code never holds the LLM provider&#39;s API key. It authenticates to the gateway using internal credentials (a service token, mTLS certificate, or OAuth client credentials &mdash; patterns we covered in Episode 15 and Episode 20). The gateway holds and manages the provider key. If your application is compromised, the attacker gets an internal token that only works through your gateway &mdash; not a raw OpenAI key they can use from anywhere.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Budget Controls and Anomaly Detection</h3>
 
@@ -191,57 +256,79 @@
         <li>Verify the new key works by routing a percentage of traffic through it</li>
         <li>Remove the old key from the gateway</li>
         <li>Revoke the old key at the provider</li>
-    </ul>
+    </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">At no point does the application need to change. It authenticates to the gateway with its internal credentials, which remain stable. The provider key rotation is entirely transparent.[^9]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">At no point does the application need to change. It authenticates to the gateway with its internal credentials, which remain stable. The provider key rotation is entirely transparent.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Open-Source and Commercial Options</h2>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Tool</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Type</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Feature</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">LiteLLM</strong></td>
+                <td class="py-3 px-4">Open-source proxy</td>
+                <td class="py-3 px-4">Multi-provider support, budget tracking (note: verify package integrity post-2026 compromise)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Portkey</strong></td>
+                <td class="py-3 px-4">Commercial gateway</td>
+                <td class="py-3 px-4">Policy enforcement, caching, observability</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Helicone</strong></td>
+                <td class="py-3 px-4">Commercial gateway</td>
+                <td class="py-3 px-4">Usage analytics, prompt management, cost tracking</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Kong AI Gateway</strong></td>
+                <td class="py-3 px-4">Commercial gateway</td>
+                <td class="py-3 px-4">Enterprise API management with AI-specific plugins</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Custom (nginx/Envoy + middleware)</strong></td>
+                <td class="py-3 px-4">Self-built</td>
+                <td class="py-3 px-4">Full control, but maintenance burden</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Tool | Type | Key Feature |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------|------|-------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">LiteLLM</strong> | Open-source proxy | Multi-provider support, budget tracking (note: verify package integrity post-2026 compromise)[^4] |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Portkey</strong> | Commercial gateway | Policy enforcement, caching, observability |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Helicone</strong> | Commercial gateway | Usage analytics, prompt management, cost tracking |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Kong AI Gateway</strong> | Commercial gateway | Enterprise API management with AI-specific plugins |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Custom (nginx/Envoy + middleware)</strong> | Self-built | Full control, but maintenance burden |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For firms that prefer to build their own, an Envoy or nginx reverse proxy with custom middleware for authentication, logging, and rate limiting is a viable approach. The tradeoff is maintenance overhead &mdash; the commercial gateways handle provider API changes, new model support, and billing integration automatically.[^10]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For firms that prefer to build their own, an Envoy or nginx reverse proxy with custom middleware for authentication, logging, and rate limiting is a viable approach. The tradeoff is maintenance overhead &mdash; the commercial gateways handle provider API changes, new model support, and billing integration automatically.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 39 covers <strong class="text-ink">Redaction Pipelines for Cloud AI</strong> &mdash; how to strip sensitive information from prompts before they reach a cloud provider, and how to reassemble the redacted information when the response comes back. Because the best way to protect client data from cloud AI is to never send it in the first place.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: Sysdig, [LLMjacking: Stolen Cloud Credentials Used in New AI Attack](https://www.sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack) (May 2024).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Sysdig, <a href="https://www.sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: Stolen Cloud Credentials Used in New AI Attack</a> (May 2024).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Sysdig, [What is LLMjacking?](https://www.sysdig.com/learn-cloud-native/what-is-llmjacking).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Sysdig, <a href="https://www.sysdig.com/learn-cloud-native/what-is-llmjacking" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is LLMjacking?</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Prompt Guardrails, [LLMjacking: The $100K-Per-Day Attack Draining Enterprise AI Budgets](https://promptguardrails.com/blog/llmjacking-stolen-credentials-ai-budget-attack).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Prompt Guardrails, <a href="https://promptguardrails.com/blog/llmjacking-stolen-credentials-ai-budget-attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: The $100K-Per-Day Attack Draining Enterprise AI Budgets</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Trend Micro, [Your AI Gateway Was a Backdoor: Inside the LiteLLM Supply Chain Compromise](https://www.trendmicro.com/en_us/research/26/c/inside-litellm-supply-chain-compromise.html) (March 2026).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Trend Micro, <a href="https://www.trendmicro.com/en_us/research/26/c/inside-litellm-supply-chain-compromise.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Your AI Gateway Was a Backdoor: Inside the LiteLLM Supply Chain Compromise</a> (March 2026).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: CSO Online, [Microsoft Files Lawsuit Against LLMjacking Gang That Bypassed AI Safeguards](https://www.csoonline.com/article/3835936/microsoft-files-lawsuit-against-llmjacking-gang-that-bypassed-ai-safeguards.html) (January 2025).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CSO Online, <a href="https://www.csoonline.com/article/3835936/microsoft-files-lawsuit-against-llmjacking-gang-that-bypassed-ai-safeguards.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Files Lawsuit Against LLMjacking Gang That Bypassed AI Safeguards</a> (January 2025).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: GitHub Blog, [Secret Scanning](https://github.blog/security/secret-scanning/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GitHub Blog, <a href="https://github.blog/security/secret-scanning/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secret Scanning</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: API7.ai, [How AI Gateways Enforce Security and Compliance for LLMs](https://api7.ai/blog/ai-gateway-security-compliance).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: API7.ai, <a href="https://api7.ai/blog/ai-gateway-security-compliance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How AI Gateways Enforce Security and Compliance for LLMs</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Noma Security, [How an AI Agent Vulnerability in LangSmith Could Lead to Stolen API Keys](https://noma.security/blog/how-an-ai-agent-vulnerability-in-langsmith-could-lead-to-stolen-api-keys-and-hijacked-llm-responses/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Noma Security, <a href="https://noma.security/blog/how-an-ai-agent-vulnerability-in-langsmith-could-lead-to-stolen-api-keys-and-hijacked-llm-responses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How an AI Agent Vulnerability in LangSmith Could Lead to Stolen API Keys</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: BeyondScale, [LLMjacking: AI API Key Theft Defense Guide](https://beyondscale.tech/blog/llmjacking-defense-guide).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: BeyondScale, <a href="https://beyondscale.tech/blog/llmjacking-defense-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: AI API Key Theft Defense Guide</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: DreamFactory, [The LiteLLM Supply Chain Attack: A Complete Technical Breakdown](https://blog.dreamfactory.com/the-litellm-supply-chain-attack-a-complete-technical-breakdown-of-what-happened-who-is-affected-and-what-comes-next).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DreamFactory, <a href="https://blog.dreamfactory.com/the-litellm-supply-chain-attack-a-complete-technical-breakdown-of-what-happened-who-is-affected-and-what-comes-next" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The LiteLLM Supply Chain Attack: A Complete Technical Breakdown</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Aikido, [GPT-Proxy Backdoor in npm and PyPI Turns Servers into Chinese LLM Relays](https://www.aikido.dev/blog/gpt-proxy-backdoor-npm-pypi-chinese-llm-relay).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Aikido, <a href="https://www.aikido.dev/blog/gpt-proxy-backdoor-npm-pypi-chinese-llm-relay" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GPT-Proxy Backdoor in npm and PyPI Turns Servers into Chinese LLM Relays</a>.</p>
 
 </article>
 
@@ -256,59 +343,59 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 38 &mdash; LLM API key isolation and inference gateways. Alice, I&#39;ll be honest, when I first saw this topic I thought &mdash; how much is there to say about an API key? It&#39;s just a password for a service, right?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 38 &mdash; LLM API key isolation and inference gateways. Alice, I&#39;ll be honest, when I first saw this topic I thought &mdash; how much is there to say about an API key? It&#39;s just a password for a service, right?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It&#39;s a credential, yes &mdash; a long string of characters that proves your application is authorised to use a service like OpenAI or Anthropic. We covered API keys way back in Episode 3. But here&#39;s why this deserves its own episode: there&#39;s now a named attack category called LLMjacking, coined by Sysdig&#39;s threat research team. It&#39;s exactly what it sounds like &mdash; attackers steal your API key and hijack your access to cloud AI services. And the economics are brutal.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It&#39;s a credential, yes &mdash; a long string of characters that proves your application is authorised to use a service like OpenAI or Anthropic. We covered API keys way back in Episode 3. But here&#39;s why this deserves its own episode: there&#39;s now a named attack category called LLMjacking, coined by Sysdig&#39;s threat research team. It&#39;s exactly what it sounds like &mdash; attackers steal your API key and hijack your access to cloud AI services. And the economics are brutal.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. How brutal are we talking?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. How brutal are we talking?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;One startup had a $400-a-month OpenAI bill. Their API key ended up in a public GitHub repository for eleven days. The next invoice was $67,000. The attacker had been running commercial AI services through the stolen key for over a week. And that&#39;s a small case. Sysdig documented attacks costing over $100,000 per day when targeting enterprise accounts with access to models like GPT-4 or Claude Opus.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> One startup had a $400-a-month OpenAI bill. Their API key ended up in a public GitHub repository for eleven days. The next invoice was $67,000. The attacker had been running commercial AI services through the stolen key for over a week. And that&#39;s a small case. Sysdig documented attacks costing over $100,000 per day when targeting enterprise accounts with access to models like GPT-4 or Claude Opus.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And for a law firm, the cost isn&#39;t just the bill &mdash; it&#39;s every prompt that went through that key.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And for a law firm, the cost isn&#39;t just the bill &mdash; it&#39;s every prompt that went through that key.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Every prompt your legal AI sends contains something &mdash; a client name, a contract clause, a case strategy question, a privileged communication. If the attacker has your key, they can set up a proxy that logs every request and response flowing through it. The financial damage is real, but the data exposure is the existential risk.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Every prompt your legal AI sends contains something &mdash; a client name, a contract clause, a case strategy question, a privileged communication. If the attacker has your key, they can set up a proxy that logs every request and response flowing through it. The financial damage is real, but the data exposure is the existential risk.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. So how do these keys get stolen in the first place?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. So how do these keys get stolen in the first place?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The usual ways. Hardcoded in source code that gets pushed to a public repository. Stored in environment variable files that get committed accidentally. Left in CI/CD pipeline configurations. Shared over Slack or email. And here&#39;s one that&#39;s newer &mdash; in March 2026, a popular open-source LLM proxy called LiteLLM was compromised. Attackers hijacked the maintainer&#39;s account on PyPI &mdash; that&#39;s the Python package repository &mdash; and pushed a version that silently exfiltrated cloud credentials, SSH keys, and API keys. LiteLLM had 97 million monthly downloads. Because it runs as a centralised gateway, compromising it gave the attackers access to LLM API keys for every provider its users connected to &mdash; OpenAI, Anthropic, Azure, all of them.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The usual ways. Hardcoded in source code that gets pushed to a public repository. Stored in environment variable files that get committed accidentally. Left in CI/CD pipeline configurations. Shared over Slack or email. And here&#39;s one that&#39;s newer &mdash; in March 2026, a popular open-source LLM proxy called LiteLLM was compromised. Attackers hijacked the maintainer&#39;s account on PyPI &mdash; that&#39;s the Python package repository &mdash; and pushed a version that silently exfiltrated cloud credentials, SSH keys, and API keys. LiteLLM had 97 million monthly downloads. Because it runs as a centralised gateway, compromising it gave the attackers access to LLM API keys for every provider its users connected to &mdash; OpenAI, Anthropic, Azure, all of them.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s a supply chain attack on the infrastructure that&#39;s supposed to manage the keys.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That&#39;s a supply chain attack on the infrastructure that&#39;s supposed to manage the keys.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Which brings us to the solution &mdash; and the irony. The right architecture is an inference gateway, which is conceptually similar to what LiteLLM does. The difference is how you deploy and secure it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Which brings us to the solution &mdash; and the irony. The right architecture is an inference gateway, which is conceptually similar to what LiteLLM does. The difference is how you deploy and secure it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Walk me through what an inference gateway actually is.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. Walk me through what an inference gateway actually is.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Think of it as a proxy layer between your application and the LLM provider. Your application never holds the OpenAI or Anthropic API key directly. Instead, it authenticates to your gateway using internal credentials &mdash; a service token, an mTLS certificate, the kind of internal authentication we covered in Episode 15. The gateway holds and manages the provider&#39;s API key. Every request flows through the gateway, which adds logging, rate limiting, budget controls, and policy enforcement before forwarding the request to the provider.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Think of it as a proxy layer between your application and the LLM provider. Your application never holds the OpenAI or Anthropic API key directly. Instead, it authenticates to your gateway using internal credentials &mdash; a service token, an mTLS certificate, the kind of internal authentication we covered in Episode 15. The gateway holds and manages the provider&#39;s API key. Every request flows through the gateway, which adds logging, rate limiting, budget controls, and policy enforcement before forwarding the request to the provider.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So if someone compromises your application, they get an internal token that only works through your gateway &mdash; not a raw API key they can use from anywhere?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. So if someone compromises your application, they get an internal token that only works through your gateway &mdash; not a raw API key they can use from anywhere?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And the gateway gives you controls you don&#39;t have when your application talks directly to the provider. Hard budget caps &mdash; not just alerts, but actual request rejection when spending exceeds a threshold. Per-user and per-team rate limits. Anomaly detection &mdash; someone making five thousand API calls at 3 AM when no attorneys are working should trigger an alert. And critically, the gateway is where you can intercept prompts and scan them for sensitive information before they ever leave your network. That&#39;s the redaction pipeline we&#39;ll cover next episode.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And the gateway gives you controls you don&#39;t have when your application talks directly to the provider. Hard budget caps &mdash; not just alerts, but actual request rejection when spending exceeds a threshold. Per-user and per-team rate limits. Anomaly detection &mdash; someone making five thousand API calls at 3 AM when no attorneys are working should trigger an alert. And critically, the gateway is where you can intercept prompts and scan them for sensitive information before they ever leave your network. That&#39;s the redaction pipeline we&#39;ll cover next episode.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What about key rotation? I know from Episode 30 on secrets management that you should rotate credentials regularly. How does that work when your whole AI pipeline depends on one API key?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. What about key rotation? I know from Episode 30 on secrets management that you should rotate credentials regularly. How does that work when your whole AI pipeline depends on one API key?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is one of the biggest advantages of the gateway pattern. Key rotation happens at the gateway level, completely invisible to your application. You generate a new key from the provider, add it to the gateway configuration alongside the old one, verify it works by routing some traffic through it, then remove the old key and revoke it. Your application code doesn&#39;t change at all &mdash; it still authenticates to the gateway with the same internal credentials. Compare that to rotating a key that&#39;s hardcoded in fifteen different microservices. That&#39;s a deployment event. With a gateway, it&#39;s a configuration change.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is one of the biggest advantages of the gateway pattern. Key rotation happens at the gateway level, completely invisible to your application. You generate a new key from the provider, add it to the gateway configuration alongside the old one, verify it works by routing some traffic through it, then remove the old key and revoke it. Your application code doesn&#39;t change at all &mdash; it still authenticates to the gateway with the same internal credentials. Compare that to rotating a key that&#39;s hardcoded in fifteen different microservices. That&#39;s a deployment event. With a gateway, it&#39;s a configuration change.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So the first principle is per-environment isolation?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. So the first principle is per-environment isolation?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; It should be obvious, but it still isn&#39;t in practice. Development, staging, and production must each have their own API key. A developer&#39;s sandbox key should have a hard cap of maybe fifty dollars a day and should not have access to production-grade models. If a developer&#39;s key leaks &mdash; and developer keys leak constantly &mdash; the blast radius is a small bill and no exposure to production data. The production key should be locked down with the minimum permissions required. If your application only uses one specific model for contract review, the key shouldn&#39;t have access to image generation, speech-to-text, or any other service.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; It should be obvious, but it still isn&#39;t in practice. Development, staging, and production must each have their own API key. A developer&#39;s sandbox key should have a hard cap of maybe fifty dollars a day and should not have access to production-grade models. If a developer&#39;s key leaks &mdash; and developer keys leak constantly &mdash; the blast radius is a small bill and no exposure to production data. The production key should be locked down with the minimum permissions required. If your application only uses one specific model for contract review, the key shouldn&#39;t have access to image generation, speech-to-text, or any other service.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Principle of least privilege, applied to AI services.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Principle of least privilege, applied to AI services.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly what we covered in Episode 8, now applied to a new category of credential. And store these keys in your secrets manager &mdash; HashiCorp Vault, AWS Secrets Manager, whatever your firm uses. Not in environment variables. Not in configuration files. Definitely not in source code. The gateway retrieves keys from the secrets manager at runtime, and the keys are rotated on a schedule. Microsoft filed a lawsuit in January 2025 against a criminal syndicate called Storm-2139 that had built an entire commercial hacking-as-a-service operation using stolen Azure API keys. This is organised crime, not script kiddies.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly what we covered in Episode 8, now applied to a new category of credential. And store these keys in your secrets manager &mdash; HashiCorp Vault, AWS Secrets Manager, whatever your firm uses. Not in environment variables. Not in configuration files. Definitely not in source code. The gateway retrieves keys from the secrets manager at runtime, and the keys are rotated on a schedule. Microsoft filed a lawsuit in January 2025 against a criminal syndicate called Storm-2139 that had built an entire commercial hacking-as-a-service operation using stolen Azure API keys. This is organised crime, not script kiddies.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. For someone building a legal AI tool today &mdash; maybe a contract review platform or a research assistant &mdash; what&#39;s the minimum they should implement?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. For someone building a legal AI tool today &mdash; maybe a contract review platform or a research assistant &mdash; what&#39;s the minimum they should implement?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three things. First, separate keys per environment with hard budget caps on each. Second, an inference gateway &mdash; even a simple one using an nginx reverse proxy with basic auth, logging, and rate limiting. Third, never put the provider&#39;s API key in your application code or anywhere a developer can see it in plaintext. Those three things would have prevented most of the LLMjacking incidents we&#39;ve seen.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three things. First, separate keys per environment with hard budget caps on each. Second, an inference gateway &mdash; even a simple one using an nginx reverse proxy with basic auth, logging, and rate limiting. Third, never put the provider&#39;s API key in your application code or anywhere a developer can see it in plaintext. Those three things would have prevented most of the LLMjacking incidents we&#39;ve seen.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Redaction Pipelines for Cloud AI. How to strip sensitive data from prompts before they leave your network.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Redaction Pipelines for Cloud AI. How to strip sensitive data from prompts before they leave your network.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

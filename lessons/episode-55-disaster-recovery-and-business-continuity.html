@@ -76,15 +76,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 55: Disaster Recovery and Business Continuity</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Your Primary Region Is Underwater</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">On a Monday morning, the cloud region hosting your legal SaaS platform experiences a catastrophic failure. Power outage, network partition, natural disaster &mdash; the cause doesn&#39;t matter. What matters is that hundreds of lawyers at dozens of firms cannot access their case files, their court deadlines are in hours, and your phone is ringing.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Disaster recovery (DR) and business continuity (BC) planning answer a single question: how long until your clients can work again, and how much data do they lose? For most SaaS platforms, downtime is inconvenient. For legal SaaS, it can be professionally catastrophic. Court filing deadlines don&#39;t move because your server crashed. A missed limitation period cannot be refiled. [GDPR Article 32(1)(c)](https://www.konfirmity.com/blog/gdpr-incident-response-plan) explicitly requires &quot;the ability to restore the availability and access to personal data in a timely manner in the event of a physical or technical incident&quot; &mdash; making disaster recovery not just an operational concern but a data protection compliance requirement.[^1]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Disaster recovery (DR) and business continuity (BC) planning answer a single question: how long until your clients can work again, and how much data do they lose? For most SaaS platforms, downtime is inconvenient. For legal SaaS, it can be professionally catastrophic. Court filing deadlines don&#39;t move because your server crashed. A missed limitation period cannot be refiled. <a href="https://www.konfirmity.com/blog/gdpr-incident-response-plan" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Article 32(1)(c)</a> explicitly requires &quot;the ability to restore the availability and access to personal data in a timely manner in the event of a physical or technical incident&quot; &mdash; making disaster recovery not just an operational concern but a data protection compliance requirement.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">RTO and RPO: The Two Numbers That Define Your Recovery</h2>
 
@@ -93,18 +89,44 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">RTO (Recovery Time Objective):</strong> The maximum acceptable time your system can be down. If your RTO is four hours, your DR plan must be capable of restoring service within four hours of a disaster declaration.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">RPO (Recovery Point Objective):</strong> The maximum acceptable amount of data loss, measured in time. If your RPO is one hour, you must have backups or replication no more than one hour old. Any data created in the gap between the last backup and the disaster is lost.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Platform Type | Typical RTO | Typical RPO | Justification |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------------|-------------|-------------|---------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Case management SaaS</strong> | 1-4 hours | 15 minutes | Court deadlines; active matters need near-continuous access |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Document review platform</strong> | 4-8 hours | 1 hour | Large datasets; some delay tolerable during off-peak |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">E-filing integration</strong> | &lt; 1 hour | Near-zero | Filing deadlines are absolute; missed filings have legal consequences |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Contract repository</strong> | 4-12 hours | 1 hour | Reference material; lower urgency than active litigation tools |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Platform Type</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical RTO</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical RPO</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Justification</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Case management SaaS</strong></td>
+                <td class="py-3 px-4">1-4 hours</td>
+                <td class="py-3 px-4">15 minutes</td>
+                <td class="py-3 px-4">Court deadlines; active matters need near-continuous access</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Document review platform</strong></td>
+                <td class="py-3 px-4">4-8 hours</td>
+                <td class="py-3 px-4">1 hour</td>
+                <td class="py-3 px-4">Large datasets; some delay tolerable during off-peak</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">E-filing integration</strong></td>
+                <td class="py-3 px-4">&lt; 1 hour</td>
+                <td class="py-3 px-4">Near-zero</td>
+                <td class="py-3 px-4">Filing deadlines are absolute; missed filings have legal consequences</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Contract repository</strong></td>
+                <td class="py-3 px-4">4-12 hours</td>
+                <td class="py-3 px-4">1 hour</td>
+                <td class="py-3 px-4">Reference material; lower urgency than active litigation tools</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
@@ -112,27 +134,55 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Backup Strategies</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Backups are the foundation of any DR plan. But &quot;we have backups&quot; is not a DR plan &mdash; it&#39;s the beginning of one.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Backup Types</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Strategy | How It Works | RPO Achievable | Restore Speed |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|-------------|---------------|---------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Full backups</strong> | Complete copy of all data at a point in time | Depends on frequency (daily = 24hr RPO) | Fastest &mdash; single restore |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Incremental backups</strong> | Only changes since the last backup | Depends on frequency | Slower &mdash; must replay from last full + all increments |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Continuous Data Protection (CDP)</strong> | Every write is replicated in near-real-time | Seconds | Fast &mdash; minimal data loss |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Snapshot-based</strong> | Point-in-time copy of storage volume | Minutes to hours | Fast &mdash; restore from snapshot |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cross-region replication</strong> | Data continuously replicated to another geographic region | Seconds to minutes | Fastest failover &mdash; region already has current data |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strategy</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RPO Achievable</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Restore Speed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Full backups</strong></td>
+                <td class="py-3 px-4">Complete copy of all data at a point in time</td>
+                <td class="py-3 px-4">Depends on frequency (daily = 24hr RPO)</td>
+                <td class="py-3 px-4">Fastest &mdash; single restore</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Incremental backups</strong></td>
+                <td class="py-3 px-4">Only changes since the last backup</td>
+                <td class="py-3 px-4">Depends on frequency</td>
+                <td class="py-3 px-4">Slower &mdash; must replay from last full + all increments</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Continuous Data Protection (CDP)</strong></td>
+                <td class="py-3 px-4">Every write is replicated in near-real-time</td>
+                <td class="py-3 px-4">Seconds</td>
+                <td class="py-3 px-4">Fast &mdash; minimal data loss</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Snapshot-based</strong></td>
+                <td class="py-3 px-4">Point-in-time copy of storage volume</td>
+                <td class="py-3 px-4">Minutes to hours</td>
+                <td class="py-3 px-4">Fast &mdash; restore from snapshot</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Cross-region replication</strong></td>
+                <td class="py-3 px-4">Data continuously replicated to another geographic region</td>
+                <td class="py-3 px-4">Seconds to minutes</td>
+                <td class="py-3 px-4">Fastest failover &mdash; region already has current data</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The 3-2-1 Rule</h3>
 
@@ -143,7 +193,7 @@
         <li>With <strong class="text-ink">1</strong> copy offsite (different geographic region)</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS handling privileged communications, add encryption at rest for all backup copies. [AWS](https://docs.aws.amazon.com/prescriptive-guidance/latest/backup-recovery/best-practices.html), [Azure](https://learn.microsoft.com/en-us/azure/reliability/concept-business-continuity-high-availability-disaster-recovery), and GCP all provide managed backup services with built-in encryption and cross-region replication.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS handling privileged communications, add encryption at rest for all backup copies. <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/backup-recovery/best-practices.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS</a>, <a href="https://learn.microsoft.com/en-us/azure/reliability/concept-business-continuity-high-availability-disaster-recovery" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Azure</a>, and GCP all provide managed backup services with built-in encryption and cross-region replication.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Backup Nobody Tests</h3>
 
@@ -152,8 +202,6 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;An untested backup is not a backup.&lt;/strong&gt; Regularly test that you can actually restore from your backups to a functioning system. At least quarterly, perform a full restore test: take a backup, restore it to a clean environment, verify the application works and the data is intact. The number of organisations that discover their backups are corrupted or incomplete during an actual disaster is sobering. Testing is the only proof.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Multi-Region Failover</h2>
 
@@ -167,7 +215,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Cons:</strong> Failover takes time (minutes to an hour). Secondary region may be stale by the RPO window.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Buxton Consulting&#39;s DR guide for SaaS](https://buxtonconsulting.com/general/building-and-testing-disaster-recovery-plans-for-saas-applications/) recommends active-passive as the pragmatic starting point for most SaaS platforms, with active-active reserved for mission-critical workloads with near-zero RTO requirements.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://buxtonconsulting.com/general/building-and-testing-disaster-recovery-plans-for-saas-applications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Buxton Consulting's DR guide for SaaS</a> recommends active-passive as the pragmatic starting point for most SaaS platforms, with active-active reserved for mission-critical workloads with near-zero RTO requirements.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Active-Active</h3>
 
@@ -179,21 +227,45 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">AWS Well-Architected DR Strategies</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The [AWS Well-Architected Framework&#39;s Reliability Pillar](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html) defines four DR strategies mapped to RTO/RPO ranges:[^4]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Strategy | RTO | RPO | Cost |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|-----|-----|------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Backup &amp; Restore</strong> | Hours | Hours | Lowest |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Pilot Light</strong> | Minutes to hours | Minutes | Low-medium |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Warm Standby</strong> | Minutes | Seconds to minutes | Medium-high |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Multi-Site Active-Active</strong> | Near-zero | Near-zero | Highest |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS Well-Architected Framework's Reliability Pillar</a> defines four DR strategies mapped to RTO/RPO ranges:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strategy</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RTO</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RPO</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Backup &amp; Restore</strong></td>
+                <td class="py-3 px-4">Hours</td>
+                <td class="py-3 px-4">Hours</td>
+                <td class="py-3 px-4">Lowest</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Pilot Light</strong></td>
+                <td class="py-3 px-4">Minutes to hours</td>
+                <td class="py-3 px-4">Minutes</td>
+                <td class="py-3 px-4">Low-medium</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Warm Standby</strong></td>
+                <td class="py-3 px-4">Minutes</td>
+                <td class="py-3 px-4">Seconds to minutes</td>
+                <td class="py-3 px-4">Medium-high</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Multi-Site Active-Active</strong></td>
+                <td class="py-3 px-4">Near-zero</td>
+                <td class="py-3 px-4">Near-zero</td>
+                <td class="py-3 px-4">Highest</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">DR Testing: Proving Your Plan Works</h2>
 
@@ -214,13 +286,11 @@
         <li>The failback to the primary region works cleanly</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Cloud4C&#39;s 2026 business resilience guide](https://www.cloud4c.com/blogs/business-resilience-in-2026-guide-to-rapid-disaster-recovery-and-business-continuity-planning) recommends automated failover drills with synthetic traffic, reducing the risk and effort of manual testing.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.cloud4c.com/blogs/business-resilience-in-2026-guide-to-rapid-disaster-recovery-and-business-continuity-planning" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud4C's 2026 business resilience guide</a> recommends automated failover drills with synthetic traffic, reducing the risk and effort of manual testing.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Chaos Engineering</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For mature teams, introduce controlled failures in production: terminate a database replica, simulate a network partition, corrupt a cache. This validates not just your DR plan but your system&#39;s day-to-day resilience. Netflix&#39;s Chaos Monkey pioneered this approach; tools like AWS Fault Injection Simulator and Gremlin provide managed chaos engineering platforms.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal-Specific DR Considerations</h2>
 
@@ -234,59 +304,79 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Regulatory Requirements</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Beyond GDPR&#39;s availability requirement, the EU&#39;s [Digital Operational Resilience Act (DORA)](https://www.cloud4c.com/blogs/business-resilience-in-2026-guide-to-rapid-disaster-recovery-and-business-continuity-planning), enforceable since January 2025, requires financial entities to maintain ICT continuity policies with defined RTOs and RPOs.[^5] While DORA targets financial services, legal SaaS platforms serving regulated industries must meet their clients&#39; compliance requirements &mdash; which increasingly include DR certification.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Beyond GDPR&#39;s availability requirement, the EU&#39;s <a href="https://www.cloud4c.com/blogs/business-resilience-in-2026-guide-to-rapid-disaster-recovery-and-business-continuity-planning" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Digital Operational Resilience Act (DORA)</a>, enforceable since January 2025, requires financial entities to maintain ICT continuity policies with defined RTOs and RPOs. While DORA targets financial services, legal SaaS platforms serving regulated industries must meet their clients&#39; compliance requirements &mdash; which increasingly include DR certification.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The DR Minimum for Legal SaaS</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Control | Purpose |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|---------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Defined RTO and RPO for each service tier | Sets recovery expectations and drives architecture decisions |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Automated daily backups with cross-region replication | Ensures data survives regional failures |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Encrypted backup storage with access controls | Protects client data at rest in backup locations |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Quarterly backup restore tests | Proves backups actually work |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Documented failover procedures | Enables fast, reliable region switches |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Annual failover drill | Validates the entire DR chain under realistic conditions |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Client communication template for outages | Prepares clear, consistent messaging during incidents |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Manual filing procedures for e-filing integrations | Provides lawyers a fallback when automation fails |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Defined RTO and RPO for each service tier</td>
+                <td class="py-3 px-4">Sets recovery expectations and drives architecture decisions</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Automated daily backups with cross-region replication</td>
+                <td class="py-3 px-4">Ensures data survives regional failures</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Encrypted backup storage with access controls</td>
+                <td class="py-3 px-4">Protects client data at rest in backup locations</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Quarterly backup restore tests</td>
+                <td class="py-3 px-4">Proves backups actually work</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Documented failover procedures</td>
+                <td class="py-3 px-4">Enables fast, reliable region switches</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Annual failover drill</td>
+                <td class="py-3 px-4">Validates the entire DR chain under realistic conditions</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Client communication template for outages</td>
+                <td class="py-3 px-4">Prepares clear, consistent messaging during incidents</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Manual filing procedures for e-filing integrations</td>
+                <td class="py-3 px-4">Provides lawyers a fallback when automation fails</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Disaster recovery isn&#39;t about preventing disasters &mdash; it&#39;s about ensuring your clients can keep working when one happens. For legal SaaS, &quot;keep working&quot; means meeting court deadlines, accessing case files, and preserving privileged communications. Plan for the worst. Test regularly. The drill that feels unnecessary is the one that saves you.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: security testing in your development process &mdash; how to find vulnerabilities before attackers do, from code commit to production.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: Konfirmity, [GDPR Incident Response Plan: A Practical Guide &mdash; Article 32 DR Requirements](https://www.konfirmity.com/blog/gdpr-incident-response-plan).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Konfirmity, <a href="https://www.konfirmity.com/blog/gdpr-incident-response-plan" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Incident Response Plan: A Practical Guide — Article 32 DR Requirements</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Microsoft, [Business Continuity, High Availability, and Disaster Recovery](https://learn.microsoft.com/en-us/azure/reliability/concept-business-continuity-high-availability-disaster-recovery).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Microsoft, <a href="https://learn.microsoft.com/en-us/azure/reliability/concept-business-continuity-high-availability-disaster-recovery" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Business Continuity, High Availability, and Disaster Recovery</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Buxton Consulting, [Building and Testing Disaster Recovery Plans for SaaS Applications](https://buxtonconsulting.com/general/building-and-testing-disaster-recovery-plans-for-saas-applications/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Buxton Consulting, <a href="https://buxtonconsulting.com/general/building-and-testing-disaster-recovery-plans-for-saas-applications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building and Testing Disaster Recovery Plans for SaaS Applications</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: AWS, [Well-Architected Framework: Plan for Disaster Recovery](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Well-Architected Framework: Plan for Disaster Recovery</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Cloud4C, [Business Resilience in 2026: A Cross-Sector Guide to Rapid Disaster Recovery](https://www.cloud4c.com/blogs/business-resilience-in-2026-guide-to-rapid-disaster-recovery-and-business-continuity-planning).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cloud4C, <a href="https://www.cloud4c.com/blogs/business-resilience-in-2026-guide-to-rapid-disaster-recovery-and-business-continuity-planning" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Business Resilience in 2026: A Cross-Sector Guide to Rapid Disaster Recovery</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: ATOZDEBUG, [Disaster Recovery for SaaS &mdash; A Complete 2025 Strategy Guide](https://atozdebug.com/disaster-recovery-for-saas/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ATOZDEBUG, <a href="https://atozdebug.com/disaster-recovery-for-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery for SaaS — A Complete 2025 Strategy Guide</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: GainHQ, [Disaster Recovery SaaS Guide For Business Continuity In 2026](https://gainhq.com/blog/disaster-recovery-saas/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GainHQ, <a href="https://gainhq.com/blog/disaster-recovery-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery SaaS Guide For Business Continuity In 2026</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Opsio Cloud, [Disaster Recovery &amp; Business Continuity in the Cloud](https://opsiocloud.com/knowledge-base/disaster-recovery-business-continuity/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Opsio Cloud, <a href="https://opsiocloud.com/knowledge-base/disaster-recovery-business-continuity/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery & Business Continuity in the Cloud</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Exodata, [IT Disaster Recovery Plan Template (2026)](https://exodata.io/it-disaster-recovery-plan-template-2026/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Exodata, <a href="https://exodata.io/it-disaster-recovery-plan-template-2026/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IT Disaster Recovery Plan Template (2026)</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: N2W Software, [Best Cloud Recovery Tools for Business Continuity: Top 5 in 2026](https://n2ws.com/blog/best-cloud-recovery-tools-for-business-continuity).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: N2W Software, <a href="https://n2ws.com/blog/best-cloud-recovery-tools-for-business-continuity" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Best Cloud Recovery Tools for Business Continuity: Top 5 in 2026</a>.</p>
 
 </article>
 
@@ -301,63 +391,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 55 &mdash; disaster recovery and business continuity. Alice, last two episodes we covered monitoring and incident response &mdash; detecting attacks and containing them. This episode is different. This isn&#39;t about an attacker. This is about everything just... going down.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 55 &mdash; disaster recovery and business continuity. Alice, last two episodes we covered monitoring and incident response &mdash; detecting attacks and containing them. This episode is different. This isn&#39;t about an attacker. This is about everything just... going down.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Your primary cloud region fails. Power outage, network partition, maybe a natural disaster. The cause is irrelevant. What matters is that hundreds of lawyers at dozens of firms cannot access their case files. Court deadlines are in hours. Your phone is ringing. What happens next depends entirely on what you planned before this moment.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Your primary cloud region fails. Power outage, network partition, maybe a natural disaster. The cause is irrelevant. What matters is that hundreds of lawyers at dozens of firms cannot access their case files. Court deadlines are in hours. Your phone is ringing. What happens next depends entirely on what you planned before this moment.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And for legal SaaS, downtime is worse than for most platforms, right?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And for legal SaaS, downtime is worse than for most platforms, right?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Much worse. For a social media app, four hours of downtime is embarrassing. For a legal SaaS platform, four hours could mean a missed court filing deadline. A missed limitation period that can never be refiled. A lawyer who can&#39;t access case documents before a hearing. These aren&#39;t inconveniences &mdash; they&#39;re potential malpractice claims. Court deadlines don&#39;t move because your server crashed.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Much worse. For a social media app, four hours of downtime is embarrassing. For a legal SaaS platform, four hours could mean a missed court filing deadline. A missed limitation period that can never be refiled. A lawyer who can&#39;t access case documents before a hearing. These aren&#39;t inconveniences &mdash; they&#39;re potential malpractice claims. Court deadlines don&#39;t move because your server crashed.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So where does the planning start?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So where does the planning start?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Two numbers. RTO and RPO. RTO is Recovery Time Objective &mdash; the maximum acceptable time your system can be down. If your RTO is four hours, your plan must restore service within four hours. RPO is Recovery Point Objective &mdash; the maximum acceptable data loss, measured in time. If your RPO is one hour, your last backup must be no more than one hour old. Anything created between the last backup and the disaster is gone.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Two numbers. RTO and RPO. RTO is Recovery Time Objective &mdash; the maximum acceptable time your system can be down. If your RTO is four hours, your plan must restore service within four hours. RPO is Recovery Point Objective &mdash; the maximum acceptable data loss, measured in time. If your RPO is one hour, your last backup must be no more than one hour old. Anything created between the last backup and the disaster is gone.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And those numbers are different for different types of legal platforms?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. And those numbers are different for different types of legal platforms?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Significantly. An e-filing integration &mdash; where missing a deadline has direct legal consequences &mdash; needs an RTO under one hour and an RPO near zero. A case management system might tolerate one to four hours of downtime. A contract repository that&#39;s mostly reference material might be acceptable at four to twelve hours. But you can&#39;t set these numbers in a vacuum. You need to talk to your customers about what they can tolerate, and then build architecture that delivers it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Significantly. An e-filing integration &mdash; where missing a deadline has direct legal consequences &mdash; needs an RTO under one hour and an RPO near zero. A case management system might tolerate one to four hours of downtime. A contract repository that&#39;s mostly reference material might be acceptable at four to twelve hours. But you can&#39;t set these numbers in a vacuum. You need to talk to your customers about what they can tolerate, and then build architecture that delivers it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Let&#39;s talk about backups. Everyone says they have backups. But having backups and having a recovery plan are different things.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. Let&#39;s talk about backups. Everyone says they have backups. But having backups and having a recovery plan are different things.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&quot;We have backups&quot; is the beginning of a plan, not the plan itself. The critical questions are: how often? How far back? Are they tested? Where are they stored? A daily backup gives you a 24-hour RPO &mdash; meaning you could lose a full day of work. For a platform handling active litigation, that&#39;s probably not acceptable. Continuous data protection replicates every write in near-real-time &mdash; RPO of seconds. Cross-region replication keeps a copy of your data in a completely different geographic area, so a regional disaster doesn&#39;t destroy both your primary and your backup.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &quot;We have backups&quot; is the beginning of a plan, not the plan itself. The critical questions are: how often? How far back? Are they tested? Where are they stored? A daily backup gives you a 24-hour RPO &mdash; meaning you could lose a full day of work. For a platform handling active litigation, that&#39;s probably not acceptable. Continuous data protection replicates every write in near-real-time &mdash; RPO of seconds. Cross-region replication keeps a copy of your data in a completely different geographic area, so a regional disaster doesn&#39;t destroy both your primary and your backup.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. The 3-2-1 rule?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. The 3-2-1 rule?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three copies of your data, on two different types of storage, with one copy offsite. That&#39;s the minimum. And for legal SaaS, add encryption at rest for every backup copy. Your backups contain the same privileged communications and client data as your production system. They need the same protection.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three copies of your data, on two different types of storage, with one copy offsite. That&#39;s the minimum. And for legal SaaS, add encryption at rest for every backup copy. Your backups contain the same privileged communications and client data as your production system. They need the same protection.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And testing. I imagine most teams don&#39;t test their restores.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And testing. I imagine most teams don&#39;t test their restores.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Most teams discover their backups are corrupted or incomplete during an actual disaster. That&#39;s why you test quarterly &mdash; at minimum. Take a backup, restore it to a clean environment, verify the application starts, verify the data is intact, verify client records are accessible. An untested backup is not a backup. It&#39;s a hope.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; Most teams discover their backups are corrupted or incomplete during an actual disaster. That&#39;s why you test quarterly &mdash; at minimum. Take a backup, restore it to a clean environment, verify the application starts, verify the data is intact, verify client records are accessible. An untested backup is not a backup. It&#39;s a hope.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What about multi-region? When do you need that?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. What about multi-region? When do you need that?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;If your RTO is below four hours, restoring from backups in a single region is usually too slow. You need your application running &mdash; or ready to run &mdash; in a second geographic region. There are two approaches. Active-passive: your app runs in one region, a second region has infrastructure ready but not serving traffic, and data replicates continuously. If the primary fails, you switch traffic to the secondary. It takes minutes to about an hour. Active-active: both regions serve traffic simultaneously. If one fails, the other absorbs the load with near-zero downtime.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> If your RTO is below four hours, restoring from backups in a single region is usually too slow. You need your application running &mdash; or ready to run &mdash; in a second geographic region. There are two approaches. Active-passive: your app runs in one region, a second region has infrastructure ready but not serving traffic, and data replicates continuously. If the primary fails, you switch traffic to the secondary. It takes minutes to about an hour. Active-active: both regions serve traffic simultaneously. If one fails, the other absorbs the load with near-zero downtime.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Active-active sounds better. Why wouldn&#39;t everyone do it?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Active-active sounds better. Why wouldn&#39;t everyone do it?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Cost and complexity. Active-active means running your entire stack twice. And bidirectional data replication introduces conflict resolution problems. What happens when two users edit the same document in different regions at the same time? That&#39;s a hard problem. AWS actually maps this out nicely &mdash; their Well-Architected Framework defines four DR strategies with increasing cost and decreasing RTO. Backup and restore is the cheapest with the longest recovery. Pilot light keeps minimal infrastructure running. Warm standby runs a scaled-down version. Multi-site active-active is the most expensive with near-zero downtime. You pick based on your RTO requirements and your budget.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Cost and complexity. Active-active means running your entire stack twice. And bidirectional data replication introduces conflict resolution problems. What happens when two users edit the same document in different regions at the same time? That&#39;s a hard problem. AWS actually maps this out nicely &mdash; their Well-Architected Framework defines four DR strategies with increasing cost and decreasing RTO. Backup and restore is the cheapest with the longest recovery. Pilot light keeps minimal infrastructure running. Warm standby runs a scaled-down version. Multi-site active-active is the most expensive with near-zero downtime. You pick based on your RTO requirements and your budget.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. And you actually drill this? Like a fire drill?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. And you actually drill this? Like a fire drill?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;At least annually. Simulate a primary region failure and actually switch to your DR region. Verify the application works, the data is current, external integrations reconnect &mdash; court filing systems, email providers, payment processors. Then verify the failback to the primary works cleanly. Between drills, do quarterly tabletop exercises. Gather the team, present a scenario: &quot;It&#39;s 9 AM Monday, AWS us-east-1 is down, what do you do?&quot; Walk through the response step by step. Who makes the failover decision? Who communicates to clients? How long does each step take? Tabletops are cheap and they reveal gaps that aren&#39;t visible on paper.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> At least annually. Simulate a primary region failure and actually switch to your DR region. Verify the application works, the data is current, external integrations reconnect &mdash; court filing systems, email providers, payment processors. Then verify the failback to the primary works cleanly. Between drills, do quarterly tabletop exercises. Gather the team, present a scenario: &quot;It&#39;s 9 AM Monday, AWS us-east-1 is down, what do you do?&quot; Walk through the response step by step. Who makes the failover decision? Who communicates to clients? How long does each step take? Tabletops are cheap and they reveal gaps that aren&#39;t visible on paper.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. For legal SaaS specifically &mdash; what are the unique considerations?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. For legal SaaS specifically &mdash; what are the unique considerations?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three big ones. First: court filing deadlines. Your e-filing integrations need independent failover paths. If the platform is down and a lawyer has a filing due in two hours, there must be a documented manual procedure they can follow. Second: privilege continuity. When you fail over to a DR region, the access controls and encryption must be identical to production. A failover that exposes privileged documents to users who shouldn&#39;t see them is worse than downtime. Third: regulatory compliance. GDPR Article 32 explicitly requires the ability to restore availability in a timely manner. The EU&#39;s Digital Operational Resilience Act &mdash; DORA &mdash; which became enforceable in January 2025, requires organisations to maintain continuity policies with defined RTOs and RPOs. If your clients are in regulated industries, your DR certification becomes part of their compliance story.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three big ones. First: court filing deadlines. Your e-filing integrations need independent failover paths. If the platform is down and a lawyer has a filing due in two hours, there must be a documented manual procedure they can follow. Second: privilege continuity. When you fail over to a DR region, the access controls and encryption must be identical to production. A failover that exposes privileged documents to users who shouldn&#39;t see them is worse than downtime. Third: regulatory compliance. GDPR Article 32 explicitly requires the ability to restore availability in a timely manner. The EU&#39;s Digital Operational Resilience Act &mdash; DORA &mdash; which became enforceable in January 2025, requires organisations to maintain continuity policies with defined RTOs and RPOs. If your clients are in regulated industries, your DR certification becomes part of their compliance story.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So the minimum DR checklist for a legal SaaS platform?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So the minimum DR checklist for a legal SaaS platform?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Defined RTO and RPO for each service tier. Automated backups with cross-region replication. Encrypted backup storage with proper access controls. Quarterly restore tests. Documented failover procedures. Annual failover drills. A client communication template for outages &mdash; so you&#39;re not writing emails under pressure. And manual procedures for critical integrations like court filing systems. Plan for the worst. Test regularly. The drill that feels unnecessary is the one that saves you.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Defined RTO and RPO for each service tier. Automated backups with cross-region replication. Encrypted backup storage with proper access controls. Quarterly restore tests. Documented failover procedures. Annual failover drills. A client communication template for outages &mdash; so you&#39;re not writing emails under pressure. And manual procedures for critical integrations like court filing systems. Plan for the worst. Test regularly. The drill that feels unnecessary is the one that saves you.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; security testing in your development process. How to find vulnerabilities before attackers do.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; security testing in your development process. How to find vulnerabilities before attackers do.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

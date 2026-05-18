@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">In [Episode 23](../ep23/article.md), we built a role-based access control model with five or six roles: Firm Admin, Partner, Associate, Paralegal, Client Viewer. That covers 80% of access decisions. This episode is about the other 20% &mdash; the decisions where a role alone doesn&#39;t carry enough information. Consider this scenario: an associate in the M&amp;A practice group needs access to M&amp;A matter documents during business hours from the firm&#39;s network. RBAC can tell you they&#39;re an associate. It cannot</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">In Episode 23, we built a role-based access control model with five or six roles: Firm Admin, Partner, Associate, Paralegal, Client Viewer. That covers 80% of access decisions. This episode is about the other 20% &mdash; the decisions where a role alone doesn&#39;t carry enough information. Consider this scenario: an associate in the M&amp;A practice group needs access to M&amp;A matter documents during business hours from the firm&#39;s network. RBAC can tell you they&#39;re an associate. It cannot tell you they&#39;re in M</p>
 </div>
 
 <!-- Article -->
@@ -76,41 +76,55 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 24: ABAC and Policy Engines</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">When Roles Are Not Enough</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 23](../ep23/article.md), we built a role-based access control model with five or six roles: Firm Admin, Partner, Associate, Paralegal, Client Viewer. That covers 80% of access decisions. This episode is about the other 20% &mdash; the decisions where a role alone doesn&#39;t carry enough information.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 23, we built a role-based access control model with five or six roles: Firm Admin, Partner, Associate, Paralegal, Client Viewer. That covers 80% of access decisions. This episode is about the other 20% &mdash; the decisions where a role alone doesn&#39;t carry enough information.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Consider this scenario: an associate in the M&amp;A practice group needs access to M&amp;A matter documents during business hours from the firm&#39;s network. RBAC can tell you they&#39;re an associate. It cannot tell you they&#39;re in M&amp;A, that the document is tagged as M&amp;A, that it&#39;s currently 2pm on a Tuesday, or that they&#39;re connecting from the office VPN. For those decisions, you need <strong class="text-ink">Attribute-Based Access Control</strong> &mdash; ABAC.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Is ABAC?</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ABAC makes access decisions based on <strong class="text-ink">attributes</strong> &mdash; properties of the user, the resource, the action, and the environment. Instead of a static role-to-permission mapping, ABAC evaluates a policy that considers multiple attributes at decision time.[^1]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ABAC makes access decisions based on <strong class="text-ink">attributes</strong> &mdash; properties of the user, the resource, the action, and the environment. Instead of a static role-to-permission mapping, ABAC evaluates a policy that considers multiple attributes at decision time.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The four attribute categories:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Category | Examples in Legal SaaS |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|----------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Subject attributes</strong> | User&#39;s role, department, practice group, seniority, bar admission status |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Resource attributes</strong> | Matter type (litigation, M&amp;A, IP), confidentiality level, client name, jurisdiction |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Action attributes</strong> | Read, write, delete, export, share externally |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Environment attributes</strong> | Time of day, network location (office VPN vs. public wifi), device compliance status |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Category</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples in Legal SaaS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Subject attributes</strong></td>
+                <td class="py-3 px-4">User&#39;s role, department, practice group, seniority, bar admission status</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Resource attributes</strong></td>
+                <td class="py-3 px-4">Matter type (litigation, M&amp;A, IP), confidentiality level, client name, jurisdiction</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Action attributes</strong></td>
+                <td class="py-3 px-4">Read, write, delete, export, share externally</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Environment attributes</strong></td>
+                <td class="py-3 px-4">Time of day, network location (office VPN vs. public wifi), device compliance status</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An ABAC policy combines these attributes into rules:</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Allow</strong> if subject.department = &quot;M&amp;A&quot; AND resource.matter_type = &quot;M&amp;A&quot; AND action = &quot;read&quot; AND environment.time is within business_hours</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is fundamentally more expressive than RBAC. A single ABAC policy can encode what would require dozens of purpose-built roles.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is fundamentally more expressive than RBAC. A single ABAC policy can encode what would require dozens of purpose-built roles.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">RBAC + ABAC: The Practical Approach</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Pure ABAC &mdash; replacing all roles with attribute policies &mdash; is theoretically elegant but operationally complex. Most real-world systems use a hybrid approach:[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Pure ABAC &mdash; replacing all roles with attribute policies &mdash; is theoretically elegant but operationally complex. Most real-world systems use a hybrid approach:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">RBAC for broad strokes:</strong> Roles define the general permission level (Admin, Associate, Viewer)</li>
         <li><strong class="text-ink">ABAC for fine-grained decisions:</strong> Attributes refine access within a role (which matters, which document types, under what conditions)</li>
@@ -120,17 +134,17 @@
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li>RBAC determines: &quot;Associates can access matter documents&quot;</li>
         <li>ABAC refines: &quot;Associates in the litigation department can access litigation matter documents marked Confidential, during business hours, from managed devices&quot;</li>
-    </ul>
+    </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The role gets the user through the first gate. The attributes decide exactly which resources they can touch and under what conditions.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Policy Engines: Externalising Access Decisions</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Hardcoding access rules in application code &mdash; `if (user.role === &#39;admin&#39; || (user.role === &#39;associate&#39; &amp;&amp; matter.department === user.department))` &mdash; works for simple cases but becomes unmaintainable as rules multiply. <strong class="text-ink">Policy engines</strong> solve this by externalising access decisions into a dedicated service that your application queries at runtime.[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Hardcoding access rules in application code &mdash; `if (user.role === &#39;admin&#39; || (user.role === &#39;associate&#39; &amp;&amp; matter.department === user.department))` &mdash; works for simple cases but becomes unmaintainable as rules multiply. <strong class="text-ink">Policy engines</strong> solve this by externalising access decisions into a dedicated service that your application queries at runtime.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Open Policy Agent (OPA)</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Open Policy Agent](https://www.openpolicyagent.org/) is the most widely adopted general-purpose policy engine, donated to the Cloud Native Computing Foundation (CNCF) and graduated in 2021.[^5] Policies are written in <strong class="text-ink">Rego</strong>, a declarative query language:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.openpolicyagent.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Open Policy Agent</a> is the most widely adopted general-purpose policy engine, donated to the Cloud Native Computing Foundation (CNCF) and graduated in 2021. Policies are written in <strong class="text-ink">Rego</strong>, a declarative query language:</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```rego</p>
 
@@ -146,7 +160,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">OPA runs as a sidecar service alongside your application. When a user requests access to a resource, your application sends the relevant attributes to OPA, and OPA returns an allow/deny decision. The application never evaluates the policy itself &mdash; it delegates entirely to OPA.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">OPA runs as a sidecar service alongside your application. When a user requests access to a resource, your application sends the relevant attributes to OPA, and OPA returns an allow/deny decision. The application never evaluates the policy itself &mdash; it delegates entirely to OPA.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Strengths:</strong> Language-agnostic (works with any backend), extensive ecosystem, Kubernetes-native, well-tested in production at large scale.</p>
 
@@ -154,7 +168,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">AWS Cedar</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Cedar](https://www.cedarpolicy.com/) is AWS&#39;s purpose-built authorisation policy language and engine, open-sourced in 2023 and used in production by Amazon Verified Permissions.[^6] Cedar was explicitly designed for application-level authorisation &mdash; it&#39;s more specialised than OPA&#39;s general-purpose approach:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.cedarpolicy.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cedar</a> is AWS&#39;s purpose-built authorisation policy language and engine, open-sourced in 2023 and used in production by Amazon Verified Permissions. Cedar was explicitly designed for application-level authorisation &mdash; it&#39;s more specialised than OPA&#39;s general-purpose approach:</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```cedar</p>
 
@@ -180,31 +194,47 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Google Zanzibar / OpenFGA</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Zanzibar](https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/) is Google&#39;s internal authorisation system, handling trillions of access checks per second for Google Drive, YouTube, and Google Cloud.[^7] [OpenFGA](https://openfga.dev/) is the open-source implementation. Unlike OPA and Cedar, Zanzibar uses a <strong class="text-ink">relationship-based</strong> model &mdash; access is determined by the relationships between users and resources (e.g., &quot;Alice is an editor of Document X&quot; or &quot;Alice is a member of Team Y which owns Matter Z&quot;).[^8]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zanzibar</a> is Google&#39;s internal authorisation system, handling trillions of access checks per second for Google Drive, YouTube, and Google Cloud. <a href="https://openfga.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OpenFGA</a> is the open-source implementation. Unlike OPA and Cedar, Zanzibar uses a <strong class="text-ink">relationship-based</strong> model &mdash; access is determined by the relationships between users and resources (e.g., &quot;Alice is an editor of Document X&quot; or &quot;Alice is a member of Team Y which owns Matter Z&quot;).</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Strengths:</strong> Exceptional performance at scale. Natural fit for document sharing and collaboration models. Strong consistency guarantees.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tradeoffs:</strong> The relationship model is different from traditional RBAC/ABAC thinking &mdash; requires rethinking how you model access.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Comparison summary from AWS and Teleport security benchmarks:</strong> OPA is best for general-purpose policy across infrastructure and applications. Cedar excels at application-level authorisation with formal verification. Zanzibar/OpenFGA is optimal for relationship-heavy models like document sharing.[^9]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Comparison summary from AWS and Teleport security benchmarks:</strong> OPA is best for general-purpose policy across infrastructure and applications. Cedar excels at application-level authorisation with formal verification. Zanzibar/OpenFGA is optimal for relationship-heavy models like document sharing.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Performance: Policy Evaluation at Scale</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal SaaS platforms evaluate authorisation decisions on every API request &mdash; potentially thousands per second during peak usage. Policy engine performance is a real concern:[^10]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal SaaS platforms evaluate authorisation decisions on every API request &mdash; potentially thousands per second during peak usage. Policy engine performance is a real concern:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Consideration</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Guidance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Caching</strong></td>
+                <td class="py-3 px-4">Cache policy decisions for identical inputs (same user, same resource, same action). Invalidate on role changes</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Data locality</strong></td>
+                <td class="py-3 px-4">Keep frequently-used attributes (user role, matter assignments) in the policy engine&#39;s data store, not fetched per-request from a remote database</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Policy complexity</strong></td>
+                <td class="py-3 px-4">Simpler policies evaluate faster. Avoid deeply nested conditions or external data calls in hot paths</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Bulk evaluation</strong></td>
+                <td class="py-3 px-4">When loading a matter list, evaluate access for all matters in one batch call rather than one-per-matter</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Consideration | Guidance |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------------|----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Caching</strong> | Cache policy decisions for identical inputs (same user, same resource, same action). Invalidate on role changes |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data locality</strong> | Keep frequently-used attributes (user role, matter assignments) in the policy engine&#39;s data store, not fetched per-request from a remote database |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Policy complexity</strong> | Simpler policies evaluate faster. Avoid deeply nested conditions or external data calls in hot paths |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Bulk evaluation</strong> | When loading a matter list, evaluate access for all matters in one batch call rather than one-per-matter |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A well-configured OPA instance can evaluate policies in <strong class="text-ink">sub-millisecond time</strong> for typical authorisation queries. Cedar was benchmarked by AWS at similar performance. The overhead of a policy engine call is negligible compared to a database query.[^5][^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A well-configured OPA instance can evaluate policies in <strong class="text-ink">sub-millisecond time</strong> for typical authorisation queries. Cedar was benchmarked by AWS at similar performance. The overhead of a policy engine call is negligible compared to a database query.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Context: Where ABAC Shines</h2>
 
@@ -222,37 +252,35 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The AuthZEN Standard</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The industry is converging on standardised interfaces for policy engines. [AuthZEN](https://openid.net/wg/authzen/), an OpenID Foundation working group, is developing a standard API for authorisation &mdash; a single interface that works regardless of whether the backend is OPA, Cedar, OpenFGA, or a custom engine.[^11] For legal SaaS builders, this means you can adopt a policy engine today without permanent vendor lock-in.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The industry is converging on standardised interfaces for policy engines. <a href="https://openid.net/wg/authzen/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AuthZEN</a>, an OpenID Foundation working group, is developing a standard API for authorisation &mdash; a single interface that works regardless of whether the backend is OPA, Cedar, OpenFGA, or a custom engine. For legal SaaS builders, this means you can adopt a policy engine today without permanent vendor lock-in.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 25 covers <strong class="text-ink">Ethical Walls and Matter-Scoped Access</strong> &mdash; the legal profession&#39;s specific access control requirement where two partners in the same firm may be on opposite sides of the same deal, and your software must enforce the barrier.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: NIST, [SP 800-162: Guide to Attribute Based Access Control (ABAC)](https://csrc.nist.gov/pubs/sp/800/162/final) &mdash; the NIST ABAC standard.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/162/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-162: Guide to Attribute Based Access Control (ABAC)</a> &mdash; the NIST ABAC standard.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: CNCF, [Love, Hate, and Policy Languages: An Introduction to Decision-Making Engines](https://www.cncf.io/blog/2024/05/21/love-hate-and-policy-languages-an-introduction-to-decision-making-engines/) &mdash; comparison of policy approaches (May 2024).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CNCF, <a href="https://www.cncf.io/blog/2024/05/21/love-hate-and-policy-languages-an-introduction-to-decision-making-engines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Love, Hate, and Policy Languages: An Introduction to Decision-Making Engines</a> &mdash; comparison of policy approaches (May 2024).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Oso, [OPA vs Cedar vs Zanzibar: 2025 Policy Engine Guide](https://www.osohq.com/learn/opa-vs-cedar-vs-zanzibar) &mdash; comparative analysis of leading policy engines.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Oso, <a href="https://www.osohq.com/learn/opa-vs-cedar-vs-zanzibar" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OPA vs Cedar vs Zanzibar: 2025 Policy Engine Guide</a> &mdash; comparative analysis of leading policy engines.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Permit.io, [Policy Engines: Open Policy Agent vs AWS Cedar vs Google Zanzibar](https://www.permit.io/blog/policy-engines) &mdash; architectural comparison.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Permit.io, <a href="https://www.permit.io/blog/policy-engines" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Policy Engines: Open Policy Agent vs AWS Cedar vs Google Zanzibar</a> &mdash; architectural comparison.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Open Policy Agent, [OPA Documentation](https://www.openpolicyagent.org/docs/latest/) &mdash; official OPA documentation and Rego language reference.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Open Policy Agent, <a href="https://www.openpolicyagent.org/docs/latest/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OPA Documentation</a> &mdash; official OPA documentation and Rego language reference.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: AWS, [Cedar Policy Language](https://www.cedarpolicy.com/) &mdash; Cedar documentation and formal verification details.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://www.cedarpolicy.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cedar Policy Language</a> &mdash; Cedar documentation and formal verification details.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Google Research, [Zanzibar: Google&#39;s Consistent, Global Authorization System](https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/) &mdash; original Zanzibar paper (2019).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Google Research, <a href="https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zanzibar: Google's Consistent, Global Authorization System</a> &mdash; original Zanzibar paper (2019).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: OpenFGA, [OpenFGA Documentation](https://openfga.dev/) &mdash; open-source Zanzibar implementation.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OpenFGA, <a href="https://openfga.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OpenFGA Documentation</a> &mdash; open-source Zanzibar implementation.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Teleport, [Security Benchmarking Authorization Policy Engines](https://goteleport.com/blog/benchmarking-policy-languages/) &mdash; comparative security analysis of Rego, Cedar, and OpenFGA.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Teleport, <a href="https://goteleport.com/blog/benchmarking-policy-languages/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Benchmarking Authorization Policy Engines</a> &mdash; comparative security analysis of Rego, Cedar, and OpenFGA.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Auth0, [Understanding ReBAC and ABAC Through OpenFGA and Cedar](https://auth0.com/blog/rebac-abac-openfga-cedar/) &mdash; relationship-based vs. attribute-based models.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Auth0, <a href="https://auth0.com/blog/rebac-abac-openfga-cedar/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding ReBAC and ABAC Through OpenFGA and Cedar</a> &mdash; relationship-based vs. attribute-based models.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Nordic APIs, [AuthZEN: A New Standard for Fine-Grained Authorization](https://nordicapis.com/authzen-a-new-standard-for-fine-grained-authorization/) &mdash; the emerging authorisation API standard.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Nordic APIs, <a href="https://nordicapis.com/authzen-a-new-standard-for-fine-grained-authorization/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AuthZEN: A New Standard for Fine-Grained Authorization</a> &mdash; the emerging authorisation API standard.</p>
 
 </article>
 
@@ -267,67 +295,67 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 24 &mdash; ABAC and policy engines. Alice, last episode we built a role-based access control model with about five or six roles. You said that covers 80 percent of access decisions. Today is about the other 20 percent?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 24 &mdash; ABAC and policy engines. Alice, last episode we built a role-based access control model with about five or six roles. You said that covers 80 percent of access decisions. Today is about the other 20 percent?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Here&#39;s the scenario that breaks pure RBAC. You have an associate in the M&amp;A practice group. They should be able to read M&amp;A matter documents &mdash; but not litigation documents, even though they have the same &quot;Associate&quot; role as someone in the litigation group. RBAC says &quot;associates can read documents.&quot; But it can&#39;t say &quot;associates can read documents in their own practice group, during business hours, from a managed device.&quot; That&#39;s where ABAC comes in &mdash; Attribute-Based Access Control.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Here&#39;s the scenario that breaks pure RBAC. You have an associate in the M&amp;A practice group. They should be able to read M&amp;A matter documents &mdash; but not litigation documents, even though they have the same &quot;Associate&quot; role as someone in the litigation group. RBAC says &quot;associates can read documents.&quot; But it can&#39;t say &quot;associates can read documents in their own practice group, during business hours, from a managed device.&quot; That&#39;s where ABAC comes in &mdash; Attribute-Based Access Control.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So instead of just checking the role, you&#39;re checking a bunch of properties?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So instead of just checking the role, you&#39;re checking a bunch of properties?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. ABAC evaluates four categories of attributes when making an access decision. Subject attributes &mdash; that&#39;s about the user. Their role, their department, their practice group, their seniority. Resource attributes &mdash; that&#39;s about the thing they&#39;re trying to access. Is this document tagged as M&amp;A or litigation? What confidentiality tier is it? Action attributes &mdash; are they trying to read it, edit it, download it, share it externally? And environment attributes &mdash; what time is it, are they on the office network or public wifi, is their device managed by the firm&#39;s IT?&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Right. ABAC evaluates four categories of attributes when making an access decision. Subject attributes &mdash; that&#39;s about the user. Their role, their department, their practice group, their seniority. Resource attributes &mdash; that&#39;s about the thing they&#39;re trying to access. Is this document tagged as M&amp;A or litigation? What confidentiality tier is it? Action attributes &mdash; are they trying to read it, edit it, download it, share it externally? And environment attributes &mdash; what time is it, are they on the office network or public wifi, is their device managed by the firm&#39;s IT?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So an ABAC policy might say something like: allow access if the user&#39;s department matches the document&#39;s practice group, the action is read, and they&#39;re on the VPN.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So an ABAC policy might say something like: allow access if the user&#39;s department matches the document&#39;s practice group, the action is read, and they&#39;re on the VPN.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And the practical approach is to combine RBAC and ABAC. Use roles for the broad strokes &mdash; the role gets you through the first gate. Then use attributes for the fine-grained decisions within that role. The role says &quot;you&#39;re an associate, you can access matter documents.&quot; The attributes say &quot;specifically, you can access M&amp;A documents tagged up to Confidential level, from a managed device.&quot;&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And the practical approach is to combine RBAC and ABAC. Use roles for the broad strokes &mdash; the role gets you through the first gate. Then use attributes for the fine-grained decisions within that role. The role says &quot;you&#39;re an associate, you can access matter documents.&quot; The attributes say &quot;specifically, you can access M&amp;A documents tagged up to Confidential level, from a managed device.&quot;</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. But where do these policies actually live? You&#39;re not hardcoding all of this in your application, right?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. But where do these policies actually live? You&#39;re not hardcoding all of this in your application, right?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;No &mdash; and that&#39;s where policy engines come in. A policy engine is a separate service that your application queries whenever it needs to make an access decision. Your application sends the attributes &mdash; who&#39;s asking, what they want, under what conditions &mdash; and the engine evaluates the policy and returns allow or deny. The rules live outside your application code, which means you can update policies without redeploying your application.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> No &mdash; and that&#39;s where policy engines come in. A policy engine is a separate service that your application queries whenever it needs to make an access decision. Your application sends the attributes &mdash; who&#39;s asking, what they want, under what conditions &mdash; and the engine evaluates the policy and returns allow or deny. The rules live outside your application code, which means you can update policies without redeploying your application.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So what are the main options?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. So what are the main options?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three big ones. First is Open Policy Agent &mdash; OPA. It&#39;s the most widely adopted, it&#39;s a graduated project in the Cloud Native Computing Foundation, and it&#39;s been in production at large scale since about 2018. You write policies in a language called Rego. OPA is general-purpose &mdash; you can use it for authorisation, but also for Kubernetes admission control, API gateway policies, infrastructure compliance. It&#39;s very powerful.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three big ones. First is Open Policy Agent &mdash; OPA. It&#39;s the most widely adopted, it&#39;s a graduated project in the Cloud Native Computing Foundation, and it&#39;s been in production at large scale since about 2018. You write policies in a language called Rego. OPA is general-purpose &mdash; you can use it for authorisation, but also for Kubernetes admission control, API gateway policies, infrastructure compliance. It&#39;s very powerful.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And the second?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. And the second?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Cedar &mdash; developed by AWS and open-sourced in 2023. Cedar is purpose-built for application-level authorisation. It&#39;s more specialised than OPA. The syntax is more readable for authorisation rules, and it has a key feature that lawyers should appreciate &mdash; formal verification. Cedar&#39;s type system can mathematically prove that certain policy configurations are correct. You can verify, before deploying, that no combination of attributes will accidentally grant admin access to a regular user.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Cedar &mdash; developed by AWS and open-sourced in 2023. Cedar is purpose-built for application-level authorisation. It&#39;s more specialised than OPA. The syntax is more readable for authorisation rules, and it has a key feature that lawyers should appreciate &mdash; formal verification. Cedar&#39;s type system can mathematically prove that certain policy configurations are correct. You can verify, before deploying, that no combination of attributes will accidentally grant admin access to a regular user.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;That&#39;s interesting &mdash; formal proof of correctness. What&#39;s the third?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&#39;s interesting &mdash; formal proof of correctness. What&#39;s the third?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Google Zanzibar, or more practically its open-source implementation called OpenFGA. Zanzibar is the system Google uses internally &mdash; it handles access checks for Google Drive, YouTube, Google Cloud. The model is fundamentally different. Instead of evaluating attributes, it checks relationships. &quot;Alice is an editor of Document X.&quot; &quot;Alice is a member of Team Y, and Team Y owns Matter Z.&quot; It&#39;s incredibly fast at scale because relationship lookups are simpler than arbitrary policy evaluation.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Google Zanzibar, or more practically its open-source implementation called OpenFGA. Zanzibar is the system Google uses internally &mdash; it handles access checks for Google Drive, YouTube, Google Cloud. The model is fundamentally different. Instead of evaluating attributes, it checks relationships. &quot;Alice is an editor of Document X.&quot; &quot;Alice is a member of Team Y, and Team Y owns Matter Z.&quot; It&#39;s incredibly fast at scale because relationship lookups are simpler than arbitrary policy evaluation.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Which one should someone building legal SaaS pick?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Which one should someone building legal SaaS pick?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It depends on your access model. If your primary pattern is &quot;users belong to practice groups and need access to matters within those groups&quot; &mdash; that&#39;s a relationship model, and Zanzibar or OpenFGA is a natural fit. If you need complex conditional logic &mdash; time-based access, jurisdiction restrictions, confidentiality tiers &mdash; OPA or Cedar gives you more expressive power. For most legal SaaS platforms, I&#39;d lean toward Cedar for application-level authorisation. The formal verification alone is worth the trade-off of a smaller ecosystem.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It depends on your access model. If your primary pattern is &quot;users belong to practice groups and need access to matters within those groups&quot; &mdash; that&#39;s a relationship model, and Zanzibar or OpenFGA is a natural fit. If you need complex conditional logic &mdash; time-based access, jurisdiction restrictions, confidentiality tiers &mdash; OPA or Cedar gives you more expressive power. For most legal SaaS platforms, I&#39;d lean toward Cedar for application-level authorisation. The formal verification alone is worth the trade-off of a smaller ecosystem.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Let me ask about performance. If every API request has to call out to a policy engine, doesn&#39;t that add latency?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Let me ask about performance. If every API request has to call out to a policy engine, doesn&#39;t that add latency?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; This is one of those concerns that sounds reasonable but doesn&#39;t hold up in practice. A well-configured OPA instance evaluates typical authorisation queries in under a millisecond. Cedar benchmarks similarly. Compare that to the 5 to 50 milliseconds your database query takes, and the policy evaluation is basically free. The key is keeping frequently-used attributes &mdash; user roles, matter assignments &mdash; loaded in the policy engine&#39;s local data store, so you&#39;re not making network calls to look them up on every request.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; This is one of those concerns that sounds reasonable but doesn&#39;t hold up in practice. A well-configured OPA instance evaluates typical authorisation queries in under a millisecond. Cedar benchmarks similarly. Compare that to the 5 to 50 milliseconds your database query takes, and the policy evaluation is basically free. The key is keeping frequently-used attributes &mdash; user roles, matter assignments &mdash; loaded in the policy engine&#39;s local data store, so you&#39;re not making network calls to look them up on every request.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What about caching?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. What about caching?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You can cache decisions for identical inputs &mdash; same user, same resource, same action. Invalidate the cache when roles change or matter assignments update. But be careful with time-based policies. If access expires at 5pm, the cache needs to respect that. The standard pattern is a short TTL &mdash; a few seconds &mdash; for time-sensitive policies, and longer TTLs for stable ones like role membership.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> You can cache decisions for identical inputs &mdash; same user, same resource, same action. Invalidate the cache when roles change or matter assignments update. But be careful with time-based policies. If access expires at 5pm, the cache needs to respect that. The standard pattern is a short TTL &mdash; a few seconds &mdash; for time-sensitive policies, and longer TTLs for stable ones like role membership.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Give me a real legal scenario where ABAC makes a difference that pure RBAC can&#39;t handle.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. Give me a real legal scenario where ABAC makes a difference that pure RBAC can&#39;t handle.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Deal room access. A corporate M&amp;A team gets access to due diligence documents for 90 days. After the deal closes, access automatically expires. RBAC can give them the &quot;deal team member&quot; role. But only an environment attribute &mdash; current date compared to the deal&#39;s expiry date &mdash; can automatically revoke access when the window closes. Without ABAC, someone has to remember to manually remove access after every deal. With ABAC, the policy handles it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Deal room access. A corporate M&amp;A team gets access to due diligence documents for 90 days. After the deal closes, access automatically expires. RBAC can give them the &quot;deal team member&quot; role. But only an environment attribute &mdash; current date compared to the deal&#39;s expiry date &mdash; can automatically revoke access when the window closes. Without ABAC, someone has to remember to manually remove access after every deal. With ABAC, the policy handles it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Another one?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Another one?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Document export controls. Reading a document internally is one thing. Downloading it or emailing it outside the firm is another. ABAC can require a different approval attribute for export actions. The user has permission to read &mdash; but to download, they need an additional approval flag from the supervising partner. Same user, same document, different action &mdash; different policy outcome.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Document export controls. Reading a document internally is one thing. Downloading it or emailing it outside the firm is another. ABAC can require a different approval attribute for export actions. The user has permission to read &mdash; but to download, they need an additional approval flag from the supervising partner. Same user, same document, different action &mdash; different policy outcome.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Quick summary &mdash; RBAC for the broad strokes, ABAC for the fine grain. Externalise your policies into an engine like OPA, Cedar, or OpenFGA instead of hardcoding them.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Quick summary &mdash; RBAC for the broad strokes, ABAC for the fine grain. Externalise your policies into an engine like OPA, Cedar, or OpenFGA instead of hardcoding them.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And one more thing &mdash; the industry is converging on a standard API for authorisation called AuthZEN, from the OpenID Foundation. It means you can pick a policy engine today and swap it later without rewriting your application. The interface stays the same.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And one more thing &mdash; the industry is converging on a standard API for authorisation called AuthZEN, from the OpenID Foundation. It means you can pick a policy engine today and swap it later without rewriting your application. The interface stays the same.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Ethical Walls and Matter-Scoped Access. When two partners in the same firm are on opposite sides of the same deal.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Ethical Walls and Matter-Scoped Access. When two partners in the same firm are on opposite sides of the same deal.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

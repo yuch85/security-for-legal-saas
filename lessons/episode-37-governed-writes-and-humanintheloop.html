@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">In [Episode 36](../ep36/article.md), we examined how models can leak training data through inference attacks. This episode addresses a different risk entirely: what happens when AI doesn&#39;t just analyse &mdash; it acts. The principle is simple: AI systems in legal practice should propose, never dispose. They can draft a contract clause, suggest edits to a brief, classify a document, or flag a compliance risk. But filing a court document, sending a client communication, modifying a matter record, or exe</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">In Episode 36, we examined how models can leak training data through inference attacks. This episode addresses a different risk entirely: what happens when AI doesn&#39;t just analyse &mdash; it acts. The principle is simple: AI systems in legal practice should propose, never dispose. They can draft a contract clause, suggest edits to a brief, classify a document, or flag a compliance risk. But filing a court document, sending a client communication, modifying a matter record, or executing a financial tra</p>
 </div>
 
 <!-- Article -->
@@ -76,11 +76,9 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 37: Governed Writes and Human-in-the-Loop</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">AI Proposes, Humans Dispose</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 36](../ep36/article.md), we examined how models can leak training data through inference attacks. This episode addresses a different risk entirely: what happens when AI doesn&#39;t just analyse &mdash; it acts.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 36, we examined how models can leak training data through inference attacks. This episode addresses a different risk entirely: what happens when AI doesn&#39;t just analyse &mdash; it acts.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The principle is simple: AI systems in legal practice should propose, never dispose. They can draft a contract clause, suggest edits to a brief, classify a document, or flag a compliance risk. But filing a court document, sending a client communication, modifying a matter record, or executing a financial transaction &mdash; those actions must require a human professional to review, approve, and take responsibility.</p>
 
@@ -90,29 +88,53 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Professional Responsibility Demands Human Judgment</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ABA Formal Opinion 512, issued in July 2024, is the American Bar Association&#39;s first comprehensive ethics guidance on generative AI in legal practice. It makes the obligation explicit: &quot;GAI tools lack the ability to understand the meaning of the text they generate or evaluate its context, and therefore are not a substitute for the independent professional judgment a lawyer must exercise.&quot;[^1]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ABA Formal Opinion 512, issued in July 2024, is the American Bar Association&#39;s first comprehensive ethics guidance on generative AI in legal practice. It makes the obligation explicit: &quot;GAI tools lack the ability to understand the meaning of the text they generate or evaluate its context, and therefore are not a substitute for the independent professional judgment a lawyer must exercise.&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The Opinion addresses several Model Rules:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Model Rule</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Requirement</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">AI Implication</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Rule 1.1 (Competence)</strong></td>
+                <td class="py-3 px-4">Lawyer must provide competent representation</td>
+                <td class="py-3 px-4">Lawyer must understand AI tool&#39;s capabilities and limitations</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Rule 1.4 (Communication)</strong></td>
+                <td class="py-3 px-4">Keep client informed of case status</td>
+                <td class="py-3 px-4">Client must know when AI is being used in their matter</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Rule 1.6 (Confidentiality)</strong></td>
+                <td class="py-3 px-4">Protect client information</td>
+                <td class="py-3 px-4">AI tool&#39;s data handling must preserve confidentiality</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Rule 3.3 (Candor)</strong></td>
+                <td class="py-3 px-4">Duty of candor toward the tribunal</td>
+                <td class="py-3 px-4">Lawyer must verify all AI-generated citations and analysis</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Rule 5.1/5.3 (Supervision)</strong></td>
+                <td class="py-3 px-4">Partners must supervise subordinates</td>
+                <td class="py-3 px-4">AI tool use requires supervisory frameworks</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Model Rule | Requirement | AI Implication |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------------|-------------|----------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Rule 1.1 (Competence)</strong> | Lawyer must provide competent representation | Lawyer must understand AI tool&#39;s capabilities and limitations |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Rule 1.4 (Communication)</strong> | Keep client informed of case status | Client must know when AI is being used in their matter |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Rule 1.6 (Confidentiality)</strong> | Protect client information | AI tool&#39;s data handling must preserve confidentiality |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Rule 3.3 (Candor)</strong> | Duty of candor toward the tribunal | Lawyer must verify all AI-generated citations and analysis |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Rule 5.1/5.3 (Supervision)</strong> | Partners must supervise subordinates | AI tool use requires supervisory frameworks |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The EU AI Act reinforces this globally. [Article 14](https://artificialintelligenceact.eu/article/14/) requires that high-risk AI systems &mdash; which includes AI used in legal decision-making &mdash; &quot;be designed and developed in such a way that they can be effectively overseen by natural persons during the period in which they are in use.&quot;[^2] The oversight must enable humans to understand the system&#39;s capabilities, correctly interpret its output, and decide not to use the system or disregard its output.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The EU AI Act reinforces this globally. <a href="https://artificialintelligenceact.eu/article/14/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 14</a> requires that high-risk AI systems &mdash; which includes AI used in legal decision-making &mdash; &quot;be designed and developed in such a way that they can be effectively overseen by natural persons during the period in which they are in use.&quot; The oversight must enable humans to understand the system&#39;s capabilities, correctly interpret its output, and decide not to use the system or disregard its output.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Automation Bias Problem</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Automation bias &mdash; the tendency to trust automated outputs without critical evaluation &mdash; is the practical reason governed writes matter. Research consistently shows that humans over-rely on AI suggestions, especially when those suggestions are presented with apparent confidence.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Automation bias &mdash; the tendency to trust automated outputs without critical evaluation &mdash; is the practical reason governed writes matter. Research consistently shows that humans over-rely on AI suggestions, especially when those suggestions are presented with apparent confidence.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In legal AI, this manifests as:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
@@ -121,7 +143,7 @@
         <li>Approving AI-classified documents without reviewing edge cases</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: Mata v. Avianca (S.D.N.Y., 2023).</strong> Attorney Steven Schwartz submitted a brief containing six fabricated case citations generated by ChatGPT. When opposing counsel could not locate the cases, Schwartz asked ChatGPT to confirm they were real &mdash; and it did. The court sanctioned Schwartz and his firm. The failure was not in using AI; it was in treating AI output as a final product rather than a draft requiring verification.[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: Mata v. Avianca (S.D.N.Y., 2023).</strong> Attorney Steven Schwartz submitted a brief containing six fabricated case citations generated by ChatGPT. When opposing counsel could not locate the cases, Schwartz asked ChatGPT to confirm they were real &mdash; and it did. The court sanctioned Schwartz and his firm. The failure was not in using AI; it was in treating AI output as a final product rather than a draft requiring verification.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Technical Enforcement: The Draft State Pattern</h2>
 
@@ -152,30 +174,51 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every AI-generated artifact &mdash; a contract clause, a document classification, a research memo, a billing entry &mdash; enters the system in a draft state that cannot reach production without human approval. The approval event is logged with the reviewer&#39;s identity, timestamp, and the specific version reviewed.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Implementation Patterns</h3>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Pattern</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Use Case</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Approval queue</strong></td>
+                <td class="py-3 px-4">AI outputs land in a review queue; nothing progresses without explicit approval</td>
+                <td class="py-3 px-4">Court filings, client communications, regulatory submissions</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Confidence threshold</strong></td>
+                <td class="py-3 px-4">Low-confidence AI outputs require review; high-confidence outputs may proceed with lighter oversight</td>
+                <td class="py-3 px-4">Document classification, email triage</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Escalation rules</strong></td>
+                <td class="py-3 px-4">Certain output types always require senior review regardless of confidence</td>
+                <td class="py-3 px-4">Privilege designations, conflict checks, financial transactions</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Four-eyes principle</strong></td>
+                <td class="py-3 px-4">Two independent reviewers must approve before promotion to production</td>
+                <td class="py-3 px-4">High-stakes filings, M&amp;A document production</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pattern | Description | Use Case |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|-------------|----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Approval queue</strong> | AI outputs land in a review queue; nothing progresses without explicit approval | Court filings, client communications, regulatory submissions |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Confidence threshold</strong> | Low-confidence AI outputs require review; high-confidence outputs may proceed with lighter oversight | Document classification, email triage |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Escalation rules</strong> | Certain output types always require senior review regardless of confidence | Privilege designations, conflict checks, financial transactions |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Four-eyes principle</strong> | Two independent reviewers must approve before promotion to production | High-stakes filings, M&amp;A document production |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key distinction:</strong> A confidence threshold does NOT mean &quot;skip human review for confident outputs.&quot; It means &quot;route high-confidence outputs to a faster review track and low-confidence outputs to a more thorough one.&quot; Even at 99% confidence, a human must see the output before it becomes official.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key distinction:</strong> A confidence threshold does NOT mean &quot;skip human review for confident outputs.&quot; It means &quot;route high-confidence outputs to a faster review track and low-confidence outputs to a more thorough one.&quot; Even at 99% confidence, a human must see the output before it becomes official.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">What &quot;Review&quot; Actually Means</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Effective human oversight requires more than a rubber stamp. The IAPP&#39;s analysis of human-in-the-loop requirements notes that oversight fails when reviewers lack the time, training, or technical understanding to meaningfully evaluate AI outputs.[^6] For legal AI, meaningful review means:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Effective human oversight requires more than a rubber stamp. The IAPP&#39;s analysis of human-in-the-loop requirements notes that oversight fails when reviewers lack the time, training, or technical understanding to meaningfully evaluate AI outputs. For legal AI, meaningful review means:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">The reviewer can see the AI&#39;s reasoning</strong> &mdash; not just the output, but what inputs it relied on and how confident it is</li>
         <li><strong class="text-ink">The reviewer has domain expertise</strong> &mdash; a junior associate reviewing a complex derivatives clause is not meaningful oversight</li>
         <li><strong class="text-ink">The reviewer has time</strong> &mdash; if the approval queue contains 500 items and the reviewer has 30 minutes, oversight is theatrical</li>
         <li><strong class="text-ink">The reviewer can reject without friction</strong> &mdash; if rejecting an AI output requires more effort than approving it, approval becomes the default</li>
-    </ul>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Specific Governed Write Scenarios in Legal SaaS</h2>
 
@@ -185,7 +228,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Client Communication</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AI-drafted emails to clients should enter an outbox that requires explicit send approval. The system should prevent scheduled auto-send of AI-generated content &mdash; every communication must pass through a human checkpoint. As ABA Formal Opinion 512 notes, boilerplate consent in engagement letters is not sufficient to authorise unrestricted AI use in client communications.[^1]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AI-drafted emails to clients should enter an outbox that requires explicit send approval. The system should prevent scheduled auto-send of AI-generated content &mdash; every communication must pass through a human checkpoint. As ABA Formal Opinion 512 notes, boilerplate consent in engagement letters is not sufficient to authorise unrestricted AI use in client communications.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Document Classification and Privilege Review</h3>
 
@@ -207,41 +250,39 @@
         <li><strong class="text-ink">Why</strong> was it escalated? (If applicable &mdash; confidence threshold, document type, matter sensitivity)</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This audit trail is not optional. It is the evidence that human oversight actually occurred, and it must be [tamper-evident](../ep42/article.md) &mdash; a topic we will cover in Episode 42.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This audit trail is not optional. It is the evidence that human oversight actually occurred, and it must be tamper-evident &mdash; a topic we will cover in Episode 42.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Harvard Standard for AI Oversight Liability</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A 2024 Harvard Journal of Law &amp; Technology analysis proposed redefining the standard of human oversight for AI negligence. The argument: if a professional claims to have &quot;overseen&quot; an AI system but the audit trail shows they approved 200 outputs in 15 minutes without opening any of them, the oversight was illusory, and the professional bears the same liability as if no oversight occurred.[^7] Meaningful oversight leaves a forensic trail that can withstand scrutiny.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A 2024 Harvard Journal of Law &amp; Technology analysis proposed redefining the standard of human oversight for AI negligence. The argument: if a professional claims to have &quot;overseen&quot; an AI system but the audit trail shows they approved 200 outputs in 15 minutes without opening any of them, the oversight was illusory, and the professional bears the same liability as if no oversight occurred. Meaningful oversight leaves a forensic trail that can withstand scrutiny.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 38 covers <strong class="text-ink">LLM API Key Isolation and Inference Gateways</strong> &mdash; how to manage the API keys that connect your legal AI to cloud providers like OpenAI and Anthropic, and why a single leaked key can cost you more than a data breach.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: ABA, [Formal Opinion 512: Generative Artificial Intelligence Tools](https://www.americanbar.org/news/abanews/aba-news-archives/2024/07/aba-issues-first-ethics-guidance-ai-tools/) (July 2024).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/news/abanews/aba-news-archives/2024/07/aba-issues-first-ethics-guidance-ai-tools/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 512: Generative Artificial Intelligence Tools</a> (July 2024).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: EU AI Act, [Article 14: Human Oversight](https://artificialintelligenceact.eu/article/14/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: EU AI Act, <a href="https://artificialintelligenceact.eu/article/14/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 14: Human Oversight</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Strata.io, [Human-in-the-Loop: A 2026 Guide to AI Oversight](https://www.strata.io/blog/agentic-identity/practicing-the-human-in-the-loop/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Strata.io, <a href="https://www.strata.io/blog/agentic-identity/practicing-the-human-in-the-loop/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Human-in-the-Loop: A 2026 Guide to AI Oversight</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Mata v. Avianca, Inc., No. 22-cv-1461 (S.D.N.Y. June 22, 2023) &mdash; sanctions for AI-fabricated citations.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Mata v. Avianca, Inc., No. 22-cv-1461 (S.D.N.Y. June 22, 2023) &mdash; sanctions for AI-fabricated citations.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: IBM, [What Is Human In The Loop (HITL)?](https://www.ibm.com/think/topics/human-in-the-loop).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IBM, <a href="https://www.ibm.com/think/topics/human-in-the-loop" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Is Human In The Loop (HITL)?</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: IAPP, [&#39;Human in the Loop&#39; in AI Risk Management &mdash; Not a Cure-All Approach](https://iapp.org/news/a/-human-in-the-loop-in-ai-risk-management-not-a-cure-all-approach).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IAPP, <a href="https://iapp.org/news/a/-human-in-the-loop-in-ai-risk-management-not-a-cure-all-approach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">'Human in the Loop' in AI Risk Management — Not a Cure-All Approach</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Harvard Journal of Law &amp; Technology, [Redefining the Standard of Human Oversight for AI Negligence](https://jolt.law.harvard.edu/digest/redefining-the-standard-of-human-oversight-for-ai-negligence).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Harvard Journal of Law &amp; Technology, <a href="https://jolt.law.harvard.edu/digest/redefining-the-standard-of-human-oversight-for-ai-negligence" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redefining the Standard of Human Oversight for AI Negligence</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Trilateral Research, [Human-in-the-Loop AI Balances Automation and Accountability](https://trilateralresearch.com/responsible-ai/human-in-the-loop-ai-balances-automation-and-accountability).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Trilateral Research, <a href="https://trilateralresearch.com/responsible-ai/human-in-the-loop-ai-balances-automation-and-accountability" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Human-in-the-Loop AI Balances Automation and Accountability</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Kiteworks, [Human in the Loop: AI Compliance and Oversight Requirements](https://www.kiteworks.com/regulatory-compliance/human-in-the-loop-ai-compliance/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Kiteworks, <a href="https://www.kiteworks.com/regulatory-compliance/human-in-the-loop-ai-compliance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Human in the Loop: AI Compliance and Oversight Requirements</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: NYC Bar, [Formal Opinion 2024-5: Generative AI in the Practice of Law](https://www.nycbar.org/reports/formal-opinion-2024-5-generative-ai-in-the-practice-of-law/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NYC Bar, <a href="https://www.nycbar.org/reports/formal-opinion-2024-5-generative-ai-in-the-practice-of-law/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 2024-5: Generative AI in the Practice of Law</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Small Wars Journal, [Human-in-the-Loop or Loophole? Targeting AI and Legal Accountability](https://smallwarsjournal.com/2026/03/11/human-in-the-loop/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Small Wars Journal, <a href="https://smallwarsjournal.com/2026/03/11/human-in-the-loop/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Human-in-the-Loop or Loophole? Targeting AI and Legal Accountability</a>.</p>
 
 </article>
 
@@ -256,61 +297,55 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Governed Writes and Human-in-the-Loop</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 37 &mdash; governed writes and human-in-the-loop. Alice, this sounds like it&#39;s about keeping humans in charge when AI is doing the work?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s exactly it. The core principle is: AI proposes, humans dispose. Your AI can draft a contract clause, suggest edits to a brief, classify a document, even flag a compliance risk. But it should never, on its own, file something with a court, send an email to a client, or modify a legal record. A human professional has to review it, approve it, and take responsibility for it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That sounds like common sense, but I&#39;m guessing there&#39;s more to it than just telling people &quot;always review the AI output&quot;?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 37 &mdash; governed writes and human-in-the-loop. Alice, this sounds like it&#39;s about keeping humans in charge when AI is doing the work?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> There&#39;s a lot more. Because telling people isn&#39;t enough. The ABA issued Formal Opinion 512 in July 2024 &mdash; the first comprehensive ethics guidance on generative AI in legal practice. It&#39;s very clear: AI tools &quot;lack the ability to understand the meaning of the text they generate&quot; and are &quot;not a substitute for the independent professional judgment a lawyer must exercise.&quot; The lawyer remains responsible. That&#39;s not a suggestion &mdash; it&#39;s an ethical obligation under multiple Model Rules. Competence, confidentiality, candor to the tribunal, supervision of subordinates. They all apply.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s exactly it. The core principle is: AI proposes, humans dispose. Your AI can draft a contract clause, suggest edits to a brief, classify a document, even flag a compliance risk. But it should never, on its own, file something with a court, send an email to a client, or modify a legal record. A human professional has to review it, approve it, and take responsibility for it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And then there&#39;s the EU AI Act as well?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That sounds like common sense, but I&#39;m guessing there&#39;s more to it than just telling people &quot;always review the AI output&quot;?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Article 14 of the EU AI Act requires that high-risk AI systems &mdash; and legal decision-making qualifies &mdash; be designed so that humans can effectively oversee them. Not theoretically. Effectively. That means the human must be able to understand the system&#39;s capabilities, correctly interpret its output, and &mdash; this is the key part &mdash; decide not to use it or override it. If the system doesn&#39;t make it easy to say &quot;no, that&#39;s wrong,&quot; the oversight is meaningless.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;There&#39;s a lot more. Because telling people isn&#39;t enough. The ABA issued Formal Opinion 512 in July 2024 &mdash; the first comprehensive ethics guidance on generative AI in legal practice. It&#39;s very clear: AI tools &quot;lack the ability to understand the meaning of the text they generate&quot; and are &quot;not a substitute for the independent professional judgment a lawyer must exercise.&quot; The lawyer remains responsible. That&#39;s not a suggestion &mdash; it&#39;s an ethical obligation under multiple Model Rules. Competence, confidentiality, candor to the tribunal, supervision of subordinates. They all apply.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. I keep thinking about the Mata v. Avianca case. The lawyer who submitted the ChatGPT brief with the fake citations.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And then there&#39;s the EU AI Act as well?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the textbook example. Steven Schwartz used ChatGPT to draft a brief. It generated six case citations that didn&#39;t exist. When opposing counsel couldn&#39;t find them, Schwartz went back to ChatGPT and asked if the cases were real &mdash; and ChatGPT said yes. He submitted them to the court. The judge sanctioned him and his firm. The problem wasn&#39;t that he used AI. The problem was that he treated AI output as a finished product instead of a draft that needed verification.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Article 14 of the EU AI Act requires that high-risk AI systems &mdash; and legal decision-making qualifies &mdash; be designed so that humans can effectively oversee them. Not theoretically. Effectively. That means the human must be able to understand the system&#39;s capabilities, correctly interpret its output, and &mdash; this is the key part &mdash; decide not to use it or override it. If the system doesn&#39;t make it easy to say &quot;no, that&#39;s wrong,&quot; the oversight is meaningless.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. So how do you build a system that prevents that?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. I keep thinking about the Mata v. Avianca case. The lawyer who submitted the ChatGPT brief with the fake citations.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> You enforce it in the architecture, not just in policy. Everything the AI generates enters the system in a draft state. Draft means it cannot reach production &mdash; it can&#39;t be filed, it can&#39;t be sent, it can&#39;t be recorded as official &mdash; until a human reviewer explicitly approves it. The approval is a logged event with the reviewer&#39;s identity, a timestamp, and the specific version they reviewed.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the textbook example. Steven Schwartz used ChatGPT to draft a brief. It generated six case citations that didn&#39;t exist. When opposing counsel couldn&#39;t find them, Schwartz went back to ChatGPT and asked if the cases were real &mdash; and ChatGPT said yes. He submitted them to the court. The judge sanctioned him and his firm. The problem wasn&#39;t that he used AI. The problem was that he treated AI output as a finished product instead of a draft that needed verification.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So it&#39;s like tracked changes in a Word document? The AI makes suggestions, the lawyer accepts or rejects them?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So how do you build a system that prevents that?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly that model for contract review &mdash; AI-suggested redlines appear as tracked changes, and the attorney accepts, rejects, or modifies each one individually. For court filings, the AI produces a draft with citations flagged for verification, and the &quot;File&quot; button requires attorney authentication plus a certification that the filing was reviewed. For client emails, the AI draft goes to an outbox that requires explicit send approval &mdash; no scheduled auto-send of AI-generated content. Every path from AI output to the real world passes through a human checkpoint.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You enforce it in the architecture, not just in policy. Everything the AI generates enters the system in a draft state. Draft means it cannot reach production &mdash; it can&#39;t be filed, it can&#39;t be sent, it can&#39;t be recorded as official &mdash; until a human reviewer explicitly approves it. The approval is a logged event with the reviewer&#39;s identity, a timestamp, and the specific version they reviewed.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. But here&#39;s what I&#39;m wondering &mdash; what about the situations where the AI is really confident? Like, 99% confidence on a document classification. Do you still need full human review?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So it&#39;s like tracked changes in a Word document? The AI makes suggestions, the lawyer accepts or rejects them?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; This is where people get into trouble. You can use confidence thresholds to route outputs &mdash; high-confidence items go to a faster review track, low-confidence items go to more thorough review. But &quot;faster&quot; doesn&#39;t mean &quot;skip.&quot; Even at 99% confidence, a human has to see the output. Think about privilege review in document production. If your AI is 99% sure a document isn&#39;t privileged, and it auto-produces that document to opposing counsel without anyone checking, and it turns out the document was a privileged strategy memo &mdash; you cannot un-produce it. The damage is done. One percent of a ten-thousand-document review is a hundred documents. You want a hundred privileged documents slipping through?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly that model for contract review &mdash; AI-suggested redlines appear as tracked changes, and the attorney accepts, rejects, or modifies each one individually. For court filings, the AI produces a draft with citations flagged for verification, and the &quot;File&quot; button requires attorney authentication plus a certification that the filing was reviewed. For client emails, the AI draft goes to an outbox that requires explicit send approval &mdash; no scheduled auto-send of AI-generated content. Every path from AI output to the real world passes through a human checkpoint.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. Good point. So what about the quality of the review itself? Because I&#39;ve seen approval workflows where people just click &quot;approve&quot; without reading anything.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. But here&#39;s what I&#39;m wondering &mdash; what about the situations where the AI is really confident? Like, 99% confidence on a document classification. Do you still need full human review?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the automation bias problem. Humans tend to trust automated outputs, especially when the AI sounds confident. A Harvard study proposed that if a professional claims to have &quot;overseen&quot; AI output but the audit trail shows they approved 200 items in 15 minutes without opening any of them, the oversight was illusory. They should bear the same liability as if no oversight occurred at all. So meaningful review requires four things. One &mdash; the reviewer can see the AI&#39;s reasoning, not just the output. Two &mdash; the reviewer has domain expertise. A first-year associate reviewing a complex derivatives clause is not meaningful oversight. Three &mdash; the reviewer has adequate time. And four &mdash; rejecting is as easy as approving. If it takes three clicks to approve and ten clicks to reject, approval becomes the default.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; This is where people get into trouble. You can use confidence thresholds to route outputs &mdash; high-confidence items go to a faster review track, low-confidence items go to more thorough review. But &quot;faster&quot; doesn&#39;t mean &quot;skip.&quot; Even at 99% confidence, a human has to see the output. Think about privilege review in document production. If your AI is 99% sure a document isn&#39;t privileged, and it auto-produces that document to opposing counsel without anyone checking, and it turns out the document was a privileged strategy memo &mdash; you cannot un-produce it. The damage is done. One percent of a ten-thousand-document review is a hundred documents. You want a hundred privileged documents slipping through?&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that fourth point is really practical. If you make the &quot;no&quot; button harder to reach than the &quot;yes&quot; button, you&#39;ve biased the outcome.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Good point. So what about the quality of the review itself? Because I&#39;ve seen approval workflows where people just click &quot;approve&quot; without reading anything.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And the audit trail behind all of this matters enormously. Every governed write should produce a record that answers: who generated the output, which model and version, who reviewed it, when they reviewed it, what specific version they saw, and what they decided &mdash; approve, reject, or modify. If the matter ends up in litigation or a regulatory investigation, that trail is how you prove that human oversight actually happened. Without it, you&#39;re just claiming you checked.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the automation bias problem. Humans tend to trust automated outputs, especially when the AI sounds confident. A Harvard study proposed that if a professional claims to have &quot;overseen&quot; AI output but the audit trail shows they approved 200 items in 15 minutes without opening any of them, the oversight was illusory. They should bear the same liability as if no oversight occurred at all. So meaningful review requires four things. One &mdash; the reviewer can see the AI&#39;s reasoning, not just the output. Two &mdash; the reviewer has domain expertise. A first-year associate reviewing a complex derivatives clause is not meaningful oversight. Three &mdash; the reviewer has adequate time. And four &mdash; rejecting is as easy as approving. If it takes three clicks to approve and ten clicks to reject, approval becomes the default.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And that ties into the audit log episodes coming up later in the series.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that fourth point is really practical. If you make the &quot;no&quot; button harder to reach than the &quot;yes&quot; button, you&#39;ve biased the outcome.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It does &mdash; Episode 41 covers audit log design in detail, and Episode 42 covers making those logs tamper-evident with hash chains. But the key point for today is that governed writes aren&#39;t just about preventing bad AI output from reaching the world. They&#39;re about creating a defensible record that a qualified human exercised professional judgment at every decision point. That&#39;s what the regulators want. That&#39;s what the ethics rules require. And it&#39;s what protects your firm when something goes wrong &mdash; because it will, eventually.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And the audit trail behind all of this matters enormously. Every governed write should produce a record that answers: who generated the output, which model and version, who reviewed it, when they reviewed it, what specific version they saw, and what they decided &mdash; approve, reject, or modify. If the matter ends up in litigation or a regulatory investigation, that trail is how you prove that human oversight actually happened. Without it, you&#39;re just claiming you checked.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; LLM API Key Isolation and Inference Gateways. How to protect the keys that connect your AI to the cloud.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And that ties into the audit log episodes coming up later in the series.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It does &mdash; Episode 41 covers audit log design in detail, and Episode 42 covers making those logs tamper-evident with hash chains. But the key point for today is that governed writes aren&#39;t just about preventing bad AI output from reaching the world. They&#39;re about creating a defensible record that a qualified human exercised professional judgment at every decision point. That&#39;s what the regulators want. That&#39;s what the ethics rules require. And it&#39;s what protects your firm when something goes wrong &mdash; because it will, eventually.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; LLM API Key Isolation and Inference Gateways. How to protect the keys that connect your AI to the cloud.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

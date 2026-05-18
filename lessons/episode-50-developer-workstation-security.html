@@ -76,59 +76,73 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 50: Developer Workstation Security</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Softest Target on Your Network</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your production servers sit behind firewalls, intrusion detection systems (IDS &mdash; software that monitors network traffic for suspicious activity), and strict access controls. Your staging environment mirrors production security policies. But the laptop sitting on your developer&#39;s desk &mdash; the one with an SSH key to every environment, saved cloud console sessions, and a browser full of logged-in admin panels &mdash; has antivirus software from 2019 and no disk encryption.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Developer workstations have become the preferred initial access vector for sophisticated attackers. A [CSO Online analysis](https://www.csoonline.com/article/4169635/developer-workstations-are-the-new-beachhead.html) found that three unrelated threat actor groups independently converged on the same conclusion: the developer laptop offers the best return on investment for initial access, because the gap between the value of developer credentials and the maturity of the controls protecting them is enormous.[^1]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Developer workstations have become the preferred initial access vector for sophisticated attackers. A <a href="https://www.csoonline.com/article/4169635/developer-workstations-are-the-new-beachhead.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CSO Online analysis</a> found that three unrelated threat actor groups independently converged on the same conclusion: the developer laptop offers the best return on investment for initial access, because the gap between the value of developer credentials and the maturity of the controls protecting them is enormous.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The Codecov breach illustrates this perfectly. Attackers compromised Codecov&#39;s Bash Uploader script &mdash; a tool that runs in developers&#39; CI/CD pipelines (automated build and deployment systems). For two months, the [modified script silently exfiltrated environment variables](https://www.bleepingcomputer.com/news/security/hundreds-of-networks-reportedly-hacked-in-codecov-supply-chain-attack/) containing API keys, cloud credentials, and tokens from every customer who ran it.[^2] Federal investigators found the attackers used automation to leverage those stolen credentials and [tap into hundreds of downstream client networks](https://www.cybersecuritydive.com/news/codecov-breach-solarwinds-software-supply-chain/598950/).[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The Codecov breach illustrates this perfectly. Attackers compromised Codecov&#39;s Bash Uploader script &mdash; a tool that runs in developers&#39; CI/CD pipelines (automated build and deployment systems). For two months, the <a href="https://www.bleepingcomputer.com/news/security/hundreds-of-networks-reportedly-hacked-in-codecov-supply-chain-attack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">modified script silently exfiltrated environment variables</a> containing API keys, cloud credentials, and tokens from every customer who ran it. Federal investigators found the attackers used automation to leverage those stolen credentials and <a href="https://www.cybersecuritydive.com/news/codecov-breach-solarwinds-software-supply-chain/598950/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">tap into hundreds of downstream client networks</a>.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal tech team, the stakes are acute. A compromised developer workstation doesn&#39;t just expose source code &mdash; it exposes SSH keys to servers holding privileged client communications, database credentials for case management systems, and API tokens for court filing integrations.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Lives on a Developer&#39;s Machine</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Before hardening workstations, audit what&#39;s actually there. The typical legal SaaS developer&#39;s laptop contains:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Asset</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk if Compromised</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">SSH private keys</strong></td>
+                <td class="py-3 px-4">Direct access to production servers, databases, deployment pipelines</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Cloud console sessions</strong></td>
+                <td class="py-3 px-4">Browser cookies grant full AWS/GCP/Azure access without re-authentication</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Source code</strong></td>
+                <td class="py-3 px-4">Intellectual property; may contain hardcoded secrets in older commits</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">`.env` files</strong></td>
+                <td class="py-3 px-4">Database URLs, API keys, third-party service credentials in plaintext</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Browser extensions</strong></td>
+                <td class="py-3 px-4">Extensions with broad permissions can read every page, including admin consoles</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Password manager vaults</strong></td>
+                <td class="py-3 px-4">If unlocked, contains credentials for every system the developer touches</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">AI assistant history</strong></td>
+                <td class="py-3 px-4">Prompts may contain pasted credentials, architecture details, or client data</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Asset | Risk if Compromised |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|-------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SSH private keys</strong> | Direct access to production servers, databases, deployment pipelines |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cloud console sessions</strong> | Browser cookies grant full AWS/GCP/Azure access without re-authentication |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Source code</strong> | Intellectual property; may contain hardcoded secrets in older commits |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">`.env` files</strong> | Database URLs, API keys, third-party service credentials in plaintext |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Browser extensions</strong> | Extensions with broad permissions can read every page, including admin consoles |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Password manager vaults</strong> | If unlocked, contains credentials for every system the developer touches |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">AI assistant history</strong> | Prompts may contain pasted credentials, architecture details, or client data |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal-specific risk:</strong> Developers building e-discovery tools or contract review platforms may have test datasets containing real client documents on their local machines. A workstation compromise becomes a client data breach, triggering notification obligations under [ABA Formal Opinion 483](https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/) and state breach notification laws.[^4]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal-specific risk:</strong> Developers building e-discovery tools or contract review platforms may have test datasets containing real client documents on their local machines. A workstation compromise becomes a client data breach, triggering notification obligations under <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 483</a> and state breach notification laws.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Credential Theft Vectors</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Attackers don&#39;t need sophisticated exploits when developers hand them the keys. Common credential theft patterns include:</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Keyloggers and clipboard access.</strong> Malware that records keystrokes or monitors the clipboard captures passwords, TOTP codes (as we covered in [Episode 21](../ep21/article.md)), and even SSH passphrases as developers type them.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Keyloggers and clipboard access.</strong> Malware that records keystrokes or monitors the clipboard captures passwords, TOTP codes (as we covered in Episode 21), and even SSH passphrases as developers type them.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Browser session hijacking.</strong> Modern browsers keep users logged into cloud consoles for days or weeks. Malware that extracts browser cookies &mdash; stored in SQLite databases on disk &mdash; can replay those sessions from any machine without needing passwords or MFA.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Memory dumps.</strong> Tools like Mimikatz can extract credentials from process memory. If a developer has AWS CLI configured with long-lived access keys, those keys exist in memory and in `~/.aws/credentials` in plaintext.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">AI assistant leakage.</strong> Developers routinely paste code snippets, error messages, and configuration files into AI coding assistants. If those snippets include API keys or database connection strings, they may be logged by third-party servers. [NIST SP 800-218](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf) (the Secure Software Development Framework) explicitly addresses the risk of exposing sensitive data through development tooling.[^5]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">AI assistant leakage.</strong> Developers routinely paste code snippets, error messages, and configuration files into AI coding assistants. If those snippets include API keys or database connection strings, they may be logged by third-party servers. <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-218</a> (the Secure Software Development Framework) explicitly addresses the risk of exposing sensitive data through development tooling.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Browser Extension Risks</h2>
 
@@ -148,17 +162,15 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Hardening the Developer Workstation</h2>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Full Disk Encryption</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Non-negotiable. If a laptop is stolen or lost, full disk encryption (FileVault on macOS, BitLocker on Windows, LUKS on Linux) ensures the data is inaccessible without the decryption key. [CIS Benchmarks](https://learn.microsoft.com/en-us/compliance/regulatory/offering-cis-benchmark) for all major operating systems list disk encryption as a Level 1 control &mdash; the baseline that every organisation should implement.[^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Non-negotiable. If a laptop is stolen or lost, full disk encryption (FileVault on macOS, BitLocker on Windows, LUKS on Linux) ensures the data is inaccessible without the decryption key. <a href="https://learn.microsoft.com/en-us/compliance/regulatory/offering-cis-benchmark" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS Benchmarks</a> for all major operating systems list disk encryption as a Level 1 control &mdash; the baseline that every organisation should implement.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Hardware Security Keys for Authentication</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Replace SSH key files with hardware-backed keys. FIDO2 security keys (as we discussed in [Episode 21](../ep21/article.md)) can store SSH keys in tamper-resistant hardware. The private key never touches the filesystem. Even if the workstation is fully compromised, the attacker cannot extract the SSH key &mdash; they&#39;d need to physically steal the hardware token.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Replace SSH key files with hardware-backed keys. FIDO2 security keys (as we discussed in Episode 21) can store SSH keys in tamper-resistant hardware. The private key never touches the filesystem. Even if the workstation is fully compromised, the attacker cannot extract the SSH key &mdash; they&#39;d need to physically steal the hardware token.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Credential Helpers Over Plaintext</h3>
 
@@ -171,7 +183,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Endpoint Detection and Response (EDR)</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">EDR tools &mdash; software that continuously monitors endpoint devices for threats and provides automated response &mdash; go beyond traditional antivirus. They detect behavioural anomalies: a process reading SSH key files, unusual outbound connections, credential dumping tools in memory. For small teams, [SentinelOne](https://www.sentinelone.com/cybersecurity-101/identity-security/remote-access-security-best-practices/) and CrowdStrike offer cloud-managed EDR that requires minimal IT overhead.[^7]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">EDR tools &mdash; software that continuously monitors endpoint devices for threats and provides automated response &mdash; go beyond traditional antivirus. They detect behavioural anomalies: a process reading SSH key files, unusual outbound connections, credential dumping tools in memory. For small teams, <a href="https://www.sentinelone.com/cybersecurity-101/identity-security/remote-access-security-best-practices/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SentinelOne</a> and CrowdStrike offer cloud-managed EDR that requires minimal IT overhead.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Device Management for Small Teams</h3>
 
@@ -189,8 +201,6 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The AI Credential Leakage Problem</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is a newer risk that didn&#39;t exist five years ago. Developers using cloud-hosted AI assistants routinely paste:</p>
@@ -205,57 +215,86 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigations:</strong> Use locally-hosted AI assistants for sensitive work. Implement pre-commit hooks (automated scripts that run before code is saved to version control) that scan for secrets and block commits containing API keys or credentials. Enforce `.env` file exclusions in `.gitignore` from day one.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Minimum Viable Workstation Security Checklist</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Control | Effort | Impact |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|--------|--------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Full disk encryption | One-time setup | Protects against physical theft |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Hardware security keys for SSH | Per-developer setup | Eliminates extractable SSH keys |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Short-lived cloud credentials (SSO) | Infrastructure setup | No persistent keys to steal |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Browser extension allowlist | Policy + enforcement | Blocks malicious extensions |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| EDR on all developer machines | Per-device license | Detects credential theft in progress |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pre-commit secret scanning | Repository setup | Prevents accidental secret commits |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Separate AI assistant for sensitive work | Policy | Prevents credential leakage to third parties |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Offboarding credential rotation checklist | Process | Eliminates stale access after departure |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Effort</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Full disk encryption</td>
+                <td class="py-3 px-4">One-time setup</td>
+                <td class="py-3 px-4">Protects against physical theft</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Hardware security keys for SSH</td>
+                <td class="py-3 px-4">Per-developer setup</td>
+                <td class="py-3 px-4">Eliminates extractable SSH keys</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Short-lived cloud credentials (SSO)</td>
+                <td class="py-3 px-4">Infrastructure setup</td>
+                <td class="py-3 px-4">No persistent keys to steal</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Browser extension allowlist</td>
+                <td class="py-3 px-4">Policy + enforcement</td>
+                <td class="py-3 px-4">Blocks malicious extensions</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">EDR on all developer machines</td>
+                <td class="py-3 px-4">Per-device license</td>
+                <td class="py-3 px-4">Detects credential theft in progress</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Pre-commit secret scanning</td>
+                <td class="py-3 px-4">Repository setup</td>
+                <td class="py-3 px-4">Prevents accidental secret commits</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Separate AI assistant for sensitive work</td>
+                <td class="py-3 px-4">Policy</td>
+                <td class="py-3 px-4">Prevents credential leakage to third parties</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Offboarding credential rotation checklist</td>
+                <td class="py-3 px-4">Process</td>
+                <td class="py-3 px-4">Eliminates stale access after departure</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your production infrastructure can be hardened to military specifications. If the developer workstation that accesses it runs with local admin rights, no disk encryption, and SSH keys sitting in `~/.ssh/` as plaintext files, the weakest link in your security chain is the one that matters.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: we examine the security risks of AI-generated code &mdash; what happens when the developer writing your authentication middleware is a probabilistic model that might hallucinate a back door.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: CSO Online, [Developer workstations are the new beachhead](https://www.csoonline.com/article/4169635/developer-workstations-are-the-new-beachhead.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CSO Online, <a href="https://www.csoonline.com/article/4169635/developer-workstations-are-the-new-beachhead.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Developer workstations are the new beachhead</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: BleepingComputer, [Hundreds of networks reportedly hacked in Codecov supply-chain attack](https://www.bleepingcomputer.com/news/security/hundreds-of-networks-reportedly-hacked-in-codecov-supply-chain-attack/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: BleepingComputer, <a href="https://www.bleepingcomputer.com/news/security/hundreds-of-networks-reportedly-hacked-in-codecov-supply-chain-attack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hundreds of networks reportedly hacked in Codecov supply-chain attack</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Cybersecurity Dive, [Codecov hack &mdash; likened to SolarWinds &mdash; targets software supply chain](https://www.cybersecuritydive.com/news/codecov-breach-solarwinds-software-supply-chain/598950/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cybersecurity Dive, <a href="https://www.cybersecuritydive.com/news/codecov-breach-solarwinds-software-supply-chain/598950/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Codecov hack — likened to SolarWinds — targets software supply chain</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: ABA, [When Should Law Firms Notify Clients About Data Breaches?](https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">When Should Law Firms Notify Clients About Data Breaches?</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: NIST, [SP 800-218: Secure Software Development Framework](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-218: Secure Software Development Framework</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: CIS Benchmarks, [Overview and Compliance Mapping](https://learn.microsoft.com/en-us/compliance/regulatory/offering-cis-benchmark).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CIS Benchmarks, <a href="https://learn.microsoft.com/en-us/compliance/regulatory/offering-cis-benchmark" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Overview and Compliance Mapping</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: SentinelOne, [Remote Access Security Best Practices](https://www.sentinelone.com/cybersecurity-101/identity-security/remote-access-security-best-practices/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SentinelOne, <a href="https://www.sentinelone.com/cybersecurity-101/identity-security/remote-access-security-best-practices/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Remote Access Security Best Practices</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: NIST, [NISTIR 8587: Protecting Tokens and Assertions from Forgery, Theft, and Misuse](https://csrc.nist.gov/pubs/ir/8587/ipd).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/ir/8587/ipd" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NISTIR 8587: Protecting Tokens and Assertions from Forgery, Theft, and Misuse</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Sonatype, [What You Need to Know About the Codecov Incident](https://www.sonatype.com/blog/what-you-need-to-know-about-the-codecov-incident-a-supply-chain-attack-gone-undetected-for-2-months).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Sonatype, <a href="https://www.sonatype.com/blog/what-you-need-to-know-about-the-codecov-incident-a-supply-chain-attack-gone-undetected-for-2-months" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What You Need to Know About the Codecov Incident</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Palo Alto Networks, [When Security Scanners Become the Weapon: Breaking Down the Trivy Supply Chain Attack](https://www.paloaltonetworks.com/blog/cloud-security/trivy-supply-chain-attack/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Palo Alto Networks, <a href="https://www.paloaltonetworks.com/blog/cloud-security/trivy-supply-chain-attack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">When Security Scanners Become the Weapon: Breaking Down the Trivy Supply Chain Attack</a>.</p>
 
 </article>
 
@@ -270,59 +309,59 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 50 &mdash; developer workstation security. Alice, we&#39;ve spent the last several episodes on cloud infrastructure, deployment pipelines, and IAM permissions. But today we&#39;re zooming in on something much more personal &mdash; the actual laptop sitting on a developer&#39;s desk.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 50 &mdash; developer workstation security. Alice, we&#39;ve spent the last several episodes on cloud infrastructure, deployment pipelines, and IAM permissions. But today we&#39;re zooming in on something much more personal &mdash; the actual laptop sitting on a developer&#39;s desk.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And it&#39;s the thing most teams harden last, if they harden it at all. Think about it this way. Your production servers are behind firewalls, intrusion detection, strict access controls. Your cloud IAM policies &mdash; which we covered last episode &mdash; enforce least privilege. But the developer&#39;s laptop? It has an SSH key that connects directly to every one of those environments. It has saved browser sessions to the cloud console. It has dot-env files with database passwords in plaintext. And it probably has antivirus that hasn&#39;t been updated since it was first set up.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And it&#39;s the thing most teams harden last, if they harden it at all. Think about it this way. Your production servers are behind firewalls, intrusion detection, strict access controls. Your cloud IAM policies &mdash; which we covered last episode &mdash; enforce least privilege. But the developer&#39;s laptop? It has an SSH key that connects directly to every one of those environments. It has saved browser sessions to the cloud console. It has dot-env files with database passwords in plaintext. And it probably has antivirus that hasn&#39;t been updated since it was first set up.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So the laptop is basically the keys to the kingdom, sitting on a desk in a coffee shop.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So the laptop is basically the keys to the kingdom, sitting on a desk in a coffee shop.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; That&#39;s not even the worst version. The worst version is the laptop sitting on the desk of someone who just left the company. But yes &mdash; a security researcher at CSO Online described developer workstations as &quot;the new beachhead.&quot; Three separate threat actor groups independently decided that the developer laptop was the single best entry point into an organisation. Not the servers, not the cloud &mdash; the laptop. Because the value of what&#39;s on it is enormous and the security around it is often minimal.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; That&#39;s not even the worst version. The worst version is the laptop sitting on the desk of someone who just left the company. But yes &mdash; a security researcher at CSO Online described developer workstations as &quot;the new beachhead.&quot; Three separate threat actor groups independently decided that the developer laptop was the single best entry point into an organisation. Not the servers, not the cloud &mdash; the laptop. Because the value of what&#39;s on it is enormous and the security around it is often minimal.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Can you give us a real example of this going wrong?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Can you give us a real example of this going wrong?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The Codecov breach. Codecov was a code coverage tool &mdash; it tells developers how much of their code is tested. Attackers compromised a script that ran inside developers&#39; build pipelines. For two months, that script silently collected environment variables &mdash; things like API keys, cloud credentials, authentication tokens &mdash; from every customer who used it. Federal investigators found the attackers then used those stolen credentials to break into hundreds of downstream companies. The developers never knew. They ran their normal build process and it sent their secrets to the attacker.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The Codecov breach. Codecov was a code coverage tool &mdash; it tells developers how much of their code is tested. Attackers compromised a script that ran inside developers&#39; build pipelines. For two months, that script silently collected environment variables &mdash; things like API keys, cloud credentials, authentication tokens &mdash; from every customer who used it. Federal investigators found the attackers then used those stolen credentials to break into hundreds of downstream companies. The developers never knew. They ran their normal build process and it sent their secrets to the attacker.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. Two months undetected. And for a legal tech team, what&#39;s actually at risk on a developer&#39;s machine?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. Two months undetected. And for a legal tech team, what&#39;s actually at risk on a developer&#39;s machine?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Let me walk through it. SSH keys &mdash; those are the cryptographic keys that let developers log into servers remotely. If stolen, the attacker gets direct server access. Cloud console sessions &mdash; developers stay logged into AWS or Azure in their browser, and those login sessions can be extracted from the browser&#39;s storage and replayed from any other machine. Source code &mdash; which may contain hardcoded secrets in older versions. Dot-env files &mdash; configuration files with database passwords, API keys, all in plain text. And here&#39;s one people miss: if your developers are building a document review tool or an e-discovery platform, they might have test datasets on their laptops that contain real client documents. A workstation compromise becomes a client data breach, and that triggers notification obligations under ABA rules and state law.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Let me walk through it. SSH keys &mdash; those are the cryptographic keys that let developers log into servers remotely. If stolen, the attacker gets direct server access. Cloud console sessions &mdash; developers stay logged into AWS or Azure in their browser, and those login sessions can be extracted from the browser&#39;s storage and replayed from any other machine. Source code &mdash; which may contain hardcoded secrets in older versions. Dot-env files &mdash; configuration files with database passwords, API keys, all in plain text. And here&#39;s one people miss: if your developers are building a document review tool or an e-discovery platform, they might have test datasets on their laptops that contain real client documents. A workstation compromise becomes a client data breach, and that triggers notification obligations under ABA rules and state law.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s a hard one. Real client documents on a test machine. What about browser extensions? I&#39;ve heard you mention those as a risk.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that&#39;s a hard one. Real client documents on a test machine. What about browser extensions? I&#39;ve heard you mention those as a risk.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Browser extensions are uniquely dangerous. An extension with broad permissions &mdash; and many request access to all websites &mdash; can read the content of every page the developer visits. That includes cloud admin consoles, code repositories, internal dashboards. It can intercept form submissions, capturing passwords as they&#39;re typed. It can modify what the developer sees on screen. And it can send data to external servers without triggering any of your network security. A developer who installs a random productivity extension has basically given a stranger read access to every authenticated session in their browser.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Browser extensions are uniquely dangerous. An extension with broad permissions &mdash; and many request access to all websites &mdash; can read the content of every page the developer visits. That includes cloud admin consoles, code repositories, internal dashboards. It can intercept form submissions, capturing passwords as they&#39;re typed. It can modify what the developer sees on screen. And it can send data to external servers without triggering any of your network security. A developer who installs a random productivity extension has basically given a stranger read access to every authenticated session in their browser.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So what&#39;s the fix? What does a properly secured developer workstation look like?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. So what&#39;s the fix? What does a properly secured developer workstation look like?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Start with the basics. Full disk encryption &mdash; FileVault on Mac, BitLocker on Windows, LUKS on Linux. Non-negotiable. If a laptop is lost or stolen, encryption means the data is unreadable without the key. The Center for Internet Security lists this as a Level 1 control &mdash; the bare minimum every organisation should have.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Start with the basics. Full disk encryption &mdash; FileVault on Mac, BitLocker on Windows, LUKS on Linux. Non-negotiable. If a laptop is lost or stolen, encryption means the data is unreadable without the key. The Center for Internet Security lists this as a Level 1 control &mdash; the bare minimum every organisation should have.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Next, replace file-based SSH keys with hardware security keys. We talked about FIDO2 keys back in Episode 21. The same hardware keys that protect your login can store SSH keys in tamper-resistant hardware. The private key never exists as a file on the laptop. Even if the machine is fully compromised, the attacker can&#39;t extract it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Next, replace file-based SSH keys with hardware security keys. We talked about FIDO2 keys back in Episode 21. The same hardware keys that protect your login can store SSH keys in tamper-resistant hardware. The private key never exists as a file on the laptop. Even if the machine is fully compromised, the attacker can&#39;t extract it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And cloud credentials?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And cloud credentials?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Stop using long-lived access keys. Use single sign-on with session tokens that expire in hours. AWS has IAM Identity Center for this. The idea is: no persistent credentials on the filesystem. If there&#39;s nothing to steal, a compromised machine gives the attacker a much smaller window.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Stop using long-lived access keys. Use single sign-on with session tokens that expire in hours. AWS has IAM Identity Center for this. The idea is: no persistent credentials on the filesystem. If there&#39;s nothing to steal, a compromised machine gives the attacker a much smaller window.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What about the AI angle? Developers are pasting code into AI assistants all the time.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. What about the AI angle? Developers are pasting code into AI assistants all the time.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is a newer risk. Developers routinely paste error messages, configuration files, and code snippets into AI coding tools. If those snippets include API keys or database connection strings, that data is now on a third-party server. Even if the AI provider says they don&#39;t train on your data, it still traversed their infrastructure. The fix is policy and tooling: use locally-hosted AI for sensitive work, and set up pre-commit hooks &mdash; those are automated scripts that scan code before it&#39;s saved &mdash; to catch secrets before they get committed.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is a newer risk. Developers routinely paste error messages, configuration files, and code snippets into AI coding tools. If those snippets include API keys or database connection strings, that data is now on a third-party server. Even if the AI provider says they don&#39;t train on your data, it still traversed their infrastructure. The fix is policy and tooling: use locally-hosted AI for sensitive work, and set up pre-commit hooks &mdash; those are automated scripts that scan code before it&#39;s saved &mdash; to catch secrets before they get committed.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. And offboarding &mdash; when someone leaves?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. And offboarding &mdash; when someone leaves?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Revoking their Git access is about ten percent of the job. You need to rotate every credential they had access to. SSH keys, cloud IAM roles, API tokens, database passwords, CI/CD secrets &mdash; the automated deployment pipeline credentials. If they used a personal device, wipe the corporate data remotely. The developer may have had credentials cached on that machine for months. If you don&#39;t rotate, those credentials still work, and you&#39;ll never know if they&#39;re being used by someone they shouldn&#39;t be.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Revoking their Git access is about ten percent of the job. You need to rotate every credential they had access to. SSH keys, cloud IAM roles, API tokens, database passwords, CI/CD secrets &mdash; the automated deployment pipeline credentials. If they used a personal device, wipe the corporate data remotely. The developer may have had credentials cached on that machine for months. If you don&#39;t rotate, those credentials still work, and you&#39;ll never know if they&#39;re being used by someone they shouldn&#39;t be.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So to summarise &mdash; disk encryption, hardware keys instead of file-based SSH keys, short-lived cloud tokens, browser extension controls, endpoint detection software, pre-commit secret scanning, and a real offboarding process.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So to summarise &mdash; disk encryption, hardware keys instead of file-based SSH keys, short-lived cloud tokens, browser extension controls, endpoint detection software, pre-commit secret scanning, and a real offboarding process.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the minimum. And the principle behind all of it is: assume the workstation will be compromised, and make sure that compromise gives the attacker as little as possible. No persistent credentials to steal, no plaintext secrets on disk, no browser extensions with god-mode permissions. Your production infrastructure can be hardened perfectly &mdash; but if the laptop that accesses it is wide open, that&#39;s where the attacker walks in.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the minimum. And the principle behind all of it is: assume the workstation will be compromised, and make sure that compromise gives the attacker as little as possible. No persistent credentials to steal, no plaintext secrets on disk, no browser extensions with god-mode permissions. Your production infrastructure can be hardened perfectly &mdash; but if the laptop that accesses it is wide open, that&#39;s where the attacker walks in.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; what happens when the developer writing your code is itself an AI. Verifying agent-generated code and the risks of hallucinated dependencies.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; what happens when the developer writing your code is itself an AI. Verifying agent-generated code and the risks of hallucinated dependencies.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

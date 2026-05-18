@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">Over the course of this series, we have covered threat modelling ([Episode 1](../ep01/article.md)), the CIA triad ([Episode 2](../ep02/article.md)), defence in depth ([Episode 4](../ep04/article.md)), input validation ([Episode 7](../ep07/article.md)), SQL injection ([Episode 8](../ep08/article.md)), XSS ([Episode 9](../ep09/article.md)), file upload security ([Episode 10](../ep10/article.md)), TLS and encryption ([Episode 13](../ep13/article.md)), rate limiting ([Episode 14](../ep14/article.md)</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">Over the course of this series, we have covered threat modelling (Episode 1), the CIA triad (Episode 2), defence in depth (Episode 4), input validation (Episode 7), SQL injection (Episode 8), XSS (Episode 9), file upload security (Episode 10), TLS and encryption (Episode 13), rate limiting (Episode 14), email security (Episode 16), password hashing (Episode 17), JWT security (Episode 18), OAuth and OIDC (Episode 20), MFA (Episode 21), RBAC (Episode 23), data protection at rest and in transit (Ep</p>
 </div>
 
 <!-- Article -->
@@ -76,33 +76,53 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 62: Security Roadmapping &mdash; From Here to Production (Series Finale)</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Sixty-One Episodes Later</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Over the course of this series, we have covered threat modelling ([Episode 1](../ep01/article.md)), the CIA triad ([Episode 2](../ep02/article.md)), defence in depth ([Episode 4](../ep04/article.md)), input validation ([Episode 7](../ep07/article.md)), SQL injection ([Episode 8](../ep08/article.md)), XSS ([Episode 9](../ep09/article.md)), file upload security ([Episode 10](../ep10/article.md)), TLS and encryption ([Episode 13](../ep13/article.md)), rate limiting ([Episode 14](../ep14/article.md)), email security ([Episode 16](../ep16/article.md)), password hashing ([Episode 17](../ep17/article.md)), JWT security ([Episode 18](../ep18/article.md)), OAuth and OIDC ([Episode 20](../ep20/article.md)), MFA ([Episode 21](../ep21/article.md)), RBAC ([Episode 23](../ep23/article.md)), data protection at rest and in transit ([Episodes 28&ndash;32](../ep28/article.md)), AI-specific security ([Episodes 33&ndash;40](../ep33/article.md)), audit logging ([Episodes 41&ndash;44](../ep41/article.md)), infrastructure and deployment ([Episodes 45&ndash;51](../ep45/article.md)), incident response ([Episodes 52&ndash;56](../ep52/article.md)), access reviews ([Episode 57](../ep57/article.md)), insider threats ([Episode 58](../ep58/article.md)), data protection compliance ([Episode 59](../ep59/article.md)), security certification ([Episode 60](../ep60/article.md)), and customer trust ([Episode 61](../ep61/article.md)).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Over the course of this series, we have covered threat modelling (Episode 1), the CIA triad (Episode 2), defence in depth (Episode 4), input validation (Episode 7), SQL injection (Episode 8), XSS (Episode 9), file upload security (Episode 10), TLS and encryption (Episode 13), rate limiting (Episode 14), email security (Episode 16), password hashing (Episode 17), JWT security (Episode 18), OAuth and OIDC (Episode 20), MFA (Episode 21), RBAC (Episode 23), data protection at rest and in transit (Episodes 28&ndash;32), AI-specific security (Episodes 33&ndash;40), audit logging (Episodes 41&ndash;44), infrastructure and deployment (Episodes 45&ndash;51), incident response (Episodes 52&ndash;56), access reviews (Episode 57), insider threats (Episode 58), data protection compliance (Episode 59), security certification (Episode 60), and customer trust (Episode 61).</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">That is a lot of security. The question now is not what to do &mdash; it is what to do first.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Security Maturity Curve</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security investment follows a predictable maturity curve. Attempting to implement enterprise-grade controls before you have paying clients wastes resources. Ignoring security until your first enterprise prospect demands SOC 2 leaves you scrambling. The key is matching your security posture to your stage.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Stage | Focus | Key Actions |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|-------|-------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Pre-revenue / Building</strong> | Secure foundations | Threat model (EP01), input validation (EP07), parameterised queries (EP08), TLS everywhere (EP13), password hashing with bcrypt/Argon2id (EP17), RBAC from the start (EP23) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">First clients (1&ndash;10)</strong> | Trust basics | MFA enforcement (EP21), audit logging (EP41&ndash;44), incident response plan (EP52), DPA template ready (EP59), basic vulnerability scanning |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Growth (10&ndash;50 clients)</strong> | External validation | SOC 2 Type I (EP60), annual penetration test (EP60), formal access review process (EP57), trust centre (EP61), automated security questionnaire responses |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Enterprise (50+ clients)</strong> | Sustained proof | SOC 2 Type II (EP60), ISO 27001 (EP60), insider threat programme (EP58), SIEM and real-time monitoring (EP41&ndash;44), security champion programme |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Scale</strong> | Continuous improvement | Bug bounty programme, red team exercises, security as a product feature, quarterly roadmap reviews |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Stage</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Focus</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Pre-revenue / Building</strong></td>
+                <td class="py-3 px-4">Secure foundations</td>
+                <td class="py-3 px-4">Threat model (EP01), input validation (EP07), parameterised queries (EP08), TLS everywhere (EP13), password hashing with bcrypt/Argon2id (EP17), RBAC from the start (EP23)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">First clients (1&ndash;10)</strong></td>
+                <td class="py-3 px-4">Trust basics</td>
+                <td class="py-3 px-4">MFA enforcement (EP21), audit logging (EP41&ndash;44), incident response plan (EP52), DPA template ready (EP59), basic vulnerability scanning</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Growth (10&ndash;50 clients)</strong></td>
+                <td class="py-3 px-4">External validation</td>
+                <td class="py-3 px-4">SOC 2 Type I (EP60), annual penetration test (EP60), formal access review process (EP57), trust centre (EP61), automated security questionnaire responses</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Enterprise (50+ clients)</strong></td>
+                <td class="py-3 px-4">Sustained proof</td>
+                <td class="py-3 px-4">SOC 2 Type II (EP60), ISO 27001 (EP60), insider threat programme (EP58), SIEM and real-time monitoring (EP41&ndash;44), security champion programme</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Scale</strong></td>
+                <td class="py-3 px-4">Continuous improvement</td>
+                <td class="py-3 px-4">Bug bounty programme, red team exercises, security as a product feature, quarterly roadmap reviews</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
@@ -110,24 +130,22 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Three Prioritisation Frameworks</h2>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Risk-Based Prioritisation</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Start with your threat model from [Episode 1](../ep01/article.md). Which threats have the highest likelihood and the highest impact? For most legal SaaS platforms, the ranking is:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Start with your threat model from Episode 1. Which threats have the highest likelihood and the highest impact? For most legal SaaS platforms, the ranking is:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Authentication compromise</strong> &mdash; credential stuffing, phished passwords, missing MFA → Highest impact because it grants full access to client data</li>
         <li><strong class="text-ink">Injection vulnerabilities</strong> &mdash; SQL injection, XSS → Direct access to data or session hijack</li>
         <li><strong class="text-ink">Broken access control</strong> &mdash; IDOR/BOLA, privilege escalation → Cross-tenant data exposure</li>
         <li><strong class="text-ink">Data exposure in transit/at rest</strong> &mdash; missing encryption → Regulatory violation and breach notification</li>
         <li><strong class="text-ink">Insider threats</strong> &mdash; privilege misuse, departing employee exfiltration → Hardest to detect, highest trust damage</li>
-    </ul>
+    </ol>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Compliance-Driven Prioritisation</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your next enterprise client requires SOC 2 Type II, your roadmap is defined by the Trust Services Criteria ([Episode 60](../ep60/article.md)). Work backwards from the audit date:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your next enterprise client requires SOC 2 Type II, your roadmap is defined by the Trust Services Criteria (Episode 60). Work backwards from the audit date:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Month 1&ndash;3:</strong> Document existing controls, identify gaps, implement missing controls</li>
         <li><strong class="text-ink">Month 4&ndash;6:</strong> Begin the observation period (Type II requires 6&ndash;12 months of evidence)</li>
@@ -138,81 +156,162 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Customer-Driven Prioritisation</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your largest prospects will tell you what they need. Track every security question from sales calls, every finding from security questionnaires ([Episode 61](../ep61/article.md)), and every feature request related to security. The pattern that emerges is your customer-driven roadmap.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your largest prospects will tell you what they need. Track every security question from sales calls, every finding from security questionnaires (Episode 61), and every feature request related to security. The pattern that emerges is your customer-driven roadmap.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Building a Security Roadmap</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A security roadmap is not a wish list &mdash; it is a quarterly plan with measurable outcomes, resource allocation, and clear ownership.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Quarter 1: Foundation</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Action | Episode Reference | Measurable Outcome |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|------------------|--------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Complete threat model for all critical workflows | EP01 | Documented threat model with risk ratings |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Enforce MFA for all users | EP21 | 100% MFA enrolment rate |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Implement structured audit logging | EP41&ndash;44 | All authentication, authorisation, and data access events logged |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Draft incident response plan | EP52 | Documented IR plan with assigned roles and tested communication channels |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Prepare DPA template | EP59 | Signed DPA with first enterprise client |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Complete threat model for all critical workflows</td>
+                <td class="py-3 px-4">EP01</td>
+                <td class="py-3 px-4">Documented threat model with risk ratings</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Enforce MFA for all users</td>
+                <td class="py-3 px-4">EP21</td>
+                <td class="py-3 px-4">100% MFA enrolment rate</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Implement structured audit logging</td>
+                <td class="py-3 px-4">EP41&ndash;44</td>
+                <td class="py-3 px-4">All authentication, authorisation, and data access events logged</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Draft incident response plan</td>
+                <td class="py-3 px-4">EP52</td>
+                <td class="py-3 px-4">Documented IR plan with assigned roles and tested communication channels</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Prepare DPA template</td>
+                <td class="py-3 px-4">EP59</td>
+                <td class="py-3 px-4">Signed DPA with first enterprise client</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Quarter 2: Validation</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Action | Episode Reference | Measurable Outcome |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|------------------|--------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Commission external penetration test | EP60 | Pentest report with all Critical/High findings remediated |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Begin SOC 2 Type I preparation | EP60 | Gap assessment complete, remediation plan in place |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Implement formal access review process | EP57 | First quarterly access review completed with evidence |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Build trust centre | EP61 | Public trust centre live with SOC 2 summary, DPA, sub-processor list |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Commission external penetration test</td>
+                <td class="py-3 px-4">EP60</td>
+                <td class="py-3 px-4">Pentest report with all Critical/High findings remediated</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Begin SOC 2 Type I preparation</td>
+                <td class="py-3 px-4">EP60</td>
+                <td class="py-3 px-4">Gap assessment complete, remediation plan in place</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Implement formal access review process</td>
+                <td class="py-3 px-4">EP57</td>
+                <td class="py-3 px-4">First quarterly access review completed with evidence</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Build trust centre</td>
+                <td class="py-3 px-4">EP61</td>
+                <td class="py-3 px-4">Public trust centre live with SOC 2 summary, DPA, sub-processor list</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Quarter 3: Maturity</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Action | Episode Reference | Measurable Outcome |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|------------------|--------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Achieve SOC 2 Type I | EP60 | Report issued |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Begin SOC 2 Type II observation period | EP60 | Controls operating with continuous evidence collection |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Implement DLP and insider threat monitoring | EP58 | Baseline established, alerting configured |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Automate security questionnaire responses | EP61 | Response time reduced from weeks to days |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Achieve SOC 2 Type I</td>
+                <td class="py-3 px-4">EP60</td>
+                <td class="py-3 px-4">Report issued</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Begin SOC 2 Type II observation period</td>
+                <td class="py-3 px-4">EP60</td>
+                <td class="py-3 px-4">Controls operating with continuous evidence collection</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Implement DLP and insider threat monitoring</td>
+                <td class="py-3 px-4">EP58</td>
+                <td class="py-3 px-4">Baseline established, alerting configured</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Automate security questionnaire responses</td>
+                <td class="py-3 px-4">EP61</td>
+                <td class="py-3 px-4">Response time reduced from weeks to days</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Quarter 4: Scale</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Action | Episode Reference | Measurable Outcome |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|------------------|--------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| SOC 2 Type II report issued | EP60 | Clean report with no material findings |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Achieve ISO 27001 certification (if international) | EP60 | Certificate issued |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Establish security champion programme | &mdash; | One security-aware engineer per team |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Conduct tabletop incident response exercise | EP52 | Exercise completed, lessons learned documented |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">SOC 2 Type II report issued</td>
+                <td class="py-3 px-4">EP60</td>
+                <td class="py-3 px-4">Clean report with no material findings</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Achieve ISO 27001 certification (if international)</td>
+                <td class="py-3 px-4">EP60</td>
+                <td class="py-3 px-4">Certificate issued</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Establish security champion programme</td>
+                <td class="py-3 px-4">&mdash;</td>
+                <td class="py-3 px-4">One security-aware engineer per team</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Conduct tabletop incident response exercise</td>
+                <td class="py-3 px-4">EP52</td>
+                <td class="py-3 px-4">Exercise completed, lessons learned documented</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security as a Competitive Advantage</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Enterprise SaaS research](https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster) consistently shows that vendors with strong security posture close deals faster.[^1] In legal SaaS specifically, security is not just a checkbox &mdash; it is a feature. Law firms are under increasing pressure from regulators ([ABA Model Rule 1.6(c)](https://www.americanbar.org/groups/law_practice/resources/tech-report/)), insurers (cyber insurance prerequisites), and their own clients (corporate legal departments demanding vendor security reviews) to demonstrate that their technology stack is secure.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Enterprise SaaS research</a> consistently shows that vendors with strong security posture close deals faster. In legal SaaS specifically, security is not just a checkbox &mdash; it is a feature. Law firms are under increasing pressure from regulators (<a href="https://www.americanbar.org/groups/law_practice/resources/tech-report/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Model Rule 1.6(c)</a>), insurers (cyber insurance prerequisites), and their own clients (corporate legal departments demanding vendor security reviews) to demonstrate that their technology stack is secure.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A legal SaaS platform that can produce a SOC 2 Type II report, a clean penetration test, a ready-to-sign DPA, and a comprehensive trust centre does not just meet requirements &mdash; it differentiates. While competitors scramble to answer questionnaires, you hand over a trust centre URL and move to contract negotiation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What to Do Monday Morning</h2>
 
@@ -220,13 +319,13 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 1: Run a threat model.&lt;/strong&gt; Take your most critical workflow &mdash; user login, document upload, client data export &mdash; and walk through it using STRIDE (&lt;a href=&quot;../ep01/article.md&quot;&gt;Episode 1&lt;/a&gt;). Identify the top three threats. This takes one afternoon and gives you a prioritised list to work from.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 1: Run a threat model.&lt;/strong&gt; Take your most critical workflow &mdash; user login, document upload, client data export &mdash; and walk through it using STRIDE (<a href="../ep01/article.md">Episode 1</a>). Identify the top three threats. This takes one afternoon and gives you a prioritised list to work from.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 2: Enforce MFA for all users.&lt;/strong&gt; Not optional, not &quot;available.&quot; Enforced. TOTP as baseline, passkeys as the upgrade path (&lt;a href=&quot;../ep21/article.md&quot;&gt;Episode 21&lt;/a&gt;). This single control blocks 99.9% of automated account compromise attempts.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 2: Enforce MFA for all users.&lt;/strong&gt; Not optional, not &quot;available.&quot; Enforced. TOTP as baseline, passkeys as the upgrade path (<a href="../ep21/article.md">Episode 21</a>). This single control blocks 99.9% of automated account compromise attempts.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
@@ -238,64 +337,58 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 4: Write your incident response plan.&lt;/strong&gt; One page. Who is on the response team, how you communicate during an incident, when you notify clients, when you notify regulators (&lt;a href=&quot;../ep52/article.md&quot;&gt;Episode 52&lt;/a&gt;). Test it with a tabletop scenario within 30 days.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 4: Write your incident response plan.&lt;/strong&gt; One page. Who is on the response team, how you communicate during an incident, when you notify clients, when you notify regulators (<a href="../ep52/article.md">Episode 52</a>). Test it with a tabletop scenario within 30 days.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 5: Prepare your DPA.&lt;/strong&gt; Have a Data Processing Agreement template reviewed by counsel and ready to send (&lt;a href=&quot;../ep59/article.md&quot;&gt;Episode 59&lt;/a&gt;). The first enterprise client who asks for one should receive it within 24 hours, not 24 days.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 5: Prepare your DPA.&lt;/strong&gt; Have a Data Processing Agreement template reviewed by counsel and ready to send (<a href="../ep59/article.md">Episode 59</a>). The first enterprise client who asks for one should receive it within 24 hours, not 24 days.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Maintaining Momentum</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security is not a project with a finish line. It is a continuous practice. Three mechanisms keep it alive:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Security champions</strong> &mdash; designate one engineer per team as the security-aware voice in design reviews, code reviews, and architecture decisions. They are not a security team &mdash; they are security advocates embedded in product teams.</li>
-    </ul>
+    </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Regular reviews</strong> &mdash; quarterly security roadmap reviews that assess progress, reprioritise based on new threats or customer requirements, and adjust resource allocation.</li>
-    </ul>
+    </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Continuous improvement</strong> &mdash; every incident, every penetration test finding, every customer security question is an input to the next cycle. The organisations that get breached are not the ones with imperfect security &mdash; they are the ones that stopped improving.</li>
-    </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Series Reflection</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Sixty-two episodes. Twelve modules. From threat modelling to security roadmapping. If you have followed this series from [Episode 1](../ep01/article.md), you now have a comprehensive understanding of how to build, secure, certify, and sell a legal SaaS platform. Not every control applies to every stage of your journey, but you now know what exists, why it matters, and when to implement it.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Sixty-two episodes. Twelve modules. From threat modelling to security roadmapping. If you have followed this series from Episode 1, you now have a comprehensive understanding of how to build, secure, certify, and sell a legal SaaS platform. Not every control applies to every stage of your journey, but you now know what exists, why it matters, and when to implement it.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The legal profession is undergoing the most significant technology transformation in its history. The lawyers building software today are shaping how law will be practised for decades. Building that software securely is not just a technical requirement &mdash; it is a professional obligation to every client whose data you hold.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Thank you for listening. Build secure software. Protect your clients&#39; data. And when in doubt, go back to Episode 1 and start with the threat model.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: SecureSlate, [How Top SaaS Use Trust Centers to Close Deals 2x Faster](https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster) &mdash; security posture as competitive advantage.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SecureSlate, <a href="https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How Top SaaS Use Trust Centers to Close Deals 2x Faster</a> &mdash; security posture as competitive advantage.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: ABA, [2023 Legal Technology Survey Report](https://www.americanbar.org/groups/law_practice/resources/tech-report/) &mdash; lawyer technology adoption and security obligations.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/law_practice/resources/tech-report/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2023 Legal Technology Survey Report</a> &mdash; lawyer technology adoption and security obligations.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: OWASP, [Threat Modeling](https://owasp.org/www-community/Threat_Modeling) &mdash; STRIDE methodology and implementation guidance.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-community/Threat_Modeling" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Threat Modeling</a> &mdash; STRIDE methodology and implementation guidance.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: NIST, [Cybersecurity Framework (CSF) 2.0](https://www.nist.gov/cyberframework) &mdash; risk-based prioritisation framework.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity Framework (CSF) 2.0</a> &mdash; risk-based prioritisation framework.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Wiz, [The Cloud Security Maturity Model](https://www.wiz.io/academy/cloud-security/cloud-security-maturity-model) &mdash; maturity-based security investment framework.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wiz, <a href="https://www.wiz.io/academy/cloud-security/cloud-security-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Cloud Security Maturity Model</a> &mdash; maturity-based security investment framework.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: AICPA, [SOC 2 Trust Services Criteria](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2) &mdash; compliance-driven roadmap anchor.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AICPA, <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria</a> &mdash; compliance-driven roadmap anchor.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: AWS, [Security Maturity Model](https://maturitymodel.security.aws.dev/en/) &mdash; progressive security control implementation.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://maturitymodel.security.aws.dev/en/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Maturity Model</a> &mdash; progressive security control implementation.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: NCSC, [Cyber Essentials](https://www.ncsc.gov.uk/cyberessentials/overview) &mdash; UK baseline security certification.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NCSC, <a href="https://www.ncsc.gov.uk/cyberessentials/overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cyber Essentials</a> &mdash; UK baseline security certification.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Bright Defense, [SOC 2 Trust Services Criteria: A Practical View](https://www.brightdefense.com/resources/soc-2-trust-services-criteria/) &mdash; SOC 2 readiness assessment.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bright Defense, <a href="https://www.brightdefense.com/resources/soc-2-trust-services-criteria/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria: A Practical View</a> &mdash; SOC 2 readiness assessment.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: SSOJet, [Enterprise Readiness Guide &mdash; B2B SaaS Leadership Framework](https://ssojet.com/white-papers/enterprise-readiness-guide-b2b-saas-leadership/) &mdash; security maturity in enterprise SaaS context.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SSOJet, <a href="https://ssojet.com/white-papers/enterprise-readiness-guide-b2b-saas-leadership/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Enterprise Readiness Guide — B2B SaaS Leadership Framework</a> &mdash; security maturity in enterprise SaaS context.</p>
 
 </article>
 
@@ -316,79 +409,79 @@
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 62 &mdash; the final episode. Alice, sixty-two episodes. Twelve modules. Threat modelling to security roadmapping. That is a lot of ground.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 62 &mdash; the final episode. Alice, sixty-two episodes. Twelve modules. Threat modelling to security roadmapping. That is a lot of ground.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. We started in Episode 1 with STRIDE &mdash; a framework for thinking about what can go wrong. We covered how the web works, how attacks happen, how to build defences. Authentication, authorisation, encryption, logging, infrastructure, incident response, compliance, and certification. If you&#39;ve followed this series, you now have a comprehensive mental model of how to secure a legal SaaS platform.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is. We started in Episode 1 with STRIDE &mdash; a framework for thinking about what can go wrong. We covered how the web works, how attacks happen, how to build defences. Authentication, authorisation, encryption, logging, infrastructure, incident response, compliance, and certification. If you&#39;ve followed this series, you now have a comprehensive mental model of how to secure a legal SaaS platform.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And the question that remains is &mdash; where do you start? Because nobody can implement sixty-two episodes worth of security on a Monday morning.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And the question that remains is &mdash; where do you start? Because nobody can implement sixty-two episodes worth of security on a Monday morning.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. And that&#39;s the whole point of this episode. The question is not &quot;what should I do&quot; &mdash; you know that now. The question is &quot;what should I do first.&quot; And the answer depends on where you are in your journey.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Right. And that&#39;s the whole point of this episode. The question is not &quot;what should I do&quot; &mdash; you know that now. The question is &quot;what should I do first.&quot; And the answer depends on where you are in your journey.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So walk me through it. If I&#39;m building a legal SaaS platform and I&#39;m pre-revenue &mdash; just me and a co-founder writing code. What do I focus on?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So walk me through it. If I&#39;m building a legal SaaS platform and I&#39;m pre-revenue &mdash; just me and a co-founder writing code. What do I focus on?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Foundations. And the good news is that foundational security is nearly free when you build it from the start. Use parameterised queries for every database call &mdash; that&#39;s Episode 8, and it costs nothing extra compared to string concatenation. Validate and sanitise all input &mdash; Episode 7. Use TLS everywhere &mdash; Episode 13, and with Let&#39;s Encrypt it&#39;s literally free. Hash passwords with bcrypt or Argon2id &mdash; Episode 17. Build role-based access control from day one &mdash; Episode 23. These are things that cost almost nothing when you start with them but are extremely expensive to retrofit later.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Foundations. And the good news is that foundational security is nearly free when you build it from the start. Use parameterised queries for every database call &mdash; that&#39;s Episode 8, and it costs nothing extra compared to string concatenation. Validate and sanitise all input &mdash; Episode 7. Use TLS everywhere &mdash; Episode 13, and with Let&#39;s Encrypt it&#39;s literally free. Hash passwords with bcrypt or Argon2id &mdash; Episode 17. Build role-based access control from day one &mdash; Episode 23. These are things that cost almost nothing when you start with them but are extremely expensive to retrofit later.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Security debt compounds faster than technical debt.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. Security debt compounds faster than technical debt.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Now, when you get your first paying clients &mdash; say one to ten &mdash; the focus shifts to trust basics. Enforce multi-factor authentication for all users, not just admins. That&#39;s Episode 21. Implement structured audit logging so you know who did what and when &mdash; Episodes 41 through 44. Draft an incident response plan &mdash; Episode 52. It doesn&#39;t need to be fifty pages. One page: who&#39;s on the response team, how you communicate during an incident, when you notify clients, when you notify regulators. And prepare a Data Processing Agreement template &mdash; Episode 59 &mdash; because your first enterprise prospect will ask for one, and you want to hand it over in twenty-four hours, not scramble for twenty-four days.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Now, when you get your first paying clients &mdash; say one to ten &mdash; the focus shifts to trust basics. Enforce multi-factor authentication for all users, not just admins. That&#39;s Episode 21. Implement structured audit logging so you know who did what and when &mdash; Episodes 41 through 44. Draft an incident response plan &mdash; Episode 52. It doesn&#39;t need to be fifty pages. One page: who&#39;s on the response team, how you communicate during an incident, when you notify clients, when you notify regulators. And prepare a Data Processing Agreement template &mdash; Episode 59 &mdash; because your first enterprise prospect will ask for one, and you want to hand it over in twenty-four hours, not scramble for twenty-four days.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. What about the ten-to-fifty client stage?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. What about the ten-to-fifty client stage?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s where external validation matters. Commission an annual penetration test from a qualified external firm &mdash; Episode 60. Start preparing for SOC 2 Type I. Build a trust centre &mdash; Episode 61 &mdash; so prospects can self-serve your security documentation. Implement a formal access review process &mdash; Episode 57 &mdash; so you have evidence that you&#39;re actually managing permissions, not just granting them and forgetting.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s where external validation matters. Commission an annual penetration test from a qualified external firm &mdash; Episode 60. Start preparing for SOC 2 Type I. Build a trust centre &mdash; Episode 61 &mdash; so prospects can self-serve your security documentation. Implement a formal access review process &mdash; Episode 57 &mdash; so you have evidence that you&#39;re actually managing permissions, not just granting them and forgetting.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. And once you&#39;re truly enterprise &mdash; fifty-plus clients, selling to large law firms?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. And once you&#39;re truly enterprise &mdash; fifty-plus clients, selling to large law firms?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; SOC 2 Type II becomes table stakes. ISO 27001 if you&#39;re selling internationally. An insider threat programme &mdash; Episode 58 &mdash; because at this scale you have enough employees and contractors that insider risk becomes real. A SIEM for real-time security monitoring. Security champions embedded in each engineering team. And quarterly roadmap reviews to keep the whole thing moving forward.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; SOC 2 Type II becomes table stakes. ISO 27001 if you&#39;re selling internationally. An insider threat programme &mdash; Episode 58 &mdash; because at this scale you have enough employees and contractors that insider risk becomes real. A SIEM for real-time security monitoring. Security champions embedded in each engineering team. And quarterly roadmap reviews to keep the whole thing moving forward.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Now, you mentioned three prioritisation approaches in the article. Can you give the quick version?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Now, you mentioned three prioritisation approaches in the article. Can you give the quick version?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Sure. The first is risk-based &mdash; go back to your threat model from Episode 1 and ask &quot;what&#39;s most likely to happen and what would hurt the most?&quot; For most legal SaaS platforms, authentication compromise is number one because it gives full access to client data. Injection vulnerabilities are number two. Broken access control &mdash; where one client can see another client&#39;s data &mdash; is number three. Prioritise the controls that mitigate those threats first.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Sure. The first is risk-based &mdash; go back to your threat model from Episode 1 and ask &quot;what&#39;s most likely to happen and what would hurt the most?&quot; For most legal SaaS platforms, authentication compromise is number one because it gives full access to client data. Injection vulnerabilities are number two. Broken access control &mdash; where one client can see another client&#39;s data &mdash; is number three. Prioritise the controls that mitigate those threats first.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The second approach is compliance-driven. If your next big prospect requires SOC 2 Type II, your roadmap writes itself. Work backwards from the audit date. Three months to document and implement controls. Six to twelve months of observation period. Then the audit. Plan eighteen months ahead of when you need the report in hand.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The second approach is compliance-driven. If your next big prospect requires SOC 2 Type II, your roadmap writes itself. Work backwards from the audit date. Three months to document and implement controls. Six to twelve months of observation period. Then the audit. Plan eighteen months ahead of when you need the report in hand.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. And the third?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. And the third?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Customer-driven. Track every security question from sales calls, every finding from questionnaires, every feature request related to security. The pattern that emerges tells you what the market actually cares about &mdash; not what a framework says you should care about. The best security roadmaps combine all three: mitigate the highest risks, satisfy the compliance requirements that unlock revenue, and respond to what customers are actually asking for.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Customer-driven. Track every security question from sales calls, every finding from questionnaires, every feature request related to security. The pattern that emerges tells you what the market actually cares about &mdash; not what a framework says you should care about. The best security roadmaps combine all three: mitigate the highest risks, satisfy the compliance requirements that unlock revenue, and respond to what customers are actually asking for.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. All right. Let&#39;s do the Monday morning version. Someone finishes this episode, opens their laptop. Five actions. Go.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. All right. Let&#39;s do the Monday morning version. Someone finishes this episode, opens their laptop. Five actions. Go.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;One. Run a threat model on your most critical workflow. User login, document upload, client data export &mdash; pick one. Walk through it using STRIDE. Identify the top three threats. This takes one afternoon and gives you a prioritised list to work from.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> One. Run a threat model on your most critical workflow. User login, document upload, client data export &mdash; pick one. Walk through it using STRIDE. Identify the top three threats. This takes one afternoon and gives you a prioritised list to work from.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Two. Enforce MFA for all users. Not available &mdash; enforced. TOTP as the baseline, passkeys as the upgrade path. This single control blocks ninety-nine point nine percent of automated account compromise attempts.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Two. Enforce MFA for all users. Not available &mdash; enforced. TOTP as the baseline, passkeys as the upgrade path. This single control blocks ninety-nine point nine percent of automated account compromise attempts.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three. Audit your dependencies. Run your package manager&#39;s audit command. Check your container images for known vulnerabilities. Patch anything Critical or High severity. Set this up as a weekly automated check.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three. Audit your dependencies. Run your package manager&#39;s audit command. Check your container images for known vulnerabilities. Patch anything Critical or High severity. Set this up as a weekly automated check.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Four. Write your incident response plan. One page. Response team, communication channels, client notification triggers, regulator notification timelines. Test it with a tabletop scenario within thirty days.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Four. Write your incident response plan. One page. Response team, communication channels, client notification triggers, regulator notification timelines. Test it with a tabletop scenario within thirty days.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Five. Prepare your DPA. Have it reviewed by counsel, ready to send. When the first enterprise client asks &mdash; and they will &mdash; you hand it over the same day.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Five. Prepare your DPA. Have it reviewed by counsel, ready to send. When the first enterprise client asks &mdash; and they will &mdash; you hand it over the same day.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Five actions. Any one of those is achievable in a week. All five in a month. That&#39;s a real starting point.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Five actions. Any one of those is achievable in a week. All five in a month. That&#39;s a real starting point.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. And here&#39;s the thing about security &mdash; it&#39;s not a project with a finish line. It&#39;s a continuous practice. The organisations that get breached are not the ones with imperfect security. They&#39;re the ones that stopped improving. Keep a quarterly cadence. Review your threat model. Review your access controls. Review your incident response plan. Every penetration test finding, every customer security question, every near-miss &mdash; those are inputs to the next cycle.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is. And here&#39;s the thing about security &mdash; it&#39;s not a project with a finish line. It&#39;s a continuous practice. The organisations that get breached are not the ones with imperfect security. They&#39;re the ones that stopped improving. Keep a quarterly cadence. Review your threat model. Review your access controls. Review your incident response plan. Every penetration test finding, every customer security question, every near-miss &mdash; those are inputs to the next cycle.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Alice, this has been sixty-two episodes. What&#39;s the one thing you&#39;d want listeners to take away from the entire series?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Alice, this has been sixty-two episodes. What&#39;s the one thing you&#39;d want listeners to take away from the entire series?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That security is not someone else&#39;s job. If you&#39;re building software that handles client data &mdash; especially privileged legal data &mdash; security is as much your professional obligation as client confidentiality. You don&#39;t outsource confidentiality to a vendor. You don&#39;t outsource security to a framework. You build it into the way you work, from the first line of code to the last access review. The tools are all here. The knowledge is all here. What you do with it is up to you.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That security is not someone else&#39;s job. If you&#39;re building software that handles client data &mdash; especially privileged legal data &mdash; security is as much your professional obligation as client confidentiality. You don&#39;t outsource confidentiality to a vendor. You don&#39;t outsource security to a framework. You build it into the way you work, from the first line of code to the last access review. The tools are all here. The knowledge is all here. What you do with it is up to you.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Well said. This has been Security for Legal SaaS &mdash; sixty-two episodes, twelve modules, from threat modelling to production. Thank you for listening.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Well said. This has been Security for Legal SaaS &mdash; sixty-two episodes, twelve modules, from threat modelling to production. Thank you for listening.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

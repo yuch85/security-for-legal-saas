@@ -76,8 +76,6 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 31: PII Handling and Anonymisation</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Personal Data in Legal Tech Is Double-Sensitive</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most SaaS platforms handle personally identifiable information (PII) &mdash; names, email addresses, phone numbers. Legal SaaS platforms handle PII that is often simultaneously <strong class="text-ink">legally privileged</strong>. A client&#39;s name attached to a litigation strategy memo. A witness&#39;s home address in a deposition transcript. Financial records produced in discovery. This is not just personal data under privacy regulations &mdash; it is data protected by attorney-client privilege, work product doctrine, or court-ordered confidentiality.</p>
@@ -87,57 +85,105 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Counts as PII in Legal Tech</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">PII is any information that can identify a specific individual, either directly or in combination with other data. In the legal technology context, the scope is broader than most developers expect:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Category</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Why It Matters in Legal Tech</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Direct identifiers</strong></td>
+                <td class="py-3 px-4">Full name, SSN, passport number, email address</td>
+                <td class="py-3 px-4">Present in virtually every legal document</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Case metadata</strong></td>
+                <td class="py-3 px-4">Case numbers, court filing dates, docket entries</td>
+                <td class="py-3 px-4">Combined with public records, can identify parties</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Financial records</strong></td>
+                <td class="py-3 px-4">Bank statements, tax returns, billing records</td>
+                <td class="py-3 px-4">Common in discovery; regulated by multiple frameworks</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Health information</strong></td>
+                <td class="py-3 px-4">Medical records, insurance claims</td>
+                <td class="py-3 px-4">Subject to HIPAA in the US; frequent in personal injury and employment cases</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Communications metadata</strong></td>
+                <td class="py-3 px-4">Email timestamps, call logs, IP addresses</td>
+                <td class="py-3 px-4">Can reveal attorney-client relationships even without content</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Biometric data</strong></td>
+                <td class="py-3 px-4">Voice recordings (depositions), facial images</td>
+                <td class="py-3 px-4">Increasingly regulated; used in remote hearings</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Category | Examples | Why It Matters in Legal Tech |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|----------|------------------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Direct identifiers</strong> | Full name, SSN, passport number, email address | Present in virtually every legal document |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Case metadata</strong> | Case numbers, court filing dates, docket entries | Combined with public records, can identify parties |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Financial records</strong> | Bank statements, tax returns, billing records | Common in discovery; regulated by multiple frameworks |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Health information</strong> | Medical records, insurance claims | Subject to HIPAA in the US; frequent in personal injury and employment cases |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Communications metadata</strong> | Email timestamps, call logs, IP addresses | Can reveal attorney-client relationships even without content |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Biometric data</strong> | Voice recordings (depositions), facial images | Increasingly regulated; used in remote hearings |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key principle:</strong> In legal SaaS, always assume data is PII unless proven otherwise. A document number that seems anonymous can become identifying when cross-referenced with a public court docket.[^1]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key principle:</strong> In legal SaaS, always assume data is PII unless proven otherwise. A document number that seems anonymous can become identifying when cross-referenced with a public court docket.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Data Minimisation: Collect Less, Protect Less</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The first line of defence is not a technical control &mdash; it is restraint. [GDPR Article 5(1)(c)](https://gdpr-info.eu/art-5-gdpr/) codifies <strong class="text-ink">data minimisation</strong>: personal data must be &quot;adequate, relevant and limited to what is necessary in relation to the purposes for which they are processed.&quot;[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The first line of defence is not a technical control &mdash; it is restraint. <a href="https://gdpr-info.eu/art-5-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Article 5(1)(c)</a> codifies <strong class="text-ink">data minimisation</strong>: personal data must be &quot;adequate, relevant and limited to what is necessary in relation to the purposes for which they are processed.&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Collect only what your feature requires.</strong> If your document review tool needs to classify documents by type, it does not need to index the full text of every exhibit.</li>
         <li><strong class="text-ink">Retain only as long as necessary.</strong> Define retention periods per data category. Case data may need to be retained for the statute of limitations period. Audit logs may have a different retention schedule. Activity analytics should expire after months, not years.</li>
-        <li><strong class="text-ink">Delete completely when the period expires.</strong> This means database records, search indices, backups, caches, log files, and &mdash; as we discussed in [Episode 29](../ep29/article.md) &mdash; crypto-shredding of encrypted data by destroying its encryption keys.</li>
-    </ul>
+        <li><strong class="text-ink">Delete completely when the period expires.</strong> This means database records, search indices, backups, caches, log files, and &mdash; as we discussed in Episode 29 &mdash; crypto-shredding of encrypted data by destroying its encryption keys.</li>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Pseudonymisation vs. Anonymisation: The Difference Matters</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These two terms are frequently confused, and the distinction has direct legal consequences under GDPR:[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These two terms are frequently confused, and the distinction has direct legal consequences under GDPR:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Property</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Pseudonymisation</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Anonymisation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Definition</strong></td>
+                <td class="py-3 px-4">Replace identifiers with artificial tokens; the mapping exists somewhere</td>
+                <td class="py-3 px-4">Remove or transform identifiers so that re-identification is impossible</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Reversible?</strong></td>
+                <td class="py-3 px-4">Yes &mdash; with the mapping key</td>
+                <td class="py-3 px-4">No &mdash; by definition, irreversible</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Still personal data under GDPR?</strong></td>
+                <td class="py-3 px-4"><strong class="text-ink">Yes</strong> &mdash; GDPR still applies in full</td>
+                <td class="py-3 px-4"><strong class="text-ink">No</strong> &mdash; falls outside GDPR scope entirely</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Example</strong></td>
+                <td class="py-3 px-4">Replace &quot;Jane Smith&quot; with &quot;Client-7A3F&quot; in a case file; store the mapping in a separate secure system</td>
+                <td class="py-3 px-4">Aggregate case outcomes into statistics with no individual-level records</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Property | Pseudonymisation | Anonymisation |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Pseudonymisation</strong> is a security measure, not a de-identification technique. <a href="https://gdpr-info.eu/art-4-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Article 4(5)</a> defines it as processing personal data so it &quot;can no longer be attributed to a specific data subject without the use of additional information,&quot; provided that additional information is kept separately with appropriate technical controls.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|-----------------|---------------|</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Anonymisation</strong> removes the data from GDPR scope entirely &mdash; but the bar is high. The <a href="https://www.enisa.europa.eu/sites/default/files/publications/Guidelines%20on%20shaping%20technology%20according%20to%20GDPR%20provisions.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 29 Working Party (now the EDPB)</a> requires that re-identification must be impossible considering &quot;all the means reasonably likely to be used&quot; &mdash; including cross-referencing with other datasets, future technological advances, and publicly available information.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Definition</strong> | Replace identifiers with artificial tokens; the mapping exists somewhere | Remove or transform identifiers so that re-identification is impossible |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Reversible?</strong> | Yes &mdash; with the mapping key | No &mdash; by definition, irreversible |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Still personal data under GDPR?</strong> | <strong class="text-ink">Yes</strong> &mdash; GDPR still applies in full | <strong class="text-ink">No</strong> &mdash; falls outside GDPR scope entirely |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Example</strong> | Replace &quot;Jane Smith&quot; with &quot;Client-7A3F&quot; in a case file; store the mapping in a separate secure system | Aggregate case outcomes into statistics with no individual-level records |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Pseudonymisation</strong> is a security measure, not a de-identification technique. [GDPR Article 4(5)](https://gdpr-info.eu/art-4-gdpr/) defines it as processing personal data so it &quot;can no longer be attributed to a specific data subject without the use of additional information,&quot; provided that additional information is kept separately with appropriate technical controls.[^4]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Anonymisation</strong> removes the data from GDPR scope entirely &mdash; but the bar is high. The [Article 29 Working Party (now the EDPB)](https://www.enisa.europa.eu/sites/default/files/publications/Guidelines%20on%20shaping%20technology%20according%20to%20GDPR%20provisions.pdf) requires that re-identification must be impossible considering &quot;all the means reasonably likely to be used&quot; &mdash; including cross-referencing with other datasets, future technological advances, and publicly available information.[^5]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The misclassification trap:</strong> Research consistently shows that organisations confuse pseudonymisation with anonymisation. If your legal SaaS platform pseudonymises client data (replacing names with tokens) but still stores the mapping, that data is personal data under GDPR. Treating it as anonymous &mdash; for example, sharing it with analytics vendors or using it for model training without consent &mdash; is a compliance violation.[^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The misclassification trap:</strong> Research consistently shows that organisations confuse pseudonymisation with anonymisation. If your legal SaaS platform pseudonymises client data (replacing names with tokens) but still stores the mapping, that data is personal data under GDPR. Treating it as anonymous &mdash; for example, sharing it with analytics vendors or using it for model training without consent &mdash; is a compliance violation.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Tokenisation for Search: Maintaining Functionality</h2>
 
@@ -149,19 +195,19 @@
         <li>Stores the token in the search index alongside non-PII metadata.</li>
         <li>At search time, applies the same tokenisation function to the search query, so the lawyer searching for &quot;Jane Smith&quot; generates the same token and matches the indexed records.</li>
         <li>The display layer de-tokenises for authorised users, showing the original name.</li>
-    </ul>
+    </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The search index never contains raw PII. The tokenisation key is managed through the key management infrastructure covered in [Episode 29](../ep29/article.md). If the tokenisation key is destroyed, the search index becomes permanently unlinkable &mdash; another form of crypto-shredding.[^7]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The search index never contains raw PII. The tokenisation key is managed through the key management infrastructure covered in Episode 29. If the tokenisation key is destroyed, the search index becomes permanently unlinkable &mdash; another form of crypto-shredding.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Data Subject Access Requests: The Technical Architecture</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Under GDPR, individuals have the right to request access to their personal data ([Article 15](https://gdpr-info.eu/art-15-gdpr/)), correction ([Article 16](https://gdpr-info.eu/art-16-gdpr/)), and deletion ([Article 17](https://gdpr-info.eu/art-17-gdpr/)). For legal SaaS platforms, this means you need a technical architecture that can:[^8]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Under GDPR, individuals have the right to request access to their personal data (<a href="https://gdpr-info.eu/art-15-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 15</a>), correction (<a href="https://gdpr-info.eu/art-16-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 16</a>), and deletion (<a href="https://gdpr-info.eu/art-17-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 17</a>). For legal SaaS platforms, this means you need a technical architecture that can:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Discover</strong> all PII for a given individual across all systems (database, search index, backups, logs, third-party integrations).</li>
         <li><strong class="text-ink">Export</strong> that data in a portable format (Article 20 &mdash; data portability).</li>
         <li><strong class="text-ink">Delete</strong> it completely, or document why deletion is legally excluded (e.g., legal hold, regulatory retention requirement).</li>
         <li><strong class="text-ink">Respond within 30 days</strong> (extendable to 90 for complex requests).</li>
-    </ul>
+    </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This requires a <strong class="text-ink">PII inventory</strong> &mdash; a mapping of every data store that contains personal data, what PII fields it holds, and how to query it for a specific individual. Without this inventory, DSAR fulfilment becomes a manual, error-prone scramble across dozens of systems.</p>
 
@@ -177,50 +223,66 @@
     </ul>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Real-World PII Failures in Legal Technology</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Incident | What Went Wrong | Impact |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|----------------|--------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Orrick, Herrington &amp; Sutcliffe (2023)</strong> | Attackers accessed personal data &mdash; names, SSNs, financial data, health information &mdash; of over 600,000 individuals stored in the firm&#39;s systems | $8 million class action settlement; reputational damage[^9] |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Latitude Financial (2023)</strong> | Retained driver&#39;s licence numbers and passport data years beyond any legitimate business need; attackers exfiltrated 14 million records | Demonstrated that data minimisation failures multiply breach impact; retained PII that should have been deleted years earlier |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Clearview AI (multiple, 2020-2024)</strong> | Scraped billions of facial images from public sources for biometric identification; regulators in multiple jurisdictions found GDPR violations | Fines exceeding EUR 20 million; demonstrated that &quot;publicly available&quot; does not mean &quot;lawfully processable&quot; |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Incident</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What Went Wrong</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Orrick, Herrington &amp; Sutcliffe (2023)</strong></td>
+                <td class="py-3 px-4">Attackers accessed personal data &mdash; names, SSNs, financial data, health information &mdash; of over 600,000 individuals stored in the firm&#39;s systems</td>
+                <td class="py-3 px-4">$8 million class action settlement; reputational damage</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Latitude Financial (2023)</strong></td>
+                <td class="py-3 px-4">Retained driver&#39;s licence numbers and passport data years beyond any legitimate business need; attackers exfiltrated 14 million records</td>
+                <td class="py-3 px-4">Demonstrated that data minimisation failures multiply breach impact; retained PII that should have been deleted years earlier</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Clearview AI (multiple, 2020-2024)</strong></td>
+                <td class="py-3 px-4">Scraped billions of facial images from public sources for biometric identification; regulators in multiple jurisdictions found GDPR violations</td>
+                <td class="py-3 px-4">Fines exceeding EUR 20 million; demonstrated that &quot;publicly available&quot; does not mean &quot;lawfully processable&quot;</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS developers, the Orrick breach illustrates a pattern: the firm stored PII from individuals who were not even clients &mdash; they were individuals whose data was held because Orrick served as legal counsel to other companies that had been breached. The firm became a secondary target because it accumulated PII through its advisory role. Data minimisation &mdash; deleting data as soon as the advisory engagement ends &mdash; would have limited the exposure.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The privilege multiplier:</strong> When PII in a legal SaaS system is also covered by attorney-client privilege, a breach creates a dual harm: the privacy violation under data protection law AND potential waiver of privilege. Courts have held that failure to maintain reasonable security for privileged communications can constitute waiver. The PII breach becomes a privilege breach.[^10]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The privilege multiplier:</strong> When PII in a legal SaaS system is also covered by attorney-client privilege, a breach creates a dual harm: the privacy violation under data protection law AND potential waiver of privilege. Courts have held that failure to maintain reasonable security for privileged communications can constitute waiver. The PII breach becomes a privilege breach.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 32 covers <strong class="text-ink">Database Security Hardening</strong> &mdash; protecting the system where all this PII ultimately lives, from network isolation to audit logging to backup encryption.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: GDPR Local, [Data Pseudonymisation vs Anonymisation: Key Differences](https://gdprlocal.com/data-pseudonymisation-vs-anonymisation/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR Local, <a href="https://gdprlocal.com/data-pseudonymisation-vs-anonymisation/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Pseudonymisation vs Anonymisation: Key Differences</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: GDPR, [Article 5(1)(c) &mdash; Principles Relating to Processing of Personal Data](https://gdpr-info.eu/art-5-gdpr/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR, <a href="https://gdpr-info.eu/art-5-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 5(1)(c) — Principles Relating to Processing of Personal Data</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: MOSTLY AI, [Pseudonymization vs Anonymization: Ensure GDPR Compliance](https://mostly.ai/blog/pseudonymization-vs-anonymization-ensure-gdpr-compliance-and-maximize-data-utility).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: MOSTLY AI, <a href="https://mostly.ai/blog/pseudonymization-vs-anonymization-ensure-gdpr-compliance-and-maximize-data-utility" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Pseudonymization vs Anonymization: Ensure GDPR Compliance</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: GDPR, [Article 4(5) &mdash; Definition of Pseudonymisation](https://gdpr-info.eu/art-4-gdpr/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR, <a href="https://gdpr-info.eu/art-4-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 4(5) — Definition of Pseudonymisation</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: ENISA, [Pseudonymisation Techniques and Best Practices](https://www.enisa.europa.eu/sites/default/files/publications/Guidelines%20on%20shaping%20technology%20according%20to%20GDPR%20provisions.pdf).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ENISA, <a href="https://www.enisa.europa.eu/sites/default/files/publications/Guidelines%20on%20shaping%20technology%20according%20to%20GDPR%20provisions.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Pseudonymisation Techniques and Best Practices</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Privacy Company, [What Are the Differences Between Anonymisation and Pseudonymisation](https://www.privacycompany.eu/blog/what-are-the-differences-between-anonymisation-and-pseudonymisation).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Privacy Company, <a href="https://www.privacycompany.eu/blog/what-are-the-differences-between-anonymisation-and-pseudonymisation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Are the Differences Between Anonymisation and Pseudonymisation</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Protecto AI, [Pseudonymization vs Anonymization: Key Differences, Examples &amp; GDPR Guide](https://www.protecto.ai/blog/pseudonymization-vs-anonymization/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Protecto AI, <a href="https://www.protecto.ai/blog/pseudonymization-vs-anonymization/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Pseudonymization vs Anonymization: Key Differences, Examples & GDPR Guide</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: GDPR, [Article 15 &mdash; Right of Access by the Data Subject](https://gdpr-info.eu/art-15-gdpr/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR, <a href="https://gdpr-info.eu/art-15-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 15 — Right of Access by the Data Subject</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: GDPR Register, [Is Pseudonymised Data Personal Data? 2025 Guide](https://www.gdprregister.eu/gdpr/is-pseudonymised-data-personal-data-2025/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR Register, <a href="https://www.gdprregister.eu/gdpr/is-pseudonymised-data-personal-data-2025/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Is Pseudonymised Data Personal Data? 2025 Guide</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Xata, [Data Pseudonymization Explained: When Anonymization Isn&#39;t Enough](https://xata.io/blog/data-pseudonymization-explained-when-anonymization-isnt-enough).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Xata, <a href="https://xata.io/blog/data-pseudonymization-explained-when-anonymization-isnt-enough" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Pseudonymization Explained: When Anonymization Isn't Enough</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Piwik PRO, [The Most Important Benefits of Data Pseudonymization and Anonymization Under GDPR](https://piwik.pro/blog/benefits-data-pseudonymization-anonymization-gdpr/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Piwik PRO, <a href="https://piwik.pro/blog/benefits-data-pseudonymization-anonymization-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Most Important Benefits of Data Pseudonymization and Anonymization Under GDPR</a>.</p>
 
 </article>
 
@@ -235,55 +297,55 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 31 &mdash; PII handling and anonymisation. Alice, personal data protection is a huge topic. What makes it different for legal tech specifically?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 31 &mdash; PII handling and anonymisation. Alice, personal data protection is a huge topic. What makes it different for legal tech specifically?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The double sensitivity problem. Most SaaS platforms handle personally identifiable information &mdash; names, emails, phone numbers. Legal SaaS handles PII that is often simultaneously legally privileged. A client&#39;s name attached to a litigation strategy memo. A witness&#39;s address in a deposition transcript. Financial records produced during discovery. This isn&#39;t just personal data under privacy regulations &mdash; it&#39;s data protected by attorney-client privilege or work product doctrine. Get PII handling wrong in a regular SaaS product and you face regulatory fines. Get it wrong in legal SaaS and you face fines, malpractice claims, and potential waiver of privilege.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The double sensitivity problem. Most SaaS platforms handle personally identifiable information &mdash; names, emails, phone numbers. Legal SaaS handles PII that is often simultaneously legally privileged. A client&#39;s name attached to a litigation strategy memo. A witness&#39;s address in a deposition transcript. Financial records produced during discovery. This isn&#39;t just personal data under privacy regulations &mdash; it&#39;s data protected by attorney-client privilege or work product doctrine. Get PII handling wrong in a regular SaaS product and you face regulatory fines. Get it wrong in legal SaaS and you face fines, malpractice claims, and potential waiver of privilege.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;That&#39;s a much higher stakes version of the same problem. So let&#39;s start with the basics &mdash; what actually counts as PII in a legal tech context?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&#39;s a much higher stakes version of the same problem. So let&#39;s start with the basics &mdash; what actually counts as PII in a legal tech context?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;More than people expect. The obvious ones &mdash; full names, Social Security numbers, passport numbers, email addresses &mdash; those are in virtually every legal document. But in legal tech, you also have case numbers and filing dates that seem anonymous until you cross-reference them with a public court docket. You have communications metadata &mdash; email timestamps, call logs, IP addresses &mdash; that can reveal attorney-client relationships even without showing the content. And increasingly, you have biometric data from remote depositions and hearings. The safe assumption in legal SaaS is: treat everything as PII unless you can prove otherwise.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> More than people expect. The obvious ones &mdash; full names, Social Security numbers, passport numbers, email addresses &mdash; those are in virtually every legal document. But in legal tech, you also have case numbers and filing dates that seem anonymous until you cross-reference them with a public court docket. You have communications metadata &mdash; email timestamps, call logs, IP addresses &mdash; that can reveal attorney-client relationships even without showing the content. And increasingly, you have biometric data from remote depositions and hearings. The safe assumption in legal SaaS is: treat everything as PII unless you can prove otherwise.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So what&#39;s the first principle for handling all of this?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So what&#39;s the first principle for handling all of this?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Collect less. It sounds simple, but it&#39;s the most powerful protection. The GDPR calls it data minimisation &mdash; Article 5(1)(c) says personal data must be limited to what is necessary for the purpose you&#39;re processing it. For a legal SaaS developer, that means: if your document review tool only needs to classify documents by type, don&#39;t index the full text of every exhibit. If your analytics feature works on aggregate numbers, don&#39;t store individual-level records. Every field of PII you don&#39;t collect is a field that can&#39;t leak.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Collect less. It sounds simple, but it&#39;s the most powerful protection. The GDPR calls it data minimisation &mdash; Article 5(1)(c) says personal data must be limited to what is necessary for the purpose you&#39;re processing it. For a legal SaaS developer, that means: if your document review tool only needs to classify documents by type, don&#39;t index the full text of every exhibit. If your analytics feature works on aggregate numbers, don&#39;t store individual-level records. Every field of PII you don&#39;t collect is a field that can&#39;t leak.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. The data you don&#39;t have can&#39;t be stolen. Now, I keep hearing pseudonymisation and anonymisation used interchangeably. Are they the same thing?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. The data you don&#39;t have can&#39;t be stolen. Now, I keep hearing pseudonymisation and anonymisation used interchangeably. Are they the same thing?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;They are absolutely not, and confusing them is one of the most common compliance mistakes in the industry. Let me use a legal analogy. Pseudonymisation is like redacting a name in a court filing but keeping the unredacted version in a sealed envelope held by the court. The name is hidden, but it can be recovered. Anonymisation is like shredding the original document so thoroughly that no one &mdash; not the court, not forensic experts &mdash; can reconstruct the name. Ever.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> They are absolutely not, and confusing them is one of the most common compliance mistakes in the industry. Let me use a legal analogy. Pseudonymisation is like redacting a name in a court filing but keeping the unredacted version in a sealed envelope held by the court. The name is hidden, but it can be recovered. Anonymisation is like shredding the original document so thoroughly that no one &mdash; not the court, not forensic experts &mdash; can reconstruct the name. Ever.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And that distinction matters legally?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. And that distinction matters legally?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It matters enormously. Pseudonymised data is still personal data under GDPR. All the obligations still apply &mdash; consent, data subject access requests, breach notification, everything. Because the mapping exists somewhere, the data can theoretically be linked back to the individual. Anonymised data, on the other hand, falls entirely outside the GDPR&#39;s scope. But the bar for true anonymisation is extremely high. The European regulators say re-identification must be impossible considering all means reasonably likely to be used &mdash; including future technology and cross-referencing with other datasets.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It matters enormously. Pseudonymised data is still personal data under GDPR. All the obligations still apply &mdash; consent, data subject access requests, breach notification, everything. Because the mapping exists somewhere, the data can theoretically be linked back to the individual. Anonymised data, on the other hand, falls entirely outside the GDPR&#39;s scope. But the bar for true anonymisation is extremely high. The European regulators say re-identification must be impossible considering all means reasonably likely to be used &mdash; including future technology and cross-referencing with other datasets.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. So a lot of what people call &quot;anonymised&quot; is probably just pseudonymised?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. So a lot of what people call &quot;anonymised&quot; is probably just pseudonymised?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Exactly. If you replace &quot;Jane Smith&quot; with &quot;Client-7A3F&quot; in your database but store the mapping between the name and the token &mdash; that&#39;s pseudonymisation. The data is still personal data. If you then share that pseudonymised data with an analytics vendor or use it to train an AI model without consent, thinking it&#39;s &quot;anonymous,&quot; you&#39;ve violated the GDPR. This misclassification happens constantly, and regulators are increasingly aware of it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; Exactly. If you replace &quot;Jane Smith&quot; with &quot;Client-7A3F&quot; in your database but store the mapping between the name and the token &mdash; that&#39;s pseudonymisation. The data is still personal data. If you then share that pseudonymised data with an analytics vendor or use it to train an AI model without consent, thinking it&#39;s &quot;anonymous,&quot; you&#39;ve violated the GDPR. This misclassification happens constantly, and regulators are increasingly aware of it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So for the legal SaaS developer who does need to pseudonymise &mdash; say, for search functionality &mdash; how does that work technically?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So for the legal SaaS developer who does need to pseudonymise &mdash; say, for search functionality &mdash; how does that work technically?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Good practical question. You need your lawyers to search for &quot;all documents mentioning Jane Smith,&quot; but you don&#39;t want raw PII sitting in your search index. The solution is tokenisation. When a document is ingested, you pass the PII through a keyed hash function &mdash; the same function every time, using a key managed through the key management system we covered in Episode 29. &quot;Jane Smith&quot; always becomes the same token, say &quot;7a3f9b2c.&quot; You store that token in the search index. When the lawyer searches for &quot;Jane Smith,&quot; the application applies the same hash, generates the same token, and matches the indexed records. The display layer then shows the original name to authorised users. The search index itself never contains raw PII.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Good practical question. You need your lawyers to search for &quot;all documents mentioning Jane Smith,&quot; but you don&#39;t want raw PII sitting in your search index. The solution is tokenisation. When a document is ingested, you pass the PII through a keyed hash function &mdash; the same function every time, using a key managed through the key management system we covered in Episode 29. &quot;Jane Smith&quot; always becomes the same token, say &quot;7a3f9b2c.&quot; You store that token in the search index. When the lawyer searches for &quot;Jane Smith,&quot; the application applies the same hash, generates the same token, and matches the indexed records. The display layer then shows the original name to authorised users. The search index itself never contains raw PII.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s a clever pattern. What about when someone exercises their right to access or delete their data &mdash; the DSAR requests?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That&#39;s a clever pattern. What about when someone exercises their right to access or delete their data &mdash; the DSAR requests?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Data Subject Access Requests are a technical architecture problem, not just a legal one. Under GDPR, an individual can request access to all their personal data, request corrections, or request deletion &mdash; and you have thirty days to respond. For a legal SaaS platform, that means you need to be able to discover all PII for a given individual across every system &mdash; your production database, search indices, backups, log files, analytics stores, and any third-party integrations. You need to export it in a portable format. And you need to delete it completely or document why you legally can&#39;t &mdash; for example, because of an active litigation hold.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Data Subject Access Requests are a technical architecture problem, not just a legal one. Under GDPR, an individual can request access to all their personal data, request corrections, or request deletion &mdash; and you have thirty days to respond. For a legal SaaS platform, that means you need to be able to discover all PII for a given individual across every system &mdash; your production database, search indices, backups, log files, analytics stores, and any third-party integrations. You need to export it in a portable format. And you need to delete it completely or document why you legally can&#39;t &mdash; for example, because of an active litigation hold.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s where things get complicated. Litigation holds and data protection can pull in opposite directions.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that&#39;s where things get complicated. Litigation holds and data protection can pull in opposite directions.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Data protection law says &quot;delete when no longer needed.&quot; A litigation hold says &quot;preserve everything potentially relevant.&quot; When these conflict, the hold wins &mdash; but you need to document it. Track which case imposed the hold, which data it covers, and which custodians are affected. Once the hold is released, deletion resumes. And you maintain a privilege log explaining why specific data was retained. That satisfies both the data protection authority and the court.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Data protection law says &quot;delete when no longer needed.&quot; A litigation hold says &quot;preserve everything potentially relevant.&quot; When these conflict, the hold wins &mdash; but you need to document it. Track which case imposed the hold, which data it covers, and which custodians are affected. Once the hold is released, deletion resumes. And you maintain a privilege log explaining why specific data was retained. That satisfies both the data protection authority and the court.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What&#39;s the practical minimum for a legal SaaS team that&#39;s building this from scratch?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. What&#39;s the practical minimum for a legal SaaS team that&#39;s building this from scratch?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three things. First, a PII inventory &mdash; a mapping of every data store that contains personal data, what fields it holds, and how to query it for a specific individual. Without this, DSAR fulfilment is a panicked scramble. Second, defined retention periods per data category &mdash; case data, audit logs, analytics, and temporary processing data should all have different lifespans. Third, crypto-shredding capability tied to your key management architecture &mdash; when it&#39;s time to delete, destroy the encryption key and the data becomes mathematically unrecoverable.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three things. First, a PII inventory &mdash; a mapping of every data store that contains personal data, what fields it holds, and how to query it for a specific individual. Without this, DSAR fulfilment is a panicked scramble. Second, defined retention periods per data category &mdash; case data, audit logs, analytics, and temporary processing data should all have different lifespans. Third, crypto-shredding capability tied to your key management architecture &mdash; when it&#39;s time to delete, destroy the encryption key and the data becomes mathematically unrecoverable.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Database Security Hardening. The system where all this PII actually lives, and how to lock it down properly.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Database Security Hardening. The system where all this PII actually lives, and how to lock it down properly.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

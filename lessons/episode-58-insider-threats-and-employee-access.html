@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">External attackers must find a vulnerability, exploit it, and establish persistence. An insider skips all three steps. They have a valid account, they know where the data lives, and they pass every perimeter control by design. The [2024 Verizon Data Breach Investigations Report (DBIR)](https://www.verizon.com/business/resources/reports/dbir/) found that insider-driven incidents accounted for approximately 20% of all breaches, with privilege misuse as the leading action type in internal threat sc</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">External attackers must find a vulnerability, exploit it, and establish persistence. An insider skips all three steps. They have a valid account, they know where the data lives, and they pass every perimeter control by design. The 2024 Verizon Data Breach Investigations Report (DBIR) found that insider-driven incidents accounted for approximately 20% of all breaches, with privilege misuse as the leading action type in internal threat scenarios. For legal SaaS platforms, insider risk is amplified</p>
 </div>
 
 <!-- Article -->
@@ -76,11 +76,9 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 58: Insider Threats and Employee Access</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Attacker Who Already Has a Badge</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">External attackers must find a vulnerability, exploit it, and establish persistence. An insider skips all three steps. They have a valid account, they know where the data lives, and they pass every perimeter control by design. The [2024 Verizon Data Breach Investigations Report (DBIR)](https://www.verizon.com/business/resources/reports/dbir/) found that insider-driven incidents accounted for approximately 20% of all breaches, with privilege misuse as the leading action type in internal threat scenarios.[^1]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">External attackers must find a vulnerability, exploit it, and establish persistence. An insider skips all three steps. They have a valid account, they know where the data lives, and they pass every perimeter control by design. The <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 Verizon Data Breach Investigations Report (DBIR)</a> found that insider-driven incidents accounted for approximately 20% of all breaches, with privilege misuse as the leading action type in internal threat scenarios.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms, insider risk is amplified. Your system stores client communications, litigation strategy, settlement positions, and privileged legal advice. An insider with database access does not need to break encryption or bypass firewalls &mdash; they can simply query the records they are authorised to read and exfiltrate them through channels that look like normal work.</p>
 
@@ -90,39 +88,51 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Three Categories of Insider Risk</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Type | Motivation | Example |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------|-----------|---------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Malicious insider</strong> | Financial gain, revenge, ideology, coercion | Employee selling client data, departing associate downloading case files for a competitor |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Negligent insider</strong> | Carelessness, convenience, ignorance | Developer running production queries out of curiosity, staff emailing files to personal accounts |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Compromised insider</strong> | External attacker controls the insider&#39;s credentials | Phished employee whose account is used for data exfiltration without their knowledge |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Type</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Motivation</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Malicious insider</strong></td>
+                <td class="py-3 px-4">Financial gain, revenge, ideology, coercion</td>
+                <td class="py-3 px-4">Employee selling client data, departing associate downloading case files for a competitor</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Negligent insider</strong></td>
+                <td class="py-3 px-4">Carelessness, convenience, ignorance</td>
+                <td class="py-3 px-4">Developer running production queries out of curiosity, staff emailing files to personal accounts</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Compromised insider</strong></td>
+                <td class="py-3 px-4">External attacker controls the insider&#39;s credentials</td>
+                <td class="py-3 px-4">Phished employee whose account is used for data exfiltration without their knowledge</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each type requires a different detection and mitigation approach. Technical controls catch compromised accounts. Behavioural monitoring catches negligent access. Detecting malicious insiders requires correlating access patterns with context &mdash; something that purely technical controls struggle to do.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Real-World Insider Incidents in the Legal Industry</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mossack Fonseca / Panama Papers (2016).</strong> The leak of [11.5 million documents (2.6 terabytes)](https://en.wikipedia.org/wiki/Panama_Papers) from the Panamanian offshore law firm exposed the financial affairs of hundreds of public officials and led to the firm&#39;s closure in 2018.[^2] While the firm blamed external hackers, security analysts noted that the volume and structure of the data &mdash; spanning decades of client files &mdash; suggested either insider access or insider-assisted exfiltration. The firm&#39;s infrastructure had critical vulnerabilities including government-grade remote access trojans on its client portal.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mossack Fonseca / Panama Papers (2016).</strong> The leak of <a href="https://en.wikipedia.org/wiki/Panama_Papers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">11.5 million documents (2.6 terabytes)</a> from the Panamanian offshore law firm exposed the financial affairs of hundreds of public officials and led to the firm&#39;s closure in 2018. While the firm blamed external hackers, security analysts noted that the volume and structure of the data &mdash; spanning decades of client files &mdash; suggested either insider access or insider-assisted exfiltration. The firm&#39;s infrastructure had critical vulnerabilities including government-grade remote access trojans on its client portal.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tyler Loudon insider trading (2024).</strong> A Houston man [was charged with insider trading](https://www.sec.gov/) after stealing M&amp;A information from his wife, an attorney at a major law firm. He accessed documents from her home office and used confidential deal information to trade securities. The case illustrates that insider threats in legal contexts extend beyond the firm&#39;s own employees to anyone in the household with physical access to work materials.[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tyler Loudon insider trading (2024).</strong> A Houston man <a href="https://www.sec.gov/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">was charged with insider trading</a> after stealing M&amp;A information from his wife, an attorney at a major law firm. He accessed documents from her home office and used confidential deal information to trade securities. The case illustrates that insider threats in legal contexts extend beyond the firm&#39;s own employees to anyone in the household with physical access to work materials.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Bloomberg investigation &mdash; bank employee data sales (2024).</strong> A [Bloomberg investigation](https://www.bloomberg.com/) revealed that rank-and-file employees at US financial institutions were selling client data via Telegram. Low-wage staff with system access sold personal information to fraudsters targeting vulnerable customers &mdash; demonstrating that insider threats often come from employees with the lowest security awareness and the most to gain from small payments.[^5]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Bloomberg investigation &mdash; bank employee data sales (2024).</strong> A <a href="https://www.bloomberg.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Bloomberg investigation</a> revealed that rank-and-file employees at US financial institutions were selling client data via Telegram. Low-wage staff with system access sold personal information to fraudsters targeting vulnerable customers &mdash; demonstrating that insider threats often come from employees with the lowest security awareness and the most to gain from small payments.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Building an Insider Threat Programme</h2>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Least Privilege from Day One</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered the principle of least privilege in [Episode 8](../ep08/article.md) and access reviews in [Episode 57](../ep57/article.md). For insider threat mitigation, least privilege is the first line of defence. New employees and contractors should start with zero permissions beyond what their specific role requires. A support agent handling billing queries does not need access to case documents. A front-end developer does not need production database credentials.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered the principle of least privilege in Episode 8 and access reviews in Episode 57. For insider threat mitigation, least privilege is the first line of defence. New employees and contractors should start with zero permissions beyond what their specific role requires. A support agent handling billing queries does not need access to case documents. A front-end developer does not need production database credentials.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fffbeb; border-left: 4px solid #f59e0b; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
@@ -149,23 +159,21 @@
         <li><strong class="text-ink">Access after notice</strong> &mdash; any access to sensitive data after an employee has given resignation notice</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The [CERT Insider Threat Center at Carnegie Mellon](https://www.sei.cmu.edu/our-work/insider-threat/) has published extensive research on behavioural indicators, finding that most malicious insiders exhibited observable precursors &mdash; typically escalating data access &mdash; in the 30 days before their harmful action.[^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.sei.cmu.edu/our-work/insider-threat/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CERT Insider Threat Center at Carnegie Mellon</a> has published extensive research on behavioural indicators, finding that most malicious insiders exhibited observable precursors &mdash; typically escalating data access &mdash; in the 30 days before their harmful action.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">4. Zero Access Within the Hour on Departure</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered offboarding checklists in [Episode 57](../ep57/article.md). For insider threat purposes, the speed matters as much as the completeness. When an employee is terminated or resigns under concerning circumstances, access revocation must happen within the termination meeting &mdash; before the employee returns to their desk. For standard departures, same-day revocation is the minimum acceptable standard.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered offboarding checklists in Episode 57. For insider threat purposes, the speed matters as much as the completeness. When an employee is terminated or resigns under concerning circumstances, access revocation must happen within the termination meeting &mdash; before the employee returns to their desk. For standard departures, same-day revocation is the minimum acceptable standard.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[A 2024 report by Threat Intelligence](https://www.threatintelligence.com/blog/law-firm-data-breach) documented law firm breaches where departing employees downloaded client files in the window between giving notice and having their access removed &mdash; sometimes days or weeks later.[^7]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.threatintelligence.com/blog/law-firm-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A 2024 report by Threat Intelligence</a> documented law firm breaches where departing employees downloaded client files in the window between giving notice and having their access removed &mdash; sometimes days or weeks later.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">5. Technical Controls for Data Loss Prevention</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">DLP (Data Loss Prevention) policies</strong> that flag or block sensitive data leaving the organisation via email, USB, cloud storage, or messaging apps</li>
         <li><strong class="text-ink">Watermarking and document tracking</strong> &mdash; invisible watermarks in downloaded documents that trace the source account if the document appears externally</li>
         <li><strong class="text-ink">Session recording for privileged access</strong> &mdash; screen recording of admin sessions provides both deterrence and forensic evidence</li>
-        <li><strong class="text-ink">Database activity monitoring</strong> &mdash; logging and alerting on database queries, as covered in [Episodes 41&ndash;44](../ep41/article.md) on audit logging</li>
+        <li><strong class="text-ink">Database activity monitoring</strong> &mdash; logging and alerting on database queries, as covered in Episodes 41&ndash;44 on audit logging</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Culture Problem</h2>
 
@@ -180,37 +188,33 @@
         <li><strong class="text-ink">Respond proportionally</strong> &mdash; curiosity that leads to an accidental access of the wrong case file is a training issue, not a termination event</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 59 covers <strong class="text-ink">GDPR, PDPA, and Data Protection Compliance</strong> &mdash; translating the security controls we&#39;ve built over 58 episodes into the language of data protection regulators across jurisdictions.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: Verizon, [2024 Data Breach Investigations Report (DBIR)](https://www.verizon.com/business/resources/reports/dbir/) &mdash; insider threat statistics and privilege misuse analysis.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Verizon, <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 Data Breach Investigations Report (DBIR)</a> &mdash; insider threat statistics and privilege misuse analysis.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Wikipedia, [Panama Papers](https://en.wikipedia.org/wiki/Panama_Papers) &mdash; 11.5 million documents leaked from Mossack Fonseca.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wikipedia, <a href="https://en.wikipedia.org/wiki/Panama_Papers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Panama Papers</a> &mdash; 11.5 million documents leaked from Mossack Fonseca.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Twingate, [What Happened in the Mossack Fonseca Data Breach?](https://www.twingate.com/blog/tips/mossack-fonseca-data-breach) &mdash; technical vulnerabilities and breach analysis.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Twingate, <a href="https://www.twingate.com/blog/tips/mossack-fonseca-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Happened in the Mossack Fonseca Data Breach?</a> &mdash; technical vulnerabilities and breach analysis.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: U.S. Securities and Exchange Commission, [SEC Enforcement Actions &mdash; Insider Trading](https://www.sec.gov/) &mdash; Tyler Loudon case.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: U.S. Securities and Exchange Commission, <a href="https://www.sec.gov/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SEC Enforcement Actions — Insider Trading</a> &mdash; Tyler Loudon case.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Bloomberg, [Bank Employee Data Sales Investigation](https://www.bloomberg.com/) &mdash; staff at US financial institutions selling client data via Telegram (December 2024).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bloomberg, <a href="https://www.bloomberg.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Bank Employee Data Sales Investigation</a> &mdash; staff at US financial institutions selling client data via Telegram (December 2024).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Carnegie Mellon SEI, [CERT Insider Threat Center](https://www.sei.cmu.edu/our-work/insider-threat/) &mdash; behavioural indicator research and precursor analysis.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Carnegie Mellon SEI, <a href="https://www.sei.cmu.edu/our-work/insider-threat/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CERT Insider Threat Center</a> &mdash; behavioural indicator research and precursor analysis.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Threat Intelligence, [Inside the Breach: Real-Life Tales of Law Firm Hacks](https://www.threatintelligence.com/blog/law-firm-data-breach) &mdash; departing employee data exfiltration cases.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Threat Intelligence, <a href="https://www.threatintelligence.com/blog/law-firm-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Inside the Breach: Real-Life Tales of Law Firm Hacks</a> &mdash; departing employee data exfiltration cases.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: GRCI Law, [5 Real-Life Examples of Data Breaches Caused by Insider Threats](https://www.grcilaw.com/blog/5-real-life-examples-of-data-breaches-caused-by-insider-threats) &mdash; cross-industry insider threat case studies.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GRCI Law, <a href="https://www.grcilaw.com/blog/5-real-life-examples-of-data-breaches-caused-by-insider-threats" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">5 Real-Life Examples of Data Breaches Caused by Insider Threats</a> &mdash; cross-industry insider threat case studies.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: ProcessBolt, [Why Law Firm Data Breaches Are Skyrocketing in 2024](https://processbolt.com/insights/blog/why-law-firm-data-breaches-are-skyrocketing-in-2024/) &mdash; 30% increase in ransomware attacks on law firms.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ProcessBolt, <a href="https://processbolt.com/insights/blog/why-law-firm-data-breaches-are-skyrocketing-in-2024/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Why Law Firm Data Breaches Are Skyrocketing in 2024</a> &mdash; 30% increase in ransomware attacks on law firms.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Bloomberg Law, [2024 on Pace to Set Law Firm Data Breach Record](https://news.bloomberglaw.com/business-and-practice/wake-up-call-2024-on-pace-to-set-law-firm-data-breach-record) &mdash; law firm breach statistics.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bloomberg Law, <a href="https://news.bloomberglaw.com/business-and-practice/wake-up-call-2024-on-pace-to-set-law-firm-data-breach-record" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 on Pace to Set Law Firm Data Breach Record</a> &mdash; law firm breach statistics.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Recorded Future, [The Hidden Cascade: Why Law Firm Breaches Destroy More than Data](https://www.recordedfuture.com/blog/the-hidden-cascade) &mdash; downstream impacts of legal data breaches.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Recorded Future, <a href="https://www.recordedfuture.com/blog/the-hidden-cascade" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Hidden Cascade: Why Law Firm Breaches Destroy More than Data</a> &mdash; downstream impacts of legal data breaches.</p>
 
 </article>
 
@@ -225,63 +229,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 58 &mdash; insider threats. Alice, we&#39;ve spent most of this series talking about attackers on the outside trying to get in. Now we&#39;re talking about the people who are already inside.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 58 &mdash; insider threats. Alice, we&#39;ve spent most of this series talking about attackers on the outside trying to get in. Now we&#39;re talking about the people who are already inside.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. And that&#39;s what makes insider threats fundamentally different from everything else we&#39;ve discussed. An external attacker has to find a vulnerability, exploit it, and establish a foothold. An insider already has a valid account. They know the system layout. They pass every perimeter security check by design, because the system was built to let them in.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Right. And that&#39;s what makes insider threats fundamentally different from everything else we&#39;ve discussed. An external attacker has to find a vulnerability, exploit it, and establish a foothold. An insider already has a valid account. They know the system layout. They pass every perimeter security check by design, because the system was built to let them in.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So when we say &quot;insider threat,&quot; we&#39;re talking about employees going rogue?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So when we say &quot;insider threat,&quot; we&#39;re talking about employees going rogue?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s one category, but there are actually three. The first is the malicious insider &mdash; someone who deliberately steals data, sabotages systems, or sells access. The second is the negligent insider &mdash; someone who accidentally causes harm through carelessness. A developer who runs a production database query out of curiosity, or an employee who emails client files to their personal account for convenience. The third is the compromised insider &mdash; someone whose credentials have been stolen through phishing or malware. The attacker is external, but they&#39;re operating through a legitimate user&#39;s account.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s one category, but there are actually three. The first is the malicious insider &mdash; someone who deliberately steals data, sabotages systems, or sells access. The second is the negligent insider &mdash; someone who accidentally causes harm through carelessness. A developer who runs a production database query out of curiosity, or an employee who emails client files to their personal account for convenience. The third is the compromised insider &mdash; someone whose credentials have been stolen through phishing or malware. The attacker is external, but they&#39;re operating through a legitimate user&#39;s account.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And I&#39;d imagine in legal tech, the data that insiders have access to is particularly sensitive.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And I&#39;d imagine in legal tech, the data that insiders have access to is particularly sensitive.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the problem. Legal SaaS platforms hold client communications, litigation strategy, settlement positions, privileged legal advice. If an insider at a regular SaaS company steals customer data, it&#39;s a breach. If an insider at a legal tech company steals client data, it&#39;s a breach of legal professional privilege. The downstream consequences &mdash; lost cases, waived privilege, malpractice exposure &mdash; go far beyond the data itself.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the problem. Legal SaaS platforms hold client communications, litigation strategy, settlement positions, privileged legal advice. If an insider at a regular SaaS company steals customer data, it&#39;s a breach. If an insider at a legal tech company steals client data, it&#39;s a breach of legal professional privilege. The downstream consequences &mdash; lost cases, waived privilege, malpractice exposure &mdash; go far beyond the data itself.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. Can you give me a real example?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. Can you give me a real example?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The most dramatic one is the Panama Papers. In 2016, someone leaked 11.5 million documents &mdash; two and a half terabytes of data &mdash; from Mossack Fonseca, a Panamanian offshore law firm. Client files going back decades. The firm said it was hacked from outside. Security researchers pointed out that the sheer volume and structure of the data looked more like insider access or insider-assisted exfiltration. Either way, the firm&#39;s security was catastrophically inadequate &mdash; they had government-grade remote access trojans on their client portal. The firm closed two years later.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The most dramatic one is the Panama Papers. In 2016, someone leaked 11.5 million documents &mdash; two and a half terabytes of data &mdash; from Mossack Fonseca, a Panamanian offshore law firm. Client files going back decades. The firm said it was hacked from outside. Security researchers pointed out that the sheer volume and structure of the data looked more like insider access or insider-assisted exfiltration. Either way, the firm&#39;s security was catastrophically inadequate &mdash; they had government-grade remote access trojans on their client portal. The firm closed two years later.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. That&#39;s the law firm that literally ceased to exist because of a data breach.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. That&#39;s the law firm that literally ceased to exist because of a data breach.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And it&#39;s not just large-scale espionage. In 2024, a man in Houston was charged with insider trading after stealing M&amp;A information from his wife, who was an attorney at a major firm. He accessed documents from her home office &mdash; not by hacking anything, just by walking into the room. That case shows that insider threats in legal contexts extend to anyone with physical access to work materials, not just the firm&#39;s own employees.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And it&#39;s not just large-scale espionage. In 2024, a man in Houston was charged with insider trading after stealing M&amp;A information from his wife, who was an attorney at a major firm. He accessed documents from her home office &mdash; not by hacking anything, just by walking into the room. That case shows that insider threats in legal contexts extend to anyone with physical access to work materials, not just the firm&#39;s own employees.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So how do you defend against this? You can&#39;t exactly revoke access from someone who needs it to do their job.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So how do you defend against this? You can&#39;t exactly revoke access from someone who needs it to do their job.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You defend in layers. The first layer is what we covered last episode &mdash; least privilege. Every person starts with the minimum access their specific role requires. A support agent answering billing questions doesn&#39;t need access to case documents. A front-end developer doesn&#39;t need production database credentials. You build walls between the data people need and the data they don&#39;t.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> You defend in layers. The first layer is what we covered last episode &mdash; least privilege. Every person starts with the minimum access their specific role requires. A support agent answering billing questions doesn&#39;t need access to case documents. A front-end developer doesn&#39;t need production database credentials. You build walls between the data people need and the data they don&#39;t.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. But even with least privilege, some people genuinely need access to sensitive data. The lawyers, the matter teams.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. But even with least privilege, some people genuinely need access to sensitive data. The lawyers, the matter teams.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; They do. And that&#39;s where behavioural monitoring comes in. You can&#39;t prevent a lawyer from reading case files they&#39;re assigned to &mdash; that&#39;s their job. But you can detect when their access patterns change in ways that don&#39;t match normal work. If someone who usually accesses ten documents a day suddenly downloads five hundred in an hour, that&#39;s a signal. If someone who works nine to six is accessing files at two in the morning, that&#39;s a signal. If someone who normally works in one practice area starts browsing cases across every department, that&#39;s a signal.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; They do. And that&#39;s where behavioural monitoring comes in. You can&#39;t prevent a lawyer from reading case files they&#39;re assigned to &mdash; that&#39;s their job. But you can detect when their access patterns change in ways that don&#39;t match normal work. If someone who usually accesses ten documents a day suddenly downloads five hundred in an hour, that&#39;s a signal. If someone who works nine to six is accessing files at two in the morning, that&#39;s a signal. If someone who normally works in one practice area starts browsing cases across every department, that&#39;s a signal.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So you&#39;re not blocking access &mdash; you&#39;re watching for anomalies.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. So you&#39;re not blocking access &mdash; you&#39;re watching for anomalies.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. The CERT Insider Threat Center at Carnegie Mellon has done extensive research on this. They found that most malicious insiders show observable behavioural changes &mdash; typically escalating data access &mdash; in the thirty days before they do something harmful. The patterns are there if you&#39;re looking. Bulk exports, mass printing, unusual access hours, access to data outside their normal scope.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. The CERT Insider Threat Center at Carnegie Mellon has done extensive research on this. They found that most malicious insiders show observable behavioural changes &mdash; typically escalating data access &mdash; in the thirty days before they do something harmful. The patterns are there if you&#39;re looking. Bulk exports, mass printing, unusual access hours, access to data outside their normal scope.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. What about when someone is leaving? That seems like the highest-risk window.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. What about when someone is leaving? That seems like the highest-risk window.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is the highest-risk window. The period between when an employee gives notice and when their access is actually revoked is when most insider data theft happens. We covered offboarding checklists in Episode 57, but for insider threat specifically, the timing matters as much as the checklist. If someone is terminated or resigns under concerning circumstances, access should be cut during the termination meeting &mdash; before they go back to their desk. For standard departures, same-day revocation is the minimum. There are documented cases of law firm employees downloading entire client file repositories in the gap between giving notice and having their accounts disabled.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is the highest-risk window. The period between when an employee gives notice and when their access is actually revoked is when most insider data theft happens. We covered offboarding checklists in Episode 57, but for insider threat specifically, the timing matters as much as the checklist. If someone is terminated or resigns under concerning circumstances, access should be cut during the termination meeting &mdash; before they go back to their desk. For standard departures, same-day revocation is the minimum. There are documented cases of law firm employees downloading entire client file repositories in the gap between giving notice and having their accounts disabled.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That gap could be days or weeks at some firms.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That gap could be days or weeks at some firms.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It often is. And that&#39;s the window where data walks out the door. Technical controls help here too &mdash; data loss prevention tools that flag or block sensitive documents being sent to personal email accounts, USB drives, or cloud storage. Invisible watermarks in downloaded documents so you can trace the source if a file appears where it shouldn&#39;t. Session recording for anyone with admin-level access.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It often is. And that&#39;s the window where data walks out the door. Technical controls help here too &mdash; data loss prevention tools that flag or block sensitive documents being sent to personal email accounts, USB drives, or cloud storage. Invisible watermarks in downloaded documents so you can trace the source if a file appears where it shouldn&#39;t. Session recording for anyone with admin-level access.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Now, I have to ask &mdash; there&#39;s a tension here between security and trust. You don&#39;t want to create a surveillance culture where everyone feels watched.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Now, I have to ask &mdash; there&#39;s a tension here between security and trust. You don&#39;t want to create a surveillance culture where everyone feels watched.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That tension is real, and getting the balance wrong is as damaging as the insider threat itself. An organisation that monitors employees without trust will drive its best people out. The key is transparency and proportionality. Communicate that monitoring exists, explain what it covers and why. Apply it equally &mdash; executives get the same scrutiny as junior staff. Focus on anomalies, not individuals &mdash; the system flags unusual patterns, not specific people. And respond proportionally. If someone accidentally accessed the wrong case file out of curiosity, that&#39;s a training conversation, not a termination event.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That tension is real, and getting the balance wrong is as damaging as the insider threat itself. An organisation that monitors employees without trust will drive its best people out. The key is transparency and proportionality. Communicate that monitoring exists, explain what it covers and why. Apply it equally &mdash; executives get the same scrutiny as junior staff. Focus on anomalies, not individuals &mdash; the system flags unusual patterns, not specific people. And respond proportionally. If someone accidentally accessed the wrong case file out of curiosity, that&#39;s a training conversation, not a termination event.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. It sounds like the cultural part is as important as the technical part.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. It sounds like the cultural part is as important as the technical part.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. The best insider threat programmes combine technical controls &mdash; least privilege, monitoring, DLP &mdash; with a culture where people understand the rules, know they apply equally, and have safe channels to report suspicious behaviour without fear of retaliation. Neither side works alone.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is. The best insider threat programmes combine technical controls &mdash; least privilege, monitoring, DLP &mdash; with a culture where people understand the rules, know they apply equally, and have safe channels to report suspicious behaviour without fear of retaliation. Neither side works alone.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; GDPR, PDPA, and data protection compliance. How all of these security controls translate into regulatory requirements across jurisdictions.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; GDPR, PDPA, and data protection compliance. How all of these security controls translate into regulatory requirements across jurisdictions.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

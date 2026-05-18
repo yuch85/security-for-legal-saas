@@ -76,45 +76,79 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 26: Zero Trust Architecture</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Death of the Network Perimeter</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For decades, network security operated on a simple assumption: everything inside the corporate network is trusted, everything outside is not. The firewall was the castle wall. If you were inside &mdash; physically in the office or connected to the VPN &mdash; you could access internal resources freely.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">That model is dead. Remote work, cloud services, and SaaS applications mean that the &quot;inside&quot; and &quot;outside&quot; distinction no longer exists. A partner working from a hotel in Singapore accesses the same case management system as an associate in the New York office. A legal SaaS platform runs on AWS, not in a server room. The data flows across the public internet. The perimeter is everywhere &mdash; which means it&#39;s nowhere.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Zero Trust</strong> is the security model built for this reality. It was first articulated by John Kindervag at Forrester Research in 2010, formalised by [NIST in SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final) (2020), and adopted as US federal policy under Executive Order 14028.[^1]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Zero Trust</strong> is the security model built for this reality. It was first articulated by John Kindervag at Forrester Research in 2010, formalised by <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST in SP 800-207</a> (2020), and adopted as US federal policy under Executive Order 14028.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Three Principles</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Zero Trust rests on three principles:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Principle</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Means</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Never trust, always verify</strong></td>
+                <td class="py-3 px-4">No entity is trusted by default &mdash; not users, not devices, not networks</td>
+                <td class="py-3 px-4">A lawyer on the office VPN still authenticates and authorises for every request</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Assume breach</strong></td>
+                <td class="py-3 px-4">Design systems as if an attacker is already inside your network</td>
+                <td class="py-3 px-4">If the database server is compromised, lateral movement to the document store is still blocked</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Least-privilege access</strong></td>
+                <td class="py-3 px-4">Every entity gets the minimum permissions needed, for the minimum time needed</td>
+                <td class="py-3 px-4">An associate gets read access to their assigned matters &mdash; not all matters, not forever</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Principle | What It Means | Legal SaaS Example |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|--------------|-------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Never trust, always verify</strong> | No entity is trusted by default &mdash; not users, not devices, not networks | A lawyer on the office VPN still authenticates and authorises for every request |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Assume breach</strong> | Design systems as if an attacker is already inside your network | If the database server is compromised, lateral movement to the document store is still blocked |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Least-privilege access</strong> | Every entity gets the minimum permissions needed, for the minimum time needed | An associate gets read access to their assigned matters &mdash; not all matters, not forever |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These principles extend the defence-in-depth concept we covered in [Episode 4](../ep04/article.md). Defence in depth layers multiple security controls. Zero Trust makes each layer verify independently &mdash; no layer assumes a previous layer already checked.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These principles extend the defence-in-depth concept we covered in Episode 4. Defence in depth layers multiple security controls. Zero Trust makes each layer verify independently &mdash; no layer assumes a previous layer already checked.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">NIST SP 800-207: The Architecture</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST SP 800-207](https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf) defines three core components of a Zero Trust Architecture:[^1]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Component | Role | Implementation |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|------|----------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Policy Engine (PE)</strong> | Makes access decisions based on policies, identity, device state, and context | Could be a policy engine like OPA or Cedar (from [Episode 24](../ep24/article.md)) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Policy Administrator (PA)</strong> | Translates the PE&#39;s decisions into action &mdash; issues session tokens, configures access paths | Often part of your identity layer or API gateway |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Policy Enforcement Point (PEP)</strong> | Applies decisions at the resource boundary &mdash; allows or blocks the actual request | API middleware, network gateway, or service mesh proxy |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207</a> defines three core components of a Zero Trust Architecture:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Implementation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Policy Engine (PE)</strong></td>
+                <td class="py-3 px-4">Makes access decisions based on policies, identity, device state, and context</td>
+                <td class="py-3 px-4">Could be a policy engine like OPA or Cedar (from Episode 24)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Policy Administrator (PA)</strong></td>
+                <td class="py-3 px-4">Translates the PE&#39;s decisions into action &mdash; issues session tokens, configures access paths</td>
+                <td class="py-3 px-4">Often part of your identity layer or API gateway</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Policy Enforcement Point (PEP)</strong></td>
+                <td class="py-3 px-4">Applies decisions at the resource boundary &mdash; allows or blocks the actual request</td>
+                <td class="py-3 px-4">API middleware, network gateway, or service mesh proxy</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The flow for every access request:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
@@ -124,102 +158,162 @@
         <li>PE returns allow/deny to the PA</li>
         <li>PA instructs the PEP to permit or block the request</li>
         <li>If permitted, the session is established with minimum required privileges</li>
-    </ul>
+    </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key insight:</strong> This happens on every request, not just at login. A traditional system authenticates once and grants a session. Zero Trust re-evaluates continuously &mdash; the user&#39;s device compliance could change, their risk score could escalate, or an anomaly could be detected mid-session.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key insight:</strong> This happens on every request, not just at login. A traditional system authenticates once and grants a session. Zero Trust re-evaluates continuously &mdash; the user&#39;s device compliance could change, their risk score could escalate, or an anomaly could be detected mid-session.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Identity-Based Access</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Zero Trust, <strong class="text-ink">identity is the new perimeter</strong>. Every request carries proof of identity and authorisation &mdash; not just a session cookie created at login, but continuously verified credentials. This connects directly to the authentication and authorisation stack we&#39;ve built across Episodes 17-25:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Authentication</strong> ([Episodes 17-22](../ep22/article.md)): Passwords, MFA, SSO, SAML &mdash; proving who the user is</li>
-        <li><strong class="text-ink">Authorisation</strong> ([Episodes 23-25](../ep25/article.md)): RBAC, ABAC, ethical walls &mdash; deciding what they can do</li>
+        <li><strong class="text-ink">Authentication</strong> (Episodes 17-22): Passwords, MFA, SSO, SAML &mdash; proving who the user is</li>
+        <li><strong class="text-ink">Authorisation</strong> (Episodes 23-25): RBAC, ABAC, ethical walls &mdash; deciding what they can do</li>
         <li><strong class="text-ink">Continuous verification</strong>: Re-evaluating both on every request, not just at session start</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means the JWT token or session (from [Episode 18](../ep18/article.md)) should carry not just identity but context &mdash; device compliance status, network location, authentication strength &mdash; and the authorisation layer should evaluate all of it on every API call.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means the JWT token or session (from Episode 18) should carry not just identity but context &mdash; device compliance status, network location, authentication strength &mdash; and the authorisation layer should evaluate all of it on every API call.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Microsegmentation</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Microsegmentation</strong> divides your infrastructure into fine-grained zones, each with its own access controls. In a traditional network, once you&#39;re past the firewall, you can reach everything. With microsegmentation, each service, database, and API has its own boundary.[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Microsegmentation</strong> divides your infrastructure into fine-grained zones, each with its own access controls. In a traditional network, once you&#39;re past the firewall, you can reach everything. With microsegmentation, each service, database, and API has its own boundary.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Segment</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Contains</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Access Rules</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Document service</strong></td>
+                <td class="py-3 px-4">Document storage, version control</td>
+                <td class="py-3 px-4">Only the API gateway and authorised microservices can reach it</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Billing service</strong></td>
+                <td class="py-3 px-4">Financial data, invoicing</td>
+                <td class="py-3 px-4">Only billing API endpoints, restricted to admin and partner roles</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Search service</strong></td>
+                <td class="py-3 px-4">Full-text index, matter metadata</td>
+                <td class="py-3 px-4">Only the search API, filtered by ethical walls (Episode 25)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Database</strong></td>
+                <td class="py-3 px-4">PostgreSQL/MySQL instance</td>
+                <td class="py-3 px-4">Only application services on specific ports &mdash; never directly accessible from the internet</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">User service</strong></td>
+                <td class="py-3 px-4">Authentication, session management</td>
+                <td class="py-3 px-4">Only the API gateway and identity provider</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Segment | Contains | Access Rules |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|----------|-------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Document service</strong> | Document storage, version control | Only the API gateway and authorised microservices can reach it |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Billing service</strong> | Financial data, invoicing | Only billing API endpoints, restricted to admin and partner roles |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Search service</strong> | Full-text index, matter metadata | Only the search API, filtered by ethical walls ([Episode 25](../ep25/article.md)) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Database</strong> | PostgreSQL/MySQL instance | Only application services on specific ports &mdash; never directly accessible from the internet |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">User service</strong> | Authentication, session management | Only the API gateway and identity provider |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The CISA Zero Trust Maturity Model explicitly identifies microsegmentation as a foundational control: &quot;not a nice-to-have or an advanced-stage optimization&quot; but essential infrastructure.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The CISA Zero Trust Maturity Model explicitly identifies microsegmentation as a foundational control: &quot;not a nice-to-have or an advanced-stage optimization&quot; but essential infrastructure.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If an attacker compromises the document service, microsegmentation prevents them from pivoting to the billing database or the user authentication service. Each hop requires a separate authorised connection. This is the practical meaning of &quot;assume breach&quot; &mdash; you design each segment to survive even if adjacent segments are compromised.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The CISA Zero Trust Maturity Model</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The [CISA Zero Trust Maturity Model](https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model) provides a roadmap with four maturity stages across five pillars:[^5]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pillar | Traditional | Initial | Advanced | Optimal |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|------------|---------|----------|---------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Identity</strong> | Password-only, static groups | MFA, basic SSO | Phishing-resistant MFA, continuous validation | Identity-driven, risk-adaptive access |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Devices</strong> | No inventory | Basic inventory | Device compliance checked at access time | Real-time device health integrated into every decision |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Networks</strong> | Flat network, perimeter firewall | Basic segmentation | Microsegmentation, encrypted east-west traffic | Fully encrypted, software-defined perimeters |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Applications</strong> | Monolithic, trusted internally | Some API gateway controls | Per-service authorisation | Every service independently verified |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data</strong> | Unclassified, broadly accessible | Basic classification | Encryption + access controls by classification | Automated classification, real-time protection |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Zero Trust Maturity Model</a> provides a roadmap with four maturity stages across five pillars:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Pillar</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Traditional</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Initial</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Advanced</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Optimal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Identity</strong></td>
+                <td class="py-3 px-4">Password-only, static groups</td>
+                <td class="py-3 px-4">MFA, basic SSO</td>
+                <td class="py-3 px-4">Phishing-resistant MFA, continuous validation</td>
+                <td class="py-3 px-4">Identity-driven, risk-adaptive access</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Devices</strong></td>
+                <td class="py-3 px-4">No inventory</td>
+                <td class="py-3 px-4">Basic inventory</td>
+                <td class="py-3 px-4">Device compliance checked at access time</td>
+                <td class="py-3 px-4">Real-time device health integrated into every decision</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Networks</strong></td>
+                <td class="py-3 px-4">Flat network, perimeter firewall</td>
+                <td class="py-3 px-4">Basic segmentation</td>
+                <td class="py-3 px-4">Microsegmentation, encrypted east-west traffic</td>
+                <td class="py-3 px-4">Fully encrypted, software-defined perimeters</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Applications</strong></td>
+                <td class="py-3 px-4">Monolithic, trusted internally</td>
+                <td class="py-3 px-4">Some API gateway controls</td>
+                <td class="py-3 px-4">Per-service authorisation</td>
+                <td class="py-3 px-4">Every service independently verified</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Data</strong></td>
+                <td class="py-3 px-4">Unclassified, broadly accessible</td>
+                <td class="py-3 px-4">Basic classification</td>
+                <td class="py-3 px-4">Encryption + access controls by classification</td>
+                <td class="py-3 px-4">Automated classification, real-time protection</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most legal SaaS platforms should target &quot;Advanced&quot; across all pillars. &quot;Optimal&quot; is aspirational for most organisations but increasingly expected for platforms handling national security or government legal work.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Zero Trust for a Small Team</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Zero Trust sounds like a massive infrastructure project. For a small legal SaaS team, here&#39;s a prioritised implementation path:[^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Zero Trust sounds like a massive infrastructure project. For a small legal SaaS team, here&#39;s a prioritised implementation path:</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 1: Identity Foundation (Weeks 1-4)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Enforce MFA for all users ([Episode 21](../ep21/article.md))</li>
-        <li>Implement SSO with SAML/OIDC ([Episode 22](../ep22/article.md))</li>
-        <li>Short-lived sessions with automatic token refresh ([Episode 19](../ep19/article.md))</li>
+        <li>Enforce MFA for all users (Episode 21)</li>
+        <li>Implement SSO with SAML/OIDC (Episode 22)</li>
+        <li>Short-lived sessions with automatic token refresh (Episode 19)</li>
     </ul>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 2: API-Level Enforcement (Weeks 5-8)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Every API endpoint checks authorisation &mdash; no implicit trust ([Episode 23](../ep23/article.md))</li>
-        <li>Deploy a policy engine for ABAC decisions ([Episode 24](../ep24/article.md))</li>
+        <li>Every API endpoint checks authorisation &mdash; no implicit trust (Episode 23)</li>
+        <li>Deploy a policy engine for ABAC decisions (Episode 24)</li>
         <li>Log all access decisions with immutable audit trails</li>
     </ul>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 3: Network Segmentation (Weeks 9-12)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li>Database never directly accessible from the internet</li>
-        <li>Service-to-service authentication (mTLS, from [Episode 15](../ep15/article.md))</li>
+        <li>Service-to-service authentication (mTLS, from Episode 15)</li>
         <li>Separate network segments for different service tiers</li>
     </ul>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 4: Continuous Verification (Ongoing)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li>Device compliance checking at access time</li>
-        <li>Anomaly detection &mdash; unusual access patterns trigger step-up authentication ([Episode 19](../ep19/article.md))</li>
+        <li>Anomaly detection &mdash; unusual access patterns trigger step-up authentication (Episode 19)</li>
         <li>Risk-adaptive policies that tighten access when risk indicators increase</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The 80/20 rule:</strong> Phases 1 and 2 deliver most of the security benefit. If you do nothing else, enforce MFA, implement SSO, and check authorisation on every API request. That alone moves you from a perimeter-based model to an identity-based one.[^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The 80/20 rule:</strong> Phases 1 and 2 deliver most of the security benefit. If you do nothing else, enforce MFA, implement SSO, and check authorisation on every API request. That alone moves you from a perimeter-based model to an identity-based one.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Google BeyondCorp: The Original Implementation</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Google&#39;s [BeyondCorp](https://cloud.google.com/beyondcorp) initiative, published in a series of papers from 2014 onwards, was the first large-scale production implementation of Zero Trust.[^7] Google eliminated the corporate VPN entirely &mdash; internal applications are accessed the same way from the office as from a coffee shop. Every request is authenticated, every device is verified, and access decisions are made per-request based on identity and device state.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Google&#39;s <a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondCorp</a> initiative, published in a series of papers from 2014 onwards, was the first large-scale production implementation of Zero Trust. Google eliminated the corporate VPN entirely &mdash; internal applications are accessed the same way from the office as from a coffee shop. Every request is authenticated, every device is verified, and access decisions are made per-request based on identity and device state.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">BeyondCorp proved that Zero Trust is not just theoretical. It works at the scale of one of the world&#39;s largest technology companies. For legal SaaS platforms, the lesson is clear: if Google can eliminate implicit trust for 100,000+ employees, a 50-person SaaS company can certainly adopt the same principles.</p>
 
@@ -227,29 +321,27 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 27 covers <strong class="text-ink">Multi-Tenant Data Isolation</strong> &mdash; how your SaaS platform keeps 50 different law firms&#39; data completely separate, and what happens when the isolation fails.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: NIST, [SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final) &mdash; the foundational zero trust standard.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207: Zero Trust Architecture</a> &mdash; the foundational zero trust standard.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: NIST, [SP 800-207A: Zero Trust Architecture Model for Access Control in Cloud-Native Applications](https://csrc.nist.gov/pubs/sp/800/207/a/final) &mdash; cloud-native ZTA guidance.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/a/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207A: Zero Trust Architecture Model for Access Control in Cloud-Native Applications</a> &mdash; cloud-native ZTA guidance.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Palo Alto Networks, [What is NIST SP 800-207?](https://www.paloaltonetworks.com/cyberpedia/what-is-nist-sp-800-207) &mdash; overview of the NIST ZTA framework.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Palo Alto Networks, <a href="https://www.paloaltonetworks.com/cyberpedia/what-is-nist-sp-800-207" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; overview of the NIST ZTA framework.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: CISA, [Microsegmentation in Zero Trust](https://www.cisa.gov/sites/default/files/2025-07/ZT-Microsegmentation-Guidance-Part-One_508c.pdf) &mdash; CISA guidance on microsegmentation as a foundational ZTA control.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CISA, <a href="https://www.cisa.gov/sites/default/files/2025-07/ZT-Microsegmentation-Guidance-Part-One_508c.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsegmentation in Zero Trust</a> &mdash; CISA guidance on microsegmentation as a foundational ZTA control.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: CISA, [Zero Trust Maturity Model](https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model) &mdash; five-pillar maturity framework.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CISA, <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zero Trust Maturity Model</a> &mdash; five-pillar maturity framework.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: TerraZone, [NIST SP 800-207: Complete Guide to Zero Trust Architecture (2025)](https://terrazone.io/nist-sp-800-207/) &mdash; practical implementation guide.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: TerraZone, <a href="https://terrazone.io/nist-sp-800-207/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207: Complete Guide to Zero Trust Architecture (2025)</a> &mdash; practical implementation guide.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Google Cloud, [BeyondCorp](https://cloud.google.com/beyondcorp) &mdash; Google&#39;s zero trust implementation.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Google Cloud, <a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondCorp</a> &mdash; Google&#39;s zero trust implementation.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: CyberArk, [What is NIST SP 800-207?](https://www.cyberark.com/what-is/nist-sp-800-207-cybersecurity-framework/) &mdash; ZTA framework overview.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CyberArk, <a href="https://www.cyberark.com/what-is/nist-sp-800-207-cybersecurity-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; ZTA framework overview.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Zero Networks, [CISA Guidance Confirms: Microsegmentation Is Foundational for Zero Trust](https://zeronetworks.com/blog/cisa-guidance-confirms-microsegmentation-is-foundational-for-zero-trust) &mdash; analysis of CISA microsegmentation guidance.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Zero Networks, <a href="https://zeronetworks.com/blog/cisa-guidance-confirms-microsegmentation-is-foundational-for-zero-trust" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Guidance Confirms: Microsegmentation Is Foundational for Zero Trust</a> &mdash; analysis of CISA microsegmentation guidance.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Seraphic Security, [Top 4 Zero Trust Frameworks in 2026](https://seraphicsecurity.com/learn/zero-trust/top-4-zero-trust-frameworks-in-2026-and-how-to-choose/) &mdash; framework comparison and selection guide.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Seraphic Security, <a href="https://seraphicsecurity.com/learn/zero-trust/top-4-zero-trust-frameworks-in-2026-and-how-to-choose/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top 4 Zero Trust Frameworks in 2026</a> &mdash; framework comparison and selection guide.</p>
 
 </article>
 
@@ -264,63 +356,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 26 &mdash; Zero Trust Architecture. Alice, we first mentioned zero trust way back in Episode 4 when we talked about defence in depth. Now we&#39;re doing the deep dive. What&#39;s the core idea?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 26 &mdash; Zero Trust Architecture. Alice, we first mentioned zero trust way back in Episode 4 when we talked about defence in depth. Now we&#39;re doing the deep dive. What&#39;s the core idea?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The core idea is that your network location means nothing. Traditionally, security worked like a castle. There&#39;s a firewall &mdash; the castle wall &mdash; and everything inside is trusted. If you&#39;re on the corporate network or connected to the VPN, you can access internal systems freely. Zero trust says that model is broken. A partner working from a hotel room in Singapore, an associate at the New York office, and a contractor on their personal laptop are all treated the same way. None of them are trusted by default. Every single request has to prove its right to exist.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The core idea is that your network location means nothing. Traditionally, security worked like a castle. There&#39;s a firewall &mdash; the castle wall &mdash; and everything inside is trusted. If you&#39;re on the corporate network or connected to the VPN, you can access internal systems freely. Zero trust says that model is broken. A partner working from a hotel room in Singapore, an associate at the New York office, and a contractor on their personal laptop are all treated the same way. None of them are trusted by default. Every single request has to prove its right to exist.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So &quot;never trust, always verify&quot; &mdash; that&#39;s the phrase I keep hearing.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So &quot;never trust, always verify&quot; &mdash; that&#39;s the phrase I keep hearing.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s one of the three principles. Never trust, always verify &mdash; no entity is trusted by default, regardless of where they are. Assume breach &mdash; design your systems as if an attacker is already inside your network. And least-privilege access &mdash; everyone gets the minimum permissions they need, for the minimum time they need them. We&#39;ve been building toward this all series. MFA in Episode 21, SSO in Episode 22, RBAC in 23, ABAC in 24. Zero Trust is the architecture that ties all of those together.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s one of the three principles. Never trust, always verify &mdash; no entity is trusted by default, regardless of where they are. Assume breach &mdash; design your systems as if an attacker is already inside your network. And least-privilege access &mdash; everyone gets the minimum permissions they need, for the minimum time they need them. We&#39;ve been building toward this all series. MFA in Episode 21, SSO in Episode 22, RBAC in 23, ABAC in 24. Zero Trust is the architecture that ties all of those together.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. NIST has a standard for this, right?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. NIST has a standard for this, right?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;NIST SP 800-207, published in 2020. It defines three components. The Policy Engine makes access decisions &mdash; it evaluates who you are, what device you&#39;re on, what you&#39;re trying to access, and what the risk looks like. The Policy Administrator translates those decisions into action &mdash; it issues tokens or configures access. And the Policy Enforcement Point is the actual gate &mdash; it allows or blocks the request at the resource boundary. Think of the Policy Engine as the judge, the Administrator as the clerk, and the Enforcement Point as the door.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> NIST SP 800-207, published in 2020. It defines three components. The Policy Engine makes access decisions &mdash; it evaluates who you are, what device you&#39;re on, what you&#39;re trying to access, and what the risk looks like. The Policy Administrator translates those decisions into action &mdash; it issues tokens or configures access. And the Policy Enforcement Point is the actual gate &mdash; it allows or blocks the request at the resource boundary. Think of the Policy Engine as the judge, the Administrator as the clerk, and the Enforcement Point as the door.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And this happens on every request? Not just at login?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. And this happens on every request? Not just at login?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;On every request. That&#39;s the fundamental difference from traditional security. A traditional system authenticates you once, gives you a session cookie, and trusts that cookie for the next eight hours. Zero trust re-evaluates continuously. Your device compliance could change &mdash; maybe your antivirus went out of date. Your risk score could escalate &mdash; maybe you&#39;re suddenly accessing resources you&#39;ve never touched before. An anomaly could be detected mid-session. The system adapts in real time.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> On every request. That&#39;s the fundamental difference from traditional security. A traditional system authenticates you once, gives you a session cookie, and trusts that cookie for the next eight hours. Zero trust re-evaluates continuously. Your device compliance could change &mdash; maybe your antivirus went out of date. Your risk score could escalate &mdash; maybe you&#39;re suddenly accessing resources you&#39;ve never touched before. An anomaly could be detected mid-session. The system adapts in real time.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. That sounds like a massive infrastructure project. What does a small team actually implement first?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. That sounds like a massive infrastructure project. What does a small team actually implement first?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;There&#39;s an 80/20 rule here. Two things give you most of the security benefit. First, enforce MFA for every user and implement SSO &mdash; we covered both in the last few episodes. Second, check authorisation on every API request &mdash; not just at login, but on every call. That middleware pattern from Episode 23, where every endpoint checks the user&#39;s permissions before executing. Those two things together move you from a perimeter-based model to an identity-based one. You don&#39;t need to rearchitect your entire network overnight.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> There&#39;s an 80/20 rule here. Two things give you most of the security benefit. First, enforce MFA for every user and implement SSO &mdash; we covered both in the last few episodes. Second, check authorisation on every API request &mdash; not just at login, but on every call. That middleware pattern from Episode 23, where every endpoint checks the user&#39;s permissions before executing. Those two things together move you from a perimeter-based model to an identity-based one. You don&#39;t need to rearchitect your entire network overnight.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What comes after that?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. What comes after that?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Microsegmentation. Instead of one flat network where every service can talk to every other service, you divide your infrastructure into isolated zones. Your document storage service is in one segment. Your billing service is in another. Your database is in a third. Each segment has its own access controls. The document service can talk to the database, but only on specific ports with authenticated connections. The billing service cannot reach the document store directly. If an attacker compromises one service, microsegmentation stops them from pivoting to everything else.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Microsegmentation. Instead of one flat network where every service can talk to every other service, you divide your infrastructure into isolated zones. Your document storage service is in one segment. Your billing service is in another. Your database is in a third. Each segment has its own access controls. The document service can talk to the database, but only on specific ports with authenticated connections. The billing service cannot reach the document store directly. If an attacker compromises one service, microsegmentation stops them from pivoting to everything else.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s the &quot;assume breach&quot; principle in practice.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That&#39;s the &quot;assume breach&quot; principle in practice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. You&#39;re not trying to prevent every breach &mdash; that&#39;s impossible. You&#39;re containing the blast radius. If the document service is compromised, the billing database is still safe because it&#39;s in a separate segment with its own authentication. CISA &mdash; the US Cybersecurity and Infrastructure Security Agency &mdash; recently published guidance calling microsegmentation &quot;foundational&quot; for zero trust. Not advanced. Not optional. Foundational.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. You&#39;re not trying to prevent every breach &mdash; that&#39;s impossible. You&#39;re containing the blast radius. If the document service is compromised, the billing database is still safe because it&#39;s in a separate segment with its own authentication. CISA &mdash; the US Cybersecurity and Infrastructure Security Agency &mdash; recently published guidance calling microsegmentation &quot;foundational&quot; for zero trust. Not advanced. Not optional. Foundational.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. For a legal SaaS platform specifically, what does this look like?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. For a legal SaaS platform specifically, what does this look like?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Your database should never be directly accessible from the internet. Only your application services, on specific ports, with authenticated connections. Your search service &mdash; which has the full-text index we talked about in Episode 25, including the ethical wall filters &mdash; is a separate segment. Your user authentication service is isolated. And the communication between all of these uses mTLS &mdash; mutual TLS, which we covered in Episode 15 &mdash; so each service proves its identity to every other service it talks to.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Your database should never be directly accessible from the internet. Only your application services, on specific ports, with authenticated connections. Your search service &mdash; which has the full-text index we talked about in Episode 25, including the ethical wall filters &mdash; is a separate segment. Your user authentication service is isolated. And the communication between all of these uses mTLS &mdash; mutual TLS, which we covered in Episode 15 &mdash; so each service proves its identity to every other service it talks to.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Let me ask about the CISA maturity model. Where should a legal SaaS platform aim?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. Let me ask about the CISA maturity model. Where should a legal SaaS platform aim?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Ideally, &quot;Advanced&quot; across all five pillars &mdash; identity, devices, networks, applications, and data. But let me be realistic. Most small SaaS teams start at &quot;Traditional&quot; &mdash; passwords, flat networks, monolithic applications. Getting to &quot;Initial&quot; &mdash; MFA, basic SSO, some API gateway controls &mdash; is achievable in weeks. Getting to &quot;Advanced&quot; &mdash; phishing-resistant MFA, microsegmentation, per-service authorisation, encrypted internal traffic &mdash; takes months. &quot;Optimal&quot; &mdash; fully risk-adaptive, real-time device health in every decision &mdash; is aspirational for most and takes years.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; Ideally, &quot;Advanced&quot; across all five pillars &mdash; identity, devices, networks, applications, and data. But let me be realistic. Most small SaaS teams start at &quot;Traditional&quot; &mdash; passwords, flat networks, monolithic applications. Getting to &quot;Initial&quot; &mdash; MFA, basic SSO, some API gateway controls &mdash; is achievable in weeks. Getting to &quot;Advanced&quot; &mdash; phishing-resistant MFA, microsegmentation, per-service authorisation, encrypted internal traffic &mdash; takes months. &quot;Optimal&quot; &mdash; fully risk-adaptive, real-time device health in every decision &mdash; is aspirational for most and takes years.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. But the first steps are high-value, low-effort.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. But the first steps are high-value, low-effort.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Yes. And here&#39;s the business case. Enterprise law firm clients are increasingly asking about zero trust in security questionnaires. &quot;Do you enforce least-privilege access?&quot; &quot;Are your internal services authenticated?&quot; &quot;Do you segment your network?&quot; If you can say yes with evidence &mdash; access logs, architecture diagrams, policy engine configurations &mdash; you pass the assessment. If you&#39;re still on the castle-and-moat model, that&#39;s a red flag.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Yes. And here&#39;s the business case. Enterprise law firm clients are increasingly asking about zero trust in security questionnaires. &quot;Do you enforce least-privilege access?&quot; &quot;Are your internal services authenticated?&quot; &quot;Do you segment your network?&quot; If you can say yes with evidence &mdash; access logs, architecture diagrams, policy engine configurations &mdash; you pass the assessment. If you&#39;re still on the castle-and-moat model, that&#39;s a red flag.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. The Google BeyondCorp example always comes up in these discussions. How relevant is that for a smaller company?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. The Google BeyondCorp example always comes up in these discussions. How relevant is that for a smaller company?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;BeyondCorp proved the model works at extreme scale &mdash; Google eliminated VPNs entirely. Internal applications are accessed the same way from the office as from a coffee shop. Every request is authenticated and authorised based on identity and device state. For a 50-person legal SaaS company, the lesson is: if Google can do this for 100,000 employees, you can adopt the same principles. You don&#39;t need Google&#39;s infrastructure. You need the mindset &mdash; stop trusting the network, start verifying every request.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> BeyondCorp proved the model works at extreme scale &mdash; Google eliminated VPNs entirely. Internal applications are accessed the same way from the office as from a coffee shop. Every request is authenticated and authorised based on identity and device state. For a 50-person legal SaaS company, the lesson is: if Google can do this for 100,000 employees, you can adopt the same principles. You don&#39;t need Google&#39;s infrastructure. You need the mindset &mdash; stop trusting the network, start verifying every request.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Quick practical summary for builders &mdash; enforce MFA and SSO, check authorisation on every API call, segment your network so services can&#39;t freely talk to each other, and use mTLS for service-to-service communication.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Quick practical summary for builders &mdash; enforce MFA and SSO, check authorisation on every API call, segment your network so services can&#39;t freely talk to each other, and use mTLS for service-to-service communication.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And log everything. Zero trust without audit trails is just aspirational security. The logs prove the verification is happening.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And log everything. Zero trust without audit trails is just aspirational security. The logs prove the verification is happening.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Multi-Tenant Data Isolation. How your SaaS keeps 50 different law firms&#39; data completely separate.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Multi-Tenant Data Isolation. How your SaaS keeps 50 different law firms&#39; data completely separate.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

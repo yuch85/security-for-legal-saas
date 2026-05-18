@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">Authentication answers &quot;who are you?&quot; Authorization answers &quot;what are you allowed to do?&quot; In [Episode 22](../ep22/article.md), we covered how SSO and SAML let firms manage who can log in. But once a user is authenticated, your application must decide what they can see, edit, delete, and administer. Get this wrong, and a junior paralegal can access partner-level billing data &mdash; or worse, a client can view another client&#39;s privileged litigation strategy. Broken access control is the [#1 vulnerabili</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">Authentication answers &quot;who are you?&quot; Authorization answers &quot;what are you allowed to do?&quot; In Episode 22, we covered how SSO and SAML let firms manage who can log in. But once a user is authenticated, your application must decide what they can see, edit, delete, and administer. Get this wrong, and a junior paralegal can access partner-level billing data &mdash; or worse, a client can view another client&#39;s privileged litigation strategy. Broken access control is the #1 vulnerability in the OWASP Top 10,</p>
 </div>
 
 <!-- Article -->
@@ -76,17 +76,15 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 23: RBAC &mdash; Roles, Permissions and Scopes</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Authorization Problem</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Authentication answers &quot;who are you?&quot; Authorization answers &quot;what are you allowed to do?&quot; In [Episode 22](../ep22/article.md), we covered how SSO and SAML let firms manage who can log in. But once a user is authenticated, your application must decide what they can see, edit, delete, and administer. Get this wrong, and a junior paralegal can access partner-level billing data &mdash; or worse, a client can view another client&#39;s privileged litigation strategy.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Authentication answers &quot;who are you?&quot; Authorization answers &quot;what are you allowed to do?&quot; In Episode 22, we covered how SSO and SAML let firms manage who can log in. But once a user is authenticated, your application must decide what they can see, edit, delete, and administer. Get this wrong, and a junior paralegal can access partner-level billing data &mdash; or worse, a client can view another client&#39;s privileged litigation strategy.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Broken access control is the [#1 vulnerability in the OWASP Top 10](https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/), found in 94% of applications tested.[^1] It&#39;s not exotic. It&#39;s the most common security failure in web applications, and legal SaaS &mdash; with its complex hierarchy of firms, departments, matters, and privilege levels &mdash; is particularly exposed.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Broken access control is the <a href="https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">#1 vulnerability in the OWASP Top 10</a>, found in 94% of applications tested. It&#39;s not exotic. It&#39;s the most common security failure in web applications, and legal SaaS &mdash; with its complex hierarchy of firms, departments, matters, and privilege levels &mdash; is particularly exposed.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Is RBAC?</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Role-Based Access Control (RBAC) is an access control model where permissions are assigned to <strong class="text-ink">roles</strong>, and users are assigned to roles. A user inherits all permissions associated with their assigned roles. The model was formalised by David Ferraiolo and Rick Kuhn in 1992 and adopted as [ANSI/INCITS 359-2004](https://csrc.nist.gov/projects/role-based-access-control), the American national standard for RBAC.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Role-Based Access Control (RBAC) is an access control model where permissions are assigned to <strong class="text-ink">roles</strong>, and users are assigned to roles. A user inherits all permissions associated with their assigned roles. The model was formalised by David Ferraiolo and Rick Kuhn in 1992 and adopted as <a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ANSI/INCITS 359-2004</a>, the American national standard for RBAC.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The core abstraction is simple:</p>
 
@@ -101,40 +99,88 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Designing Roles for Legal SaaS</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A legal SaaS platform typically needs a role hierarchy that mirrors how law firms actually operate:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical Permissions</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Firm Administrator</strong></td>
+                <td class="py-3 px-4">Full system configuration, user management, billing</td>
+                <td class="py-3 px-4">Create users, configure SSO, export audit logs</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Partner</strong></td>
+                <td class="py-3 px-4">Full matter access within their practice group, financial data</td>
+                <td class="py-3 px-4">View billing rates, approve write-offs, access all matters in their group</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Senior Associate</strong></td>
+                <td class="py-3 px-4">Matter-level access, document editing, limited admin</td>
+                <td class="py-3 px-4">Edit documents, manage deadlines, assign tasks to juniors</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Associate</strong></td>
+                <td class="py-3 px-4">Assigned matter access, document creation and editing</td>
+                <td class="py-3 px-4">Draft documents, log time, view assigned matter files</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Paralegal</strong></td>
+                <td class="py-3 px-4">Assigned matter access, limited to document support</td>
+                <td class="py-3 px-4">Upload documents, manage filing, no billing access</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Client Viewer</strong></td>
+                <td class="py-3 px-4">Read-only access to designated matters</td>
+                <td class="py-3 px-4">View shared documents, download reports &mdash; no editing</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Role | Typical Permissions | Example Actions |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------|-------------------|-----------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Firm Administrator</strong> | Full system configuration, user management, billing | Create users, configure SSO, export audit logs |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Partner</strong> | Full matter access within their practice group, financial data | View billing rates, approve write-offs, access all matters in their group |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Senior Associate</strong> | Matter-level access, document editing, limited admin | Edit documents, manage deadlines, assign tasks to juniors |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Associate</strong> | Assigned matter access, document creation and editing | Draft documents, log time, view assigned matter files |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Paralegal</strong> | Assigned matter access, limited to document support | Upload documents, manage filing, no billing access |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Client Viewer</strong> | Read-only access to designated matters | View shared documents, download reports &mdash; no editing |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key principle:</strong> Roles should reflect job functions, not individual people. If you find yourself creating a role for one specific person, you&#39;re doing RBAC wrong &mdash; you&#39;re creating a permission assignment disguised as a role.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key principle:</strong> Roles should reflect job functions, not individual people. If you find yourself creating a role for one specific person, you&#39;re doing RBAC wrong &mdash; you&#39;re creating a permission assignment disguised as a role.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The NIST RBAC Model</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST&#39;s formal RBAC standard](https://csrc.nist.gov/projects/role-based-access-control) defines four levels of increasing sophistication:[^2]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Level | Name | What It Adds |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|------|-------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Core RBAC</strong> | Flat RBAC | Users, roles, permissions &mdash; the basics |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Hierarchical RBAC</strong> | Role inheritance | Senior roles inherit junior role permissions (a Partner inherits everything an Associate can do) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Constrained RBAC</strong> | Separation of duties | Rules preventing dangerous role combinations (the person who approves invoices cannot also create them) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Symmetric RBAC</strong> | Permission-role review | Ability to audit which permissions a role grants and which roles grant a specific permission |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST's formal RBAC standard</a> defines four levels of increasing sophistication:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Level</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Name</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Adds</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Core RBAC</strong></td>
+                <td class="py-3 px-4">Flat RBAC</td>
+                <td class="py-3 px-4">Users, roles, permissions &mdash; the basics</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Hierarchical RBAC</strong></td>
+                <td class="py-3 px-4">Role inheritance</td>
+                <td class="py-3 px-4">Senior roles inherit junior role permissions (a Partner inherits everything an Associate can do)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Constrained RBAC</strong></td>
+                <td class="py-3 px-4">Separation of duties</td>
+                <td class="py-3 px-4">Rules preventing dangerous role combinations (the person who approves invoices cannot also create them)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Symmetric RBAC</strong></td>
+                <td class="py-3 px-4">Permission-role review</td>
+                <td class="py-3 px-4">Ability to audit which permissions a role grants and which roles grant a specific permission</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most legal SaaS platforms need at least Hierarchical RBAC. Constrained RBAC becomes critical when your platform handles financial operations &mdash; billing, trust accounting, or client fund management &mdash; where separation of duties is a regulatory requirement.</p>
 
@@ -184,33 +230,33 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions should be <strong class="text-ink">resource-type scoped</strong> (documents, matters, billing) with <strong class="text-ink">CRUD actions</strong> (create, read, update, delete), and the application enforces <strong class="text-ink">matter-level scoping</strong> to ensure users only access matters they&#39;re assigned to. The matter-scoping layer is where RBAC meets the specific needs of legal software &mdash; we&#39;ll explore this in depth in [Episode 25](../ep25/article.md) when we cover ethical walls.[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions should be <strong class="text-ink">resource-type scoped</strong> (documents, matters, billing) with <strong class="text-ink">CRUD actions</strong> (create, read, update, delete), and the application enforces <strong class="text-ink">matter-level scoping</strong> to ensure users only access matters they&#39;re assigned to. The matter-scoping layer is where RBAC meets the specific needs of legal software &mdash; we&#39;ll explore this in depth in Episode 25 when we cover ethical walls.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">API Scopes: Consistent Enforcement</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions defined in roles must be enforced at the <strong class="text-ink">API layer</strong>, not just the UI. The [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) makes this explicit: &quot;Authorization policies must be enforced at the backend (API) to guarantee security and consistency.&quot;[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions defined in roles must be enforced at the <strong class="text-ink">API layer</strong>, not just the UI. The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Authorization Cheat Sheet</a> makes this explicit: &quot;Authorization policies must be enforced at the backend (API) to guarantee security and consistency.&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your UI hides the &quot;Delete&quot; button for paralegals but the API endpoint `/api/documents/:id` accepts DELETE requests from anyone with a valid session, you have a broken access control vulnerability. An attacker &mdash; or simply a curious user with browser developer tools &mdash; can call the API directly.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">The pattern:</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li>Define permissions as API scopes: `documents:read`, `documents:write`, `matters:admin`</li>
-        <li>When a user authenticates (via SSO from [Episode 22](../ep22/article.md)), their session or JWT token (from [Episode 18](../ep18/article.md)) includes the scopes their role grants</li>
+        <li>When a user authenticates (via SSO from Episode 22), their session or JWT token (from Episode 18) includes the scopes their role grants</li>
         <li>Every API endpoint checks the token&#39;s scopes before executing &mdash; middleware that runs before any business logic</li>
         <li>The UI reads the same scopes to show or hide interface elements &mdash; but this is cosmetic, not security</li>
-    </ul>
+    </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Callout: The &quot;hidden button&quot; fallacy.</strong> Removing a button from the UI is not access control. It&#39;s a UX decision. Access control happens at the API. Every. Single. Request.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Callout: The &quot;hidden button&quot; fallacy.</strong> Removing a button from the UI is not access control. It&#39;s a UX decision. Access control happens at the API. Every. Single. Request.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Common RBAC Mistakes</h2>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Role Explosion</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Starting with three roles (Admin, Editor, Viewer) and gradually adding &quot;Senior Editor,&quot; &quot;Junior Admin,&quot; &quot;Billing Viewer,&quot; &quot;Matter-Specific Editor&quot; until you have 47 roles and nobody knows which does what. Keep roles aligned to job functions, not individual needs. If a specific user needs an exception, that&#39;s an attribute-based decision &mdash; covered in [Episode 24](../ep24/article.md).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Starting with three roles (Admin, Editor, Viewer) and gradually adding &quot;Senior Editor,&quot; &quot;Junior Admin,&quot; &quot;Billing Viewer,&quot; &quot;Matter-Specific Editor&quot; until you have 47 roles and nobody knows which does what. Keep roles aligned to job functions, not individual needs. If a specific user needs an exception, that&#39;s an attribute-based decision &mdash; covered in Episode 24.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Permission Creep</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A user gets temporarily promoted or assigned to a special project, receives elevated permissions, and nobody removes them afterwards. Over months, users accumulate permissions far beyond their current role. The fix: regular access reviews. Quarterly audits comparing actual role assignments against current job functions.[^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A user gets temporarily promoted or assigned to a special project, receives elevated permissions, and nobody removes them afterwards. Over months, users accumulate permissions far beyond their current role. The fix: regular access reviews. Quarterly audits comparing actual role assignments against current job functions.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. No Audit Trail</h3>
 
@@ -240,17 +286,17 @@
         <li>Resolves those roles to a set of permissions/scopes</li>
         <li>Compares against the permissions required by the specific endpoint</li>
         <li>Returns 403 Forbidden if the user lacks the required permission</li>
-    </ul>
+    </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This centralised pattern ensures that every endpoint is protected by default. New endpoints that forget to specify required permissions should fail closed &mdash; deny access &mdash; rather than fail open.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This centralised pattern ensures that every endpoint is protected by default. New endpoints that forget to specify required permissions should fail closed &mdash; deny access &mdash; rather than fail open.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Regular Access Reviews</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">RBAC is not &quot;set and forget.&quot; The [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) recommends periodic reviews:[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">RBAC is not &quot;set and forget.&quot; The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Authorization Cheat Sheet</a> recommends periodic reviews:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Quarterly:</strong> Review all role assignments against current org charts</li>
         <li><strong class="text-ink">On role change:</strong> When an employee changes departments or seniority, update roles immediately</li>
-        <li><strong class="text-ink">On departure:</strong> Revoke all roles immediately (automated via SCIM, as covered in [Episode 22](../ep22/article.md))</li>
+        <li><strong class="text-ink">On departure:</strong> Revoke all roles immediately (automated via SCIM, as covered in Episode 22)</li>
         <li><strong class="text-ink">On incident:</strong> After any security event, audit whether existing permissions enabled it</li>
     </ul>
 
@@ -260,29 +306,27 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 24 covers <strong class="text-ink">ABAC and Policy Engines</strong> &mdash; when roles aren&#39;t enough and you need to make access decisions based on attributes like department, matter type, jurisdiction, or time of day.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: OWASP, [A01:2021 &mdash; Broken Access Control](https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/) &mdash; #1 in OWASP Top 10, found in 94% of tested applications.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A01:2021 — Broken Access Control</a> &mdash; #1 in OWASP Top 10, found in 94% of tested applications.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: NIST, [Role-Based Access Control Project](https://csrc.nist.gov/projects/role-based-access-control) &mdash; the NIST RBAC model and ANSI/INCITS 359-2004 standard.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Role-Based Access Control Project</a> &mdash; the NIST RBAC model and ANSI/INCITS 359-2004 standard.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Oso, [How to Build a Role-Based Access Control Layer](https://www.osohq.com/learn/rbac-role-based-access-control) &mdash; practical RBAC design guidance.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Oso, <a href="https://www.osohq.com/learn/rbac-role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build a Role-Based Access Control Layer</a> &mdash; practical RBAC design guidance.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: NIST, [The NIST Model for Role-Based Access Control](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=916402) &mdash; formal model paper by Sandhu, Ferraiolo, and Kuhn.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=916402" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The NIST Model for Role-Based Access Control</a> &mdash; formal model paper by Sandhu, Ferraiolo, and Kuhn.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: OWASP, [Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) &mdash; backend enforcement, middleware patterns, common mistakes.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authorization Cheat Sheet</a> &mdash; backend enforcement, middleware patterns, common mistakes.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Omada, [NIST Role-Based Access Control](https://omadaidentity.com/resources/blog/nist-role-based-access-control/) &mdash; RBAC implementation best practices and compliance.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Omada, <a href="https://omadaidentity.com/resources/blog/nist-role-based-access-control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Role-Based Access Control</a> &mdash; RBAC implementation best practices and compliance.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: SecureLayer7, [RBAC Explained: Benefits, Models, and Best Practices](https://blog.securelayer7.net/role-based-access-control/) &mdash; comprehensive RBAC guide.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SecureLayer7, <a href="https://blog.securelayer7.net/role-based-access-control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RBAC Explained: Benefits, Models, and Best Practices</a> &mdash; comprehensive RBAC guide.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Wikipedia, [Role-Based Access Control](https://en.wikipedia.org/wiki/Role-based-access-control) &mdash; history and formal definitions.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wikipedia, <a href="https://en.wikipedia.org/wiki/Role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Role-Based Access Control</a> &mdash; history and formal definitions.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: OWASP, [A01:2025 &mdash; Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/) &mdash; continues as #1 in OWASP Top 10 2025 release candidate.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A01:2025 — Broken Access Control</a> &mdash; continues as #1 in OWASP Top 10 2025 release candidate.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: CWE, [CWE-1345: OWASP Top Ten 2021 Category A01](https://cwe.mitre.org/data/definitions/1345.html) &mdash; related Common Weakness Enumerations.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CWE, <a href="https://cwe.mitre.org/data/definitions/1345.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CWE-1345: OWASP Top Ten 2021 Category A01</a> &mdash; related Common Weakness Enumerations.</p>
 
 </article>
 
@@ -297,69 +341,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">RBAC &mdash; Roles, Permissions and Scopes</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 23 &mdash; we&#39;re moving from authentication into authorisation. RBAC &mdash; Role-Based Access Control. Alice, we&#39;ve spent the last few episodes on proving who someone is. Now we need to figure out what they&#39;re allowed to do.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Right. And this is where legal SaaS gets genuinely hard. Think about the access hierarchy at a typical law firm. You&#39;ve got firm administrators who manage the platform. Partners who oversee practice groups and billing. Associates who work on specific matters. Paralegals supporting those matters. And sometimes external clients who need read-only access to certain documents. Every one of those people needs different permissions. And if you get it wrong &mdash; if a junior associate can see a partner&#39;s billing rates, or a client viewer can access a matter they&#39;re not party to &mdash; you&#39;ve got a serious problem.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And this isn&#39;t a niche concern, right? OWASP has something to say about it?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 23 &mdash; we&#39;re moving from authentication into authorisation. RBAC &mdash; Role-Based Access Control. Alice, we&#39;ve spent the last few episodes on proving who someone is. Now we need to figure out what they&#39;re allowed to do.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Broken access control is literally the number one vulnerability in the OWASP Top 10 &mdash; we introduced OWASP back in Episode 1. They found some form of broken access control in 94 percent of applications they tested. It&#39;s not exotic. It&#39;s the most common security failure in web applications.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. And this is where legal SaaS gets genuinely hard. Think about the access hierarchy at a typical law firm. You&#39;ve got firm administrators who manage the platform. Partners who oversee practice groups and billing. Associates who work on specific matters. Paralegals supporting those matters. And sometimes external clients who need read-only access to certain documents. Every one of those people needs different permissions. And if you get it wrong &mdash; if a junior associate can see a partner&#39;s billing rates, or a client viewer can access a matter they&#39;re not party to &mdash; you&#39;ve got a serious problem.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So RBAC is the solution?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And this isn&#39;t a niche concern, right? OWASP has something to say about it?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> RBAC is the foundation. The idea is simple. Instead of assigning individual permissions to each user &mdash; which gets completely unmanageable once you have hundreds of users &mdash; you create roles. A role is just a named collection of permissions. &quot;Associate&quot; might include permissions to read and edit documents on their assigned matters, log time entries, and view deadlines. &quot;Firm Administrator&quot; includes everything, plus user management and system configuration. You assign users to roles, and they inherit the permissions that role carries.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Broken access control is literally the number one vulnerability in the OWASP Top 10 &mdash; we introduced OWASP back in Episode 1. They found some form of broken access control in 94 percent of applications they tested. It&#39;s not exotic. It&#39;s the most common security failure in web applications.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that&#39;s cleaner than managing permissions per person. But how many roles do you actually need?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So RBAC is the solution?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> For most legal SaaS platforms, five or six covers eighty percent of the need. Firm Admin, Partner, Senior Associate, Associate, Paralegal, Client Viewer. The NIST standard for RBAC &mdash; and yes, there is a formal US national standard for this &mdash; adds the concept of role hierarchies, where senior roles automatically inherit the permissions of junior roles. A Partner gets everything an Associate can do, plus billing access and matter management.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;RBAC is the foundation. The idea is simple. Instead of assigning individual permissions to each user &mdash; which gets completely unmanageable once you have hundreds of users &mdash; you create roles. A role is just a named collection of permissions. &quot;Associate&quot; might include permissions to read and edit documents on their assigned matters, log time entries, and view deadlines. &quot;Firm Administrator&quot; includes everything, plus user management and system configuration. You assign users to roles, and they inherit the permissions that role carries.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. What&#39;s the trap? Where does this go wrong?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s cleaner than managing permissions per person. But how many roles do you actually need?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The biggest one is role explosion. You start with three roles &mdash; Admin, Editor, Viewer. Then someone says &quot;we need a Billing Viewer who can see invoices but not edit them.&quot; Then &quot;we need a Senior Editor who can approve document changes.&quot; Then &quot;we need a Matter-Specific Admin for just the litigation department.&quot; Before you know it, you&#39;ve got 47 roles and nobody can tell you which permissions each one actually grants. The rule of thumb is: roles should map to job functions, not individual people. If you&#39;re creating a role for one specific user&#39;s needs, you&#39;ve left RBAC territory.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;For most legal SaaS platforms, five or six covers eighty percent of the need. Firm Admin, Partner, Senior Associate, Associate, Paralegal, Client Viewer. The NIST standard for RBAC &mdash; and yes, there is a formal US national standard for this &mdash; adds the concept of role hierarchies, where senior roles automatically inherit the permissions of junior roles. A Partner gets everything an Associate can do, plus billing access and matter management.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. What about when someone&#39;s permissions should change over time? Like someone gets promoted?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What&#39;s the trap? Where does this go wrong?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the second big trap &mdash; permission creep. An associate gets temporarily promoted to handle a sensitive matter. They get elevated permissions. The matter closes six months later, but nobody removes the extra access. Over time, users accumulate permissions far beyond what they currently need. The fix is regular access reviews &mdash; quarterly audits where you compare actual role assignments against current org charts. When we talked about SCIM provisioning in Episode 22, that&#39;s the automation side. When someone&#39;s role changes in the firm&#39;s directory, SCIM can update their role in your application automatically.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The biggest one is role explosion. You start with three roles &mdash; Admin, Editor, Viewer. Then someone says &quot;we need a Billing Viewer who can see invoices but not edit them.&quot; Then &quot;we need a Senior Editor who can approve document changes.&quot; Then &quot;we need a Matter-Specific Admin for just the litigation department.&quot; Before you know it, you&#39;ve got 47 roles and nobody can tell you which permissions each one actually grants. The rule of thumb is: roles should map to job functions, not individual people. If you&#39;re creating a role for one specific user&#39;s needs, you&#39;ve left RBAC territory.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Let me ask about something I see developers get wrong. If you hide a button in the interface &mdash; like removing the Delete button for paralegals &mdash; is that access control?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. What about when someone&#39;s permissions should change over time? Like someone gets promoted?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; No. And this is so common it has a name &mdash; the &quot;hidden button&quot; fallacy. Hiding a button in the user interface is a user experience decision. It is not security. If the API endpoint behind that button still accepts requests from anyone with a valid session, any user can call it directly. Open the browser developer tools, find the API URL, and send a DELETE request. If the server processes it, you have broken access control.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the second big trap &mdash; permission creep. An associate gets temporarily promoted to handle a sensitive matter. They get elevated permissions. The matter closes six months later, but nobody removes the extra access. Over time, users accumulate permissions far beyond what they currently need. The fix is regular access reviews &mdash; quarterly audits where you compare actual role assignments against current org charts. When we talked about SCIM provisioning in Episode 22, that&#39;s the automation side. When someone&#39;s role changes in the firm&#39;s directory, SCIM can update their role in your application automatically.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So where should the check actually happen?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Let me ask about something I see developers get wrong. If you hide a button in the interface &mdash; like removing the Delete button for paralegals &mdash; is that access control?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> At the API layer. Every single request. The OWASP Authorisation Cheat Sheet is very explicit about this &mdash; authorisation policies must be enforced at the backend to guarantee security and consistency. The pattern is middleware &mdash; a layer of code that runs before every API request. It extracts the user&#39;s roles from their session or their JWT token, which we covered in Episode 18. It resolves those roles to a set of permissions. And it checks whether the user has the specific permission required by that endpoint. If not, the request gets a 403 Forbidden response before any business logic executes.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; No. And this is so common it has a name &mdash; the &quot;hidden button&quot; fallacy. Hiding a button in the user interface is a user experience decision. It is not security. If the API endpoint behind that button still accepts requests from anyone with a valid session, any user can call it directly. Open the browser developer tools, find the API URL, and send a DELETE request. If the server processes it, you have broken access control.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. And the UI can still read those same permissions to decide what to show?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So where should the check actually happen?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Absolutely. The UI reads the user&#39;s permissions to show or hide interface elements &mdash; that&#39;s good UX. But it&#39;s cosmetic. The API is the actual gate. Think of it this way: the UI is the velvet rope at a nightclub. The API is the locked door behind it. If someone steps over the rope, they still need to get through the door.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;At the API layer. Every single request. The OWASP Authorisation Cheat Sheet is very explicit about this &mdash; authorisation policies must be enforced at the backend to guarantee security and consistency. The pattern is middleware &mdash; a layer of code that runs before every API request. It extracts the user&#39;s roles from their session or their JWT token, which we covered in Episode 18. It resolves those roles to a set of permissions. And it checks whether the user has the specific permission required by that endpoint. If not, the request gets a 403 Forbidden response before any business logic executes.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. What about scoping? You mentioned that an associate should only access documents on their assigned matters. How does that work with roles?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. And the UI can still read those same permissions to decide what to show?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is where legal SaaS goes beyond generic RBAC. A role might say &quot;associates can read and edit documents.&quot; But that can&#39;t mean all documents in the entire system &mdash; it means documents on matters they&#39;re assigned to. So you need a second layer of scoping. The role gives you the action permission &mdash; &quot;can read documents.&quot; The matter assignment gives you the resource scope &mdash; &quot;on these specific matters.&quot; Every database query needs to include both checks. We&#39;ll go much deeper on this in Episode 25 when we cover ethical walls and matter-scoped access.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Absolutely. The UI reads the user&#39;s permissions to show or hide interface elements &mdash; that&#39;s good UX. But it&#39;s cosmetic. The API is the actual gate. Think of it this way: the UI is the velvet rope at a nightclub. The API is the locked door behind it. If someone steps over the rope, they still need to get through the door.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. One more question &mdash; API scopes. How do those tie into roles?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. What about scoping? You mentioned that an associate should only access documents on their assigned matters. How does that work with roles?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> API scopes are the technical encoding of permissions. When a user logs in and gets a session or a JWT token, that token contains a list of scopes &mdash; like documents:read, documents:write, billing:view, users:manage. Those scopes are derived from the user&#39;s role. The API middleware checks the token&#39;s scopes against what the endpoint requires. It creates a clean, consistent enforcement chain: user gets assigned a role, role maps to scopes, scopes travel in the token, API checks scopes on every request.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is where legal SaaS goes beyond generic RBAC. A role might say &quot;associates can read and edit documents.&quot; But that can&#39;t mean all documents in the entire system &mdash; it means documents on matters they&#39;re assigned to. So you need a second layer of scoping. The role gives you the action permission &mdash; &quot;can read documents.&quot; The matter assignment gives you the resource scope &mdash; &quot;on these specific matters.&quot; Every database query needs to include both checks. We&#39;ll go much deeper on this in Episode 25 when we cover ethical walls and matter-scoped access.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And for anyone building this right now &mdash; the key takeaway?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. One more question &mdash; API scopes. How do those tie into roles?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three things. First, keep your role model simple &mdash; five or six roles mapped to job functions, not individual people. Second, enforce permissions at the API, never just the UI. Third, build access review reporting into your platform from the start, because enterprise law firm clients will ask for it during every security audit. &quot;Show me every user with admin access and when it was granted&quot; should be a one-click report, not a database spelunking exercise.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;API scopes are the technical encoding of permissions. When a user logs in and gets a session or a JWT token, that token contains a list of scopes &mdash; like documents:read, documents:write, billing:view, users:manage. Those scopes are derived from the user&#39;s role. The API middleware checks the token&#39;s scopes against what the endpoint requires. It creates a clean, consistent enforcement chain: user gets assigned a role, role maps to scopes, scopes travel in the token, API checks scopes on every request.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; ABAC and Policy Engines. When roles aren&#39;t enough and you need to make access decisions based on attributes like department, matter type, or time of day.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And for anyone building this right now &mdash; the key takeaway?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three things. First, keep your role model simple &mdash; five or six roles mapped to job functions, not individual people. Second, enforce permissions at the API, never just the UI. Third, build access review reporting into your platform from the start, because enterprise law firm clients will ask for it during every security audit. &quot;Show me every user with admin access and when it was granted&quot; should be a one-click report, not a database spelunking exercise.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; ABAC and Policy Engines. When roles aren&#39;t enough and you need to make access decisions based on attributes like department, matter type, or time of day.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

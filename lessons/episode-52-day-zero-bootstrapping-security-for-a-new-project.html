@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">Day one is too late. The security posture of your legal SaaS platform is largely determined by decisions made before the first feature is built: which framework, which authentication library, which hosting provider, how secrets are stored, whether logging exists. These choices compound. A good foundation makes every subsequent security decision easier. A poor one creates debt that grows faster than feature code &mdash; because every feature built on an insecure foundation inherits its weaknesses. [OWA</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">Day one is too late. The security posture of your legal SaaS platform is largely determined by decisions made before the first feature is built: which framework, which authentication library, which hosting provider, how secrets are stored, whether logging exists. These choices compound. A good foundation makes every subsequent security decision easier. A poor one creates debt that grows faster than feature code &mdash; because every feature built on an insecure foundation inherits its weaknesses. OWAS</p>
 </div>
 
 <!-- Article -->
@@ -76,43 +76,61 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 52: Day Zero &mdash; Bootstrapping Security for a New Project</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Decisions You Make Before Writing Code</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Day one is too late. The security posture of your legal SaaS platform is largely determined by decisions made before the first feature is built: which framework, which authentication library, which hosting provider, how secrets are stored, whether logging exists. These choices compound. A good foundation makes every subsequent security decision easier. A poor one creates debt that grows faster than feature code &mdash; because every feature built on an insecure foundation inherits its weaknesses.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[OWASP&#39;s Secure by Design Framework](https://owasp.org/www-project-secure-by-design-framework/) formalises this principle: security controls should be embedded at the design phase, not bolted on after deployment.[^1] The framework&#39;s checklist covers trust boundaries (the points where data crosses from one trust level to another, as we introduced in [Episode 1](../ep01/article.md)), encryption requirements, authentication and authorisation design, and incident readiness &mdash; all before a single line of application code is written.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Secure by Design Framework</a> formalises this principle: security controls should be embedded at the design phase, not bolted on after deployment. The framework&#39;s checklist covers trust boundaries (the points where data crosses from one trust level to another, as we introduced in Episode 1), encryption requirements, authentication and authorisation design, and incident readiness &mdash; all before a single line of application code is written.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal tech team bootstrapping a new case management system, contract review tool, or e-filing platform, the question isn&#39;t &quot;when do we add security?&quot; It&#39;s &quot;which security decisions do we make right now so we don&#39;t have to rewrite everything in six months?&quot;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Tech Stack Choices with Security Implications</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your framework and library choices have security consequences that persist for the lifetime of the project.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Decision | Secure Default | Insecure Default |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|---------------|-----------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Web framework</strong> | Frameworks with built-in CSRF protection, XSS escaping, and parameterised queries (Django, Rails, Next.js) | Minimal frameworks that leave all security to the developer (Express without middleware) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">ORM vs raw SQL</strong> | ORM (Object-Relational Mapper &mdash; a library that generates database queries from code, as covered in [Episode 7](../ep07/article.md)) with parameterised queries by default | Raw SQL string concatenation |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Authentication</strong> | Established library (NextAuth, Passport.js, Django Auth) with MFA support | Hand-rolled authentication logic |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Hosting provider</strong> | Provider with managed TLS, DDoS protection, and compliance certifications (SOC 2, ISO 27001) | Self-hosted on unmanaged infrastructure |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Secrets management</strong> | Dedicated secrets manager (AWS Secrets Manager, HashiCorp Vault, as covered in [Episode 15](../ep15/article.md)) | `.env` files committed to version control |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Decision</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Secure Default</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Insecure Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Web framework</strong></td>
+                <td class="py-3 px-4">Frameworks with built-in CSRF protection, XSS escaping, and parameterised queries (Django, Rails, Next.js)</td>
+                <td class="py-3 px-4">Minimal frameworks that leave all security to the developer (Express without middleware)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">ORM vs raw SQL</strong></td>
+                <td class="py-3 px-4">ORM (Object-Relational Mapper &mdash; a library that generates database queries from code, as covered in Episode 7) with parameterised queries by default</td>
+                <td class="py-3 px-4">Raw SQL string concatenation</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Authentication</strong></td>
+                <td class="py-3 px-4">Established library (NextAuth, Passport.js, Django Auth) with MFA support</td>
+                <td class="py-3 px-4">Hand-rolled authentication logic</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Hosting provider</strong></td>
+                <td class="py-3 px-4">Provider with managed TLS, DDoS protection, and compliance certifications (SOC 2, ISO 27001)</td>
+                <td class="py-3 px-4">Self-hosted on unmanaged infrastructure</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Secrets management</strong></td>
+                <td class="py-3 px-4">Dedicated secrets manager (AWS Secrets Manager, HashiCorp Vault, as covered in Episode 15)</td>
+                <td class="py-3 px-4">`.env` files committed to version control</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Framework defaults matter more than you think.&lt;/strong&gt; Django auto-escapes template variables (preventing XSS &mdash; cross-site scripting, as covered in &lt;a href=&quot;../ep09/article.md&quot;&gt;Episode 9&lt;/a&gt;), enables CSRF middleware by default, and uses parameterised queries through its ORM. A developer has to actively opt out of these protections. Express.js, by contrast, provides none of these by default &mdash; each must be added manually. The framework&#39;s opinion on security becomes your application&#39;s baseline.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Framework defaults matter more than you think.&lt;/strong&gt; Django auto-escapes template variables (preventing XSS &mdash; cross-site scripting, as covered in <a href="../ep09/article.md">Episode 9</a>), enables CSRF middleware by default, and uses parameterised queries through its ORM. A developer has to actively opt out of these protections. Express.js, by contrast, provides none of these by default &mdash; each must be added manually. The framework&#39;s opinion on security becomes your application&#39;s baseline.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The First-Commit Security Checklist</h2>
 
@@ -128,15 +146,15 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. HTTPS Everywhere</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">TLS (Transport Layer Security, as covered in [Episode 13](../ep13/article.md)) must be active from the first deployment. Not &quot;we&#39;ll add it before launch&quot; &mdash; from the first time anyone accesses the application. [Let&#39;s Encrypt](https://letsencrypt.org/) provides free, automated certificates. Most modern hosting platforms (Vercel, Railway, Fly.io, AWS App Runner) provide TLS by default. There is no excuse for HTTP in 2026.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">TLS (Transport Layer Security, as covered in Episode 13) must be active from the first deployment. Not &quot;we&#39;ll add it before launch&quot; &mdash; from the first time anyone accesses the application. <a href="https://letsencrypt.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Let's Encrypt</a> provides free, automated certificates. Most modern hosting platforms (Vercel, Railway, Fly.io, AWS App Runner) provide TLS by default. There is no excuse for HTTP in 2026.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Authentication Library, Not Custom Code</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Do not build your own authentication system. Use an established, well-audited library or service. For legal SaaS specifically, choose one that supports:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Multi-factor authentication (as covered in [Episode 21](../ep21/article.md))</li>
-        <li>OAuth 2.0 / OpenID Connect for enterprise SSO (as covered in [Episode 20](../ep20/article.md))</li>
-        <li>Session management with proper expiry and re-keying (as covered in [Episode 19](../ep19/article.md))</li>
+        <li>Multi-factor authentication (as covered in Episode 21)</li>
+        <li>OAuth 2.0 / OpenID Connect for enterprise SSO (as covered in Episode 20)</li>
+        <li>Session management with proper expiry and re-keying (as covered in Episode 19)</li>
         <li>Audit logging of all authentication events</li>
     </ul>
 
@@ -146,43 +164,61 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">5. Structured Logging</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configure structured logging (logs in a consistent, machine-readable format like JSON) from the start. Log authentication events, authorisation decisions, data access patterns, and errors. Not for debugging &mdash; for security. When (not if) you need to investigate an incident, logs are the evidence. [OWASP&#39;s Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) provides detailed guidance on what to log and what not to log (never log passwords, tokens, or full credit card numbers).[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configure structured logging (logs in a consistent, machine-readable format like JSON) from the start. Log authentication events, authorisation decisions, data access patterns, and errors. Not for debugging &mdash; for security. When (not if) you need to investigate an incident, logs are the evidence. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Logging Cheat Sheet</a> provides detailed guidance on what to log and what not to log (never log passwords, tokens, or full credit card numbers).</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">6. Dependency Scanning in CI</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Add dependency scanning to your CI/CD pipeline (the automated system that builds and deploys your code, as we covered in [Episode 12](../ep12/article.md)) from the first pull request. Tools like `npm audit`, `pip audit`, Snyk, or Dependabot continuously check your dependencies for known vulnerabilities. [OWASP&#39;s Software Composition Analysis (SCA)](https://owasp.org/www-project-dependency-check/) project provides open-source options.[^3]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Add dependency scanning to your CI/CD pipeline (the automated system that builds and deploys your code, as we covered in Episode 12) from the first pull request. Tools like `npm audit`, `pip audit`, Snyk, or Dependabot continuously check your dependencies for known vulnerabilities. <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Software Composition Analysis (SCA)</a> project provides open-source options.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Minimum Viable Security Posture</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">What must exist before your first user accesses the system?</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Control | Why It Can&#39;t Wait |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| HTTPS / TLS | Data in transit is readable without it; compliance requirement for any platform handling PII |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Authentication with MFA | Single-factor auth on a platform storing client legal matters is a breach waiting to happen |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Role-based access control | Without it, every user has the same permissions &mdash; including access to other clients&#39; data |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Input validation on all endpoints | First external request without validation is the first potential injection |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Secrets in a secrets manager | First committed secret is a secret you&#39;ll spend days trying to remove from Git history |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Automated dependency scanning | First unscanned dependency is a potential known-vulnerability in your supply chain |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Structured security logging | First incident without logs is an incident you can&#39;t investigate |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Why It Can&#39;t Wait</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">HTTPS / TLS</td>
+                <td class="py-3 px-4">Data in transit is readable without it; compliance requirement for any platform handling PII</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Authentication with MFA</td>
+                <td class="py-3 px-4">Single-factor auth on a platform storing client legal matters is a breach waiting to happen</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Role-based access control</td>
+                <td class="py-3 px-4">Without it, every user has the same permissions &mdash; including access to other clients&#39; data</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Input validation on all endpoints</td>
+                <td class="py-3 px-4">First external request without validation is the first potential injection</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Secrets in a secrets manager</td>
+                <td class="py-3 px-4">First committed secret is a secret you&#39;ll spend days trying to remove from Git history</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Automated dependency scanning</td>
+                <td class="py-3 px-4">First unscanned dependency is a potential known-vulnerability in your supply chain</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Structured security logging</td>
+                <td class="py-3 px-4">First incident without logs is an incident you can&#39;t investigate</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The legal standard:&lt;/strong&gt; &lt;a href=&quot;https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/&quot;&gt;NYC Bar Formal Opinion 2024-3&lt;/a&gt; clarified that lawyers&#39; ethical obligations regarding cybersecurity extend to the technology platforms they choose. Selecting a platform that lacks basic security controls &mdash; or building one without them &mdash; is not a defensible &quot;reasonable efforts&quot; position under ABA Model Rule 1.6(c).&lt;sup&gt;[4]&lt;/sup&gt;</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The legal standard:&lt;/strong&gt; <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/">NYC Bar Formal Opinion 2024-3</a> clarified that lawyers&#39; ethical obligations regarding cybersecurity extend to the technology platforms they choose. Selecting a platform that lacks basic security controls &mdash; or building one without them &mdash; is not a defensible &quot;reasonable efforts&quot; position under ABA Model Rule 1.6(c).&lt;sup&gt;[4]&lt;/sup&gt;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security Debt Compounds Faster Than Technical Debt</h2>
 
@@ -192,9 +228,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If you&#39;d started with an authentication library that supported SSO from day one, the integration would have been configuration, not architecture.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[OWASP SAMM](https://owasp.org/www-project-samm/) (Software Assurance Maturity Model) provides a structured framework for measuring and improving your security posture over time, with maturity levels that scale from &quot;getting started&quot; to &quot;optimised.&quot;[^5] Starting at Level 1 on day zero is realistic. Starting at Level 0 and trying to catch up later is where projects fail.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP SAMM</a> (Software Assurance Maturity Model) provides a structured framework for measuring and improving your security posture over time, with maturity levels that scale from &quot;getting started&quot; to &quot;optimised.&quot; Starting at Level 1 on day zero is realistic. Starting at Level 0 and trying to catch up later is where projects fail.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Day-Zero Mindset</h2>
 
@@ -206,35 +240,33 @@
         <li><strong class="text-ink">Add dependency scanning before the first dependency</strong> &mdash; so nothing slips through unchecked</li>
         <li><strong class="text-ink">Configure logging before the first user</strong> &mdash; so the evidence exists when you need it</li>
         <li><strong class="text-ink">Pick an auth library that supports MFA and SSO</strong> &mdash; so you don&#39;t rewrite login in six months</li>
-    </ul>
+    </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The decisions you make before writing code determine how hard everything else will be. Make them well.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: we shift from building to watching &mdash; monitoring and alerting design for detecting attacks in progress.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: OWASP, [Secure by Design Framework](https://owasp.org/www-project-secure-by-design-framework/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure by Design Framework</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: OWASP, [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Logging Cheat Sheet</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: OWASP, [Dependency-Check: Software Composition Analysis](https://owasp.org/www-project-dependency-check/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependency-Check: Software Composition Analysis</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: NYC Bar Association, [Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident](https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NYC Bar Association, <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: OWASP, [Software Assurance Maturity Model (SAMM)](https://owasp.org/www-project-samm/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Assurance Maturity Model (SAMM)</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: OWASP, [Establishing a Modern Application Security Program &mdash; OWASP Top 10:2025](https://owasp.org/Top10/2025/0x03_2025-Establishing_a_Modern_Application_Security_Program/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/Top10/2025/0x03_2025-Establishing_a_Modern_Application_Security_Program/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Establishing a Modern Application Security Program — OWASP Top 10:2025</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: OWASP, [Secure Development and Integration &mdash; Developer Guide](https://devguide.owasp.org/en/02-foundations/02-secure-development/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://devguide.owasp.org/en/02-foundations/02-secure-development/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Development and Integration — Developer Guide</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: OWASP, [OWASP in SDLC &mdash; Integration Standards](https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP in SDLC — Integration Standards</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: ABA, [Cybersecurity for Law Firms: ABA Compliance Guide](https://petronellatech.com/blog/cybersecurity-law-firms-compliance/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://petronellatech.com/blog/cybersecurity-law-firms-compliance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity for Law Firms: ABA Compliance Guide</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: NIST, [SP 800-218: Secure Software Development Framework](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-218: Secure Software Development Framework</a>.</p>
 
 </article>
 
@@ -249,69 +281,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Day Zero &mdash; Bootstrapping Security for a New Project</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 52, and we&#39;re calling this one Day Zero. Alice, we&#39;ve spent fifty-one episodes talking about specific security controls &mdash; authentication, encryption, input validation, cloud permissions, AI code risks. Today feels like we&#39;re stepping back and asking: if you&#39;re starting a new project from scratch, where do you actually begin?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And the key insight is that day one is already too late. The security posture of your application is largely determined by decisions you make before writing the first feature. Which framework you pick, how you store secrets, whether you set up logging. These are architectural choices, and if you get them wrong, fixing them later means rewriting, not patching.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That sounds abstract. Can you make it concrete?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 52, and we&#39;re calling this one Day Zero. Alice, we&#39;ve spent fifty-one episodes talking about specific security controls &mdash; authentication, encryption, input validation, cloud permissions, AI code risks. Today feels like we&#39;re stepping back and asking: if you&#39;re starting a new project from scratch, where do you actually begin?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Sure. Imagine you&#39;re building a case management system for law firms. On day one, you set up authentication as a simple username-and-password table in your database. You write the login flow yourself. Six months later, your first enterprise customer says: &quot;we need single sign-on with our Azure Active Directory.&quot; You go to integrate it &mdash; and you discover that your custom login code is tangled into every part of the application. The session management, the permission checks, the audit logs &mdash; all of it assumed your hand-built auth. Adding SSO isn&#39;t a three-day integration. It&#39;s a three-month rewrite.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And the key insight is that day one is already too late. The security posture of your application is largely determined by decisions you make before writing the first feature. Which framework you pick, how you store secrets, whether you set up logging. These are architectural choices, and if you get them wrong, fixing them later means rewriting, not patching.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That sounds abstract. Can you make it concrete?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> If you&#39;d started with an authentication library that already supported SSO &mdash; something like NextAuth or Django&#39;s built-in auth system &mdash; that integration would have been configuration, not surgery. The day-zero decision saved you three months.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Sure. Imagine you&#39;re building a case management system for law firms. On day one, you set up authentication as a simple username-and-password table in your database. You write the login flow yourself. Six months later, your first enterprise customer says: &quot;we need single sign-on with our Azure Active Directory.&quot; You go to integrate it &mdash; and you discover that your custom login code is tangled into every part of the application. The session management, the permission checks, the audit logs &mdash; all of it assumed your hand-built auth. Adding SSO isn&#39;t a three-day integration. It&#39;s a three-month rewrite.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. So what&#39;s on the day-zero checklist? If someone&#39;s starting a legal tech project tomorrow, what do they do first?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Framework choice matters enormously. Pick a framework with secure defaults. Django, for example, auto-escapes template output &mdash; that&#39;s protection against cross-site scripting, which we covered in Episode 9. It enables CSRF protection by default &mdash; that&#39;s protection against forged requests, Episode 12. It uses parameterised database queries through its ORM &mdash; protection against SQL injection, Episode 8. A developer using Django has to actively opt out of these protections. Compare that to a minimal framework like Express.js, where none of those protections exist by default. You have to add each one manually. The framework&#39;s opinion on security becomes your application&#39;s baseline.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;If you&#39;d started with an authentication library that already supported SSO &mdash; something like NextAuth or Django&#39;s built-in auth system &mdash; that integration would have been configuration, not surgery. The day-zero decision saved you three months.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. What about secrets &mdash; API keys, database passwords?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So what&#39;s on the day-zero checklist? If someone&#39;s starting a legal tech project tomorrow, what do they do first?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Set up a secrets manager before you have secrets to store. AWS Secrets Manager, HashiCorp Vault &mdash; we talked about Vault back in Episode 15 &mdash; or even a simpler service if you&#39;re just starting. The point is: there should never be a moment where someone thinks &quot;I&#39;ll just put this API key in the dot-env file for now.&quot; Because &quot;for now&quot; becomes &quot;forever.&quot; And once a secret is committed to Git &mdash; to your version control history &mdash; it&#39;s there forever. Even if you delete the file, the secret exists in the history. Removing it properly requires rewriting Git history, which is painful and error-prone.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Framework choice matters enormously. Pick a framework with secure defaults. Django, for example, auto-escapes template output &mdash; that&#39;s protection against cross-site scripting, which we covered in Episode 9. It enables CSRF protection by default &mdash; that&#39;s protection against forged requests, Episode 12. It uses parameterised database queries through its ORM &mdash; protection against SQL injection, Episode 8. A developer using Django has to actively opt out of these protections. Compare that to a minimal framework like Express.js, where none of those protections exist by default. You have to add each one manually. The framework&#39;s opinion on security becomes your application&#39;s baseline.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. And that&#39;s why the gitignore file matters from the first commit?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. What about secrets &mdash; API keys, database passwords?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> From commit zero. Your dot-gitignore should exclude dot-env files, private key files, credential JSON files, anything framework-specific that contains secrets. And install pre-commit hooks &mdash; those are automated scripts that run before code is saved to version control &mdash; that scan for secrets. Tools like git-secrets or detect-secrets will catch an API key before it enters the repository. It&#39;s a safety net for the inevitable moment when someone forgets.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Set up a secrets manager before you have secrets to store. AWS Secrets Manager, HashiCorp Vault &mdash; we talked about Vault back in Episode 15 &mdash; or even a simpler service if you&#39;re just starting. The point is: there should never be a moment where someone thinks &quot;I&#39;ll just put this API key in the dot-env file for now.&quot; Because &quot;for now&quot; becomes &quot;forever.&quot; And once a secret is committed to Git &mdash; to your version control history &mdash; it&#39;s there forever. Even if you delete the file, the secret exists in the history. Removing it properly requires rewriting Git history, which is painful and error-prone.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. What about HTTPS? When does that go live?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. And that&#39;s why the gitignore file matters from the first commit?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> From the first deployment. Not &quot;before launch,&quot; not &quot;when we get a domain&quot; &mdash; from the first time anyone accesses the application over a network. Let&#39;s Encrypt provides free TLS certificates. Most modern hosting platforms &mdash; Vercel, Railway, Fly.io &mdash; handle it automatically. We covered TLS in Episode 13. There is no reason for unencrypted HTTP in 2026, especially for anything touching legal data.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;From commit zero. Your dot-gitignore should exclude dot-env files, private key files, credential JSON files, anything framework-specific that contains secrets. And install pre-commit hooks &mdash; those are automated scripts that run before code is saved to version control &mdash; that scan for secrets. Tools like git-secrets or detect-secrets will catch an API key before it enters the repository. It&#39;s a safety net for the inevitable moment when someone forgets.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And logging?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What about HTTPS? When does that go live?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; Logging is the one that gets skipped the most, and it&#39;s the one you most regret skipping when something goes wrong. Set up structured logging &mdash; that means logs in a consistent, machine-readable format, usually JSON &mdash; from the start. Log every authentication event. Every authorisation decision. Every data access that touches client records. Not for debugging &mdash; for security. When you need to investigate an incident, logs are your evidence. If they don&#39;t exist, you&#39;re investigating blind.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;From the first deployment. Not &quot;before launch,&quot; not &quot;when we get a domain&quot; &mdash; from the first time anyone accesses the application over a network. Let&#39;s Encrypt provides free TLS certificates. Most modern hosting platforms &mdash; Vercel, Railway, Fly.io &mdash; handle it automatically. We covered TLS in Episode 13. There is no reason for unencrypted HTTP in 2026, especially for anything touching legal data.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. OWASP has guidance on what to log and what not to log, right?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And logging?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Their Logging Cheat Sheet is excellent. The key rule: log the event, not the secret. Log &quot;user 47 attempted login at 14:32, failed&quot; &mdash; don&#39;t log the password they typed. Log &quot;API key rotated for service X&quot; &mdash; don&#39;t log the new key value. And don&#39;t log full credit card numbers, social security numbers, or client document contents. The log itself becomes a target if it contains sensitive data.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Logging is the one that gets skipped the most, and it&#39;s the one you most regret skipping when something goes wrong. Set up structured logging &mdash; that means logs in a consistent, machine-readable format, usually JSON &mdash; from the start. Log every authentication event. Every authorisation decision. Every data access that touches client records. Not for debugging &mdash; for security. When you need to investigate an incident, logs are your evidence. If they don&#39;t exist, you&#39;re investigating blind.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. What about dependency scanning? When does that start?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. OWASP has guidance on what to log and what not to log, right?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Before the first dependency. Add a scanning tool &mdash; npm audit, pip audit, Snyk, Dependabot &mdash; to your CI/CD pipeline from the first pull request. Every dependency you add is code you didn&#39;t write and can&#39;t fully inspect. Scanning catches known vulnerabilities automatically. We talked about supply chain risks extensively in the last episode with AI-generated code. This is the same principle applied to all third-party code.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Their Logging Cheat Sheet is excellent. The key rule: log the event, not the secret. Log &quot;user 47 attempted login at 14:32, failed&quot; &mdash; don&#39;t log the password they typed. Log &quot;API key rotated for service X&quot; &mdash; don&#39;t log the new key value. And don&#39;t log full credit card numbers, social security numbers, or client document contents. The log itself becomes a target if it contains sensitive data.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So to summarise the day-zero list: secure framework, secrets manager, gitignore and pre-commit hooks, HTTPS from first deployment, authentication library with MFA and SSO support, structured logging, dependency scanning in CI, and branch protection requiring code reviews.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. What about dependency scanning? When does that start?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the minimum viable security posture. None of it is exotic. None of it requires a security team. It&#39;s all choices you make at the start that prevent months of rework later. Security debt compounds faster than technical debt, because every day a vulnerability exists in production is a day it can be exploited. And unlike slow code that just frustrates users, a security flaw can cost you your clients&#39; data and your professional obligations.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Before the first dependency. Add a scanning tool &mdash; npm audit, pip audit, Snyk, Dependabot &mdash; to your CI/CD pipeline from the first pull request. Every dependency you add is code you didn&#39;t write and can&#39;t fully inspect. Scanning catches known vulnerabilities automatically. We talked about supply chain risks extensively in the last episode with AI-generated code. This is the same principle applied to all third-party code.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And there&#39;s an ethical dimension too, right? For anyone building software that lawyers use.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So to summarise the day-zero list: secure framework, secrets manager, gitignore and pre-commit hooks, HTTPS from first deployment, authentication library with MFA and SSO support, structured logging, dependency scanning in CI, and branch protection requiring code reviews.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The NYC Bar issued a formal opinion in 2024 clarifying that lawyers&#39; ethical obligations extend to the technology platforms they choose. If you&#39;re building legal SaaS and you haven&#39;t implemented basic security controls, you&#39;re making it harder for your lawyer-customers to meet their obligations under ABA Model Rule 1.6(c) &mdash; the rule requiring reasonable efforts to protect client information. &quot;We&#39;ll add security later&quot; is not a defensible position.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the minimum viable security posture. None of it is exotic. None of it requires a security team. It&#39;s all choices you make at the start that prevent months of rework later. Security debt compounds faster than technical debt, because every day a vulnerability exists in production is a day it can be exploited. And unlike slow code that just frustrates users, a security flaw can cost you your clients&#39; data and your professional obligations.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; monitoring and alerting. How to detect attacks in progress, and why alert design matters as much as detection logic.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And there&#39;s an ethical dimension too, right? For anyone building software that lawyers use.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The NYC Bar issued a formal opinion in 2024 clarifying that lawyers&#39; ethical obligations extend to the technology platforms they choose. If you&#39;re building legal SaaS and you haven&#39;t implemented basic security controls, you&#39;re making it harder for your lawyer-customers to meet their obligations under ABA Model Rule 1.6(c) &mdash; the rule requiring reasonable efforts to protect client information. &quot;We&#39;ll add security later&quot; is not a defensible position.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; monitoring and alerting. How to detect attacks in progress, and why alert design matters as much as detection logic.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

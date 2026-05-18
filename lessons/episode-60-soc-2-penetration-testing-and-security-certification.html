@@ -76,85 +76,145 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 60: SOC 2, Penetration Testing and Security Certification</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Proof Problem</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">You have implemented access controls, encrypted data at rest and in transit, deployed audit logging, and built an incident response plan. Your system is genuinely secure. Now a prospective client &mdash; a 200-lawyer firm evaluating your contract management platform &mdash; asks a single question: &quot;Can you prove it?&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is where security certifications enter the picture. They are not security controls themselves. They are structured, externally validated evidence that your controls exist and work. For legal SaaS vendors, the right certification at the right time is often the difference between closing an enterprise deal and losing it to a competitor who can produce the paperwork.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SOC 2: The Industry Standard for SaaS</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SOC 2 (System and Organisation Controls 2) is an auditing framework developed by the [American Institute of Certified Public Accountants (AICPA)](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2) that evaluates a service organisation&#39;s controls over customer data.[^1] It is the dominant security certification for B2B SaaS vendors in North America and increasingly globally.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SOC 2 (System and Organisation Controls 2) is an auditing framework developed by the <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">American Institute of Certified Public Accountants (AICPA)</a> that evaluates a service organisation&#39;s controls over customer data. It is the dominant security certification for B2B SaaS vendors in North America and increasingly globally.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Trust Services Criteria</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SOC 2 evaluates controls against five Trust Services Criteria (TSC):</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Criterion</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Required?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Security</strong> (CC series)</td>
+                <td class="py-3 px-4">Protection against unauthorised access, both physical and logical</td>
+                <td class="py-3 px-4">Yes &mdash; always included</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Availability</strong> (A series)</td>
+                <td class="py-3 px-4">System uptime and operational resilience</td>
+                <td class="py-3 px-4">Optional</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Processing Integrity</strong> (PI series)</td>
+                <td class="py-3 px-4">Data processing is complete, valid, accurate, and timely</td>
+                <td class="py-3 px-4">Optional</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Confidentiality</strong> (C series)</td>
+                <td class="py-3 px-4">Protection of information designated as confidential</td>
+                <td class="py-3 px-4">Optional</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Privacy</strong> (P series)</td>
+                <td class="py-3 px-4">Collection, use, retention, and disposal of personal information</td>
+                <td class="py-3 px-4">Optional</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Criterion | Description | Required? |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|-------------|-----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Security</strong> (CC series) | Protection against unauthorised access, both physical and logical | Yes &mdash; always included |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Availability</strong> (A series) | System uptime and operational resilience | Optional |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Processing Integrity</strong> (PI series) | Data processing is complete, valid, accurate, and timely | Optional |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Confidentiality</strong> (C series) | Protection of information designated as confidential | Optional |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Privacy</strong> (P series) | Collection, use, retention, and disposal of personal information | Optional |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security is mandatory in every SOC 2 report. The other four criteria are selected based on the commitments you make to your customers. For legal SaaS, [Confidentiality and Availability are typically expected](https://cloudsecurityalliance.org/blog/2023/10/05/the-5-soc-2-trust-services-criteria-explained) alongside Security &mdash; law firms need assurance that their client data is protected and that the platform stays accessible.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security is mandatory in every SOC 2 report. The other four criteria are selected based on the commitments you make to your customers. For legal SaaS, <a href="https://cloudsecurityalliance.org/blog/2023/10/05/the-5-soc-2-trust-services-criteria-explained" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Confidentiality and Availability are typically expected</a> alongside Security &mdash; law firms need assurance that their client data is protected and that the platform stays accessible.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Type I vs. Type II</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| | SOC 2 Type I | SOC 2 Type II |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---|---|---|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">What it proves</strong> | Controls are properly designed at a specific point in time | Controls operated effectively over a period (typically 6&ndash;12 months) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Audit scope</strong> | Design review only | Design + operational effectiveness testing |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Time required</strong> | Weeks to months of preparation | 6&ndash;12 month observation window after controls are in place |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Enterprise acceptance</strong> | Acceptable for early-stage companies | Required by most enterprise procurement teams |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink"></th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2 Type I</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2 Type II</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">What it proves</strong></td>
+                <td class="py-3 px-4">Controls are properly designed at a specific point in time</td>
+                <td class="py-3 px-4">Controls operated effectively over a period (typically 6&ndash;12 months)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Audit scope</strong></td>
+                <td class="py-3 px-4">Design review only</td>
+                <td class="py-3 px-4">Design + operational effectiveness testing</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Time required</strong></td>
+                <td class="py-3 px-4">Weeks to months of preparation</td>
+                <td class="py-3 px-4">6&ndash;12 month observation window after controls are in place</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Enterprise acceptance</strong></td>
+                <td class="py-3 px-4">Acceptable for early-stage companies</td>
+                <td class="py-3 px-4">Required by most enterprise procurement teams</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key distinction:&lt;/strong&gt; Type I says &quot;on the day the auditor looked, our controls were properly designed.&quot; Type II says &quot;for six months, someone watched us follow our own rules, and we actually did.&quot; Enterprise clients overwhelmingly prefer Type II because it demonstrates sustained discipline, not a one-day performance. &lt;a href=&quot;https://www.metomic.io/resource-centre/soc-2-type-ii&quot;&gt;According to Metomic&lt;/a&gt;, 78% of enterprise clients now require SOC 2 Type II from their service providers.&lt;sup&gt;[3]&lt;/sup&gt;</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key distinction:&lt;/strong&gt; Type I says &quot;on the day the auditor looked, our controls were properly designed.&quot; Type II says &quot;for six months, someone watched us follow our own rules, and we actually did.&quot; Enterprise clients overwhelmingly prefer Type II because it demonstrates sustained discipline, not a one-day performance. <a href="https://www.metomic.io/resource-centre/soc-2-type-ii">According to Metomic</a>, 78% of enterprise clients now require SOC 2 Type II from their service providers.&lt;sup&gt;[3]&lt;/sup&gt;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Penetration Testing as Evidence</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Penetration testing &mdash; or pentesting &mdash; is a controlled simulation of an attack against your application and infrastructure, conducted by a qualified security professional. While [SOC 2 does not explicitly require penetration testing](https://www.blazeinfosec.com/post/soc-2-penetration-testing-requirements/), it has become a de facto expectation.[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Penetration testing &mdash; or pentesting &mdash; is a controlled simulation of an attack against your application and infrastructure, conducted by a qualified security professional. While <a href="https://www.blazeinfosec.com/post/soc-2-penetration-testing-requirements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 does not explicitly require penetration testing</a>, it has become a de facto expectation.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Why Auditors Want Pentest Results</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SOC 2 Trust Services Criteria CC4.1 requires management to use &quot;ongoing and separate evaluations&quot; to assess the effectiveness of controls. [Auditors evaluating vulnerability management and access control effectiveness](https://q-sec.com/en/blog/soc-2-penetration-testing) routinely request penetration test evidence as part of this evaluation &mdash; it demonstrates that you didn&#39;t just build controls, you tested them against real attack techniques.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SOC 2 Trust Services Criteria CC4.1 requires management to use &quot;ongoing and separate evaluations&quot; to assess the effectiveness of controls. <a href="https://q-sec.com/en/blog/soc-2-penetration-testing" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auditors evaluating vulnerability management and access control effectiveness</a> routinely request penetration test evidence as part of this evaluation &mdash; it demonstrates that you didn&#39;t just build controls, you tested them against real attack techniques.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For [ISO 27001, Annex A 8.8](https://www.pentesttesting.com/iso-27001-penetration-testing-audit-evidence/) (management of technical vulnerabilities) and Annex A 5.36 (compliance with policies and standards) effectively require security testing, and auditors universally expect penetration testing as evidence.[^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For <a href="https://www.pentesttesting.com/iso-27001-penetration-testing-audit-evidence/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO 27001, Annex A 8.8</a> (management of technical vulnerabilities) and Annex A 5.36 (compliance with policies and standards) effectively require security testing, and auditors universally expect penetration testing as evidence.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Pentest Scope and Frequency</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Component | Recommended Scope | Frequency |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|------------------|-----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Web application | OWASP Top 10, business logic, authentication, authorisation | Annually + after major releases |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| API | Authentication, authorisation, injection, rate limiting | Annually + after major releases |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Infrastructure | Network segmentation, cloud configuration, credential management | Annually |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Social engineering | Phishing simulation, physical security (optional) | Annually |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recommended Scope</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Frequency</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Web application</td>
+                <td class="py-3 px-4">OWASP Top 10, business logic, authentication, authorisation</td>
+                <td class="py-3 px-4">Annually + after major releases</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">API</td>
+                <td class="py-3 px-4">Authentication, authorisation, injection, rate limiting</td>
+                <td class="py-3 px-4">Annually + after major releases</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Infrastructure</td>
+                <td class="py-3 px-4">Network segmentation, cloud configuration, credential management</td>
+                <td class="py-3 px-4">Annually</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Social engineering</td>
+                <td class="py-3 px-4">Phishing simulation, physical security (optional)</td>
+                <td class="py-3 px-4">Annually</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">What to Do with Findings</h3>
 
@@ -165,57 +225,102 @@
         <li><strong class="text-ink">Remediation plan</strong> &mdash; documented timelines for fixing each finding</li>
         <li><strong class="text-ink">Retest evidence</strong> &mdash; proof that Critical and High findings were fixed and verified</li>
         <li><strong class="text-ink">Trend analysis</strong> &mdash; comparison with prior year&#39;s results showing improvement</li>
-    </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">ISO 27001: The International Standard</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[ISO/IEC 27001:2022](https://www.iso.org/standard/27001) is the international standard for information security management systems (ISMS).[^7] Where SOC 2 evaluates specific controls, ISO 27001 evaluates whether you have a management system &mdash; a framework for continuously identifying, assessing, and treating information security risks.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO/IEC 27001:2022</a> is the international standard for information security management systems (ISMS). Where SOC 2 evaluates specific controls, ISO 27001 evaluates whether you have a management system &mdash; a framework for continuously identifying, assessing, and treating information security risks.</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">ISO 27001</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Developed by</strong></td>
+                <td class="py-3 px-4">AICPA (US)</td>
+                <td class="py-3 px-4">ISO/IEC (International)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Focus</strong></td>
+                <td class="py-3 px-4">Control effectiveness</td>
+                <td class="py-3 px-4">Management system maturity</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Output</strong></td>
+                <td class="py-3 px-4">Attestation report (not a certification)</td>
+                <td class="py-3 px-4">Certification (pass/fail)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Validity</strong></td>
+                <td class="py-3 px-4">Report covers a specific period</td>
+                <td class="py-3 px-4">Certificate valid for 3 years (annual surveillance audits)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Geographic preference</strong></td>
+                <td class="py-3 px-4">North America, increasingly global</td>
+                <td class="py-3 px-4">Europe, Asia-Pacific, global</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Cost</strong></td>
+                <td class="py-3 px-4">$30K&ndash;$150K+ depending on scope and firm</td>
+                <td class="py-3 px-4">$20K&ndash;$100K+ for initial certification</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Aspect | SOC 2 | ISO 27001 |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|-------|-----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Developed by</strong> | AICPA (US) | ISO/IEC (International) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Focus</strong> | Control effectiveness | Management system maturity |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Output</strong> | Attestation report (not a certification) | Certification (pass/fail) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Validity</strong> | Report covers a specific period | Certificate valid for 3 years (annual surveillance audits) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Geographic preference</strong> | North America, increasingly global | Europe, Asia-Pacific, global |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cost</strong> | $30K&ndash;$150K+ depending on scope and firm | $20K&ndash;$100K+ for initial certification |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS vendors selling to both US and European law firms, having both SOC 2 Type II and ISO 27001 certification covers the broadest market &mdash; SOC 2 for North American enterprise procurement and ISO 27001 for European and Asia-Pacific clients.[^8]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS vendors selling to both US and European law firms, having both SOC 2 Type II and ISO 27001 certification covers the broadest market &mdash; SOC 2 for North American enterprise procurement and ISO 27001 for European and Asia-Pacific clients.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Cyber Essentials (UK)</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Cyber Essentials](https://www.ncsc.gov.uk/cyberessentials/overview) is a UK government-backed certification scheme managed by the National Cyber Security Centre (NCSC).[^9] It covers five basic technical controls: firewalls, secure configuration, user access control, malware protection, and security update management. Cyber Essentials Plus adds external vulnerability testing.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.ncsc.gov.uk/cyberessentials/overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cyber Essentials</a> is a UK government-backed certification scheme managed by the National Cyber Security Centre (NCSC). It covers five basic technical controls: firewalls, secure configuration, user access control, malware protection, and security update management. Cyber Essentials Plus adds external vulnerability testing.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS vendors targeting UK law firms, Cyber Essentials is increasingly a minimum requirement &mdash; particularly for firms that handle government or public sector work, where Cyber Essentials certification is mandatory for suppliers.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Choosing the Right Certification at the Right Time</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Stage | Recommended Certification | Rationale |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|--------------------------|-----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Pre-revenue / MVP</strong> | None &mdash; focus on building secure foundations | Premature certification wastes resources |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">First paying clients</strong> | SOC 2 Type I or Cyber Essentials | Demonstrates intent; satisfies initial due diligence |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Growth / 10+ clients</strong> | SOC 2 Type II | Enterprise procurement teams require it |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Enterprise / international</strong> | SOC 2 Type II + ISO 27001 | Covers global markets; often required in RFPs |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">UK public sector</strong> | Add Cyber Essentials Plus | Mandatory for government suppliers |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Stage</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recommended Certification</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rationale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Pre-revenue / MVP</strong></td>
+                <td class="py-3 px-4">None &mdash; focus on building secure foundations</td>
+                <td class="py-3 px-4">Premature certification wastes resources</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">First paying clients</strong></td>
+                <td class="py-3 px-4">SOC 2 Type I or Cyber Essentials</td>
+                <td class="py-3 px-4">Demonstrates intent; satisfies initial due diligence</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Growth / 10+ clients</strong></td>
+                <td class="py-3 px-4">SOC 2 Type II</td>
+                <td class="py-3 px-4">Enterprise procurement teams require it</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Enterprise / international</strong></td>
+                <td class="py-3 px-4">SOC 2 Type II + ISO 27001</td>
+                <td class="py-3 px-4">Covers global markets; often required in RFPs</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">UK public sector</strong></td>
+                <td class="py-3 px-4">Add Cyber Essentials Plus</td>
+                <td class="py-3 px-4">Mandatory for government suppliers</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fffbeb; border-left: 4px solid #f59e0b; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
@@ -223,37 +328,33 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 61 covers <strong class="text-ink">Customer Trust and Security Reviews</strong> &mdash; how to handle the security questionnaires, trust centres, and DPA negotiations that come after (or sometimes before) your certification is in place.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: AICPA, [SOC 2 &mdash; SOC for Service Organizations](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2) &mdash; Trust Services Criteria framework overview.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AICPA, <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 — SOC for Service Organizations</a> &mdash; Trust Services Criteria framework overview.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Cloud Security Alliance, [The 5 SOC 2 Trust Services Criteria Explained](https://cloudsecurityalliance.org/blog/2023/10/05/the-5-soc-2-trust-services-criteria-explained) &mdash; detailed breakdown of each criterion.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cloud Security Alliance, <a href="https://cloudsecurityalliance.org/blog/2023/10/05/the-5-soc-2-trust-services-criteria-explained" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 5 SOC 2 Trust Services Criteria Explained</a> &mdash; detailed breakdown of each criterion.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Metomic, [SOC 2 Type II: A Complete Guide &amp; Checklist](https://www.metomic.io/resource-centre/soc-2-type-ii) &mdash; Type I vs. Type II comparison and enterprise requirements.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Metomic, <a href="https://www.metomic.io/resource-centre/soc-2-type-ii" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Type II: A Complete Guide & Checklist</a> &mdash; Type I vs. Type II comparison and enterprise requirements.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Blaze InfoSec, [SOC 2 Penetration Testing Requirements Explained](https://www.blazeinfosec.com/post/soc-2-penetration-testing-requirements/) &mdash; when and why pentesting is expected for SOC 2.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Blaze InfoSec, <a href="https://www.blazeinfosec.com/post/soc-2-penetration-testing-requirements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing Requirements Explained</a> &mdash; when and why pentesting is expected for SOC 2.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Q-Sec, [SOC 2 Penetration Testing: What Auditors Actually Expect](https://q-sec.com/en/blog/soc-2-penetration-testing) &mdash; auditor expectations and evidence requirements.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Q-Sec, <a href="https://q-sec.com/en/blog/soc-2-penetration-testing" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing: What Auditors Actually Expect</a> &mdash; auditor expectations and evidence requirements.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Pentest Testing, [ISO 27001 Penetration Testing Audit Evidence Guide](https://www.pentesttesting.com/iso-27001-penetration-testing-audit-evidence/) &mdash; ISO 27001 pentest evidence requirements.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Pentest Testing, <a href="https://www.pentesttesting.com/iso-27001-penetration-testing-audit-evidence/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO 27001 Penetration Testing Audit Evidence Guide</a> &mdash; ISO 27001 pentest evidence requirements.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: ISO, [ISO/IEC 27001 &mdash; Information Security Management](https://www.iso.org/standard/27001) &mdash; standard overview.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ISO, <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO/IEC 27001 — Information Security Management</a> &mdash; standard overview.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Bright Defense, [SOC 2 Trust Services Criteria: A Practical View](https://www.brightdefense.com/resources/soc-2-trust-services-criteria/) &mdash; selecting criteria for SaaS compliance.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bright Defense, <a href="https://www.brightdefense.com/resources/soc-2-trust-services-criteria/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria: A Practical View</a> &mdash; selecting criteria for SaaS compliance.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: NCSC, [Cyber Essentials](https://www.ncsc.gov.uk/cyberessentials/overview) &mdash; UK government certification scheme.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NCSC, <a href="https://www.ncsc.gov.uk/cyberessentials/overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cyber Essentials</a> &mdash; UK government certification scheme.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Cherry Bekaert, [SOC 2 Trust Services Criteria Guide](https://www.cbh.com/insights/articles/soc-2-trust-services-criteria-guide/) &mdash; practical audit preparation guide.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cherry Bekaert, <a href="https://www.cbh.com/insights/articles/soc-2-trust-services-criteria-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria Guide</a> &mdash; practical audit preparation guide.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Netragard, [SOC 2 Penetration Testing Requirements for 2026](https://netragard.com/blog/soc-2-penetration-testing-requirements/) &mdash; updated pentest requirements and methodology.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Netragard, <a href="https://netragard.com/blog/soc-2-penetration-testing-requirements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing Requirements for 2026</a> &mdash; updated pentest requirements and methodology.</p>
 
 </article>
 
@@ -274,67 +375,67 @@
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 60 &mdash; security certifications. SOC 2, pen tests, ISO 27001. Alice, we&#39;ve spent fifty-nine episodes building security controls. This episode is about proving they work to someone who doesn&#39;t trust your word for it.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 60 &mdash; security certifications. SOC 2, pen tests, ISO 27001. Alice, we&#39;ve spent fifty-nine episodes building security controls. This episode is about proving they work to someone who doesn&#39;t trust your word for it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s exactly what it is. You can have the most secure platform in the world, but when a 200-lawyer firm evaluates your contract management tool, they&#39;re going to ask one question: can you prove it? And &quot;we take security seriously&quot; is not proof. A SOC 2 Type II report is proof. A penetration test report is proof. An ISO 27001 certificate is proof.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s exactly what it is. You can have the most secure platform in the world, but when a 200-lawyer firm evaluates your contract management tool, they&#39;re going to ask one question: can you prove it? And &quot;we take security seriously&quot; is not proof. A SOC 2 Type II report is proof. A penetration test report is proof. An ISO 27001 certificate is proof.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So let&#39;s start with SOC 2, since that seems to be the one everyone asks about. What is it?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So let&#39;s start with SOC 2, since that seems to be the one everyone asks about. What is it?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;SOC 2 stands for System and Organisation Controls 2. It&#39;s an auditing framework developed by the AICPA &mdash; the American Institute of Certified Public Accountants. It evaluates whether a service organisation &mdash; that&#39;s you, the SaaS vendor &mdash; has effective controls for protecting customer data. The audit measures you against five Trust Services Criteria: Security, Availability, Processing Integrity, Confidentiality, and Privacy. Security is always included. The others are optional depending on what commitments you make to your customers.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> SOC 2 stands for System and Organisation Controls 2. It&#39;s an auditing framework developed by the AICPA &mdash; the American Institute of Certified Public Accountants. It evaluates whether a service organisation &mdash; that&#39;s you, the SaaS vendor &mdash; has effective controls for protecting customer data. The audit measures you against five Trust Services Criteria: Security, Availability, Processing Integrity, Confidentiality, and Privacy. Security is always included. The others are optional depending on what commitments you make to your customers.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. For a legal SaaS vendor, which of those five would you typically include?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. For a legal SaaS vendor, which of those five would you typically include?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security is mandatory. Beyond that, legal SaaS vendors should almost always include Confidentiality &mdash; because you&#39;re handling privileged client data &mdash; and Availability &mdash; because law firms need to know your platform won&#39;t go down during a filing deadline. Processing Integrity and Privacy are included less often but may be relevant depending on your product.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security is mandatory. Beyond that, legal SaaS vendors should almost always include Confidentiality &mdash; because you&#39;re handling privileged client data &mdash; and Availability &mdash; because law firms need to know your platform won&#39;t go down during a filing deadline. Processing Integrity and Privacy are included less often but may be relevant depending on your product.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Now, I&#39;ve heard there&#39;s a Type I and a Type II. What&#39;s the difference?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. Now, I&#39;ve heard there&#39;s a Type I and a Type II. What&#39;s the difference?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Type I says &quot;on the day the auditor looked, our controls were properly designed.&quot; It&#39;s a snapshot. Type II says &quot;for the past six to twelve months, an auditor watched us operate, and our controls worked consistently over that entire period.&quot; Type II is what enterprise clients want because it proves sustained discipline, not a one-day performance.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Type I says &quot;on the day the auditor looked, our controls were properly designed.&quot; It&#39;s a snapshot. Type II says &quot;for the past six to twelve months, an auditor watched us operate, and our controls worked consistently over that entire period.&quot; Type II is what enterprise clients want because it proves sustained discipline, not a one-day performance.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So Type I is like passing a driving test, and Type II is like having a clean driving record for a year.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. So Type I is like passing a driving test, and Type II is like having a clean driving record for a year.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s a good analogy. And the numbers back it up &mdash; roughly seventy-eight percent of enterprise clients now require SOC 2 Type II from their service providers. If you&#39;re selling to large law firms, Type II is the expectation. Type I is acceptable as a stepping stone while you build your observation period, but it&#39;s not the destination.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s a good analogy. And the numbers back it up &mdash; roughly seventy-eight percent of enterprise clients now require SOC 2 Type II from their service providers. If you&#39;re selling to large law firms, Type II is the expectation. Type I is acceptable as a stepping stone while you build your observation period, but it&#39;s not the destination.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. What about penetration testing? Where does that fit?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. What about penetration testing? Where does that fit?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; This is one of the most misunderstood areas. SOC 2 does not technically require a penetration test. It&#39;s not in the criteria. But SOC 2 does require that management uses &quot;ongoing and separate evaluations&quot; to assess control effectiveness. In practice, auditors routinely ask for penetration test results as evidence of that evaluation. And enterprise clients absolutely ask. So while it&#39;s not a formal requirement, it&#39;s a de facto one.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; This is one of the most misunderstood areas. SOC 2 does not technically require a penetration test. It&#39;s not in the criteria. But SOC 2 does require that management uses &quot;ongoing and separate evaluations&quot; to assess control effectiveness. In practice, auditors routinely ask for penetration test results as evidence of that evaluation. And enterprise clients absolutely ask. So while it&#39;s not a formal requirement, it&#39;s a de facto one.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What does a good pentest look like?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. What does a good pentest look like?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;A qualified external security firm tests your web application, your APIs, and your infrastructure &mdash; trying to break in using the same techniques real attackers would use. They test against the OWASP Top 10, which we covered back in Episode 3, plus business logic flaws, authentication and authorisation weaknesses, and injection vulnerabilities. The test produces a findings report, each vulnerability classified by severity &mdash; Critical, High, Medium, Low. What matters after the test is not just the report &mdash; it&#39;s what you do with it. Auditors want to see a remediation plan with timelines, retest evidence showing critical findings were fixed, and ideally a trend analysis comparing this year&#39;s results with last year&#39;s.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> A qualified external security firm tests your web application, your APIs, and your infrastructure &mdash; trying to break in using the same techniques real attackers would use. They test against the OWASP Top 10, which we covered back in Episode 3, plus business logic flaws, authentication and authorisation weaknesses, and injection vulnerabilities. The test produces a findings report, each vulnerability classified by severity &mdash; Critical, High, Medium, Low. What matters after the test is not just the report &mdash; it&#39;s what you do with it. Auditors want to see a remediation plan with timelines, retest evidence showing critical findings were fixed, and ideally a trend analysis comparing this year&#39;s results with last year&#39;s.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. A pentest that finds nothing is either great news or a bad test.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. A pentest that finds nothing is either great news or a bad test.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Every real application has findings. The question is whether they&#39;re minor or severe, and whether you fix them promptly.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Every real application has findings. The question is whether they&#39;re minor or severe, and whether you fix them promptly.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Now, ISO 27001 &mdash; that&#39;s the international one. How does it compare to SOC 2?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Now, ISO 27001 &mdash; that&#39;s the international one. How does it compare to SOC 2?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;ISO 27001 is an international standard for information security management systems &mdash; an ISMS. Where SOC 2 asks &quot;do your controls work?&quot; ISO 27001 asks &quot;do you have a system for continuously identifying, assessing, and treating security risks?&quot; SOC 2 produces an attestation report. ISO 27001 produces a certification &mdash; pass or fail &mdash; valid for three years with annual surveillance audits. Geographically, SOC 2 dominates in North America. ISO 27001 is preferred in Europe and Asia-Pacific. For a legal SaaS vendor selling internationally, having both gives you the broadest coverage.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> ISO 27001 is an international standard for information security management systems &mdash; an ISMS. Where SOC 2 asks &quot;do your controls work?&quot; ISO 27001 asks &quot;do you have a system for continuously identifying, assessing, and treating security risks?&quot; SOC 2 produces an attestation report. ISO 27001 produces a certification &mdash; pass or fail &mdash; valid for three years with annual surveillance audits. Geographically, SOC 2 dominates in North America. ISO 27001 is preferred in Europe and Asia-Pacific. For a legal SaaS vendor selling internationally, having both gives you the broadest coverage.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. That sounds expensive though. What does certification actually cost?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. That sounds expensive though. What does certification actually cost?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;SOC 2 typically ranges from thirty thousand to over a hundred and fifty thousand dollars, depending on the scope and the audit firm. ISO 27001 initial certification runs twenty thousand to a hundred thousand. The hidden cost is preparation time &mdash; getting your controls documented, implemented, and evidence-ready before the auditor arrives. For a small team, that preparation can take six to twelve months.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> SOC 2 typically ranges from thirty thousand to over a hundred and fifty thousand dollars, depending on the scope and the audit firm. ISO 27001 initial certification runs twenty thousand to a hundred thousand. The hidden cost is preparation time &mdash; getting your controls documented, implemented, and evidence-ready before the auditor arrives. For a small team, that preparation can take six to twelve months.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So when should a legal SaaS startup start thinking about this?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So when should a legal SaaS startup start thinking about this?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;There&#39;s a clear maturity curve. Before you have paying clients, don&#39;t certify &mdash; focus on building secure foundations. When you land your first few clients, consider SOC 2 Type I or Cyber Essentials in the UK &mdash; it signals intent and handles basic due diligence. Once you have ten or more clients and you&#39;re targeting enterprise law firms, SOC 2 Type II becomes the priority. And if you&#39;re selling internationally &mdash; to European or Asia-Pacific firms &mdash; add ISO 27001. The critical thing is to plan twelve to eighteen months ahead of when you expect to need it. If you wait until a prospect asks, you&#39;re already too late.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> There&#39;s a clear maturity curve. Before you have paying clients, don&#39;t certify &mdash; focus on building secure foundations. When you land your first few clients, consider SOC 2 Type I or Cyber Essentials in the UK &mdash; it signals intent and handles basic due diligence. Once you have ten or more clients and you&#39;re targeting enterprise law firms, SOC 2 Type II becomes the priority. And if you&#39;re selling internationally &mdash; to European or Asia-Pacific firms &mdash; add ISO 27001. The critical thing is to plan twelve to eighteen months ahead of when you expect to need it. If you wait until a prospect asks, you&#39;re already too late.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. I want to mention Cyber Essentials briefly &mdash; you brought it up. What is that?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. I want to mention Cyber Essentials briefly &mdash; you brought it up. What is that?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It&#39;s a UK government-backed certification managed by the National Cyber Security Centre. It covers five basic technical controls &mdash; firewalls, secure configuration, user access control, malware protection, and patch management. Cyber Essentials Plus adds external vulnerability scanning. For legal SaaS vendors targeting UK law firms, especially those handling government or public sector work, Cyber Essentials is often a minimum requirement. It&#39;s less rigorous than SOC 2 or ISO 27001, but for UK markets it&#39;s expected alongside those certifications, not instead of them.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It&#39;s a UK government-backed certification managed by the National Cyber Security Centre. It covers five basic technical controls &mdash; firewalls, secure configuration, user access control, malware protection, and patch management. Cyber Essentials Plus adds external vulnerability scanning. For legal SaaS vendors targeting UK law firms, especially those handling government or public sector work, Cyber Essentials is often a minimum requirement. It&#39;s less rigorous than SOC 2 or ISO 27001, but for UK markets it&#39;s expected alongside those certifications, not instead of them.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So the takeaway is: build the security, then prove the security, and time the proof to your sales pipeline.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. So the takeaway is: build the security, then prove the security, and time the proof to your sales pipeline.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s exactly it. Certification is not a security measure &mdash; it&#39;s a business measure backed by security evidence. The security controls we&#39;ve covered over sixty episodes are what the auditor tests. The certification is what your client&#39;s procurement team sees.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s exactly it. Certification is not a security measure &mdash; it&#39;s a business measure backed by security evidence. The security controls we&#39;ve covered over sixty episodes are what the auditor tests. The certification is what your client&#39;s procurement team sees.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; customer trust and security reviews. How to handle the questionnaires, trust centres, and DPA negotiations that follow the certification.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; customer trust and security reviews. How to handle the questionnaires, trust centres, and DPA negotiations that follow the certification.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

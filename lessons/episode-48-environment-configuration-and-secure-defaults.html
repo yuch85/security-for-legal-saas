@@ -76,8 +76,6 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 48: Environment Configuration and Secure Defaults</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Difference Between Staging and Production Should Be Credentials and Scale &mdash; Not Security Controls</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your legal SaaS platform runs in multiple environments. Development, where engineers build and test features. Staging, where the team validates before release. Production, where real law firms use the platform with real client data. The security controls in each environment should be identical. The only differences should be credentials (each environment has its own database passwords, API keys, and service accounts) and scale (production has more servers, more capacity).</p>
@@ -90,17 +88,15 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Configuration Management &mdash; Separating Config from Code</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The Twelve-Factor App methodology](https://12factor.net/config) [1] &mdash; an influential set of principles for building modern web applications &mdash; establishes the foundational rule: configuration that varies between environments must be stored separately from code. Database URLs, API keys, feature flags, service endpoints &mdash; these should never be hardcoded.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://12factor.net/config" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Twelve-Factor App methodology</a> [1] &mdash; an influential set of principles for building modern web applications &mdash; establishes the foundational rule: configuration that varies between environments must be stored separately from code. Database URLs, API keys, feature flags, service endpoints &mdash; these should never be hardcoded.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Three mechanisms dominate in practice:</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Environment Variables</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The simplest approach. Your application reads configuration from environment variables set by the deployment platform. [The Twelve-Factor App](https://12factor.net/config) [1] recommends this as the primary method because environment variables are language-agnostic and can be set without modifying code or config files.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The simplest approach. Your application reads configuration from environment variables set by the deployment platform. <a href="https://12factor.net/config" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Twelve-Factor App</a> [1] recommends this as the primary method because environment variables are language-agnostic and can be set without modifying code or config files.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```bash</p>
 
@@ -116,45 +112,76 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The security concern: environment variables can be visible in process listings, debug outputs, and crash reports. [Recent guidance](https://github.com/twelve-factor/twelve-factor/issues/4) [2] acknowledges that for secrets, environment variables alone are insufficient &mdash; they should be combined with a secrets manager.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The security concern: environment variables can be visible in process listings, debug outputs, and crash reports. <a href="https://github.com/twelve-factor/twelve-factor/issues/4" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Recent guidance</a> [2] acknowledges that for secrets, environment variables alone are insufficient &mdash; they should be combined with a secrets manager.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sealed Secrets and Config Maps</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Kubernetes environments (the container orchestration platform introduced in [Episode 15](/lessons/ep15/)), [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/) [3] store non-sensitive configuration and [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) [4] store sensitive values. Sealed Secrets encrypt the Secret data so it can be safely stored in version control &mdash; only the cluster can decrypt them.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Kubernetes environments (the container orchestration platform introduced in <a href="/lessons/ep15/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a>), <a href="https://kubernetes.io/docs/concepts/configuration/configmap/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ConfigMaps</a> [3] store non-sensitive configuration and <a href="https://kubernetes.io/docs/concepts/configuration/secret/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secrets</a> [4] store sensitive values. Sealed Secrets encrypt the Secret data so it can be safely stored in version control &mdash; only the cluster can decrypt them.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This matters for legal SaaS because it enables a GitOps workflow &mdash; all configuration, including secrets, is version-controlled and auditable. You can trace who changed a configuration value, when, and why. When a regulator asks &quot;who changed the encryption key rotation period?&quot;, you can point to a specific commit with a reviewer&#39;s approval.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">External Secrets Managers</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For production credentials, [HashiCorp Vault](https://www.hashicorp.com/products/vault), AWS Secrets Manager, GCP Secret Manager, and Azure Key Vault provide centralised, audited, rotation-capable secrets management. The application authenticates to the secrets manager at startup and retrieves only the credentials it needs. [Building Secure 12-Factor Apps](https://think-devops.com/posts/secure-12-factor-apps/) [5] recommends this as the standard for any application handling sensitive data.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For production credentials, <a href="https://www.hashicorp.com/products/vault" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HashiCorp Vault</a>, AWS Secrets Manager, GCP Secret Manager, and Azure Key Vault provide centralised, audited, rotation-capable secrets management. The application authenticates to the secrets manager at startup and retrieves only the credentials it needs. <a href="https://think-devops.com/posts/secure-12-factor-apps/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building Secure 12-Factor Apps</a> [5] recommends this as the standard for any application handling sensitive data.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Secure Defaults &mdash; The Out-of-the-Box Configuration Should Be Secure</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A &quot;default&quot; is the behaviour your system exhibits when no explicit configuration is provided. Secure defaults mean that the out-of-the-box configuration prioritises safety over convenience.</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Setting</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Insecure Default</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Secure Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Authentication</td>
+                <td class="py-3 px-4">Disabled in dev</td>
+                <td class="py-3 px-4">Enabled everywhere</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">HTTPS</td>
+                <td class="py-3 px-4">Optional</td>
+                <td class="py-3 px-4">Required (redirect HTTP to HTTPS)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">CORS</td>
+                <td class="py-3 px-4">Allow all origins</td>
+                <td class="py-3 px-4">Allow only your domains</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Debug mode</td>
+                <td class="py-3 px-4">On</td>
+                <td class="py-3 px-4">Off (require explicit flag to enable)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Session timeout</td>
+                <td class="py-3 px-4">None</td>
+                <td class="py-3 px-4">30 minutes idle, 8 hours absolute</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Logging</td>
+                <td class="py-3 px-4">Minimal</td>
+                <td class="py-3 px-4">Full audit logging</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Rate limiting</td>
+                <td class="py-3 px-4">Disabled</td>
+                <td class="py-3 px-4">Enabled with sensible thresholds</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">CSP headers</td>
+                <td class="py-3 px-4">None</td>
+                <td class="py-3 px-4">Strict policy</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Setting | Insecure Default | Secure Default |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|-----------------|----------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Authentication | Disabled in dev | Enabled everywhere |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| HTTPS | Optional | Required (redirect HTTP to HTTPS) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| CORS | Allow all origins | Allow only your domains |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Debug mode | On | Off (require explicit flag to enable) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Session timeout | None | 30 minutes idle, 8 hours absolute |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Logging | Minimal | Full audit logging |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Rate limiting | Disabled | Enabled with sensible thresholds |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| CSP headers | None | Strict policy |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST SP 800-53 controls CM-6 and CM-7](https://csf.tools/reference/nist-sp-800-53/r5/cm/) [6] specifically address configuration management and least functionality, requiring that systems be configured to provide only essential capabilities and that security-relevant settings default to the most restrictive mode consistent with operational requirements.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://csf.tools/reference/nist-sp-800-53/r5/cm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-53 controls CM-6 and CM-7</a> [6] specifically address configuration management and least functionality, requiring that systems be configured to provide only essential capabilities and that security-relevant settings default to the most restrictive mode consistent with operational requirements.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, consider what happens when a new developer joins and spins up a local development environment. If the defaults are insecure, that developer&#39;s first experience is running the application without the security controls that production depends on. Every test they write, every feature they build, every integration they validate &mdash; all without authentication, rate limiting, or audit logging. When those features reach production, they encounter security controls for the first time. This is where &quot;it works on my machine&quot; becomes a security incident.</p>
 
@@ -163,8 +190,6 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Design principle:&lt;/strong&gt; Make the secure path the easy path. If a developer has to do extra work to make the application &lt;em&gt;less&lt;/em&gt; secure, most won&#39;t bother. If they have to do extra work to make it &lt;em&gt;more&lt;/em&gt; secure, many won&#39;t.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Environment Parity &mdash; Security Controls in Every Environment</h2>
 
@@ -175,20 +200,18 @@
         <li><strong class="text-ink">Authentication in development</strong> &mdash; use a local identity provider or test accounts, but keep the authentication middleware active. Developers should log in to the application, even locally.</li>
         <li><strong class="text-ink">Rate limiting in staging</strong> &mdash; use higher thresholds if needed for integration testing, but keep the rate limiter active. Tests should work within rate limits, not around them.</li>
         <li><strong class="text-ink">Audit logging everywhere</strong> &mdash; log to a local file in development, to a managed service in production. But log in both. If audit logging causes performance issues, that&#39;s a bug to fix, not a reason to disable it.</li>
-        <li><strong class="text-ink">TLS in development</strong> &mdash; use self-signed certificates or a local CA like [mkcert](https://github.com/FiloSottile/mkcert) [7]. Developers should experience the same HTTPS behaviour as production, including mixed-content warnings and secure cookie behaviour.</li>
-    </ul>
+        <li><strong class="text-ink">TLS in development</strong> &mdash; use self-signed certificates or a local CA like <a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">mkcert</a> [7]. Developers should experience the same HTTPS behaviour as production, including mixed-content warnings and secure cookie behaviour.</li>
+    </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Feature flag platforms like Unleash and LaunchDarkly](https://www.getunleash.io/blog/feature-flag-security-best-practices) [8] can manage environment-specific configurations while maintaining security parity. A feature flag can control whether a new payment flow is enabled, while security controls like authentication and rate limiting remain always-on and unflagged.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.getunleash.io/blog/feature-flag-security-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Feature flag platforms like Unleash and LaunchDarkly</a> [8] can manage environment-specific configurations while maintaining security parity. A feature flag can control whether a new payment flow is enabled, while security controls like authentication and rate limiting remain always-on and unflagged.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Feature Flags for Security Controls</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Feature flags &mdash; configuration switches that enable or disable functionality at runtime without deploying new code &mdash; are a powerful tool for gradual security rollouts. Introducing a new Content Security Policy? Roll it out to 5% of users first, monitor for breakage, then increase.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">But [feature flag security best practices](https://www.getunleash.io/blog/feature-flag-security-best-practices) [8] warn against a dangerous anti-pattern: using feature flags to disable security controls in specific environments. A flag called `ENABLE_AUTH` that is `false` in development and `true` in production means authentication is a toggleable option, not a foundational control.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">But <a href="https://www.getunleash.io/blog/feature-flag-security-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">feature flag security best practices</a> [8] warn against a dangerous anti-pattern: using feature flags to disable security controls in specific environments. A flag called `ENABLE_AUTH` that is `false` in development and `true` in production means authentication is a toggleable option, not a foundational control.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The Octopus Deploy guide to feature flag best practices](https://octopus.com/devops/feature-flags/feature-flag-best-practices/) [9] recommends:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://octopus.com/devops/feature-flags/feature-flag-best-practices/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Octopus Deploy guide to feature flag best practices</a> [9] recommends:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Never flag core security controls.</strong> Authentication, authorization, encryption, and audit logging should be always-on, not toggleable.</li>
         <li><strong class="text-ink">Flag new security features during rollout.</strong> A new CSP policy, a new rate limiting algorithm, a new session management approach &mdash; these can be flagged during the transition period.</li>
@@ -196,24 +219,22 @@
         <li><strong class="text-ink">Clean up flags aggressively.</strong> A feature flag that has been 100% enabled for three months is not a flag &mdash; it&#39;s dead code that someone might accidentally disable.</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Unleash&#39;s DevOps compliance guide](https://www.getunleash.io/blog/devops-regulatory-compliance-how-feature-flags-can-streamline-auditing-and-governance) [10] notes that feature flag management systems should be treated as &quot;Tier-1 control planes with strict Role-Based Access Control (RBAC) and least privilege principles.&quot; For legal SaaS under SOC 2 or ISO 27001, the feature flag system itself is a security-critical component.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.getunleash.io/blog/devops-regulatory-compliance-how-feature-flags-can-streamline-auditing-and-governance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Unleash's DevOps compliance guide</a> [10] notes that feature flag management systems should be treated as &quot;Tier-1 control planes with strict Role-Based Access Control (RBAC) and least privilege principles.&quot; For legal SaaS under SOC 2 or ISO 27001, the feature flag system itself is a security-critical component.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Danger of Environment-Specific Security</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When security controls behave differently across environments, three things go wrong:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Bugs hide.</strong> A race condition in your authentication middleware only manifests under load. You never see it in development because authentication is disabled. It appears in production during a demo to a major law firm.</li>
-    </ul>
+    </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Developers build around security.</strong> If authentication is disabled locally, developers write API integration tests that skip auth headers. Those tests pass in CI but fail &mdash; or worse, expose real vulnerabilities &mdash; when auth is enabled.</li>
-    </ul>
+    </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Configuration drift accumulates.</strong> Each environment diverges. Staging gets a &quot;temporary&quot; exception to CORS rules. Development gets debug mode permanently enabled. Over time, the environments become so different that staging is no longer a reliable predictor of production behaviour.</li>
-    </ul>
+    </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[CloudBees&#39; guide to securing feature-flag-based applications](https://www.cloudbees.com/blog/how-to-secure-your-feature-flag-based-application) [11] reinforces that &quot;compliance demands strict environment segregation&quot; &mdash; but segregation means different credentials and data, not different security controls.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.cloudbees.com/blog/how-to-secure-your-feature-flag-based-application" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CloudBees' guide to securing feature-flag-based applications</a> [11] reinforces that &quot;compliance demands strict environment segregation&quot; &mdash; but segregation means different credentials and data, not different security controls.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
@@ -221,29 +242,25 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we wrap up Module 10 with cloud IAM and least privilege &mdash; the identity and access management controls that determine who (and what) can access your cloud resources, and why &quot;that service account has Owner permissions because someone needed it once&quot; is one of the most common and dangerous patterns in cloud security.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>[The Twelve-Factor App &mdash; Config](https://12factor.net/config)</li>
-        <li>[Proposal to Modify Factor Config &mdash; Twelve-Factor GitHub](https://github.com/twelve-factor/twelve-factor/issues/4)</li>
-        <li>[ConfigMaps &mdash; Kubernetes Documentation](https://kubernetes.io/docs/concepts/configuration/configmap/)</li>
-        <li>[Secrets &mdash; Kubernetes Documentation](https://kubernetes.io/docs/concepts/configuration/secret/)</li>
-        <li>[Building Secure 12-Factor Apps &mdash; Think DevOps](https://think-devops.com/posts/secure-12-factor-apps/)</li>
-        <li>[NIST SP 800-53 Rev. 5 &mdash; Configuration Management Controls](https://csf.tools/reference/nist-sp-800-53/r5/cm/)</li>
-        <li>[mkcert &mdash; Local HTTPS Development](https://github.com/FiloSottile/mkcert)</li>
-        <li>[Feature Flag Security Best Practices &mdash; Unleash](https://www.getunleash.io/blog/feature-flag-security-best-practices)</li>
-        <li>[The 12 Commandments of Feature Flags &mdash; Octopus Deploy](https://octopus.com/devops/feature-flags/feature-flag-best-practices/)</li>
-        <li>[DevOps Regulatory Compliance: Feature Flags for Auditing and Governance &mdash; Unleash](https://www.getunleash.io/blog/devops-regulatory-compliance-how-feature-flags-can-streamline-auditing-and-governance)</li>
-        <li>[How to Secure Your Feature-Flag-Based Application &mdash; CloudBees](https://www.cloudbees.com/blog/how-to-secure-your-feature-flag-based-application)</li>
-        <li>[Feature Flagging for Security: Best Practices &mdash; ConfigCat](https://configcat.com/blog/2024/02/06/feature-flagging-for-security-best-practices-and-use-cases/)</li>
-    </ul>
+        <li><a href="https://12factor.net/config" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Twelve-Factor App — Config</a></li>
+        <li><a href="https://github.com/twelve-factor/twelve-factor/issues/4" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Proposal to Modify Factor Config — Twelve-Factor GitHub</a></li>
+        <li><a href="https://kubernetes.io/docs/concepts/configuration/configmap/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ConfigMaps — Kubernetes Documentation</a></li>
+        <li><a href="https://kubernetes.io/docs/concepts/configuration/secret/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secrets — Kubernetes Documentation</a></li>
+        <li><a href="https://think-devops.com/posts/secure-12-factor-apps/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building Secure 12-Factor Apps — Think DevOps</a></li>
+        <li><a href="https://csf.tools/reference/nist-sp-800-53/r5/cm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-53 Rev. 5 — Configuration Management Controls</a></li>
+        <li><a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">mkcert — Local HTTPS Development</a></li>
+        <li><a href="https://www.getunleash.io/blog/feature-flag-security-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Feature Flag Security Best Practices — Unleash</a></li>
+        <li><a href="https://octopus.com/devops/feature-flags/feature-flag-best-practices/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 12 Commandments of Feature Flags — Octopus Deploy</a></li>
+        <li><a href="https://www.getunleash.io/blog/devops-regulatory-compliance-how-feature-flags-can-streamline-auditing-and-governance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DevOps Regulatory Compliance: Feature Flags for Auditing and Governance — Unleash</a></li>
+        <li><a href="https://www.cloudbees.com/blog/how-to-secure-your-feature-flag-based-application" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Secure Your Feature-Flag-Based Application — CloudBees</a></li>
+        <li><a href="https://configcat.com/blog/2024/02/06/feature-flagging-for-security-best-practices-and-use-cases/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Feature Flagging for Security: Best Practices — ConfigCat</a></li>
+    </ol>
 
 </article>
 
@@ -258,67 +275,67 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 48 &mdash; environment configuration and secure defaults. Alice, this sounds deceptively simple. Configure your environments properly. But I have a feeling there&#39;s more to it.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 48 &mdash; environment configuration and secure defaults. Alice, this sounds deceptively simple. Configure your environments properly. But I have a feeling there&#39;s more to it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;There is. Let me ask a question. Your legal SaaS platform &mdash; your contract review tool, your case management system &mdash; runs in multiple environments. Development, where your engineers build features. Staging, where you validate before release. Production, where real law firms use it with real client data. Here&#39;s the question: are the security controls the same in all three?&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> There is. Let me ask a question. Your legal SaaS platform &mdash; your contract review tool, your case management system &mdash; runs in multiple environments. Development, where your engineers build features. Staging, where you validate before release. Production, where real law firms use it with real client data. Here&#39;s the question: are the security controls the same in all three?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. I suspect the answer for most teams is no.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. I suspect the answer for most teams is no.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Almost universally no. Teams disable authentication in development &quot;to make testing easier.&quot; They skip rate limiting in staging &quot;because it slows down integration tests.&quot; They turn off audit logging in development &quot;because it fills up disk space.&quot; Each of these seems harmless. But what they&#39;re actually doing is testing a different application than what their clients use. Every feature built, every test written, every integration validated &mdash; all without the security controls that production depends on.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Almost universally no. Teams disable authentication in development &quot;to make testing easier.&quot; They skip rate limiting in staging &quot;because it slows down integration tests.&quot; They turn off audit logging in development &quot;because it fills up disk space.&quot; Each of these seems harmless. But what they&#39;re actually doing is testing a different application than what their clients use. Every feature built, every test written, every integration validated &mdash; all without the security controls that production depends on.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And then when those features hit production, they&#39;re encountering authentication and rate limiting for the first time.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And then when those features hit production, they&#39;re encountering authentication and rate limiting for the first time.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And that&#39;s where the bugs live. A race condition in your authentication middleware that only shows up under real traffic. An API endpoint that works perfectly without rate limiting but behaves unexpectedly when rate-limited responses come back. Debug information leaking in error messages because debug mode was always on in development and nobody thought to check what happens when it&#39;s off.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And that&#39;s where the bugs live. A race condition in your authentication middleware that only shows up under real traffic. An API endpoint that works perfectly without rate limiting but behaves unexpectedly when rate-limited responses come back. Debug information leaking in error messages because debug mode was always on in development and nobody thought to check what happens when it&#39;s off.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. So the principle is &mdash; keep security controls active everywhere?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. So the principle is &mdash; keep security controls active everywhere?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The principle is environment parity for security controls. The difference between your staging environment and production should be credentials &mdash; different database passwords, different API keys &mdash; and scale. Not whether authentication is enabled. Not whether you have rate limiting. Not whether you&#39;re logging audit events.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The principle is environment parity for security controls. The difference between your staging environment and production should be credentials &mdash; different database passwords, different API keys &mdash; and scale. Not whether authentication is enabled. Not whether you have rate limiting. Not whether you&#39;re logging audit events.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, but practically &mdash; how do you make development workable if authentication is always on? Developers don&#39;t want to log in every time they restart the app.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, but practically &mdash; how do you make development workable if authentication is always on? Developers don&#39;t want to log in every time they restart the app.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You use test accounts and local identity providers. The authentication middleware stays active &mdash; the same code path that runs in production runs in development. But instead of connecting to your production identity provider, it connects to a local one with test credentials. Developers log in with `dev@test.local` and password `test`. The point is that the authentication code is exercised. The session management works. The cookies are set. Everything downstream of authentication &mdash; authorization checks, audit log entries, rate limiting tied to user identity &mdash; functions correctly.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> You use test accounts and local identity providers. The authentication middleware stays active &mdash; the same code path that runs in production runs in development. But instead of connecting to your production identity provider, it connects to a local one with test credentials. Developers log in with `dev@test.local` and password `test`. The point is that the authentication code is exercised. The session management works. The cookies are set. Everything downstream of authentication &mdash; authorization checks, audit log entries, rate limiting tied to user identity &mdash; functions correctly.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. That makes sense. What about configuration management itself? Where does all this config live?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. That makes sense. What about configuration management itself? Where does all this config live?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; This is where teams get into trouble. The Twelve-Factor App &mdash; an influential set of principles for building modern web apps &mdash; establishes a clear rule: configuration that varies between environments must be stored separately from code. Not hardcoded. Not in a config file checked into your repository with the production database password. Environment variables are the simplest approach &mdash; your deployment platform sets them, your application reads them.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; This is where teams get into trouble. The Twelve-Factor App &mdash; an influential set of principles for building modern web apps &mdash; establishes a clear rule: configuration that varies between environments must be stored separately from code. Not hardcoded. Not in a config file checked into your repository with the production database password. Environment variables are the simplest approach &mdash; your deployment platform sets them, your application reads them.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. But environment variables for secrets &mdash; there are concerns about those being visible, aren&#39;t there?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. But environment variables for secrets &mdash; there are concerns about those being visible, aren&#39;t there?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Good catch. Environment variables can show up in process listings, crash reports, and debug output. For non-secret configuration &mdash; &quot;is rate limiting enabled,&quot; &quot;what&#39;s the session timeout&quot; &mdash; environment variables are fine. For actual secrets &mdash; database passwords, API keys, encryption keys &mdash; the best practice is an external secrets manager. HashiCorp Vault, AWS Secrets Manager, or your cloud provider&#39;s equivalent. The application authenticates to the vault at startup and retrieves only the credentials it needs. The secrets are short-lived, automatically rotated, and every access is logged.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Good catch. Environment variables can show up in process listings, crash reports, and debug output. For non-secret configuration &mdash; &quot;is rate limiting enabled,&quot; &quot;what&#39;s the session timeout&quot; &mdash; environment variables are fine. For actual secrets &mdash; database passwords, API keys, encryption keys &mdash; the best practice is an external secrets manager. HashiCorp Vault, AWS Secrets Manager, or your cloud provider&#39;s equivalent. The application authenticates to the vault at startup and retrieves only the credentials it needs. The secrets are short-lived, automatically rotated, and every access is logged.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So that&#39;s configuration management. Let me ask about secure defaults. What happens when no configuration is provided?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So that&#39;s configuration management. Let me ask about secure defaults. What happens when no configuration is provided?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the critical question. A &quot;default&quot; is what your system does when nobody explicitly configured a setting. Secure defaults mean the out-of-the-box behaviour prioritises safety over convenience. Authentication is on by default. HTTPS is required by default. Debug mode is off by default. Session timeouts are set by default. CORS &mdash; which we covered in Episode 12 &mdash; restricts origins by default. If a developer spins up a fresh instance and does nothing, the application should be secure.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the critical question. A &quot;default&quot; is what your system does when nobody explicitly configured a setting. Secure defaults mean the out-of-the-box behaviour prioritises safety over convenience. Authentication is on by default. HTTPS is required by default. Debug mode is off by default. Session timeouts are set by default. CORS &mdash; which we covered in Episode 12 &mdash; restricts origins by default. If a developer spins up a fresh instance and does nothing, the application should be secure.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, and the opposite &mdash; insecure defaults &mdash; means a fresh instance is vulnerable until someone remembers to configure it.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, and the opposite &mdash; insecure defaults &mdash; means a fresh instance is vulnerable until someone remembers to configure it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And here&#39;s the design principle: make the secure path the easy path. If a developer has to do extra work to make the application less secure &mdash; pass a special flag, set an environment variable, modify a config file &mdash; most won&#39;t bother. That&#39;s what you want. If they have to do extra work to make it more secure, many won&#39;t do that either. Security should be the path of least resistance.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And here&#39;s the design principle: make the secure path the easy path. If a developer has to do extra work to make the application less secure &mdash; pass a special flag, set an environment variable, modify a config file &mdash; most won&#39;t bother. That&#39;s what you want. If they have to do extra work to make it more secure, many won&#39;t do that either. Security should be the path of least resistance.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Let me ask about feature flags. I&#39;ve seen teams use feature flags to control security settings &mdash; &quot;enable auth&quot; as a flag. That seems problematic.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Let me ask about feature flags. I&#39;ve seen teams use feature flags to control security settings &mdash; &quot;enable auth&quot; as a flag. That seems problematic.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. Feature flags &mdash; runtime switches that enable or disable functionality without deploying new code &mdash; are a powerful tool. Rolling out a new content security policy to 5% of users? Great use of a flag. But using a flag to toggle core security controls is dangerous. A flag called &quot;ENABLE_AUTH&quot; that&#39;s false in development and true in production means authentication is a configurable option, not a foundational control. Somebody &mdash; an engineer, a script, a misconfiguration &mdash; can disable it. Core security controls should be always-on and unflagged. Authentication, authorization, encryption, audit logging &mdash; these are not features you toggle.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is. Feature flags &mdash; runtime switches that enable or disable functionality without deploying new code &mdash; are a powerful tool. Rolling out a new content security policy to 5% of users? Great use of a flag. But using a flag to toggle core security controls is dangerous. A flag called &quot;ENABLE_AUTH&quot; that&#39;s false in development and true in production means authentication is a configurable option, not a foundational control. Somebody &mdash; an engineer, a script, a misconfiguration &mdash; can disable it. Core security controls should be always-on and unflagged. Authentication, authorization, encryption, audit logging &mdash; these are not features you toggle.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What about using flags for new security features during rollout?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. What about using flags for new security features during rollout?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the correct use. You&#39;re introducing a stricter Content Security Policy. You flag it, roll it to 5% of traffic, watch for breakage, increase to 50%, then 100%. Once it&#39;s stable, you remove the flag and make it permanent. The flag exists during the transition period only. Best practices say: clean up flags aggressively. A flag that&#39;s been 100% enabled for three months is dead code that someone might accidentally toggle. And treat the feature flag system itself as security-critical &mdash; production flag changes need review and approval, just like code deployments.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the correct use. You&#39;re introducing a stricter Content Security Policy. You flag it, roll it to 5% of traffic, watch for breakage, increase to 50%, then 100%. Once it&#39;s stable, you remove the flag and make it permanent. The flag exists during the transition period only. Best practices say: clean up flags aggressively. A flag that&#39;s been 100% enabled for three months is dead code that someone might accidentally toggle. And treat the feature flag system itself as security-critical &mdash; production flag changes need review and approval, just like code deployments.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. One more angle &mdash; when security controls differ between environments, what actually goes wrong?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. One more angle &mdash; when security controls differ between environments, what actually goes wrong?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three things. First, bugs hide. A race condition in your authentication middleware only manifests under real traffic patterns with the middleware actually running. You never see it in development because auth is disabled. It appears in production during a demo to a major law firm. Second, developers build around security. If auth is disabled locally, developers write tests that skip authentication headers. Those tests pass in CI but break &mdash; or worse, miss real vulnerabilities &mdash; when auth is active. Third, configuration drift. Each environment diverges. Staging gets a &quot;temporary&quot; CORS exception. Development gets debug mode permanently. Over time, staging stops being a reliable predictor of production behaviour.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three things. First, bugs hide. A race condition in your authentication middleware only manifests under real traffic patterns with the middleware actually running. You never see it in development because auth is disabled. It appears in production during a demo to a major law firm. Second, developers build around security. If auth is disabled locally, developers write tests that skip authentication headers. Those tests pass in CI but break &mdash; or worse, miss real vulnerabilities &mdash; when auth is active. Third, configuration drift. Each environment diverges. Staging gets a &quot;temporary&quot; CORS exception. Development gets debug mode permanently. Over time, staging stops being a reliable predictor of production behaviour.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s a slow erosion that&#39;s hard to notice until it&#39;s a problem.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that&#39;s a slow erosion that&#39;s hard to notice until it&#39;s a problem.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And for legal SaaS specifically &mdash; where you&#39;re handling privileged communications, client documents, matter data &mdash; the professional obligation adds weight. If a breach traces back to a security control that was disabled in your testing environment and a resulting bug that only appeared in production, the question from the regulator is going to be: why were you testing with different security controls than what your clients rely on?&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And for legal SaaS specifically &mdash; where you&#39;re handling privileged communications, client documents, matter data &mdash; the professional obligation adds weight. If a breach traces back to a security control that was disabled in your testing environment and a resulting bug that only appeared in production, the question from the regulator is going to be: why were you testing with different security controls than what your clients rely on?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Strong point. Next episode &mdash; cloud IAM and least privilege. How you manage who and what can access your cloud resources, and why that service account with Owner permissions is one of the most dangerous things in your infrastructure.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Strong point. Next episode &mdash; cloud IAM and least privilege. How you manage who and what can access your cloud resources, and why that service account with Owner permissions is one of the most dangerous things in your infrastructure.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

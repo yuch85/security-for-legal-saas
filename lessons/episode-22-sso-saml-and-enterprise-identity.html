@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">When a 200-lawyer firm evaluates your legal SaaS platform, Single Sign-On is rarely optional. SSO &mdash; the ability to log in once through the firm&#39;s own identity provider and gain access to every connected application &mdash; is a security requirement, not a convenience feature. And from a vendor&#39;s perspective, saying yes to SSO is one of the smartest security decisions you can make, because it shifts authentication management to the client&#39;s own IT team. In [Episode 20](../ep20/article.md), we covered O</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">When a 200-lawyer firm evaluates your legal SaaS platform, Single Sign-On is rarely optional. SSO &mdash; the ability to log in once through the firm&#39;s own identity provider and gain access to every connected application &mdash; is a security requirement, not a convenience feature. And from a vendor&#39;s perspective, saying yes to SSO is one of the smartest security decisions you can make, because it shifts authentication management to the client&#39;s own IT team. In Episode 20, we covered OAuth 2.0 and OpenID Co</p>
 </div>
 
 <!-- Article -->
@@ -76,51 +76,91 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 22: SSO, SAML and Enterprise Identity</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why Enterprise Clients Demand SSO</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When a 200-lawyer firm evaluates your legal SaaS platform, Single Sign-On is rarely optional. SSO &mdash; the ability to log in once through the firm&#39;s own identity provider and gain access to every connected application &mdash; is a security requirement, not a convenience feature. And from a vendor&#39;s perspective, saying yes to SSO is one of the smartest security decisions you can make, because it shifts authentication management to the client&#39;s own IT team.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 20](../ep20/article.md), we covered OAuth 2.0 and OpenID Connect &mdash; the protocols that power consumer-facing &quot;Sign in with Google&quot; flows. Enterprise SSO builds on those concepts but uses a different set of protocols and a fundamentally different trust model. Where OAuth delegates access, enterprise SSO federates identity: the client&#39;s directory becomes the authoritative source of who works there, what access they should have, and &mdash; critically &mdash; when they should lose it.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 20, we covered OAuth 2.0 and OpenID Connect &mdash; the protocols that power consumer-facing &quot;Sign in with Google&quot; flows. Enterprise SSO builds on those concepts but uses a different set of protocols and a fundamentally different trust model. Where OAuth delegates access, enterprise SSO federates identity: the client&#39;s directory becomes the authoritative source of who works there, what access they should have, and &mdash; critically &mdash; when they should lose it.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SAML: The Enterprise Standard</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security Assertion Markup Language (SAML) &mdash; an XML-based open standard first published in 2002 and revised as [SAML 2.0 in 2005](https://docs.oasis-open.org/security/saml/v2.0/) &mdash; remains the dominant SSO protocol in enterprise legal tech.[^1] It works through a three-party trust model:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Component | Role | Legal SaaS Example |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|------|--------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Identity Provider (IdP)</strong> | Authenticates users and issues identity assertions | The law firm&#39;s Azure AD, Okta, or PingFederate instance |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Service Provider (SP)</strong> | Your application &mdash; receives and validates assertions | Your case management or document review platform |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Principal</strong> | The user seeking access | A partner, associate, or paralegal at the firm |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security Assertion Markup Language (SAML) &mdash; an XML-based open standard first published in 2002 and revised as <a href="https://docs.oasis-open.org/security/saml/v2.0/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAML 2.0 in 2005</a> &mdash; remains the dominant SSO protocol in enterprise legal tech. It works through a three-party trust model:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Identity Provider (IdP)</strong></td>
+                <td class="py-3 px-4">Authenticates users and issues identity assertions</td>
+                <td class="py-3 px-4">The law firm&#39;s Azure AD, Okta, or PingFederate instance</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Service Provider (SP)</strong></td>
+                <td class="py-3 px-4">Your application &mdash; receives and validates assertions</td>
+                <td class="py-3 px-4">Your case management or document review platform</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Principal</strong></td>
+                <td class="py-3 px-4">The user seeking access</td>
+                <td class="py-3 px-4">A partner, associate, or paralegal at the firm</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The SSO Flow</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a <strong class="text-ink">Service Provider-initiated (SP-initiated)</strong> flow &mdash; the most common pattern &mdash; the user navigates to your application, which redirects them to their firm&#39;s IdP. The user authenticates there (using whatever MFA the firm enforces, as we discussed in [Episode 21](../ep21/article.md)), and the IdP sends a signed XML document called a <strong class="text-ink">SAML assertion</strong> back to your application. This assertion contains the user&#39;s identity attributes: email address, name, group memberships, and any custom attributes the firm chooses to share.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a <strong class="text-ink">Service Provider-initiated (SP-initiated)</strong> flow &mdash; the most common pattern &mdash; the user navigates to your application, which redirects them to their firm&#39;s IdP. The user authenticates there (using whatever MFA the firm enforces, as we discussed in Episode 21), and the IdP sends a signed XML document called a <strong class="text-ink">SAML assertion</strong> back to your application. This assertion contains the user&#39;s identity attributes: email address, name, group memberships, and any custom attributes the firm chooses to share.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In an <strong class="text-ink">IdP-initiated flow</strong>, the user starts at the firm&#39;s identity portal and clicks your application&#39;s icon. This skips the initial redirect but introduces a security consideration: without an SP-generated authentication request to bind to, IdP-initiated flows are more vulnerable to replay attacks. The [OWASP SAML Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html) recommends SP-initiated flows wherever possible.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In an <strong class="text-ink">IdP-initiated flow</strong>, the user starts at the firm&#39;s identity portal and clicks your application&#39;s icon. This skips the initial redirect but introduces a security consideration: without an SP-generated authentication request to bind to, IdP-initiated flows are more vulnerable to replay attacks. The <a href="https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP SAML Security Cheat Sheet</a> recommends SP-initiated flows wherever possible.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SAML vs. OpenID Connect</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For new implementations, the industry is increasingly moving toward <strong class="text-ink">OpenID Connect (OIDC)</strong> &mdash; the JSON-based identity layer built on OAuth 2.0 that we covered in [Episode 20](../ep20/article.md). OIDC is lighter, easier to implement, and better suited to modern web and mobile architectures. But SAML is not going away:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Dimension | SAML 2.0 | OpenID Connect |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|----------|----------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data format</strong> | XML | JSON |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Token type</strong> | Signed XML assertion | JWT (JSON Web Token) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Typical use</strong> | Enterprise SSO, legacy IdPs | Modern web/mobile apps, consumer SSO |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Complexity</strong> | Higher (XML parsing, signature validation) | Lower (standard HTTP/JSON) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Enterprise adoption</strong> | Ubiquitous in large law firms | Growing, but SAML still required by many |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For new implementations, the industry is increasingly moving toward <strong class="text-ink">OpenID Connect (OIDC)</strong> &mdash; the JSON-based identity layer built on OAuth 2.0 that we covered in Episode 20. OIDC is lighter, easier to implement, and better suited to modern web and mobile architectures. But SAML is not going away:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Dimension</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SAML 2.0</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">OpenID Connect</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Data format</strong></td>
+                <td class="py-3 px-4">XML</td>
+                <td class="py-3 px-4">JSON</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Token type</strong></td>
+                <td class="py-3 px-4">Signed XML assertion</td>
+                <td class="py-3 px-4">JWT (JSON Web Token)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Typical use</strong></td>
+                <td class="py-3 px-4">Enterprise SSO, legacy IdPs</td>
+                <td class="py-3 px-4">Modern web/mobile apps, consumer SSO</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Complexity</strong></td>
+                <td class="py-3 px-4">Higher (XML parsing, signature validation)</td>
+                <td class="py-3 px-4">Lower (standard HTTP/JSON)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Enterprise adoption</strong></td>
+                <td class="py-3 px-4">Ubiquitous in large law firms</td>
+                <td class="py-3 px-4">Growing, but SAML still required by many</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Practical reality:</strong> If you&#39;re building legal SaaS for enterprise clients, you&#39;ll need to support both. Many firms still run SAML-only IdPs, and some require SAML specifically in their procurement security questionnaires.</p>
 
@@ -128,30 +168,30 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SAML&#39;s XML foundation creates a distinct class of vulnerabilities that JSON-based protocols avoid entirely.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Signature wrapping attacks</strong> are the most dangerous. In March 2025, GitHub disclosed [CVE-2025-25291 and CVE-2025-25292](https://github.blog/security/sign-in-as-anyone-bypassing-saml-sso-authentication-with-parser-differentials/) in the ruby-saml library &mdash; vulnerabilities scoring 8.8/10 on the CVSS scale.[^4] The attack exploited differences between how two XML parsers (REXML and Nokogiri) interpreted the same document. An attacker could craft a SAML response where the signed portion contained one identity but the parsed portion contained another, allowing authentication as any user &mdash; including administrators.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Signature wrapping attacks</strong> are the most dangerous. In March 2025, GitHub disclosed <a href="https://github.blog/security/sign-in-as-anyone-bypassing-saml-sso-authentication-with-parser-differentials/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2025-25291 and CVE-2025-25292</a> in the ruby-saml library &mdash; vulnerabilities scoring 8.8/10 on the CVSS scale. The attack exploited differences between how two XML parsers (REXML and Nokogiri) interpreted the same document. An attacker could craft a SAML response where the signed portion contained one identity but the parsed portion contained another, allowing authentication as any user &mdash; including administrators.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Earlier, in 2024, [CVE-2024-6800](https://projectdiscovery.io/blog/github-enterprise-saml-authentication-bypass) affected GitHub Enterprise Server itself, allowing attackers to forge SAML responses and bypass authentication entirely.[^5] These aren&#39;t theoretical &mdash; they&#39;re production vulnerabilities in widely-used software.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Earlier, in 2024, <a href="https://projectdiscovery.io/blog/github-enterprise-saml-authentication-bypass" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2024-6800</a> affected GitHub Enterprise Server itself, allowing attackers to forge SAML responses and bypass authentication entirely. These aren&#39;t theoretical &mdash; they&#39;re production vulnerabilities in widely-used software.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The [OWASP SAML Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html) identifies several critical mitigations:[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP SAML Security Cheat Sheet</a> identifies several critical mitigations:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Validate the XML schema before verifying the signature</strong> &mdash; reject malformed documents before processing</li>
         <li><strong class="text-ink">Use secure key selectors</strong> that ignore `KeyInfo` elements from the XML message itself</li>
         <li><strong class="text-ink">Apply absolute XPath expressions</strong> for signature scope verification</li>
         <li><strong class="text-ink">Never accept `alg=none`</strong> for any cryptographic operation</li>
-    </ul>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SCIM: Automated User Lifecycle</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SSO solves authentication &mdash; but it does not solve provisioning. When a new associate joins the firm, someone still needs to create their account in your application. When they leave, someone needs to disable it. Manual provisioning at scale is a recipe for orphaned accounts &mdash; active credentials belonging to departed employees.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">SCIM</strong> (System for Cross-domain Identity Management), defined in [RFC 7644](https://datatracker.ietf.org/doc/html/rfc7644), automates this lifecycle.[^6] It&#39;s a REST API standard that lets the firm&#39;s identity provider push user records directly into your application:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">SCIM</strong> (System for Cross-domain Identity Management), defined in <a href="https://datatracker.ietf.org/doc/html/rfc7644" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 7644</a>, automates this lifecycle. It&#39;s a REST API standard that lets the firm&#39;s identity provider push user records directly into your application:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Provisioning:</strong> IT adds a new lawyer in Okta or Azure AD → SCIM creates their account in your application within minutes</li>
         <li><strong class="text-ink">Updates:</strong> The lawyer moves from the litigation department to M&amp;A → SCIM updates their attributes (and your application can adjust access accordingly)</li>
         <li><strong class="text-ink">Deprovisioning:</strong> The lawyer leaves the firm → SCIM disables or deletes their account immediately</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Why this matters for legal SaaS:</strong> A firm with 500 lawyers might use 30 different SaaS platforms. Without SCIM, each departure requires manual deprovisioning across all 30 systems. Miss one, and a former employee retains access to privileged client communications. SCIM eliminates this class of risk entirely.[^7]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Why this matters for legal SaaS:</strong> A firm with 500 lawyers might use 30 different SaaS platforms. Without SCIM, each departure requires manual deprovisioning across all 30 systems. Miss one, and a former employee retains access to privileged client communications. SCIM eliminates this class of risk entirely.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Multi-Tenant SSO: One IdP Per Tenant</h2>
 
@@ -161,63 +201,79 @@
         <li>Your application extracts the domain (e.g., `@bakermckenzie.com`)</li>
         <li>A lookup table maps that domain to the firm&#39;s specific IdP configuration</li>
         <li>The user is redirected to their firm&#39;s IdP for authentication</li>
-    </ul>
+    </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means your application must maintain a separate SAML or OIDC configuration for each enterprise client &mdash; including their IdP metadata URL, certificates, and attribute mappings. A configuration error in one tenant&#39;s SSO setup must never affect another tenant&#39;s authentication. We&#39;ll cover the broader multi-tenancy isolation challenge in [Episode 27](../ep27/article.md).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means your application must maintain a separate SAML or OIDC configuration for each enterprise client &mdash; including their IdP metadata URL, certificates, and attribute mappings. A configuration error in one tenant&#39;s SSO setup must never affect another tenant&#39;s authentication. We&#39;ll cover the broader multi-tenancy isolation challenge in Episode 27.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The SSO Tax &mdash; and Why It&#39;s Worth Paying</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A common criticism in the SaaS industry is the &quot;SSO tax&quot; &mdash; vendors charging significantly more for SSO support, effectively penalising better security practices. [sso.tax](https://sso.tax/) maintains a public list of vendors that charge premium prices for SSO.[^8]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A common criticism in the SaaS industry is the &quot;SSO tax&quot; &mdash; vendors charging significantly more for SSO support, effectively penalising better security practices. <a href="https://sso.tax/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">sso.tax</a> maintains a public list of vendors that charge premium prices for SSO.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this framing misses the point. Enterprise law firms require SSO not as a premium feature but as a baseline security control. Supporting SAML SSO signals to enterprise procurement teams that your platform is ready for their security requirements. The implementation cost is real &mdash; maintaining SAML libraries, handling IdP certificate rotations, debugging XML signature issues &mdash; but the alternative is losing enterprise deals entirely.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">NIST Guidance: Federation Assurance Levels</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST SP 800-63C](https://pages.nist.gov/800-63-3/sp800-63c.html) defines three Federation Assurance Levels (FALs) that govern how identity assertions are protected:[^9]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://pages.nist.gov/800-63-3/sp800-63c.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-63C</a> defines three Federation Assurance Levels (FALs) that govern how identity assertions are protected:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Level</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Requirement</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Relevance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">FAL1</strong></td>
+                <td class="py-3 px-4">Bearer assertion (signed)</td>
+                <td class="py-3 px-4">Minimum for SSO &mdash; the assertion proves identity</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">FAL2</strong></td>
+                <td class="py-3 px-4">Holder-of-key assertion (assertion bound to a specific key or device)</td>
+                <td class="py-3 px-4">Higher assurance, suitable for sensitive matters</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">FAL3</strong></td>
+                <td class="py-3 px-4">Holder-of-key with hardware-backed cryptographic authenticator</td>
+                <td class="py-3 px-4">Maximum assurance &mdash; government, national security</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Level | Requirement | Legal SaaS Relevance |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|-------------|---------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">FAL1</strong> | Bearer assertion (signed) | Minimum for SSO &mdash; the assertion proves identity |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">FAL2</strong> | Holder-of-key assertion (assertion bound to a specific key or device) | Higher assurance, suitable for sensitive matters |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">FAL3</strong> | Holder-of-key with hardware-backed cryptographic authenticator | Maximum assurance &mdash; government, national security |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most legal SaaS platforms operate at FAL1, with signed SAML assertions over TLS (which we covered in [Episode 13](../ep13/article.md)). Firms handling government contracts or national security matters may require FAL2, where the assertion is cryptographically bound to the user&#39;s session.[^10]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most legal SaaS platforms operate at FAL1, with signed SAML assertions over TLS (which we covered in Episode 13). Firms handling government contracts or national security matters may require FAL2, where the assertion is cryptographically bound to the user&#39;s session.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 23 covers <strong class="text-ink">RBAC &mdash; Roles, Permissions and Scopes</strong> &mdash; how to structure who can do what inside your application, from firm administrator to paralegal to external client viewer.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: OASIS, [SAML 2.0 Standard](https://docs.oasis-open.org/security/saml/v2.0/) &mdash; the XML-based identity federation standard.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OASIS, <a href="https://docs.oasis-open.org/security/saml/v2.0/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAML 2.0 Standard</a> &mdash; the XML-based identity federation standard.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: NIST, [SP 800-63C: Federation and Assertions](https://pages.nist.gov/800-63-3/sp800-63c.html) &mdash; federal guidelines for identity federation.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63c.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63C: Federation and Assertions</a> &mdash; federal guidelines for identity federation.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: OWASP, [SAML Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html) &mdash; implementation guidance and common vulnerability mitigations.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAML Security Cheat Sheet</a> &mdash; implementation guidance and common vulnerability mitigations.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: GitHub Blog, [Sign in as Anyone: Bypassing SAML SSO Authentication with Parser Differentials](https://github.blog/security/sign-in-as-anyone-bypassing-saml-sso-authentication-with-parser-differentials/) &mdash; CVE-2025-25291/25292 disclosure (March 2025).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GitHub Blog, <a href="https://github.blog/security/sign-in-as-anyone-bypassing-saml-sso-authentication-with-parser-differentials/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Sign in as Anyone: Bypassing SAML SSO Authentication with Parser Differentials</a> &mdash; CVE-2025-25291/25292 disclosure (March 2025).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: ProjectDiscovery, [GitHub Enterprise SAML Authentication Bypass (CVE-2024-6800)](https://projectdiscovery.io/blog/github-enterprise-saml-authentication-bypass) &mdash; SAML signature wrapping in GHES.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ProjectDiscovery, <a href="https://projectdiscovery.io/blog/github-enterprise-saml-authentication-bypass" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GitHub Enterprise SAML Authentication Bypass (CVE-2024-6800)</a> &mdash; SAML signature wrapping in GHES.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: IETF, [RFC 7644: SCIM Protocol](https://datatracker.ietf.org/doc/html/rfc7644) &mdash; the standard for automated user provisioning.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IETF, <a href="https://datatracker.ietf.org/doc/html/rfc7644" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 7644: SCIM Protocol</a> &mdash; the standard for automated user provisioning.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: SSOJet, [SCIM Provisioning Best Practices](https://ssojet.com/blog/scim-provisioning-best-practices) &mdash; practical guidance for SCIM implementation.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SSOJet, <a href="https://ssojet.com/blog/scim-provisioning-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SCIM Provisioning Best Practices</a> &mdash; practical guidance for SCIM implementation.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: sso.tax, [SSO Wall of Shame](https://sso.tax/) &mdash; tracking vendors that charge premiums for SSO.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: sso.tax, <a href="https://sso.tax/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SSO Wall of Shame</a> &mdash; tracking vendors that charge premiums for SSO.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: NIST, [SP 800-63C: Federation Assurance Levels](https://pages.nist.gov/800-63-3/sp800-63c.html) &mdash; FAL1, FAL2, FAL3 definitions.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63c.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63C: Federation Assurance Levels</a> &mdash; FAL1, FAL2, FAL3 definitions.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: IDManagement.gov, [Enterprise Single Sign-On Playbook](https://www.idmanagement.gov/playbooks/sso/) &mdash; federal SSO implementation guidance.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IDManagement.gov, <a href="https://www.idmanagement.gov/playbooks/sso/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Enterprise Single Sign-On Playbook</a> &mdash; federal SSO implementation guidance.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: PortSwigger Research, [The Fragile Lock: Novel Bypasses for SAML Authentication](https://portswigger.net/research/the-fragile-lock) &mdash; advanced SAML attack techniques.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: PortSwigger Research, <a href="https://portswigger.net/research/the-fragile-lock" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Fragile Lock: Novel Bypasses for SAML Authentication</a> &mdash; advanced SAML attack techniques.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^12]: Endor Labs, [CVE-2025-47949: samlify SAML SSO Bypass](https://www.endorlabs.com/learn/cve-2025-47949-reveals-flaw-in-samlify-that-opens-door-to-saml-single-sign-on-bypass) &mdash; signature wrapping in samlify library.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Endor Labs, <a href="https://www.endorlabs.com/learn/cve-2025-47949-reveals-flaw-in-samlify-that-opens-door-to-saml-single-sign-on-bypass" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2025-47949: samlify SAML SSO Bypass</a> &mdash; signature wrapping in samlify library.</p>
 
 </article>
 
@@ -232,69 +288,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">SSO, SAML and Enterprise Identity</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 22 &mdash; Single Sign-On, SAML, and enterprise identity. Alice, last episode we covered multi-factor authentication. This feels like the next layer &mdash; how do large firms actually manage all those logins across dozens of platforms?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s exactly right. Imagine you&#39;re a partner at a 200-lawyer firm. You use a case management system, a document review tool, a billing platform, an e-filing system, maybe a contract analytics tool &mdash; each one with its own login. Without SSO, that&#39;s five separate passwords. Five places where your credentials could be phished. Five accounts that IT has to manually disable when someone leaves. SSO &mdash; Single Sign-On &mdash; means you log in once through your firm&#39;s own identity system, and that one login gives you access to all of them.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So the firm&#39;s IT team is doing the heavy lifting on authentication, not each individual vendor?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 22 &mdash; Single Sign-On, SAML, and enterprise identity. Alice, last episode we covered multi-factor authentication. This feels like the next layer &mdash; how do large firms actually manage all those logins across dozens of platforms?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And that&#39;s why enterprise clients don&#39;t ask for SSO as a nice-to-have. They require it. Because it means they control the front door. They decide what MFA method to enforce &mdash; remember the passkeys and hardware keys we discussed in Episode 21 &mdash; and that policy applies everywhere. One set of rules, enforced consistently across every application their lawyers use.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s exactly right. Imagine you&#39;re a partner at a 200-lawyer firm. You use a case management system, a document review tool, a billing platform, an e-filing system, maybe a contract analytics tool &mdash; each one with its own login. Without SSO, that&#39;s five separate passwords. Five places where your credentials could be phished. Five accounts that IT has to manually disable when someone leaves. SSO &mdash; Single Sign-On &mdash; means you log in once through your firm&#39;s own identity system, and that one login gives you access to all of them.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So how does this actually work under the hood? I keep hearing &quot;SAML&quot; thrown around.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So the firm&#39;s IT team is doing the heavy lifting on authentication, not each individual vendor?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> SAML &mdash; Security Assertion Markup Language &mdash; is the protocol that makes enterprise SSO work. It&#39;s been around since the early 2000s and it&#39;s still the most common SSO protocol in large organisations. Think of it like a trusted letter of introduction. The firm&#39;s identity provider &mdash; that&#39;s their system that knows who works there &mdash; is like a notary. When a lawyer tries to log into your application, your application says &quot;I don&#39;t know you &mdash; go get a signed letter from your firm&#39;s notary.&quot; The lawyer goes to the firm&#39;s identity provider, proves who they are &mdash; password plus MFA &mdash; and the identity provider signs a document that says &quot;this is Sarah Chen, she&#39;s a senior associate in the M&amp;A department, and I vouch for her.&quot; That signed document is called a SAML assertion. Your application checks the signature, confirms it came from a trusted source, and lets Sarah in.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And that&#39;s why enterprise clients don&#39;t ask for SSO as a nice-to-have. They require it. Because it means they control the front door. They decide what MFA method to enforce &mdash; remember the passkeys and hardware keys we discussed in Episode 21 &mdash; and that policy applies everywhere. One set of rules, enforced consistently across every application their lawyers use.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that makes sense. So your application never sees her actual password?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So how does this actually work under the hood? I keep hearing &quot;SAML&quot; thrown around.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Never. Your application never stores it, never transmits it, never handles it. The firm&#39;s identity provider does all of that. Which is genuinely good security design &mdash; you&#39;ve removed an entire category of risk from your system. If your database gets breached, there are no password hashes to steal because you never had them.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;SAML &mdash; Security Assertion Markup Language &mdash; is the protocol that makes enterprise SSO work. It&#39;s been around since the early 2000s and it&#39;s still the most common SSO protocol in large organisations. Think of it like a trusted letter of introduction. The firm&#39;s identity provider &mdash; that&#39;s their system that knows who works there &mdash; is like a notary. When a lawyer tries to log into your application, your application says &quot;I don&#39;t know you &mdash; go get a signed letter from your firm&#39;s notary.&quot; The lawyer goes to the firm&#39;s identity provider, proves who they are &mdash; password plus MFA &mdash; and the identity provider signs a document that says &quot;this is Sarah Chen, she&#39;s a senior associate in the M&amp;A department, and I vouch for her.&quot; That signed document is called a SAML assertion. Your application checks the signature, confirms it came from a trusted source, and lets Sarah in.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. What about OIDC &mdash; OpenID Connect? We covered that in Episode 20. How does that fit in?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that makes sense. So your application never sees her actual password?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Good question. OpenID Connect is the newer, lighter-weight alternative. It&#39;s built on OAuth 2.0, uses JSON instead of XML, and it&#39;s much easier to implement. For new applications, OIDC is usually the better choice. But here&#39;s the practical reality &mdash; many large law firms still run identity providers that only speak SAML. Their Azure AD or PingFederate was configured years ago for SAML, and nobody&#39;s migrating it. So if you&#39;re building legal SaaS for enterprise clients, you&#39;ll probably need to support both.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Never. Your application never stores it, never transmits it, never handles it. The firm&#39;s identity provider does all of that. Which is genuinely good security design &mdash; you&#39;ve removed an entire category of risk from your system. If your database gets breached, there are no password hashes to steal because you never had them.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. Now, you mentioned SAML uses XML. Are there security risks specific to that?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. What about OIDC &mdash; OpenID Connect? We covered that in Episode 20. How does that fit in?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; Yes, and they&#39;re not theoretical. In March 2025, GitHub disclosed a pair of vulnerabilities in a widely-used SAML library &mdash; ruby-saml. The attack exploited something called a parser differential. The library used two different XML parsers internally, and they interpreted the same document differently. An attacker could craft a SAML response where the signed part said &quot;I&#39;m a regular user,&quot; but the part the application actually read said &quot;I&#39;m an administrator.&quot; The signature checked out &mdash; because the signed part was technically valid &mdash; but the application granted admin access to the wrong identity. You could literally sign in as anyone.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Good question. OpenID Connect is the newer, lighter-weight alternative. It&#39;s built on OAuth 2.0, uses JSON instead of XML, and it&#39;s much easier to implement. For new applications, OIDC is usually the better choice. But here&#39;s the practical reality &mdash; many large law firms still run identity providers that only speak SAML. Their Azure AD or PingFederate was configured years ago for SAML, and nobody&#39;s migrating it. So if you&#39;re building legal SaaS for enterprise clients, you&#39;ll probably need to support both.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&#39;s alarming. How do you defend against something like that?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Now, you mentioned SAML uses XML. Are there security risks specific to that?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The OWASP SAML Security Cheat Sheet has the key guidance. First, validate the XML structure before you check the signature &mdash; reject anything malformed before processing. Second, use absolute XPath expressions when locating the signed elements, so an attacker can&#39;t move them around in the document. Third, prefer SP-initiated flows &mdash; that&#39;s where your application starts the process &mdash; because they include a request ID that binds the response to a specific login attempt. IdP-initiated flows, where the user starts from the firm&#39;s portal, are more vulnerable to replay attacks.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Yes, and they&#39;re not theoretical. In March 2025, GitHub disclosed a pair of vulnerabilities in a widely-used SAML library &mdash; ruby-saml. The attack exploited something called a parser differential. The library used two different XML parsers internally, and they interpreted the same document differently. An attacker could craft a SAML response where the signed part said &quot;I&#39;m a regular user,&quot; but the part the application actually read said &quot;I&#39;m an administrator.&quot; The signature checked out &mdash; because the signed part was technically valid &mdash; but the application granted admin access to the wrong identity. You could literally sign in as anyone.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Let me ask about something practical. SSO handles logging in. But what about when someone joins the firm or leaves?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;That&#39;s alarming. How do you defend against something like that?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s provisioning and deprovisioning, and it&#39;s where a protocol called SCIM comes in. SCIM &mdash; System for Cross-domain Identity Management &mdash; is a REST API standard that connects the firm&#39;s user directory to your application. When IT adds a new associate in Okta or Azure AD, SCIM automatically creates their account in your platform. When that associate leaves the firm and IT disables their directory account, SCIM automatically disables their access to your application too. No manual steps, no delay.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The OWASP SAML Security Cheat Sheet has the key guidance. First, validate the XML structure before you check the signature &mdash; reject anything malformed before processing. Second, use absolute XPath expressions when locating the signed elements, so an attacker can&#39;t move them around in the document. Third, prefer SP-initiated flows &mdash; that&#39;s where your application starts the process &mdash; because they include a request ID that binds the response to a specific login attempt. IdP-initiated flows, where the user starts from the firm&#39;s portal, are more vulnerable to replay attacks.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And without that, someone who leaves the firm could still have active credentials?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Let me ask about something practical. SSO handles logging in. But what about when someone joins the firm or leaves?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Those are called orphaned accounts, and they&#39;re one of the most common security gaps in enterprise environments. A firm with 500 lawyers using 30 different SaaS platforms &mdash; that&#39;s 15,000 account-application pairs. Without automated deprovisioning, every departure requires someone in IT to manually disable accounts across all 30 systems. Miss one, and a former employee &mdash; or anyone who compromises their credentials &mdash; retains access to privileged client communications.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s provisioning and deprovisioning, and it&#39;s where a protocol called SCIM comes in. SCIM &mdash; System for Cross-domain Identity Management &mdash; is a REST API standard that connects the firm&#39;s user directory to your application. When IT adds a new associate in Okta or Azure AD, SCIM automatically creates their account in your platform. When that associate leaves the firm and IT disables their directory account, SCIM automatically disables their access to your application too. No manual steps, no delay.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. That connects back to the Snowflake breach we&#39;ve been hearing about &mdash; stolen credentials on accounts that should have been deprovisioned.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And without that, someone who leaves the firm could still have active credentials?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It&#39;s exactly that pattern. The Snowflake incident in 2024 affected over 165 organisations. The attackers didn&#39;t break any encryption or exploit a zero-day. They used stolen credentials from old infostealer malware, and the accounts didn&#39;t have MFA. If those accounts had been automatically deprovisioned when employees left, or if MFA had been enforced through SSO policy, the breach wouldn&#39;t have happened.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Those are called orphaned accounts, and they&#39;re one of the most common security gaps in enterprise environments. A firm with 500 lawyers using 30 different SaaS platforms &mdash; that&#39;s 15,000 account-application pairs. Without automated deprovisioning, every departure requires someone in IT to manually disable accounts across all 30 systems. Miss one, and a former employee &mdash; or anyone who compromises their credentials &mdash; retains access to privileged client communications.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. One more thing &mdash; how does SSO work when your platform serves multiple firms? Firm A and Firm B both use your tool, but they have different identity providers.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. That connects back to the Snowflake breach we&#39;ve been hearing about &mdash; stolen credentials on accounts that should have been deprovisioned.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s multi-tenant SSO. Each firm gets its own identity provider configuration in your system. The routing usually works by email domain. A user types their email address on your login page, your application sees the domain &mdash; say, bakermckenzie.com &mdash; looks up which identity provider is mapped to that domain, and redirects the user there. The important thing is that each tenant&#39;s SSO configuration is completely isolated. A misconfiguration in Firm A&#39;s setup must never affect Firm B&#39;s authentication. We&#39;ll dig deeper into multi-tenant isolation in Episode 27.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It&#39;s exactly that pattern. The Snowflake incident in 2024 affected over 165 organisations. The attackers didn&#39;t break any encryption or exploit a zero-day. They used stolen credentials from old infostealer malware, and the accounts didn&#39;t have MFA. If those accounts had been automatically deprovisioned when employees left, or if MFA had been enforced through SSO policy, the breach wouldn&#39;t have happened.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Quick summary for anyone building legal SaaS &mdash; support both SAML and OIDC, implement SCIM for automated provisioning, and prefer SP-initiated flows for SAML.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. One more thing &mdash; how does SSO work when your platform serves multiple firms? Firm A and Firm B both use your tool, but they have different identity providers.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And keep your SAML libraries updated. Those parser differential attacks we discussed &mdash; they targeted real production systems. One library update is the difference between secure authentication and &quot;sign in as anyone.&quot;</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s multi-tenant SSO. Each firm gets its own identity provider configuration in your system. The routing usually works by email domain. A user types their email address on your login page, your application sees the domain &mdash; say, bakermckenzie.com &mdash; looks up which identity provider is mapped to that domain, and redirects the user there. The important thing is that each tenant&#39;s SSO configuration is completely isolated. A misconfiguration in Firm A&#39;s setup must never affect Firm B&#39;s authentication. We&#39;ll dig deeper into multi-tenant isolation in Episode 27.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; RBAC: Roles, Permissions and Scopes. How you structure who can do what inside your application.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Quick summary for anyone building legal SaaS &mdash; support both SAML and OIDC, implement SCIM for automated provisioning, and prefer SP-initiated flows for SAML.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And keep your SAML libraries updated. Those parser differential attacks we discussed &mdash; they targeted real production systems. One library update is the difference between secure authentication and &quot;sign in as anyone.&quot;&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; RBAC: Roles, Permissions and Scopes. How you structure who can do what inside your application.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

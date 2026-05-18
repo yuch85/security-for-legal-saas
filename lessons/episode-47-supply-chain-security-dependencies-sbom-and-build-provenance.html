@@ -76,17 +76,13 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 47: Supply Chain Security &mdash; Dependencies, SBOM and Build Provenance</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">You Didn&#39;t Write 95% of Your Application&#39;s Code</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A modern legal SaaS platform &mdash; a contract review tool, a case management system, a document automation service &mdash; is built on hundreds or thousands of open-source packages. The Express web framework. React for the frontend. A PDF parsing library. An encryption library. An ORM for database access. Each of those packages depends on other packages, which depend on others still. A typical Node.js application has between 500 and 1,500 transitive dependencies &mdash; packages your code never imports directly but which are pulled in by packages you do use.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">You didn&#39;t audit those dependencies. You probably haven&#39;t read their source code. And yet they run with the same privileges as your own code, processing the same client data, accessing the same databases.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Software supply chain attacks more than doubled globally in 2025](https://faithforgelabs.com/blog_supplychain_security_2025.php) [1], with over 70% of organisations reporting at least one incident linked to third-party software. Global costs reached $60 billion and are projected to hit $138 billion by 2031. The attacks are not hypothetical. They have names.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://faithforgelabs.com/blog_supplychain_security_2025.php" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software supply chain attacks more than doubled globally in 2025</a> [1], with over 70% of organisations reporting at least one incident linked to third-party software. Global costs reached $60 billion and are projected to hit $138 billion by 2031. The attacks are not hypothetical. They have names.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Attacks That Changed Everything</h2>
 
@@ -96,7 +92,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Log4Shell (2021)</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Log4Shell (CVE-2021-44228)](https://nvd.nist.gov/vuln/detail/CVE-2021-44228) [2] was a critical remote code execution vulnerability in Log4j &mdash; a ubiquitous Java logging library. The vulnerability existed for years in a library that was a transitive dependency of thousands of applications. When disclosed, many organisations could not even determine whether they were affected, because they didn&#39;t know Log4j was buried in their dependency tree.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://nvd.nist.gov/vuln/detail/CVE-2021-44228" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Log4Shell (CVE-2021-44228)</a> [2] was a critical remote code execution vulnerability in Log4j &mdash; a ubiquitous Java logging library. The vulnerability existed for years in a library that was a transitive dependency of thousands of applications. When disclosed, many organisations could not even determine whether they were affected, because they didn&#39;t know Log4j was buried in their dependency tree.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">xz-utils (2024)</h3>
 
@@ -108,23 +104,36 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Software Bill of Materials (SBOM)</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An SBOM is a comprehensive inventory of every software component in your application &mdash; direct dependencies, transitive dependencies, their versions, licences, and origins. It answers the question Log4Shell made urgent: <em>what&#39;s actually in our software?</em></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The US Executive Order 14028 on Improving Cybersecurity](https://www.nist.gov/itl/executive-order-14028-improving-nations-cybersecurity) [3] requires SBOMs for federal software procurement. [CISA&#39;s 2025 minimum elements](https://www.cisa.gov/sbom) [4] for an SBOM include: author, supplier, component name, version, dependencies, unique identifier, and timestamp.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.nist.gov/itl/executive-order-14028-improving-nations-cybersecurity" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The US Executive Order 14028 on Improving Cybersecurity</a> [3] requires SBOMs for federal software procurement. <a href="https://www.cisa.gov/sbom" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA's 2025 minimum elements</a> [4] for an SBOM include: author, supplier, component name, version, dependencies, unique identifier, and timestamp.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Two standard formats dominate:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Format | Origin | Best For |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|--------|----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SPDX</strong> | Linux Foundation | Licence compliance + security |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">CycloneDX</strong> | OWASP | Security-focused, includes vulnerability data |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Format</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Origin</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Best For</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">SPDX</strong></td>
+                <td class="py-3 px-4">Linux Foundation</td>
+                <td class="py-3 px-4">Licence compliance + security</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">CycloneDX</strong></td>
+                <td class="py-3 px-4">OWASP</td>
+                <td class="py-3 px-4">Security-focused, includes vulnerability data</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Generating an SBOM is now a single command in most ecosystems:</p>
 
@@ -142,13 +151,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms, the SBOM serves multiple purposes. Security teams use it to track which components have known vulnerabilities. Legal teams use it to verify licence compliance &mdash; an open-source library with an AGPL licence in your proprietary SaaS product is a legal risk, not just a technical one. And when a new vulnerability is disclosed, the SBOM lets you answer &quot;are we affected?&quot; in minutes instead of days.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Dependency Scanning &mdash; Automated Vigilance</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An SBOM tells you what you have. Dependency scanning tells you what&#39;s wrong with it. Tools like [Dependabot](https://github.com/dependabot) [5], [Snyk](https://snyk.io/) [6], and [OSV (Open Source Vulnerabilities)](https://osv.dev/) [7] continuously monitor your dependencies against vulnerability databases and alert you &mdash; or automatically create pull requests &mdash; when a vulnerability is found.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An SBOM tells you what you have. Dependency scanning tells you what&#39;s wrong with it. Tools like <a href="https://github.com/dependabot" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependabot</a> [5], <a href="https://snyk.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Snyk</a> [6], and <a href="https://osv.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OSV (Open Source Vulnerabilities)</a> [7] continuously monitor your dependencies against vulnerability databases and alert you &mdash; or automatically create pull requests &mdash; when a vulnerability is found.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The Practical DevSecOps guide to SBOM vs SLSA](https://www.practical-devsecops.com/sbom-vs-slsa-software-supply-chain-security-comparison/) [8] emphasises that dependency scanning must be continuous, not one-time: &quot;An SBOM generated at build time captures a snapshot. Continuous scanning catches vulnerabilities discovered after deployment.&quot;</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.practical-devsecops.com/sbom-vs-slsa-software-supply-chain-security-comparison/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Practical DevSecOps guide to SBOM vs SLSA</a> [8] emphasises that dependency scanning must be continuous, not one-time: &quot;An SBOM generated at build time captures a snapshot. Continuous scanning catches vulnerabilities discovered after deployment.&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A practical dependency scanning policy:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
@@ -156,9 +163,7 @@
         <li><strong class="text-ink">Vulnerability thresholds</strong> &mdash; block deployments with critical or high CVEs. Set deadlines for medium CVEs.</li>
         <li><strong class="text-ink">Licence scanning</strong> &mdash; flag dependencies with incompatible licences before they reach production.</li>
         <li><strong class="text-ink">Transitive dependency auditing</strong> &mdash; don&#39;t just scan your direct dependencies. Scan the full tree. Log4Shell was a transitive dependency in most affected applications.</li>
-    </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Lock Files and Reproducible Builds</h2>
 
@@ -168,33 +173,50 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Always commit your lock files to version control. Always use deterministic install commands (`npm ci`, not `npm install`) in your CI/CD pipeline.</strong> This ensures that you deploy exactly what you tested &mdash; not whatever the latest published version happens to be.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Build Provenance &mdash; SLSA and Signed Attestations</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SBOMs tell you what is <em>in</em> the software. [SLSA (Supply-chain Levels for Software Artifacts)](https://slsa.dev/) [9] tells you how the software was <em>built</em> &mdash; and whether you can trust that the build process was not tampered with. SLSA defines four levels of build integrity:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SBOMs tell you what is <em>in</em> the software. <a href="https://slsa.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA (Supply-chain Levels for Software Artifacts)</a> [9] tells you how the software was <em>built</em> &mdash; and whether you can trust that the build process was not tampered with. SLSA defines four levels of build integrity:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Level</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Requirements</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Proves</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">SLSA 1</strong></td>
+                <td class="py-3 px-4">Documentation of the build process</td>
+                <td class="py-3 px-4">You know how it was built</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">SLSA 2</strong></td>
+                <td class="py-3 px-4">Build service generates signed provenance</td>
+                <td class="py-3 px-4">Tamper-evident build record</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">SLSA 3</strong></td>
+                <td class="py-3 px-4">Hardened build platform, non-falsifiable provenance</td>
+                <td class="py-3 px-4">Build process itself is protected</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">SLSA 4</strong></td>
+                <td class="py-3 px-4">Two-person review, hermetic builds</td>
+                <td class="py-3 px-4">Highest assurance of build integrity</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Level | Requirements | What It Proves |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://faithforgelabs.com/blog_supplychain_security_2025.php" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA Level 2 is achievable for most teams in two to four weeks</a> [1] using hosted build services like GitHub Actions or Google Cloud Build. At Level 2, the build service generates a signed provenance attestation &mdash; a cryptographic document recording what source code was built, by which build system, producing which artifacts. This is the build-process equivalent of the AI output provenance chains we discussed in Episode 43.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|-------------|----------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SLSA 1</strong> | Documentation of the build process | You know how it was built |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SLSA 2</strong> | Build service generates signed provenance | Tamper-evident build record |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SLSA 3</strong> | Hardened build platform, non-falsifiable provenance | Build process itself is protected |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SLSA 4</strong> | Two-person review, hermetic builds | Highest assurance of build integrity |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[SLSA Level 2 is achievable for most teams in two to four weeks](https://faithforgelabs.com/blog_supplychain_security_2025.php) [1] using hosted build services like GitHub Actions or Google Cloud Build. At Level 2, the build service generates a signed provenance attestation &mdash; a cryptographic document recording what source code was built, by which build system, producing which artifacts. This is the build-process equivalent of the AI output provenance chains we discussed in Episode 43.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Sigstore](https://docs.sigstore.dev/) [10] provides the infrastructure for keyless signing of both build provenance and artifacts. The build system authenticates via its OIDC identity (the same OpenID Connect we covered in [Episode 20](/lessons/ep20/)), receives a short-lived certificate from Fulcio (Sigstore&#39;s certificate authority), signs the provenance attestation, and records the signature in Rekor (Sigstore&#39;s tamper-evident transparency log). No long-lived keys to manage, rotate, or leak.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://docs.sigstore.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Sigstore</a> [10] provides the infrastructure for keyless signing of both build provenance and artifacts. The build system authenticates via its OIDC identity (the same OpenID Connect we covered in <a href="/lessons/ep20/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 20</a>), receives a short-lived certificate from Fulcio (Sigstore&#39;s certificate authority), signs the provenance attestation, and records the signature in Rekor (Sigstore&#39;s tamper-evident transparency log). No long-lived keys to manage, rotate, or leak.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Legal Exposure</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When a dependency in your legal SaaS platform has a known vulnerability and you shipped it anyway, the question is no longer just technical &mdash; it&#39;s legal. [Research on supply chain security obligations](https://www.softwareseni.com/software-supply-chain-security-after-solarwinds-and-xz-utils/) [11] notes that awareness of a vulnerability coupled with failure to remediate creates a duty-of-care exposure. If a breach exploits a CVE that was publicly disclosed months before your patch, your response to &quot;why wasn&#39;t this fixed?&quot; needs a better answer than &quot;we didn&#39;t know it was in our dependency tree.&quot;</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When a dependency in your legal SaaS platform has a known vulnerability and you shipped it anyway, the question is no longer just technical &mdash; it&#39;s legal. <a href="https://www.softwareseni.com/software-supply-chain-security-after-solarwinds-and-xz-utils/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Research on supply chain security obligations</a> [11] notes that awareness of a vulnerability coupled with failure to remediate creates a duty-of-care exposure. If a breach exploits a CVE that was publicly disclosed months before your patch, your response to &quot;why wasn&#39;t this fixed?&quot; needs a better answer than &quot;we didn&#39;t know it was in our dependency tree.&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ABA Model Rule 1.6(c) requires reasonable efforts to prevent unauthorised access to client information. Running a legal SaaS platform with known, unpatched vulnerabilities in your dependencies is difficult to characterise as &quot;reasonable efforts.&quot; An SBOM and continuous dependency scanning are your evidence that you took the supply chain seriously.</p>
 
@@ -204,29 +226,25 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we look at environment configuration and secure defaults &mdash; how to ensure that the difference between your staging and production environments is credentials and scale, not security controls.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>[Software Supply Chain Security in 2025: SBOMs, SLSA &amp; Sigstore &mdash; Faith Forge Labs](https://faithforgelabs.com/blog_supplychain_security_2025.php)</li>
-        <li>[CVE-2021-44228 (Log4Shell) &mdash; National Vulnerability Database](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)</li>
-        <li>[Executive Order 14028 &mdash; Improving the Nation&#39;s Cybersecurity &mdash; NIST](https://www.nist.gov/itl/executive-order-14028-improving-nations-cybersecurity)</li>
-        <li>[Software Bill of Materials &mdash; CISA](https://www.cisa.gov/sbom)</li>
-        <li>[Dependabot &mdash; GitHub](https://github.com/dependabot)</li>
-        <li>[Snyk &mdash; Developer-First Security](https://snyk.io/)</li>
-        <li>[OSV &mdash; Open Source Vulnerabilities](https://osv.dev/)</li>
-        <li>[SBOM vs SLSA: Software Supply Chain Security Comparison &mdash; Practical DevSecOps](https://www.practical-devsecops.com/sbom-vs-slsa-software-supply-chain-security-comparison/)</li>
-        <li>[SLSA &mdash; Supply-chain Levels for Software Artifacts](https://slsa.dev/)</li>
-        <li>[Sigstore Documentation](https://docs.sigstore.dev/)</li>
-        <li>[Software Supply Chain Security After SolarWinds and XZ Utils &mdash; SoftwareSeni](https://www.softwareseni.com/software-supply-chain-security-after-solarwinds-and-xz-utils/)</li>
-        <li>[SLSA Framework: The Definitive Guide &mdash; Practical DevSecOps](https://www.practical-devsecops.com/slsa-framework-guide-software-supply-chain-security/)</li>
-    </ul>
+        <li><a href="https://faithforgelabs.com/blog_supplychain_security_2025.php" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Supply Chain Security in 2025: SBOMs, SLSA & Sigstore — Faith Forge Labs</a></li>
+        <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2021-44228" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2021-44228 (Log4Shell) — National Vulnerability Database</a></li>
+        <li><a href="https://www.nist.gov/itl/executive-order-14028-improving-nations-cybersecurity" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Executive Order 14028 — Improving the Nation's Cybersecurity — NIST</a></li>
+        <li><a href="https://www.cisa.gov/sbom" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Bill of Materials — CISA</a></li>
+        <li><a href="https://github.com/dependabot" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependabot — GitHub</a></li>
+        <li><a href="https://snyk.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Snyk — Developer-First Security</a></li>
+        <li><a href="https://osv.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OSV — Open Source Vulnerabilities</a></li>
+        <li><a href="https://www.practical-devsecops.com/sbom-vs-slsa-software-supply-chain-security-comparison/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SBOM vs SLSA: Software Supply Chain Security Comparison — Practical DevSecOps</a></li>
+        <li><a href="https://slsa.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA — Supply-chain Levels for Software Artifacts</a></li>
+        <li><a href="https://docs.sigstore.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Sigstore Documentation</a></li>
+        <li><a href="https://www.softwareseni.com/software-supply-chain-security-after-solarwinds-and-xz-utils/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Supply Chain Security After SolarWinds and XZ Utils — SoftwareSeni</a></li>
+        <li><a href="https://www.practical-devsecops.com/slsa-framework-guide-software-supply-chain-security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA Framework: The Definitive Guide — Practical DevSecOps</a></li>
+    </ol>
 
 </article>
 
@@ -241,69 +259,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Supply Chain Security &mdash; Dependencies, SBOM and Build Provenance</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 47 &mdash; supply chain security. Alice, this is a topic that&#39;s been in the news a lot. SolarWinds, Log4Shell, xz-utils. But before we get to those, let&#39;s set the stage. What does &quot;supply chain&quot; mean in a software context?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Think about your legal SaaS platform &mdash; a contract review tool, a case management system, whatever you&#39;re building. You wrote the business logic. But you didn&#39;t write the web framework. You didn&#39;t write the PDF parser. You didn&#39;t write the encryption library or the database driver. A typical application has hundreds, sometimes over a thousand, third-party packages that it depends on. And each of those packages depends on other packages. Those are your supply chain. You didn&#39;t write 95% of the code in your application, but it all runs with the same privileges, accessing the same client data.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That&#39;s a lot of code you&#39;re trusting without having read it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 47 &mdash; supply chain security. Alice, this is a topic that&#39;s been in the news a lot. SolarWinds, Log4Shell, xz-utils. But before we get to those, let&#39;s set the stage. What does &quot;supply chain&quot; mean in a software context?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And three major incidents in the last few years showed what happens when that trust is misplaced. SolarWinds in 2020 &mdash; attackers compromised the build system for a network monitoring tool. They injected a backdoor into the legitimate software update. Over 18,000 organisations installed it, including US government agencies. The backdoor wasn&#39;t in the source code. It was injected during the build process, so code review wouldn&#39;t have caught it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Think about your legal SaaS platform &mdash; a contract review tool, a case management system, whatever you&#39;re building. You wrote the business logic. But you didn&#39;t write the web framework. You didn&#39;t write the PDF parser. You didn&#39;t write the encryption library or the database driver. A typical application has hundreds, sometimes over a thousand, third-party packages that it depends on. And each of those packages depends on other packages. Those are your supply chain. You didn&#39;t write 95% of the code in your application, but it all runs with the same privileges, accessing the same client data.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And Log4Shell?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s a lot of code you&#39;re trusting without having read it.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> December 2021. A critical vulnerability in Log4j &mdash; a Java logging library. The scary part wasn&#39;t just the vulnerability itself. It was that thousands of organisations couldn&#39;t even figure out if they were affected, because Log4j was buried deep in their dependency trees. It wasn&#39;t a library they&#39;d imported directly. It was a dependency of a dependency of a dependency. They didn&#39;t know it was there.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And three major incidents in the last few years showed what happens when that trust is misplaced. SolarWinds in 2020 &mdash; attackers compromised the build system for a network monitoring tool. They injected a backdoor into the legitimate software update. Over 18,000 organisations installed it, including US government agencies. The backdoor wasn&#39;t in the source code. It was injected during the build process, so code review wouldn&#39;t have caught it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. And xz-utils was different again, right?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And Log4Shell?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; That one is the most unsettling. A threat actor &mdash; going by &quot;Jia Tan&quot; &mdash; spent years building trust as a contributor to xz-utils, a compression library used in virtually every Linux distribution. After gaining maintainer access through sustained social engineering, they injected a sophisticated backdoor targeting SSH authentication. It was discovered by accident when a developer noticed strange performance behaviour. The code had already been included in several Linux distribution pre-release builds. Years of patience for a single supply chain attack.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;December 2021. A critical vulnerability in Log4j &mdash; a Java logging library. The scary part wasn&#39;t just the vulnerability itself. It was that thousands of organisations couldn&#39;t even figure out if they were affected, because Log4j was buried deep in their dependency trees. It wasn&#39;t a library they&#39;d imported directly. It was a dependency of a dependency of a dependency. They didn&#39;t know it was there.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. Three different attack vectors. So how do you defend against this?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And xz-utils was different again, right?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Step one &mdash; know what you have. That&#39;s where an SBOM comes in. S-B-O-M &mdash; Software Bill of Materials. It&#39;s a comprehensive inventory of every component in your application. Every direct dependency, every transitive dependency &mdash; that&#39;s the dependencies of your dependencies &mdash; their versions, their licences, their origins. Think of it as a list of ingredients on a food label. You can&#39;t manage what you can&#39;t see.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; That one is the most unsettling. A threat actor &mdash; going by &quot;Jia Tan&quot; &mdash; spent years building trust as a contributor to xz-utils, a compression library used in virtually every Linux distribution. After gaining maintainer access through sustained social engineering, they injected a sophisticated backdoor targeting SSH authentication. It was discovered by accident when a developer noticed strange performance behaviour. The code had already been included in several Linux distribution pre-release builds. Years of patience for a single supply chain attack.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And this is now a requirement for government software, isn&#39;t it?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. Three different attack vectors. So how do you defend against this?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Yes. US Executive Order 14028 requires SBOMs for federal software procurement. CISA published minimum elements in 2025 &mdash; component name, version, supplier, dependencies, unique identifier, and timestamp. Generating one is a single command in most ecosystems. For a Node.js project, you run a CycloneDX tool and get a JSON file listing every package. For legal SaaS, the SBOM serves security teams tracking vulnerabilities, legal teams checking licence compliance &mdash; you don&#39;t want an AGPL-licensed library in your proprietary product &mdash; and incident responders who need to answer &quot;are we affected?&quot; when the next Log4Shell drops.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Step one &mdash; know what you have. That&#39;s where an SBOM comes in. S-B-O-M &mdash; Software Bill of Materials. It&#39;s a comprehensive inventory of every component in your application. Every direct dependency, every transitive dependency &mdash; that&#39;s the dependencies of your dependencies &mdash; their versions, their licences, their origins. Think of it as a list of ingredients on a food label. You can&#39;t manage what you can&#39;t see.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So the SBOM tells you what you have. What tells you what&#39;s wrong with it?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And this is now a requirement for government software, isn&#39;t it?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Dependency scanning tools. Dependabot, Snyk, OSV &mdash; they continuously monitor your dependencies against vulnerability databases. When a new vulnerability is disclosed that affects one of your packages, they alert you or automatically create a pull request with the fix. The key word is continuously. An SBOM generated at build time is a snapshot. Continuous scanning catches vulnerabilities discovered after you&#39;ve already deployed.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Yes. US Executive Order 14028 requires SBOMs for federal software procurement. CISA published minimum elements in 2025 &mdash; component name, version, supplier, dependencies, unique identifier, and timestamp. Generating one is a single command in most ecosystems. For a Node.js project, you run a CycloneDX tool and get a JSON file listing every package. For legal SaaS, the SBOM serves security teams tracking vulnerabilities, legal teams checking licence compliance &mdash; you don&#39;t want an AGPL-licensed library in your proprietary product &mdash; and incident responders who need to answer &quot;are we affected?&quot; when the next Log4Shell drops.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, and I imagine you also need to make sure you&#39;re deploying exactly what you tested? Not a different version that got updated between test and deploy?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So the SBOM tells you what you have. What tells you what&#39;s wrong with it?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s lock files. When you run your package manager, a lock file records the exact version of every dependency installed &mdash; not a range, the exact version. You commit that lock file to your code repository. Then in your CI/CD pipeline, you use a deterministic install command that reads from the lock file and installs exactly those versions. If an attacker publishes a malicious version of a package that falls within your version range, and you don&#39;t have a lock file, your build process could silently pull in the malicious version.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Dependency scanning tools. Dependabot, Snyk, OSV &mdash; they continuously monitor your dependencies against vulnerability databases. When a new vulnerability is disclosed that affects one of your packages, they alert you or automatically create a pull request with the fix. The key word is continuously. An SBOM generated at build time is a snapshot. Continuous scanning catches vulnerabilities discovered after you&#39;ve already deployed.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That&#39;s a simple thing that prevents a serious attack. What about the build process itself? SolarWinds showed that even if the source code is clean, the build can be compromised.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, and I imagine you also need to make sure you&#39;re deploying exactly what you tested? Not a different version that got updated between test and deploy?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s where SLSA comes in &mdash; S-L-S-A, Supply-chain Levels for Software Artifacts. It&#39;s a framework that defines levels of build integrity. The SBOM tells you what&#39;s in the software. SLSA tells you how it was built and whether you can trust the build process. At Level 2, your build system generates a signed provenance attestation &mdash; a cryptographic document proving what source code was built, by which build system, producing which artifact. It&#39;s like a notarised affidavit for your build process.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s lock files. When you run your package manager, a lock file records the exact version of every dependency installed &mdash; not a range, the exact version. You commit that lock file to your code repository. Then in your CI/CD pipeline, you use a deterministic install command that reads from the lock file and installs exactly those versions. If an attacker publishes a malicious version of a package that falls within your version range, and you don&#39;t have a lock file, your build process could silently pull in the malicious version.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And if someone tampers with the build &mdash; like the SolarWinds attackers did &mdash; that provenance wouldn&#39;t match?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s a simple thing that prevents a serious attack. What about the build process itself? SolarWinds showed that even if the source code is clean, the build can be compromised.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. The signing uses Sigstore &mdash; the same keyless signing we mentioned in Episode 46 for container images. The build system authenticates with its identity, gets a short-lived certificate, signs the provenance, and records the signature in a transparency log. No long-lived keys to steal. And Level 2 is achievable for most teams in two to four weeks using GitHub Actions or Google Cloud Build.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s where SLSA comes in &mdash; S-L-S-A, Supply-chain Levels for Software Artifacts. It&#39;s a framework that defines levels of build integrity. The SBOM tells you what&#39;s in the software. SLSA tells you how it was built and whether you can trust the build process. At Level 2, your build system generates a signed provenance attestation &mdash; a cryptographic document proving what source code was built, by which build system, producing which artifact. It&#39;s like a notarised affidavit for your build process.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. Let me ask the legal angle. If you know a dependency has a vulnerability and you ship it anyway, what&#39;s the exposure?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And if someone tampers with the build &mdash; like the SolarWinds attackers did &mdash; that provenance wouldn&#39;t match?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Real. Awareness of a vulnerability plus failure to remediate creates a duty-of-care issue. If a breach exploits a CVE that was publicly disclosed months before you patched, your answer to &quot;why wasn&#39;t this fixed?&quot; needs to be better than &quot;we didn&#39;t know.&quot; ABA Model Rule 1.6(c) requires reasonable efforts to prevent unauthorised access to client information. Running a legal SaaS platform with known, unpatched vulnerabilities in your dependency tree is hard to characterise as reasonable. The SBOM and continuous scanning are your evidence that you took it seriously.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. The signing uses Sigstore &mdash; the same keyless signing we mentioned in Episode 46 for container images. The build system authenticates with its identity, gets a short-lived certificate, signs the provenance, and records the signature in a transparency log. No long-lived keys to steal. And Level 2 is achievable for most teams in two to four weeks using GitHub Actions or Google Cloud Build.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that&#39;s compelling. So to summarise &mdash; SBOMs for visibility, dependency scanning for alerts, lock files for reproducibility, SLSA and Sigstore for build provenance.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Let me ask the legal angle. If you know a dependency has a vulnerability and you ship it anyway, what&#39;s the exposure?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Four layers that transform your supply chain from a blind spot into a managed risk. Without them, you&#39;re shipping software you cannot fully describe, built from components you cannot fully verify. With them, you can answer &mdash; to regulators, to clients, to a court &mdash; exactly what&#39;s in your software and how it was built.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Real. Awareness of a vulnerability plus failure to remediate creates a duty-of-care issue. If a breach exploits a CVE that was publicly disclosed months before you patched, your answer to &quot;why wasn&#39;t this fixed?&quot; needs to be better than &quot;we didn&#39;t know.&quot; ABA Model Rule 1.6(c) requires reasonable efforts to prevent unauthorised access to client information. Running a legal SaaS platform with known, unpatched vulnerabilities in your dependency tree is hard to characterise as reasonable. The SBOM and continuous scanning are your evidence that you took it seriously.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; environment configuration and secure defaults. How to make sure your staging and production environments have the same security controls, not just the same features.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s compelling. So to summarise &mdash; SBOMs for visibility, dependency scanning for alerts, lock files for reproducibility, SLSA and Sigstore for build provenance.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Four layers that transform your supply chain from a blind spot into a managed risk. Without them, you&#39;re shipping software you cannot fully describe, built from components you cannot fully verify. With them, you can answer &mdash; to regulators, to clients, to a court &mdash; exactly what&#39;s in your software and how it was built.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; environment configuration and secure defaults. How to make sure your staging and production environments have the same security controls, not just the same features.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

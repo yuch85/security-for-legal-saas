@@ -76,35 +76,49 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 59: GDPR, PDPA and Data Protection Compliance</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Compliance Is Not Security &mdash; But Regulators Don&#39;t Care</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">You can have excellent security and fail a data protection audit. You can pass a data protection audit and have terrible security. The two overlap substantially but are not the same thing. Data protection law asks a different question from security engineering: not &quot;is this system hard to breach?&quot; but &quot;does this system respect individuals&#39; rights over their personal data, and can you prove it?&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS vendors, data protection compliance sits at an uncomfortable intersection. Your platform processes personal data &mdash; names, case details, communications, sometimes health records or financial information &mdash; on behalf of law firms who are themselves bound by professional secrecy obligations. You are the processor; your law firm customers are the controllers. Getting this relationship wrong creates liability for both sides.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">GDPR: The Global Baseline</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The [General Data Protection Regulation (GDPR)](https://gdpr-info.eu/) came into force across the European Union in May 2018 and has become the de facto global standard for data protection legislation.[^1] Even if your legal SaaS platform is based in Singapore or the United States, GDPR applies to you if you process personal data of individuals located in the EU &mdash; regardless of where your servers sit.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://gdpr-info.eu/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">General Data Protection Regulation (GDPR)</a> came into force across the European Union in May 2018 and has become the de facto global standard for data protection legislation. Even if your legal SaaS platform is based in Singapore or the United States, GDPR applies to you if you process personal data of individuals located in the EU &mdash; regardless of where your servers sit.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Controller vs. Processor</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">GDPR distinguishes between data controllers (who determine the purposes and means of processing) and data processors (who process data on the controller&#39;s behalf). In legal SaaS:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Entity</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Responsibilities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Controller</strong></td>
+                <td class="py-3 px-4">The law firm</td>
+                <td class="py-3 px-4">Determines what data is collected, why, and how long it&#39;s kept</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Processor</strong></td>
+                <td class="py-3 px-4">Your SaaS platform</td>
+                <td class="py-3 px-4">Processes data only on the controller&#39;s documented instructions</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Sub-processor</strong></td>
+                <td class="py-3 px-4">Your cloud provider (AWS, Azure, GCP)</td>
+                <td class="py-3 px-4">Processes data on behalf of the processor, with the controller&#39;s consent</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Role | Entity | Responsibilities |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------|--------|-----------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Controller</strong> | The law firm | Determines what data is collected, why, and how long it&#39;s kept |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Processor</strong> | Your SaaS platform | Processes data only on the controller&#39;s documented instructions |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Sub-processor</strong> | Your cloud provider (AWS, Azure, GCP) | Processes data on behalf of the processor, with the controller&#39;s consent |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Article 28 of GDPR](https://gdpr-info.eu/art-28-gdpr/) requires a written contract &mdash; the Data Processing Agreement (DPA) &mdash; between controller and processor, specifying the subject matter, duration, nature and purpose of processing, the type of personal data and categories of data subjects, and the obligations of the processor.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://gdpr-info.eu/art-28-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 28 of GDPR</a> requires a written contract &mdash; the Data Processing Agreement (DPA) &mdash; between controller and processor, specifying the subject matter, duration, nature and purpose of processing, the type of personal data and categories of data subjects, and the obligations of the processor.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
@@ -115,28 +129,61 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Data Subject Rights</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">GDPR grants individuals eight rights over their personal data. Your platform must support the technical implementation of each:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Right</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">GDPR Article</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What Your Platform Must Support</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Access</strong></td>
+                <td class="py-3 px-4">Art. 15</td>
+                <td class="py-3 px-4">Export all personal data held about a data subject in a structured, readable format</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Rectification</strong></td>
+                <td class="py-3 px-4">Art. 16</td>
+                <td class="py-3 px-4">Allow correction of inaccurate personal data</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Erasure (&quot;right to be forgotten&quot;)</strong></td>
+                <td class="py-3 px-4">Art. 17</td>
+                <td class="py-3 px-4">Delete personal data when no longer necessary, unless legal retention obligations apply</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Restriction of processing</strong></td>
+                <td class="py-3 px-4">Art. 18</td>
+                <td class="py-3 px-4">Freeze processing of specific data while disputes are resolved</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Data portability</strong></td>
+                <td class="py-3 px-4">Art. 20</td>
+                <td class="py-3 px-4">Export data in a machine-readable format (JSON, CSV) for transfer to another service</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Objection</strong></td>
+                <td class="py-3 px-4">Art. 21</td>
+                <td class="py-3 px-4">Allow opt-out of specific processing activities</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Automated decision-making</strong></td>
+                <td class="py-3 px-4">Art. 22</td>
+                <td class="py-3 px-4">Provide explanation and human review for decisions made solely by algorithms</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Notification</strong></td>
+                <td class="py-3 px-4">Art. 19</td>
+                <td class="py-3 px-4">Notify third parties of rectification, erasure, or restriction</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Right | GDPR Article | What Your Platform Must Support |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|-------------|-------------------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Access</strong> | Art. 15 | Export all personal data held about a data subject in a structured, readable format |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Rectification</strong> | Art. 16 | Allow correction of inaccurate personal data |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Erasure (&quot;right to be forgotten&quot;)</strong> | Art. 17 | Delete personal data when no longer necessary, unless legal retention obligations apply |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Restriction of processing</strong> | Art. 18 | Freeze processing of specific data while disputes are resolved |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data portability</strong> | Art. 20 | Export data in a machine-readable format (JSON, CSV) for transfer to another service |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Objection</strong> | Art. 21 | Allow opt-out of specific processing activities |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Automated decision-making</strong> | Art. 22 | Provide explanation and human review for decisions made solely by algorithms |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Notification</strong> | Art. 19 | Notify third parties of rectification, erasure, or restriction |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Organisations must respond to data subject access requests (DSARs) within [one calendar month](https://transcend.io/blog/dsar), extendable by two months for complex requests provided the data subject is informed of the delay.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Organisations must respond to data subject access requests (DSARs) within <a href="https://transcend.io/blog/dsar" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">one calendar month</a>, extendable by two months for complex requests provided the data subject is informed of the delay.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
@@ -144,60 +191,80 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Cross-Border Data Transfers</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your platform stores data on servers outside the EU, or if sub-processors (cloud providers) transfer data internationally, you need a legal basis for the transfer under [GDPR Chapter V](https://gdpr-info.eu/chapter-5/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your platform stores data on servers outside the EU, or if sub-processors (cloud providers) transfer data internationally, you need a legal basis for the transfer under <a href="https://gdpr-info.eu/chapter-5/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Chapter V</a>.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The three main mechanisms:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Adequacy decisions</strong> &mdash; the European Commission has determined that certain countries provide adequate data protection. The UK, Japan, South Korea, Canada (for commercial organisations), and &mdash; since July 2023 &mdash; the United States (under the [EU-US Data Privacy Framework](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en)) have adequacy status.[^4]</li>
-    </ul>
+        <li><strong class="text-ink">Adequacy decisions</strong> &mdash; the European Commission has determined that certain countries provide adequate data protection. The UK, Japan, South Korea, Canada (for commercial organisations), and &mdash; since July 2023 &mdash; the United States (under the <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU-US Data Privacy Framework</a>) have adequacy status.</li>
+    </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Standard Contractual Clauses (SCCs)</strong> &mdash; [pre-approved contract terms](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/new-standard-contractual-clauses-questions-and-answers-overview_en) that bind the data importer to GDPR-equivalent protections. These must be supplemented by a Transfer Impact Assessment (TIA) evaluating whether the destination country&#39;s laws undermine the protections.[^5]</li>
-    </ul>
+        <li><strong class="text-ink">Standard Contractual Clauses (SCCs)</strong> &mdash; <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/new-standard-contractual-clauses-questions-and-answers-overview_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">pre-approved contract terms</a> that bind the data importer to GDPR-equivalent protections. These must be supplemented by a Transfer Impact Assessment (TIA) evaluating whether the destination country&#39;s laws undermine the protections.</li>
+    </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Binding Corporate Rules (BCRs)</strong> &mdash; for intra-group transfers within multinational organisations.</li>
-    </ul>
+    </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Enforcement reality:&lt;/strong&gt; In May 2023, Ireland&#39;s Data Protection Commission fined &lt;a href=&quot;https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en&quot;&gt;Meta €1.2 billion&lt;/a&gt; &mdash; the largest GDPR fine ever &mdash; for transferring EU user data to the United States using Standard Contractual Clauses without adequate supplementary measures following the Schrems II judgment.&lt;sup&gt;[6]&lt;/sup&gt; The message to every SaaS vendor: SCCs alone are not a rubber stamp. You must assess the actual legal environment in the destination country.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Enforcement reality:&lt;/strong&gt; In May 2023, Ireland&#39;s Data Protection Commission fined <a href="https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en">Meta €1.2 billion</a> &mdash; the largest GDPR fine ever &mdash; for transferring EU user data to the United States using Standard Contractual Clauses without adequate supplementary measures following the Schrems II judgment.&lt;sup&gt;[6]&lt;/sup&gt; The message to every SaaS vendor: SCCs alone are not a rubber stamp. You must assess the actual legal environment in the destination country.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Singapore&#39;s PDPA</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The [Personal Data Protection Act (PDPA)](https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act) is Singapore&#39;s primary data protection law, administered by the Personal Data Protection Commission (PDPC).[^7] For legal SaaS vendors operating in or serving clients in Singapore, the PDPA imposes distinct obligations:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Personal Data Protection Act (PDPA)</a> is Singapore&#39;s primary data protection law, administered by the Personal Data Protection Commission (PDPC). For legal SaaS vendors operating in or serving clients in Singapore, the PDPA imposes distinct obligations:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">PDPA Obligation</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Consent</strong></td>
+                <td class="py-3 px-4">Obtain consent before collecting, using, or disclosing personal data</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Purpose limitation</strong></td>
+                <td class="py-3 px-4">Use data only for the purpose for which consent was given</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Notification</strong></td>
+                <td class="py-3 px-4">Inform individuals of purposes before or at the time of collection</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Access and correction</strong></td>
+                <td class="py-3 px-4">Provide access to personal data and correct errors on request</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Accuracy</strong></td>
+                <td class="py-3 px-4">Make reasonable effort to ensure data is accurate and complete</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Protection</strong></td>
+                <td class="py-3 px-4">Implement reasonable security arrangements to protect personal data</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Retention limitation</strong></td>
+                <td class="py-3 px-4">Cease retaining data when no longer needed for its purpose</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Transfer limitation</strong></td>
+                <td class="py-3 px-4">Ensure recipients outside Singapore provide comparable protection</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Data breach notification</strong></td>
+                <td class="py-3 px-4">Notify the PDPC within three calendar days of becoming aware of a notifiable breach</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| PDPA Obligation | Description |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------------|-------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Consent</strong> | Obtain consent before collecting, using, or disclosing personal data |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Purpose limitation</strong> | Use data only for the purpose for which consent was given |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Notification</strong> | Inform individuals of purposes before or at the time of collection |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Access and correction</strong> | Provide access to personal data and correct errors on request |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Accuracy</strong> | Make reasonable effort to ensure data is accurate and complete |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Protection</strong> | Implement reasonable security arrangements to protect personal data |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Retention limitation</strong> | Cease retaining data when no longer needed for its purpose |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Transfer limitation</strong> | Ensure recipients outside Singapore provide comparable protection |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data breach notification</strong> | Notify the PDPC within three calendar days of becoming aware of a notifiable breach |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The PDPA&#39;s [2024 Advisory Guidelines on AI Recommendation and Decision Systems](https://www.pdpc.gov.sg/) address how data protection obligations apply when organisations use personal data to train or operate AI &mdash; directly relevant to legal SaaS platforms incorporating AI-powered features like document review, legal research, or case prediction.[^8]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The PDPA&#39;s <a href="https://www.pdpc.gov.sg/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 Advisory Guidelines on AI Recommendation and Decision Systems</a> address how data protection obligations apply when organisations use personal data to train or operate AI &mdash; directly relevant to legal SaaS platforms incorporating AI-powered features like document review, legal research, or case prediction.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Where Professional Privilege Meets Data Protection</h2>
 
@@ -214,41 +281,37 @@
         <li><strong class="text-ink">Legal hold overrides</strong> &mdash; preventing erasure of data subject to active litigation holds</li>
         <li><strong class="text-ink">Jurisdiction-specific retention policies</strong> &mdash; configurable per matter, per client, per regulatory requirement</li>
         <li><strong class="text-ink">Audit trails</strong> &mdash; documenting every DSAR response, retention override, and cross-border transfer decision</li>
-    </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 60 covers <strong class="text-ink">SOC 2, Penetration Testing, and Security Certification</strong> &mdash; how to turn the security controls you&#39;ve built into externally validated evidence that enterprise clients demand before signing contracts.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: GDPR-Info.eu, [General Data Protection Regulation &mdash; Complete Text](https://gdpr-info.eu/) &mdash; full regulation text with article-by-article commentary.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR-Info.eu, <a href="https://gdpr-info.eu/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">General Data Protection Regulation — Complete Text</a> &mdash; full regulation text with article-by-article commentary.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: GDPR-Info.eu, [Article 28 &mdash; Processor](https://gdpr-info.eu/art-28-gdpr/) &mdash; contractual requirements for data processing agreements.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR-Info.eu, <a href="https://gdpr-info.eu/art-28-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 28 — Processor</a> &mdash; contractual requirements for data processing agreements.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Transcend, [DSAR: What Is a Data Subject Access Request? (2026 Guide)](https://transcend.io/blog/dsar) &mdash; DSAR implementation requirements and response timelines.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Transcend, <a href="https://transcend.io/blog/dsar" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DSAR: What Is a Data Subject Access Request? (2026 Guide)</a> &mdash; DSAR implementation requirements and response timelines.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: European Commission, [EU-US Data Transfers](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en) &mdash; adequacy decision under the EU-US Data Privacy Framework.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: European Commission, <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU-US Data Transfers</a> &mdash; adequacy decision under the EU-US Data Privacy Framework.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: European Commission, [New Standard Contractual Clauses &mdash; Questions and Answers](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/new-standard-contractual-clauses-questions-and-answers-overview_en) &mdash; SCC requirements and supplementary measures.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: European Commission, <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/new-standard-contractual-clauses-questions-and-answers-overview_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">New Standard Contractual Clauses — Questions and Answers</a> &mdash; SCC requirements and supplementary measures.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: EDPB, [€1.2 Billion Euro Fine for Facebook as a Result of EDPB Binding Decision](https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en) &mdash; Meta cross-border data transfer enforcement.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: EDPB, <a href="https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">€1.2 Billion Euro Fine for Facebook as a Result of EDPB Binding Decision</a> &mdash; Meta cross-border data transfer enforcement.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: PDPC, [Overview of PDPA](https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act) &mdash; Singapore&#39;s Personal Data Protection Act.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: PDPC, <a href="https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Overview of PDPA</a> &mdash; Singapore&#39;s Personal Data Protection Act.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Chambers and Partners, [Data Protection &amp; Privacy 2025 &mdash; Singapore](https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2025/singapore/trends-and-developments) &mdash; 2024 PDPA advisory guidelines including AI.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Chambers and Partners, <a href="https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2025/singapore/trends-and-developments" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Protection & Privacy 2025 — Singapore</a> &mdash; 2024 PDPA advisory guidelines including AI.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: ICLG, [Data Protection Laws and Regulations &mdash; Singapore 2025-2026](https://iclg.com/practice-areas/data-protection-laws-and-regulations/singapore) &mdash; PDPA obligations and enforcement trends.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ICLG, <a href="https://iclg.com/practice-areas/data-protection-laws-and-regulations/singapore" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Protection Laws and Regulations — Singapore 2025-2026</a> &mdash; PDPA obligations and enforcement trends.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: ICO, [A Guide to International Transfers](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-transfers-a-guide/) &mdash; UK GDPR cross-border transfer guidance.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ICO, <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-transfers-a-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Guide to International Transfers</a> &mdash; UK GDPR cross-border transfer guidance.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: IAPP, [Meta Fined GDPR-Record €1.2 Billion in Data Transfer Case](https://iapp.org/news/a/meta-fined-gdpr-record-1-2-billion-euros-in-data-transfer-case) &mdash; detailed enforcement analysis.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IAPP, <a href="https://iapp.org/news/a/meta-fined-gdpr-record-1-2-billion-euros-in-data-transfer-case" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Meta Fined GDPR-Record €1.2 Billion in Data Transfer Case</a> &mdash; detailed enforcement analysis.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^12]: EDPB, [Respect Individuals&#39; Rights](https://www.edpb.europa.eu/sme-data-protection-guide/respect-individuals-rights_en) &mdash; data subject rights guidance for SMEs.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: EDPB, <a href="https://www.edpb.europa.eu/sme-data-protection-guide/respect-individuals-rights_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Respect Individuals' Rights</a> &mdash; data subject rights guidance for SMEs.</p>
 
 </article>
 
@@ -263,65 +326,59 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">GDPR, PDPA and Data Protection Compliance</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 59 &mdash; data protection compliance. GDPR, PDPA, and how all the security controls we&#39;ve built across this series connect to actual regulation. Alice, this feels like where theory meets the real world.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is. And the first thing to understand is that security and data protection compliance are related but not the same thing. You can build an incredibly secure system and still violate data protection law. Security asks &quot;is this system hard to breach?&quot; Data protection asks &quot;does this system respect people&#39;s rights over their personal data, and can you prove it?&quot; The overlap is significant, but the question is different.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So where does a legal SaaS vendor start?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 59 &mdash; data protection compliance. GDPR, PDPA, and how all the security controls we&#39;ve built across this series connect to actual regulation. Alice, this feels like where theory meets the real world.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> With understanding your role. Under data protection frameworks like the EU&#39;s GDPR &mdash; the General Data Protection Regulation &mdash; there&#39;s a distinction between the data controller and the data processor. The controller decides what data gets collected and why. The processor handles the data on the controller&#39;s instructions. If you&#39;re building a legal SaaS platform, your law firm clients are typically the controllers. They decide which client data goes into your system and for what purpose. You, the platform vendor, are the processor.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. And the first thing to understand is that security and data protection compliance are related but not the same thing. You can build an incredibly secure system and still violate data protection law. Security asks &quot;is this system hard to breach?&quot; Data protection asks &quot;does this system respect people&#39;s rights over their personal data, and can you prove it?&quot; The overlap is significant, but the question is different.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And that distinction matters because it determines who&#39;s responsible for what.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So where does a legal SaaS vendor start?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And the law requires a formal contract between controller and processor &mdash; called a Data Processing Agreement, or DPA. Under GDPR Article 28, this isn&#39;t optional. The DPA must specify what data you process, why, for how long, and what security measures you&#39;ve implemented. If a law firm asks for your DPA and you don&#39;t have one ready, that&#39;s a red flag that will slow down or kill the deal.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;With understanding your role. Under data protection frameworks like the EU&#39;s GDPR &mdash; the General Data Protection Regulation &mdash; there&#39;s a distinction between the data controller and the data processor. The controller decides what data gets collected and why. The processor handles the data on the controller&#39;s instructions. If you&#39;re building a legal SaaS platform, your law firm clients are typically the controllers. They decide which client data goes into your system and for what purpose. You, the platform vendor, are the processor.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. Now, GDPR is EU law. Does it apply to a legal SaaS company based in, say, Singapore or the US?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And that distinction matters because it determines who&#39;s responsible for what.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Yes, if you process personal data of people in the EU. GDPR has extraterritorial reach &mdash; it doesn&#39;t matter where your servers are or where your company is registered. If EU-based lawyers or their clients&#39; data flows through your platform, you&#39;re in scope. And this is not theoretical. In 2023, Ireland&#39;s Data Protection Commission fined Meta one point two billion euros &mdash; that&#39;s the largest GDPR fine ever &mdash; for transferring EU user data to the United States without adequate protections after the Schrems II judgment invalidated the previous data transfer framework.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And the law requires a formal contract between controller and processor &mdash; called a Data Processing Agreement, or DPA. Under GDPR Article 28, this isn&#39;t optional. The DPA must specify what data you process, why, for how long, and what security measures you&#39;ve implemented. If a law firm asks for your DPA and you don&#39;t have one ready, that&#39;s a red flag that will slow down or kill the deal.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. One point two billion. That gets your attention.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. Now, GDPR is EU law. Does it apply to a legal SaaS company based in, say, Singapore or the US?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It should. And the lesson isn&#39;t just for Meta. If your legal SaaS platform uses a US-based cloud provider to host EU client data, you need a legal mechanism for that transfer. There are three main ones. First, adequacy decisions &mdash; the European Commission has determined that certain countries provide adequate data protection, so data can flow freely. The UK, Japan, and the US under the newer Data Privacy Framework all have adequacy status. Second, Standard Contractual Clauses &mdash; pre-approved contract terms that commit the data recipient to GDPR-equivalent protections. Third, Binding Corporate Rules for internal transfers within a company group.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Yes, if you process personal data of people in the EU. GDPR has extraterritorial reach &mdash; it doesn&#39;t matter where your servers are or where your company is registered. If EU-based lawyers or their clients&#39; data flows through your platform, you&#39;re in scope. And this is not theoretical. In 2023, Ireland&#39;s Data Protection Commission fined Meta one point two billion euros &mdash; that&#39;s the largest GDPR fine ever &mdash; for transferring EU user data to the United States without adequate protections after the Schrems II judgment invalidated the previous data transfer framework.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. What about Singapore? You mentioned the PDPA.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. One point two billion. That gets your attention.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Singapore&#39;s Personal Data Protection Act &mdash; the PDPA &mdash; is administered by the PDPC, the Personal Data Protection Commission. It covers similar ground to GDPR but with some differences. It requires consent before collecting personal data, purpose limitation, data breach notification to the PDPC within three calendar days of discovering a notifiable breach, and reasonable security arrangements. For legal SaaS vendors operating in Singapore, the PDPA also has transfer limitation provisions &mdash; if you&#39;re sending personal data outside Singapore, you need to ensure the recipient provides comparable protection.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It should. And the lesson isn&#39;t just for Meta. If your legal SaaS platform uses a US-based cloud provider to host EU client data, you need a legal mechanism for that transfer. There are three main ones. First, adequacy decisions &mdash; the European Commission has determined that certain countries provide adequate data protection, so data can flow freely. The UK, Japan, and the US under the newer Data Privacy Framework all have adequacy status. Second, Standard Contractual Clauses &mdash; pre-approved contract terms that commit the data recipient to GDPR-equivalent protections. Third, Binding Corporate Rules for internal transfers within a company group.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. So both frameworks require the vendor to protect data, report breaches quickly, and handle cross-border transfers carefully. Are there differences that matter in practice?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What about Singapore? You mentioned the PDPA.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; Several. GDPR gives individuals a right to data portability &mdash; the right to receive their personal data in a machine-readable format so they can take it to a competing service. The PDPA doesn&#39;t currently have an equivalent general portability right, though Singapore has introduced data portability provisions in specific sectors. GDPR has the right to erasure &mdash; the so-called right to be forgotten &mdash; which lets people request deletion of their data. The PDPA doesn&#39;t have a direct equivalent, though its retention limitation obligation says you must stop keeping data when it&#39;s no longer needed for its purpose.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Singapore&#39;s Personal Data Protection Act &mdash; the PDPA &mdash; is administered by the PDPC, the Personal Data Protection Commission. It covers similar ground to GDPR but with some differences. It requires consent before collecting personal data, purpose limitation, data breach notification to the PDPC within three calendar days of discovering a notifiable breach, and reasonable security arrangements. For legal SaaS vendors operating in Singapore, the PDPA also has transfer limitation provisions &mdash; if you&#39;re sending personal data outside Singapore, you need to ensure the recipient provides comparable protection.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. Now, here&#39;s where it gets interesting for legal tech specifically. A law firm might have a legal obligation to retain documents for a case, but the individual wants their data deleted. What happens?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So both frameworks require the vendor to protect data, report breaches quickly, and handle cross-border transfers carefully. Are there differences that matter in practice?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s the core tension. Data protection law gives individuals rights over their data. Legal professional privilege and litigation holds restrict what can be disclosed or deleted. These can directly conflict. Imagine a data subject access request &mdash; a DSAR &mdash; from opposing counsel asking for all data your platform holds about them. That request could theoretically surface privileged client communications. Or an erasure request that would destroy documents subject to an active litigation hold.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Several. GDPR gives individuals a right to data portability &mdash; the right to receive their personal data in a machine-readable format so they can take it to a competing service. The PDPA doesn&#39;t currently have an equivalent general portability right, though Singapore has introduced data portability provisions in specific sectors. GDPR has the right to erasure &mdash; the so-called right to be forgotten &mdash; which lets people request deletion of their data. The PDPA doesn&#39;t have a direct equivalent, though its retention limitation obligation says you must stop keeping data when it&#39;s no longer needed for its purpose.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So how does a platform handle that?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Now, here&#39;s where it gets interesting for legal tech specifically. A law firm might have a legal obligation to retain documents for a case, but the individual wants their data deleted. What happens?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> With carefully designed workflows. First, privilege-aware DSAR processing &mdash; when a DSAR comes in, the system flags potentially privileged content for legal review before anything is disclosed. Second, legal hold overrides that prevent erasure of data tied to active litigation. Third, jurisdiction-specific retention policies that can be configured per matter, per client, per regulatory requirement. And fourth, audit trails documenting every decision &mdash; why a request was fulfilled, why it was partially denied, what legal basis justified the override. The key is that your platform needs to support these workflows technically, because your law firm clients will need them to comply with both data protection law and their professional obligations.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the core tension. Data protection law gives individuals rights over their data. Legal professional privilege and litigation holds restrict what can be disclosed or deleted. These can directly conflict. Imagine a data subject access request &mdash; a DSAR &mdash; from opposing counsel asking for all data your platform holds about them. That request could theoretically surface privileged client communications. Or an erasure request that would destroy documents subject to an active litigation hold.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So the platform isn&#39;t just storing data &mdash; it&#39;s enforcing a regulatory framework.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So how does a platform handle that?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s exactly what enterprise legal SaaS becomes. And this is why having your DPA ready, your data flow mapped, your cross-border transfer mechanisms documented, and your subject rights workflows built is not a &quot;nice to have&quot; &mdash; it&#39;s table stakes. A law firm evaluating your platform will ask about all of this. Their compliance team will review your DPA. Their IT security will review your technical measures. And increasingly, their insurers will want to see it too.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;With carefully designed workflows. First, privilege-aware DSAR processing &mdash; when a DSAR comes in, the system flags potentially privileged content for legal review before anything is disclosed. Second, legal hold overrides that prevent erasure of data tied to active litigation. Third, jurisdiction-specific retention policies that can be configured per matter, per client, per regulatory requirement. And fourth, audit trails documenting every decision &mdash; why a request was fulfilled, why it was partially denied, what legal basis justified the override. The key is that your platform needs to support these workflows technically, because your law firm clients will need them to comply with both data protection law and their professional obligations.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That leads nicely into our next episode, doesn&#39;t it?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So the platform isn&#39;t just storing data &mdash; it&#39;s enforcing a regulatory framework.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It does. Episode 60 covers SOC 2, penetration testing, and security certifications &mdash; the frameworks that turn all of this into externally validated evidence. Because telling a client &quot;we take security seriously&quot; means nothing without proof.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s exactly what enterprise legal SaaS becomes. And this is why having your DPA ready, your data flow mapped, your cross-border transfer mechanisms documented, and your subject rights workflows built is not a &quot;nice to have&quot; &mdash; it&#39;s table stakes. A law firm evaluating your platform will ask about all of this. Their compliance team will review your DPA. Their IT security will review your technical measures. And increasingly, their insurers will want to see it too.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; SOC 2, penetration testing, and the certifications that close enterprise deals.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That leads nicely into our next episode, doesn&#39;t it?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It does. Episode 60 covers SOC 2, penetration testing, and security certifications &mdash; the frameworks that turn all of this into externally validated evidence. Because telling a client &quot;we take security seriously&quot; means nothing without proof.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; SOC 2, penetration testing, and the certifications that close enterprise deals.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
-
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

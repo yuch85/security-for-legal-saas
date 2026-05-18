@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">You&#39;ve built your legal SaaS platform with secure authentication, encrypted transport, input validation, and proper access controls. But security is not a static property &mdash; it&#39;s a continuous process. Attackers don&#39;t announce themselves. A credential stuffing attack (automated login attempts using leaked passwords, as covered in [Episode 14](../ep14/article.md)) generates thousands of failed login events over minutes. A data exfiltration attempt looks like normal API calls until you notice the vo</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">You&#39;ve built your legal SaaS platform with secure authentication, encrypted transport, input validation, and proper access controls. But security is not a static property &mdash; it&#39;s a continuous process. Attackers don&#39;t announce themselves. A credential stuffing attack (automated login attempts using leaked passwords, as covered in Episode 14) generates thousands of failed login events over minutes. A data exfiltration attempt looks like normal API calls until you notice the volume. Without monitori</p>
 </div>
 
 <!-- Article -->
@@ -76,39 +76,53 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 53: Monitoring and Alerting Design</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">If Nobody Sees the Alert, It Didn&#39;t Fire</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">You&#39;ve built your legal SaaS platform with secure authentication, encrypted transport, input validation, and proper access controls. But security is not a static property &mdash; it&#39;s a continuous process. Attackers don&#39;t announce themselves. A credential stuffing attack (automated login attempts using leaked passwords, as covered in [Episode 14](../ep14/article.md)) generates thousands of failed login events over minutes. A data exfiltration attempt looks like normal API calls until you notice the volume. Without monitoring, you won&#39;t detect the attack until a client calls asking why their documents are on the internet.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">You&#39;ve built your legal SaaS platform with secure authentication, encrypted transport, input validation, and proper access controls. But security is not a static property &mdash; it&#39;s a continuous process. Attackers don&#39;t announce themselves. A credential stuffing attack (automated login attempts using leaked passwords, as covered in Episode 14) generates thousands of failed login events over minutes. A data exfiltration attempt looks like normal API calls until you notice the volume. Without monitoring, you won&#39;t detect the attack until a client calls asking why their documents are on the internet.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST Cybersecurity Framework 2.0](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf) organises cybersecurity into six core functions: Govern, Identify, Protect, Detect, Respond, and Recover. The <strong class="text-ink">Detect</strong> function specifically requires &quot;continuous monitoring capabilities to monitor cybersecurity events and verify the effectiveness of protective measures.&quot;[^1] Everything we&#39;ve covered in this series until now falls under Protect. Starting this episode, we shift to Detect, Respond, and Recover.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Cybersecurity Framework 2.0</a> organises cybersecurity into six core functions: Govern, Identify, Protect, Detect, Respond, and Recover. The <strong class="text-ink">Detect</strong> function specifically requires &quot;continuous monitoring capabilities to monitor cybersecurity events and verify the effectiveness of protective measures.&quot; Everything we&#39;ve covered in this series until now falls under Protect. Starting this episode, we shift to Detect, Respond, and Recover.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What to Monitor for Security</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not all system events are security events. Effective monitoring requires knowing which signals indicate malicious activity versus normal operations.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Authentication Anomalies</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Signal | What It Might Indicate |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|----------------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Spike in failed login attempts from one IP | Credential stuffing or brute-force attack |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Successful login from an unusual geography | Compromised credentials used from attacker&#39;s location |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Login followed immediately by bulk data export | Account takeover in progress |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Multiple MFA failures before a success | MFA fatigue attack (as covered in [Episode 21](../ep21/article.md)) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Login outside business hours with privileged actions | Insider threat or compromised admin account |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Signal</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Might Indicate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Spike in failed login attempts from one IP</td>
+                <td class="py-3 px-4">Credential stuffing or brute-force attack</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Successful login from an unusual geography</td>
+                <td class="py-3 px-4">Compromised credentials used from attacker&#39;s location</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Login followed immediately by bulk data export</td>
+                <td class="py-3 px-4">Account takeover in progress</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Multiple MFA failures before a success</td>
+                <td class="py-3 px-4">MFA fatigue attack (as covered in Episode 21)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Login outside business hours with privileged actions</td>
+                <td class="py-3 px-4">Insider threat or compromised admin account</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Authorisation Violations</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every time a user tries to access a resource they don&#39;t have permission for, that&#39;s a data point. One occurrence is probably a UI bug or a misclick. Ten occurrences from the same user in a minute, targeting different client records, is likely an attacker probing for IDOR vulnerabilities (Insecure Direct Object Reference &mdash; accessing other users&#39; data by changing identifiers in requests, as covered in [Episode 6](../ep06/article.md)).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every time a user tries to access a resource they don&#39;t have permission for, that&#39;s a data point. One occurrence is probably a UI bug or a misclick. Ten occurrences from the same user in a minute, targeting different client records, is likely an attacker probing for IDOR vulnerabilities (Insecure Direct Object Reference &mdash; accessing other users&#39; data by changing identifiers in requests, as covered in Episode 6).</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Data Access Patterns</h3>
 
@@ -116,13 +130,11 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">API Abuse</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Rate limit violations (as covered in [Episode 14](../ep14/article.md)), unusual API call patterns, requests to endpoints that don&#39;t exist (reconnaissance), and sudden spikes in traffic from a single source all warrant monitoring.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Rate limit violations (as covered in Episode 14), unusual API call patterns, requests to endpoints that don&#39;t exist (reconnaissance), and sudden spikes in traffic from a single source all warrant monitoring.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Alert Fatigue: The Silent Killer</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The biggest threat to monitoring is not insufficient data &mdash; it&#39;s too much noise. [Forrester Research](https://www.databahn.ai/blog/siem-alert-fatigue-false-positive) reported that SOC (Security Operations Centre &mdash; the team responsible for monitoring and responding to security events) teams received an average of 11,000 alerts per day.[^2] An [ACM Computing Surveys study](https://dl.acm.org/doi/10.1145/3723158) found that alert fatigue causes security teams to miss up to 30% of alerts &mdash; they go uninvestigated or are completely overlooked.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The biggest threat to monitoring is not insufficient data &mdash; it&#39;s too much noise. <a href="https://www.databahn.ai/blog/siem-alert-fatigue-false-positive" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Forrester Research</a> reported that SOC (Security Operations Centre &mdash; the team responsible for monitoring and responding to security events) teams received an average of 11,000 alerts per day. An <a href="https://dl.acm.org/doi/10.1145/3723158" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ACM Computing Surveys study</a> found that alert fatigue causes security teams to miss up to 30% of alerts &mdash; they go uninvestigated or are completely overlooked.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a small legal tech team without a dedicated SOC, the risk is even higher. If your monitoring system sends fifty alerts a day and forty-eight are false positives, your team will stop reading them. The two real alerts get buried.</p>
 
@@ -134,25 +146,44 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Designing Alerts That Get Acted On</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Fewer, higher-fidelity alerts.</strong> [Modern SIEM systems](https://radiantsecurity.ai/learn/siem-security-information-and-event-management-explained-2026-guide/) (Security Information and Event Management &mdash; platforms that aggregate logs from multiple sources, correlate events, and generate alerts) aggregate observations across data sources, assign risk scores based on asset criticality and user privilege level, and only escalate when cumulative risk exceeds defined thresholds.[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Fewer, higher-fidelity alerts.</strong> <a href="https://radiantsecurity.ai/learn/siem-security-information-and-event-management-explained-2026-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Modern SIEM systems</a> (Security Information and Event Management &mdash; platforms that aggregate logs from multiple sources, correlate events, and generate alerts) aggregate observations across data sources, assign risk scores based on asset criticality and user privilege level, and only escalate when cumulative risk exceeds defined thresholds.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Contextual enrichment.</strong> An alert saying &quot;failed login from 203.0.113.45&quot; is useless. An alert saying &quot;12 failed logins from 203.0.113.45 (Tor exit node, never seen before) targeting admin accounts over 3 minutes&quot; gives the responder enough context to act immediately.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tiered severity.</strong> Not every alert needs the same response:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Severity | Example | Response |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|---------|----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Critical</strong> | Successful admin login from unknown country | Immediate page, force session termination |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">High</strong> | Bulk data export exceeding 10x normal volume | Page within 15 minutes, investigate |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Medium</strong> | Credential stuffing pattern detected | Review within 4 hours, consider IP block |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Low</strong> | Single user accessing more files than usual | Log for review in daily security check |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Severity</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Critical</strong></td>
+                <td class="py-3 px-4">Successful admin login from unknown country</td>
+                <td class="py-3 px-4">Immediate page, force session termination</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">High</strong></td>
+                <td class="py-3 px-4">Bulk data export exceeding 10x normal volume</td>
+                <td class="py-3 px-4">Page within 15 minutes, investigate</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Medium</strong></td>
+                <td class="py-3 px-4">Credential stuffing pattern detected</td>
+                <td class="py-3 px-4">Review within 4 hours, consider IP block</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Low</strong></td>
+                <td class="py-3 px-4">Single user accessing more files than usual</td>
+                <td class="py-3 px-4">Log for review in daily security check</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SIEM vs. Log Aggregation: Right-Sizing Your Stack</h2>
 
@@ -160,15 +191,13 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Log aggregation</strong> (tools like the ELK stack &mdash; Elasticsearch/Logstash/Kibana &mdash; or Grafana Loki) collects and centralises logs from your applications, databases, and infrastructure. You query them manually or write simple alert rules. For a small team with a single application, this is often sufficient.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">SIEM</strong> adds correlation, behavioural analytics, and automated response. It connects events across sources: &quot;this IP failed to log in five times, then succeeded, then accessed the admin panel, then started downloading documents&quot; &mdash; connecting dots that individual log sources can&#39;t. [Exabeam](https://www.exabeam.com/explainers/siem/siem-alerts-understanding-security-information-and-event-alerts/) and [Graylog](https://graylog.org/post/siem-automation-to-improve-threat-detection-and-incident-response/) describe how modern SIEMs integrate UEBA (User and Entity Behaviour Analytics &mdash; machine learning models that establish baselines of normal behaviour and flag anomalies) to reduce false positives.[^5][^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">SIEM</strong> adds correlation, behavioural analytics, and automated response. It connects events across sources: &quot;this IP failed to log in five times, then succeeded, then accessed the admin panel, then started downloading documents&quot; &mdash; connecting dots that individual log sources can&#39;t. <a href="https://www.exabeam.com/explainers/siem/siem-alerts-understanding-security-information-and-event-alerts/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Exabeam</a> and <a href="https://graylog.org/post/siem-automation-to-improve-threat-detection-and-incident-response/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Graylog</a> describe how modern SIEMs integrate UEBA (User and Entity Behaviour Analytics &mdash; machine learning models that establish baselines of normal behaviour and flag anomalies) to reduce false positives.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;For small legal SaaS teams:&lt;/strong&gt; Start with structured logging (from &lt;a href=&quot;../ep52/article.md&quot;&gt;Episode 52&lt;/a&gt;) feeding into a log aggregation platform. Write alert rules for the high-priority signals: failed login spikes, admin privilege escalation, bulk data access. Graduate to a SIEM when your user base, team size, or compliance requirements demand it. A well-configured log aggregation system with five good alert rules is better than a SIEM nobody has time to tune.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;For small legal SaaS teams:&lt;/strong&gt; Start with structured logging (from <a href="../ep52/article.md">Episode 52</a>) feeding into a log aggregation platform. Write alert rules for the high-priority signals: failed login spikes, admin privilege escalation, bulk data access. Graduate to a SIEM when your user base, team size, or compliance requirements demand it. A well-configured log aggregation system with five good alert rules is better than a SIEM nobody has time to tune.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security-Specific Dashboards</h2>
 
@@ -178,11 +207,9 @@
         <li><strong class="text-ink">Access patterns:</strong> Top data-accessing users. Cross-client data access (should be zero for non-admin users). Bulk operations.</li>
         <li><strong class="text-ink">API health:</strong> Requests per second by endpoint. 4xx/5xx error rates. Rate limit triggers.</li>
         <li><strong class="text-ink">Dependency health:</strong> Known vulnerabilities in current dependencies. Time since last scan.</li>
-    </ul>
+    </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These dashboards are not just operational tools &mdash; they&#39;re evidence. When a client or regulator asks &quot;how do you monitor for security incidents?&quot; you point to the dashboard and the alert history.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">On-Call for Security Events</h2>
 
@@ -194,59 +221,77 @@
         <li><strong class="text-ink">Runbook for common scenarios:</strong> What to do when you see credential stuffing. What to do when you see bulk data export. Pre-written steps reduce response time from hours to minutes</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST SP 800-61 Revision 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final), updated in April 2025, now maps incident response activities directly to the CSF 2.0 functions, providing concrete guidance on detection and response procedures.[^7]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-61 Revision 3</a>, updated in April 2025, now maps incident response activities directly to the CSF 2.0 functions, providing concrete guidance on detection and response procedures.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Monitoring Minimum</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Control | Purpose |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|---------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Centralised structured logging | Single source of truth for all security events |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Authentication event monitoring | Detect credential attacks and account compromise |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Authorisation violation tracking | Detect access control probing and IDOR attempts |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Data access volume alerting | Detect exfiltration and insider threats |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Tiered alert severity | Ensure critical events get immediate attention |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Named on-call responder | Someone is always responsible for acting on alerts |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Monthly alert tuning | Reduce false positives, update thresholds, add new rules |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Centralised structured logging</td>
+                <td class="py-3 px-4">Single source of truth for all security events</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Authentication event monitoring</td>
+                <td class="py-3 px-4">Detect credential attacks and account compromise</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Authorisation violation tracking</td>
+                <td class="py-3 px-4">Detect access control probing and IDOR attempts</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Data access volume alerting</td>
+                <td class="py-3 px-4">Detect exfiltration and insider threats</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Tiered alert severity</td>
+                <td class="py-3 px-4">Ensure critical events get immediate attention</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Named on-call responder</td>
+                <td class="py-3 px-4">Someone is always responsible for acting on alerts</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Monthly alert tuning</td>
+                <td class="py-3 px-4">Reduce false positives, update thresholds, add new rules</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Monitoring without actionable alerting is just expensive logging. The goal is not to collect data &mdash; it&#39;s to detect threats fast enough to stop them before they become breaches.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: what happens when monitoring detects something real &mdash; incident response playbooks for when things go wrong.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: NIST, [Cybersecurity Framework 2.0](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity Framework 2.0</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Databahn, [The Cybersecurity Alert Fatigue Epidemic](https://www.databahn.ai/blog/siem-alert-fatigue-false-positive).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Databahn, <a href="https://www.databahn.ai/blog/siem-alert-fatigue-false-positive" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Cybersecurity Alert Fatigue Epidemic</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: ACM Computing Surveys, [Alert Fatigue in Security Operations Centres: Research Challenges and Opportunities](https://dl.acm.org/doi/10.1145/3723158).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ACM Computing Surveys, <a href="https://dl.acm.org/doi/10.1145/3723158" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Alert Fatigue in Security Operations Centres: Research Challenges and Opportunities</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Radiant Security, [SIEM: Security Information and Event Management Explained &mdash; 2026 Guide](https://radiantsecurity.ai/learn/siem-security-information-and-event-management-explained-2026-guide/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Radiant Security, <a href="https://radiantsecurity.ai/learn/siem-security-information-and-event-management-explained-2026-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM: Security Information and Event Management Explained — 2026 Guide</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Exabeam, [SIEM Alerts: Understanding Security Information and Event Alerts](https://www.exabeam.com/explainers/siem/siem-alerts-understanding-security-information-and-event-alerts/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Exabeam, <a href="https://www.exabeam.com/explainers/siem/siem-alerts-understanding-security-information-and-event-alerts/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM Alerts: Understanding Security Information and Event Alerts</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Graylog, [SIEM Automation to Improve Threat Detection and Incident Response](https://graylog.org/post/siem-automation-to-improve-threat-detection-and-incident-response/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Graylog, <a href="https://graylog.org/post/siem-automation-to-improve-threat-detection-and-incident-response/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM Automation to Improve Threat Detection and Incident Response</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: NIST, [SP 800-61 Revision 3: Incident Response Recommendations and Considerations](https://csrc.nist.gov/pubs/sp/800/61/r3/final).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-61 Revision 3: Incident Response Recommendations and Considerations</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Deepwatch, [Modern Security Information and Event Management (SIEM) Strategies](https://www.deepwatch.com/glossary/security-information-and-event-management-siem/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Deepwatch, <a href="https://www.deepwatch.com/glossary/security-information-and-event-management-siem/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Modern Security Information and Event Management (SIEM) Strategies</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: SearchInform, [How SIEM Aligns with NIST, ISO, and Other Cybersecurity Frameworks](https://searchinform.com/articles/cybersecurity/measures/siem/management/siem-and-cybersecurity-frameworks/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SearchInform, <a href="https://searchinform.com/articles/cybersecurity/measures/siem/management/siem-and-cybersecurity-frameworks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How SIEM Aligns with NIST, ISO, and Other Cybersecurity Frameworks</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: ManageEngine, [What Is SIEM? Security Information &amp; Event Management Guide (2026)](https://www.manageengine.com/log-management/siem/what-is-siem.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ManageEngine, <a href="https://www.manageengine.com/log-management/siem/what-is-siem.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Is SIEM? Security Information & Event Management Guide (2026)</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Saltycloud / Isora GRC, [NIST CSF Functions and Tiers: Complete Guide](https://www.saltycloud.com/blog/nist-csf-functions-and-tiers/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Saltycloud / Isora GRC, <a href="https://www.saltycloud.com/blog/nist-csf-functions-and-tiers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST CSF Functions and Tiers: Complete Guide</a>.</p>
 
 </article>
 
@@ -261,63 +306,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 53, and we&#39;re starting a new module &mdash; monitoring, alerting, and incident response. Alice, we&#39;ve spent the last ten episodes on building secure infrastructure. Now we&#39;re talking about watching it. How do you know when something&#39;s going wrong?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 53, and we&#39;re starting a new module &mdash; monitoring, alerting, and incident response. Alice, we&#39;ve spent the last ten episodes on building secure infrastructure. Now we&#39;re talking about watching it. How do you know when something&#39;s going wrong?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And that shift matters. Everything up to this point has been about prevention &mdash; building walls. This module is about detection and response. Because here&#39;s the reality: prevention eventually fails. Not might fail &mdash; will fail. A credential gets stolen, a new vulnerability is disclosed in a library you depend on, an insider does something they shouldn&#39;t. The question isn&#39;t whether something bad will happen. It&#39;s whether you&#39;ll know about it in time to do something.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And that shift matters. Everything up to this point has been about prevention &mdash; building walls. This module is about detection and response. Because here&#39;s the reality: prevention eventually fails. Not might fail &mdash; will fail. A credential gets stolen, a new vulnerability is disclosed in a library you depend on, an insider does something they shouldn&#39;t. The question isn&#39;t whether something bad will happen. It&#39;s whether you&#39;ll know about it in time to do something.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So where do you start with monitoring?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So where do you start with monitoring?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Start with the signals that matter most. Authentication anomalies are the highest-value signals for most legal SaaS platforms. A spike in failed login attempts from one IP address &mdash; that&#39;s a credential stuffing attack, where someone is trying leaked passwords from other breaches against your system. We covered that back in Episode 14. A successful login from an unusual country, followed immediately by a bulk data export &mdash; that&#39;s an account takeover in progress. Multiple MFA failures before a success &mdash; that might be an MFA fatigue attack, which we discussed in Episode 21.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Start with the signals that matter most. Authentication anomalies are the highest-value signals for most legal SaaS platforms. A spike in failed login attempts from one IP address &mdash; that&#39;s a credential stuffing attack, where someone is trying leaked passwords from other breaches against your system. We covered that back in Episode 14. A successful login from an unusual country, followed immediately by a bulk data export &mdash; that&#39;s an account takeover in progress. Multiple MFA failures before a success &mdash; that might be an MFA fatigue attack, which we discussed in Episode 21.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And beyond logins?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And beyond logins?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Authorisation violations. Every time a user tries to access something they don&#39;t have permission for, log it. One occurrence is a UI bug. Ten occurrences from the same user in a minute, targeting different client records &mdash; that&#39;s someone probing for IDOR vulnerabilities, trying to access other people&#39;s data by changing the ID in the request. We covered that in Episode 6. Then there&#39;s data access volume. A lawyer reviewing twenty documents in their case file is normal. The same account downloading every document across every client in the system &mdash; that&#39;s either an insider threat or a compromised account.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Authorisation violations. Every time a user tries to access something they don&#39;t have permission for, log it. One occurrence is a UI bug. Ten occurrences from the same user in a minute, targeting different client records &mdash; that&#39;s someone probing for IDOR vulnerabilities, trying to access other people&#39;s data by changing the ID in the request. We covered that in Episode 6. Then there&#39;s data access volume. A lawyer reviewing twenty documents in their case file is normal. The same account downloading every document across every client in the system &mdash; that&#39;s either an insider threat or a compromised account.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So you&#39;re watching logins, access violations, and data volume. But here&#39;s what I wonder &mdash; if you monitor everything, don&#39;t you end up drowning in alerts?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. So you&#39;re watching logins, access violations, and data volume. But here&#39;s what I wonder &mdash; if you monitor everything, don&#39;t you end up drowning in alerts?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; That&#39;s exactly the problem. It&#39;s called alert fatigue, and it&#39;s killed more security programmes than any attacker. Forrester Research found that security operations teams receive an average of eleven thousand alerts per day. A study in ACM Computing Surveys found that alert fatigue causes teams to miss up to thirty percent of alerts. They go completely uninvestigated.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; That&#39;s exactly the problem. It&#39;s called alert fatigue, and it&#39;s killed more security programmes than any attacker. Forrester Research found that security operations teams receive an average of eleven thousand alerts per day. A study in ACM Computing Surveys found that alert fatigue causes teams to miss up to thirty percent of alerts. They go completely uninvestigated.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. Thirty percent of security alerts just... ignored.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. Thirty percent of security alerts just... ignored.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The Target breach in 2013 is the textbook example. Their security monitoring system &mdash; FireEye &mdash; detected the malware. It generated alerts. The security team in Bangalore saw the alerts. Nobody acted on them. The breach exposed forty million credit card numbers. The technology worked perfectly. The alerting process failed. And that&#39;s a company with a dedicated security team. For a small legal tech team with maybe five developers and no full-time security person, the risk of alert fatigue is even worse.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The Target breach in 2013 is the textbook example. Their security monitoring system &mdash; FireEye &mdash; detected the malware. It generated alerts. The security team in Bangalore saw the alerts. Nobody acted on them. The breach exposed forty million credit card numbers. The technology worked perfectly. The alerting process failed. And that&#39;s a company with a dedicated security team. For a small legal tech team with maybe five developers and no full-time security person, the risk of alert fatigue is even worse.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So how do you design alerts that people actually respond to?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. So how do you design alerts that people actually respond to?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three principles. First &mdash; fewer, higher-quality alerts. Don&#39;t alert on every failed login. Alert on patterns: twelve failed logins from the same IP targeting admin accounts in three minutes. One alert, high confidence, actionable. Second &mdash; contextual enrichment. The alert shouldn&#39;t just say &quot;failed login from IP address.&quot; It should say &quot;failed login from IP address that&#39;s a known Tor exit node, never seen before, targeting admin accounts, twelve attempts in three minutes.&quot; Give the responder enough context to act immediately without having to go dig through logs.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three principles. First &mdash; fewer, higher-quality alerts. Don&#39;t alert on every failed login. Alert on patterns: twelve failed logins from the same IP targeting admin accounts in three minutes. One alert, high confidence, actionable. Second &mdash; contextual enrichment. The alert shouldn&#39;t just say &quot;failed login from IP address.&quot; It should say &quot;failed login from IP address that&#39;s a known Tor exit node, never seen before, targeting admin accounts, twelve attempts in three minutes.&quot; Give the responder enough context to act immediately without having to go dig through logs.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And severity levels?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. And severity levels?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Tier your alerts. Critical: successful admin login from an unknown country &mdash; page someone immediately, force-terminate the session. High: bulk data export ten times above normal volume &mdash; page within fifteen minutes, investigate. Medium: credential stuffing pattern detected &mdash; review within four hours, consider blocking the IP. Low: one user accessing more files than usual &mdash; log it for the daily security review. Not every alert is a fire. But the fires need to reach someone who can act, immediately.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Tier your alerts. Critical: successful admin login from an unknown country &mdash; page someone immediately, force-terminate the session. High: bulk data export ten times above normal volume &mdash; page within fifteen minutes, investigate. Medium: credential stuffing pattern detected &mdash; review within four hours, consider blocking the IP. Low: one user accessing more files than usual &mdash; log it for the daily security review. Not every alert is a fire. But the fires need to reach someone who can act, immediately.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Now, I keep hearing the term SIEM. What is that, and does a small team need one?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Now, I keep hearing the term SIEM. What is that, and does a small team need one?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;SIEM stands for Security Information and Event Management. It&#39;s a platform that collects logs from all your systems &mdash; your application, your database, your cloud infrastructure &mdash; correlates events across those sources, and generates alerts. The power of a SIEM is connection. It sees: &quot;this IP failed to log in five times, then succeeded, then accessed the admin panel, then started downloading documents.&quot; Individual log sources can&#39;t connect those dots. A SIEM can.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> SIEM stands for Security Information and Event Management. It&#39;s a platform that collects logs from all your systems &mdash; your application, your database, your cloud infrastructure &mdash; correlates events across those sources, and generates alerts. The power of a SIEM is connection. It sees: &quot;this IP failed to log in five times, then succeeded, then accessed the admin panel, then started downloading documents.&quot; Individual log sources can&#39;t connect those dots. A SIEM can.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. But that sounds expensive and complex for a small team.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah. But that sounds expensive and complex for a small team.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It can be. And for a small team &mdash; say, building a case management SaaS with ten to fifty customers &mdash; you often don&#39;t need a full SIEM. Start with log aggregation. Tools like the ELK stack &mdash; that&#39;s Elasticsearch, Logstash, and Kibana &mdash; or Grafana Loki. Centralise your logs. Write simple alert rules for the high-priority signals: failed login spikes, admin privilege changes, bulk data access. Five well-tuned alert rules in a log aggregation system are more effective than a SIEM that nobody has time to configure properly. Graduate to a SIEM when your user base, team, or compliance requirements demand it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It can be. And for a small team &mdash; say, building a case management SaaS with ten to fifty customers &mdash; you often don&#39;t need a full SIEM. Start with log aggregation. Tools like the ELK stack &mdash; that&#39;s Elasticsearch, Logstash, and Kibana &mdash; or Grafana Loki. Centralise your logs. Write simple alert rules for the high-priority signals: failed login spikes, admin privilege changes, bulk data access. Five well-tuned alert rules in a log aggregation system are more effective than a SIEM that nobody has time to configure properly. Graduate to a SIEM when your user base, team, or compliance requirements demand it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And someone has to actually respond to these alerts, right? Who does that on a small team?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. And someone has to actually respond to these alerts, right? Who does that on a small team?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You need clear ownership. A named person &mdash; or a rotation if you have enough people &mdash; who reviews security alerts daily and responds to critical alerts immediately. They need escalation paths: if I can&#39;t handle this, who do I call? And they need decision authority. The on-call person must be able to block an IP, terminate a session, or disable an account without waiting for a manager to approve it. Because if an account takeover is in progress and the response takes two hours because someone needed permission to act, that&#39;s two hours of data exfiltration.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> You need clear ownership. A named person &mdash; or a rotation if you have enough people &mdash; who reviews security alerts daily and responds to critical alerts immediately. They need escalation paths: if I can&#39;t handle this, who do I call? And they need decision authority. The on-call person must be able to block an IP, terminate a session, or disable an account without waiting for a manager to approve it. Because if an account takeover is in progress and the response takes two hours because someone needed permission to act, that&#39;s two hours of data exfiltration.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Pre-written playbooks for common scenarios?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Pre-written playbooks for common scenarios?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. A runbook &mdash; a documented set of steps &mdash; for each common scenario. &quot;When you see credential stuffing: check the source IP, check if any accounts were compromised, block the IP if it&#39;s external, force password resets on any accounts that had successful logins during the attack window.&quot; Pre-written steps reduce response time from hours to minutes. NIST updated their incident response guidance &mdash; SP 800-61 Revision 3 &mdash; in April 2025. It now maps directly to the Cybersecurity Framework 2.0 functions, and it specifically recommends playbook-style documentation.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. A runbook &mdash; a documented set of steps &mdash; for each common scenario. &quot;When you see credential stuffing: check the source IP, check if any accounts were compromised, block the IP if it&#39;s external, force password resets on any accounts that had successful logins during the attack window.&quot; Pre-written steps reduce response time from hours to minutes. NIST updated their incident response guidance &mdash; SP 800-61 Revision 3 &mdash; in April 2025. It now maps directly to the Cybersecurity Framework 2.0 functions, and it specifically recommends playbook-style documentation.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And the dashboards &mdash; what should they show at a glance?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And the dashboards &mdash; what should they show at a glance?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Four things. Authentication health: login success and failure rates, unusual geography, MFA adoption. Access patterns: who&#39;s accessing what, any cross-client data access that shouldn&#39;t happen. API health: requests per second, error rates, rate limit triggers. And dependency health: known vulnerabilities in your current libraries. These dashboards aren&#39;t just operational. They&#39;re evidence. When a client or a regulator asks &quot;how do you monitor for security incidents,&quot; you show the dashboard and the alert history.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Four things. Authentication health: login success and failure rates, unusual geography, MFA adoption. Access patterns: who&#39;s accessing what, any cross-client data access that shouldn&#39;t happen. API health: requests per second, error rates, rate limit triggers. And dependency health: known vulnerabilities in your current libraries. These dashboards aren&#39;t just operational. They&#39;re evidence. When a client or a regulator asks &quot;how do you monitor for security incidents,&quot; you show the dashboard and the alert history.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; incident response playbooks. What happens when monitoring catches something real, and you need to contain a breach.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; incident response playbooks. What happens when monitoring catches something real, and you need to contain a breach.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

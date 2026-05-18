@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">In [Episode 28](../ep28/article.md), we covered encryption at rest and in transit &mdash; the two fundamental layers that protect legal data from eavesdroppers and stolen disks. But encryption without proper key management is theatre. A key stored next to the data it protects is like locking a filing cabinet and taping the key to the front. The lock exists, but the security does not. This episode focuses on the infrastructure that makes encryption actually work: how cryptographic keys are generated, s</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">In Episode 28, we covered encryption at rest and in transit &mdash; the two fundamental layers that protect legal data from eavesdroppers and stolen disks. But encryption without proper key management is theatre. A key stored next to the data it protects is like locking a filing cabinet and taping the key to the front. The lock exists, but the security does not. This episode focuses on the infrastructure that makes encryption actually work: how cryptographic keys are generated, stored, rotated, and re</p>
 </div>
 
 <!-- Article -->
@@ -76,55 +76,102 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 29: Key Management and Rotation</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Your Encryption Is Only as Strong as Your Key Management</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 28](../ep28/article.md), we covered encryption at rest and in transit &mdash; the two fundamental layers that protect legal data from eavesdroppers and stolen disks. But encryption without proper key management is theatre. A key stored next to the data it protects is like locking a filing cabinet and taping the key to the front. The lock exists, but the security does not.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 28, we covered encryption at rest and in transit &mdash; the two fundamental layers that protect legal data from eavesdroppers and stolen disks. But encryption without proper key management is theatre. A key stored next to the data it protects is like locking a filing cabinet and taping the key to the front. The lock exists, but the security does not.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This episode focuses on the infrastructure that makes encryption actually work: how cryptographic keys are generated, stored, rotated, and retired &mdash; and why getting this wrong has caused some of the most damaging breaches in legal technology.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Key Hierarchy: Master Keys, Data Keys, and Envelope Encryption</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern key management uses a layered hierarchy rather than a single key for everything. The pattern is called <strong class="text-ink">envelope encryption</strong>, and it works like a chain of locked boxes:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Layer</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Master key (root key)</strong></td>
+                <td class="py-3 px-4">Protects all other keys; never touches data directly</td>
+                <td class="py-3 px-4">AWS KMS root key, GCP Cloud KMS key</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Key-encrypting key (KEK)</strong></td>
+                <td class="py-3 px-4">Wraps data encryption keys for storage and transport</td>
+                <td class="py-3 px-4">Intermediate key in a Vault transit backend</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Data encryption key (DEK)</strong></td>
+                <td class="py-3 px-4">Encrypts actual data (documents, database fields, files)</td>
+                <td class="py-3 px-4">AES-256 key generated per-record or per-tenant</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Layer | Purpose | Example |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When your case management system encrypts a client&#39;s document, it generates a fresh DEK, encrypts the document with that DEK, then encrypts the DEK itself with the master key. The encrypted DEK is stored alongside the encrypted document. The plaintext DEK is discarded immediately. To decrypt, the system asks the key management service (KMS) to unwrap the DEK using the master key, then uses the plaintext DEK to decrypt the document.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|---------|---------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Master key (root key)</strong> | Protects all other keys; never touches data directly | AWS KMS root key, GCP Cloud KMS key |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Key-encrypting key (KEK)</strong> | Wraps data encryption keys for storage and transport | Intermediate key in a Vault transit backend |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data encryption key (DEK)</strong> | Encrypts actual data (documents, database fields, files) | AES-256 key generated per-record or per-tenant |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When your case management system encrypts a client&#39;s document, it generates a fresh DEK, encrypts the document with that DEK, then encrypts the DEK itself with the master key. The encrypted DEK is stored alongside the encrypted document. The plaintext DEK is discarded immediately. To decrypt, the system asks the key management service (KMS) to unwrap the DEK using the master key, then uses the plaintext DEK to decrypt the document.[^1]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means the master key never leaves the KMS boundary. Even if an attacker steals your entire database &mdash; encrypted documents and encrypted DEKs included &mdash; they cannot decrypt anything without access to the master key inside the KMS.[^2]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means the master key never leaves the KMS boundary. Even if an attacker steals your entire database &mdash; encrypted documents and encrypted DEKs included &mdash; they cannot decrypt anything without access to the master key inside the KMS.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Why this matters for legal SaaS:</strong> If your platform stores privileged attorney-client communications, opposing counsel&#39;s discovery documents, and merger negotiations in the same database, envelope encryption lets you use different DEKs per client matter. Compromising one matter&#39;s key does not expose another.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Key Management Services: The Hardware Behind the Trust</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A key management service is a specialised system &mdash; often backed by tamper-resistant hardware called a Hardware Security Module (HSM) &mdash; that generates, stores, and performs cryptographic operations with master keys. The master key material never leaves the HSM boundary in plaintext.</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Service</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Provider</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">HSM Backing</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Rotation</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Pricing Model</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS KMS</a></td>
+                <td class="py-3 px-4">Amazon</td>
+                <td class="py-3 px-4">FIPS 140-2 Level 3</td>
+                <td class="py-3 px-4">Automatic (annual) or on-demand</td>
+                <td class="py-3 px-4">Per-key + per-request</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://cloud.google.com/security/products/security-key-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud KMS</a></td>
+                <td class="py-3 px-4">Google Cloud</td>
+                <td class="py-3 px-4">FIPS 140-2 Level 3</td>
+                <td class="py-3 px-4">Automatic (configurable period)</td>
+                <td class="py-3 px-4">Per-key-version + per-operation</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://learn.microsoft.com/en-us/azure/key-vault/general/overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Azure Key Vault</a></td>
+                <td class="py-3 px-4">Microsoft</td>
+                <td class="py-3 px-4">FIPS 140-2 Level 2/3</td>
+                <td class="py-3 px-4">Manual or policy-based</td>
+                <td class="py-3 px-4">Per-operation + per-key</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://developer.hashicorp.com/vault/tutorials/secrets-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HashiCorp Vault</a></td>
+                <td class="py-3 px-4">HashiCorp</td>
+                <td class="py-3 px-4">Optional HSM backend</td>
+                <td class="py-3 px-4">Policy-driven</td>
+                <td class="py-3 px-4">Self-hosted or HCP managed</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Service | Provider | HSM Backing | Key Rotation | Pricing Model |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|----------|-------------|--------------|---------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html) | Amazon | FIPS 140-2 Level 3 | Automatic (annual) or on-demand | Per-key + per-request |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [Cloud KMS](https://cloud.google.com/security/products/security-key-management) | Google Cloud | FIPS 140-2 Level 3 | Automatic (configurable period) | Per-key-version + per-operation |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview) | Microsoft | FIPS 140-2 Level 2/3 | Manual or policy-based | Per-operation + per-key |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [HashiCorp Vault](https://developer.hashicorp.com/vault/tutorials/secrets-management) | HashiCorp | Optional HSM backend | Policy-driven | Self-hosted or HCP managed |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform, the choice typically depends on your cloud provider. If you run on AWS, KMS is the natural default. The critical requirement is that the KMS is a <strong class="text-ink">separate trust boundary</strong> from your application servers and database. Your application can request encryption and decryption operations, but it never possesses the master key.[^3]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform, the choice typically depends on your cloud provider. If you run on AWS, KMS is the natural default. The critical requirement is that the KMS is a <strong class="text-ink">separate trust boundary</strong> from your application servers and database. Your application can request encryption and decryption operations, but it never possesses the master key.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Key Rotation: Why and How</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Cryptographic keys should not last forever. [NIST SP 800-57](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) defines <strong class="text-ink">cryptoperiods</strong> &mdash; the maximum lifespan during which a key is authorised for use. The reasons for rotation include:[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Cryptographic keys should not last forever. <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-57</a> defines <strong class="text-ink">cryptoperiods</strong> &mdash; the maximum lifespan during which a key is authorised for use. The reasons for rotation include:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Limiting exposure.</strong> If a key is compromised without detection, limiting its cryptoperiod limits how much data the attacker can decrypt.</li>
         <li><strong class="text-ink">Reducing ciphertext volume.</strong> The more data encrypted with a single key, the more material an attacker has for cryptanalysis.</li>
@@ -133,19 +180,37 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">How Rotation Works Without Downtime</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The elegant aspect of envelope encryption is that key rotation only rotates the <strong class="text-ink">master key</strong> &mdash; not every DEK in your system. When AWS KMS rotates a key, it generates new key material but retains all previous versions. New encryption operations use the new material. Decryption operations automatically select the correct version based on metadata in the ciphertext. No data needs to be re-encrypted.[^5]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The elegant aspect of envelope encryption is that key rotation only rotates the <strong class="text-ink">master key</strong> &mdash; not every DEK in your system. When AWS KMS rotates a key, it generates new key material but retains all previous versions. New encryption operations use the new material. Decryption operations automatically select the correct version based on metadata in the ciphertext. No data needs to be re-encrypted.</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rotation Type</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">When to Use</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Automatic rotation</strong></td>
+                <td class="py-3 px-4">KMS generates new key material on a schedule (e.g., annually)</td>
+                <td class="py-3 px-4">Default for symmetric encryption keys</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">On-demand rotation</strong></td>
+                <td class="py-3 px-4">Triggered manually or by policy (e.g., after a suspected compromise)</td>
+                <td class="py-3 px-4">Incident response, compliance events</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Re-encryption</strong></td>
+                <td class="py-3 px-4">Decrypt all data with old key, re-encrypt with new key</td>
+                <td class="py-3 px-4">When retiring a key entirely or migrating KMS providers</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Rotation Type | How It Works | When to Use |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------------|-------------|-------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Automatic rotation</strong> | KMS generates new key material on a schedule (e.g., annually) | Default for symmetric encryption keys |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">On-demand rotation</strong> | Triggered manually or by policy (e.g., after a suspected compromise) | Incident response, compliance events |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Re-encryption</strong> | Decrypt all data with old key, re-encrypt with new key | When retiring a key entirely or migrating KMS providers |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal SaaS scenario:</strong> A law firm client terminates their subscription. Your data retention policy requires you to destroy their data after 90 days. If each client matter used a separate DEK, you can <strong class="text-ink">crypto-shred</strong> &mdash; destroy the DEK, rendering the encrypted data permanently unrecoverable without touching the underlying storage. This is faster and more verifiable than attempting to delete every copy of the data across backups, replicas, and caches.[^6]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal SaaS scenario:</strong> A law firm client terminates their subscription. Your data retention policy requires you to destroy their data after 90 days. If each client matter used a separate DEK, you can <strong class="text-ink">crypto-shred</strong> &mdash; destroy the DEK, rendering the encrypted data permanently unrecoverable without touching the underlying storage. This is faster and more verifiable than attempting to delete every copy of the data across backups, replicas, and caches.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Key Access Policies: Use vs. Manage</h2>
 
@@ -155,7 +220,7 @@
         <li><strong class="text-ink">Key administrators</strong> can create, rotate, disable, and delete keys but may not use them for cryptographic operations.</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This separation of duties ensures that a compromised application server (which has key-use permissions) cannot delete or export master keys, and an administrator who can manage keys cannot decrypt production data. AWS KMS enforces this through [IAM key policies](https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html), and HashiCorp Vault uses ACL policies with similar granularity.[^7]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This separation of duties ensures that a compromised application server (which has key-use permissions) cannot delete or export master keys, and an administrator who can manage keys cannot decrypt production data. AWS KMS enforces this through <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM key policies</a>, and HashiCorp Vault uses ACL policies with similar granularity.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this maps directly to professional obligations. The lawyer-equivalent is the ethical wall: one team handles the key (the key administrator, like the conflicts department), another team uses it (the application, like the litigation team). Neither can do the other&#39;s job.</p>
 
@@ -165,55 +230,71 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mitigation strategies:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Multi-region key replication.</strong> AWS KMS supports [multi-region keys](https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html) that replicate cryptographic material across regions. If one region fails, the replica can decrypt.[^8]</li>
+        <li><strong class="text-ink">Multi-region key replication.</strong> AWS KMS supports <a href="https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">multi-region keys</a> that replicate cryptographic material across regions. If one region fails, the replica can decrypt.</li>
         <li><strong class="text-ink">Key escrow.</strong> Store encrypted copies of key material in a separate, offline system (e.g., a physical HSM in a vault). This is the nuclear option &mdash; use only for catastrophic recovery.</li>
         <li><strong class="text-ink">Dual-control procedures.</strong> Require multiple administrators to authorise key deletion, preventing a single compromised or rogue admin from destroying keys.</li>
-        <li><strong class="text-ink">Deletion scheduling.</strong> AWS KMS enforces a minimum 7-day waiting period before key deletion takes effect, providing a window to cancel accidental deletions.[^9]</li>
-    </ul>
+        <li><strong class="text-ink">Deletion scheduling.</strong> AWS KMS enforces a minimum 7-day waiting period before key deletion takes effect, providing a window to cancel accidental deletions.</li>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Real-World Failures</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Incident | What Went Wrong | Impact |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|----------------|--------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [Orrick, Herrington &amp; Sutcliffe (2023)](https://www.embroker.com/blog/law-firm-cyberattacks/) | Attackers accessed personal data of 600,000+ individuals; encryption controls insufficient to prevent exfiltration | $8 million settlement[^10] |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Uber (2016) | Encryption keys stored in a GitHub repository alongside code | Exposed 57 million user records; $148 million settlement |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Adobe (2013) | 3DES encryption with a single key for all 153 million passwords; identical passwords produced identical ciphertext | Enabled pattern analysis; largest credential breach at the time |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Incident</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What Went Wrong</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://www.embroker.com/blog/law-firm-cyberattacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Orrick, Herrington & Sutcliffe (2023)</a></td>
+                <td class="py-3 px-4">Attackers accessed personal data of 600,000+ individuals; encryption controls insufficient to prevent exfiltration</td>
+                <td class="py-3 px-4">$8 million settlement</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Uber (2016)</td>
+                <td class="py-3 px-4">Encryption keys stored in a GitHub repository alongside code</td>
+                <td class="py-3 px-4">Exposed 57 million user records; $148 million settlement</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Adobe (2013)</td>
+                <td class="py-3 px-4">3DES encryption with a single key for all 153 million passwords; identical passwords produced identical ciphertext</td>
+                <td class="py-3 px-4">Enabled pattern analysis; largest credential breach at the time</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 30 covers <strong class="text-ink">Secrets Management</strong> &mdash; the closely related problem of protecting API keys, database credentials, and service tokens that your application uses at runtime. If your encryption key is the crown jewels, your API keys are the ring of skeleton keys that opens every door in the building.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: AWS, [AWS KMS Concepts &mdash; Envelope Encryption](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS KMS Concepts — Envelope Encryption</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: AWS Prescriptive Guidance, [Encryption Best Practices for AWS Key Management Service](https://docs.aws.amazon.com/prescriptive-guidance/latest/encryption-best-practices/kms.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS Prescriptive Guidance, <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/encryption-best-practices/kms.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Encryption Best Practices for AWS Key Management Service</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: NIST, [SP 800-57 Part 1 Rev. 5: Recommendation for Key Management](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-57 Part 1 Rev. 5: Recommendation for Key Management</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: NIST, [SP 800-57 Part 1 Rev. 5 &mdash; Cryptoperiods](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-57pt1r5.pdf), Section 5.3.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-57pt1r5.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-57 Part 1 Rev. 5 — Cryptoperiods</a>, Section 5.3.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: AWS, [Rotate AWS KMS Keys](https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Rotate AWS KMS Keys</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: AWS Prescriptive Guidance, [Key Rotation for AWS KMS and Scope of Impact](https://docs.aws.amazon.com/prescriptive-guidance/latest/aws-kms-best-practices/data-protection-key-rotation.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS Prescriptive Guidance, <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/aws-kms-best-practices/data-protection-key-rotation.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Key Rotation for AWS KMS and Scope of Impact</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: HashiCorp, [Vault Secrets Management Tutorials](https://developer.hashicorp.com/vault/tutorials/secrets-management).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: HashiCorp, <a href="https://developer.hashicorp.com/vault/tutorials/secrets-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vault Secrets Management Tutorials</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: AWS, [Multi-Region Keys in AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Region Keys in AWS KMS</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: AWS, [Deleting AWS KMS Keys](https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Deleting AWS KMS Keys</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Embroker, [Law Firm Cyberattacks: Stats and Trends for 2025](https://www.embroker.com/blog/law-firm-cyberattacks/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Embroker, <a href="https://www.embroker.com/blog/law-firm-cyberattacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Law Firm Cyberattacks: Stats and Trends for 2025</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Thales, [NIST 800-57 Key Management Requirements Analysis](https://cpl.thalesgroup.com/resources/encryption/nist-800-57-key-management-requirements-analysis-white-paper).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Thales, <a href="https://cpl.thalesgroup.com/resources/encryption/nist-800-57-key-management-requirements-analysis-white-paper" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST 800-57 Key Management Requirements Analysis</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^12]: TerraZone, [NIST SP 800-57: Complete Guide to Cryptographic Key Management](https://terrazone.io/nist-800-57/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: TerraZone, <a href="https://terrazone.io/nist-800-57/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-57: Complete Guide to Cryptographic Key Management</a>.</p>
 
 </article>
 
@@ -228,55 +309,55 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 29 &mdash; key management and rotation. Last episode we covered encryption at rest and in transit. This time we&#39;re talking about the keys themselves. Alice, why does key management matter if the encryption is already strong?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. Episode 29 &mdash; key management and rotation. Last episode we covered encryption at rest and in transit. This time we&#39;re talking about the keys themselves. Alice, why does key management matter if the encryption is already strong?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Because the encryption algorithm is only half the equation. Think of it this way &mdash; you&#39;ve installed the best lock money can buy on your office door. AES-256, military-grade, unbreakable. But then you tape the key to the doorframe. The lock is perfect. The security is zero. That&#39;s what happens when you encrypt data but store the encryption key in the same database, or hardcode it in your application, or put it in a config file next to the code.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because the encryption algorithm is only half the equation. Think of it this way &mdash; you&#39;ve installed the best lock money can buy on your office door. AES-256, military-grade, unbreakable. But then you tape the key to the doorframe. The lock is perfect. The security is zero. That&#39;s what happens when you encrypt data but store the encryption key in the same database, or hardcode it in your application, or put it in a config file next to the code.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So the key needs its own protection.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. So the key needs its own protection.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And the way modern systems handle this is through something called envelope encryption. Picture a chain of locked boxes. You have your actual data &mdash; say, a privileged client communication in your case management system. You generate a fresh key just for that document. That&#39;s your data encryption key, or DEK. You encrypt the document with the DEK. Then you take that DEK and encrypt it with a separate, more powerful key called the master key. The encrypted DEK gets stored alongside the encrypted document. The plaintext DEK is immediately destroyed.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And the way modern systems handle this is through something called envelope encryption. Picture a chain of locked boxes. You have your actual data &mdash; say, a privileged client communication in your case management system. You generate a fresh key just for that document. That&#39;s your data encryption key, or DEK. You encrypt the document with the DEK. Then you take that DEK and encrypt it with a separate, more powerful key called the master key. The encrypted DEK gets stored alongside the encrypted document. The plaintext DEK is immediately destroyed.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So even if someone steals the database, they get encrypted documents and encrypted keys. They can&#39;t do anything with either one.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So even if someone steals the database, they get encrypted documents and encrypted keys. They can&#39;t do anything with either one.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Correct. Because the master key lives in a completely separate system &mdash; a key management service, or KMS. Think of it as a vault within a vault. AWS KMS, Google Cloud KMS, Azure Key Vault, HashiCorp Vault &mdash; they all work on this principle. The master key never leaves the KMS boundary. Your application sends data to the KMS and says &quot;encrypt this&quot; or &quot;decrypt this,&quot; but it never holds the master key itself. It&#39;s like a bank safety deposit box &mdash; the bank lets you use what&#39;s inside, but you can&#39;t take the vault door home.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Correct. Because the master key lives in a completely separate system &mdash; a key management service, or KMS. Think of it as a vault within a vault. AWS KMS, Google Cloud KMS, Azure Key Vault, HashiCorp Vault &mdash; they all work on this principle. The master key never leaves the KMS boundary. Your application sends data to the KMS and says &quot;encrypt this&quot; or &quot;decrypt this,&quot; but it never holds the master key itself. It&#39;s like a bank safety deposit box &mdash; the bank lets you use what&#39;s inside, but you can&#39;t take the vault door home.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. And these services are backed by specialised hardware?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. And these services are backed by specialised hardware?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Most of the major cloud KMS offerings are backed by Hardware Security Modules &mdash; HSMs. These are tamper-resistant chips certified to federal standards, specifically FIPS 140-2 Level 3 in most cases. They&#39;re designed so that if someone physically tries to open the module, the key material self-destructs. You&#39;re not trusting software alone &mdash; you&#39;re trusting purpose-built hardware.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Most of the major cloud KMS offerings are backed by Hardware Security Modules &mdash; HSMs. These are tamper-resistant chips certified to federal standards, specifically FIPS 140-2 Level 3 in most cases. They&#39;re designed so that if someone physically tries to open the module, the key material self-destructs. You&#39;re not trusting software alone &mdash; you&#39;re trusting purpose-built hardware.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s a meaningful level of paranoia. Now, you mentioned key rotation in the episode title. Why can&#39;t you just create a good key and use it forever?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that&#39;s a meaningful level of paranoia. Now, you mentioned key rotation in the episode title. Why can&#39;t you just create a good key and use it forever?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; If only. NIST &mdash; the US National Institute of Standards and Technology &mdash; publishes guidance called SP 800-57 that defines something called cryptoperiods. That&#39;s the maximum time a key should remain in active use. The logic is straightforward. The longer a key is in use, the more data gets encrypted with it. More encrypted data means more material for an attacker to analyse. And if a key gets compromised without you knowing &mdash; which happens &mdash; a shorter cryptoperiod limits the damage. You&#39;re containing the blast radius.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; If only. NIST &mdash; the US National Institute of Standards and Technology &mdash; publishes guidance called SP 800-57 that defines something called cryptoperiods. That&#39;s the maximum time a key should remain in active use. The logic is straightforward. The longer a key is in use, the more data gets encrypted with it. More encrypted data means more material for an attacker to analyse. And if a key gets compromised without you knowing &mdash; which happens &mdash; a shorter cryptoperiod limits the damage. You&#39;re containing the blast radius.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So how does rotation work in practice? If I&#39;ve encrypted millions of documents with one key, do I need to decrypt and re-encrypt everything?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. So how does rotation work in practice? If I&#39;ve encrypted millions of documents with one key, do I need to decrypt and re-encrypt everything?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is the elegant part of envelope encryption. When you rotate the master key, you&#39;re only rotating the top of the chain. The cloud KMS generates new key material but keeps all the old versions. Any new encryption uses the new material. Any old ciphertext still decrypts correctly because the KMS knows which version of the key was used and automatically selects it. You don&#39;t touch a single document. The rotation is invisible to your application.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is the elegant part of envelope encryption. When you rotate the master key, you&#39;re only rotating the top of the chain. The cloud KMS generates new key material but keeps all the old versions. Any new encryption uses the new material. Any old ciphertext still decrypts correctly because the KMS knows which version of the key was used and automatically selects it. You don&#39;t touch a single document. The rotation is invisible to your application.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;That&#39;s much less painful than I expected. What about access controls &mdash; who&#39;s allowed to use these keys?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&#39;s much less painful than I expected. What about access controls &mdash; who&#39;s allowed to use these keys?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is where key management gets interesting from a legal perspective. KMS platforms separate two roles: key users and key administrators. A key user &mdash; that&#39;s your application server &mdash; can request encrypt and decrypt operations. It cannot view, export, or delete the key. A key administrator can create, rotate, disable, and delete keys &mdash; but they may not be able to use the key for actual encryption. It&#39;s a separation of duties. Think of it like an ethical wall at a law firm. The conflicts department manages which matters can access which information. The litigation team uses that information. Neither can do the other&#39;s job.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is where key management gets interesting from a legal perspective. KMS platforms separate two roles: key users and key administrators. A key user &mdash; that&#39;s your application server &mdash; can request encrypt and decrypt operations. It cannot view, export, or delete the key. A key administrator can create, rotate, disable, and delete keys &mdash; but they may not be able to use the key for actual encryption. It&#39;s a separation of duties. Think of it like an ethical wall at a law firm. The conflicts department manages which matters can access which information. The litigation team uses that information. Neither can do the other&#39;s job.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. That makes sense. What about disaster recovery? What happens if you lose the master key?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. That makes sense. What about disaster recovery? What happens if you lose the master key?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Then every piece of data it protected is gone. Permanently. There&#39;s no backdoor, no recovery mechanism, no calling tech support. This is by design &mdash; the same property that makes encryption secure makes key loss catastrophic. So the mitigations are critical. Multi-region key replication, so if one data centre fails, you have a copy. Deletion safeguards &mdash; AWS KMS won&#39;t let you delete a key instantly; there&#39;s a mandatory waiting period of at least seven days, during which you can cancel. And dual-control procedures, meaning no single administrator can unilaterally destroy a key. You need two people to turn the key, like a nuclear launch.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Then every piece of data it protected is gone. Permanently. There&#39;s no backdoor, no recovery mechanism, no calling tech support. This is by design &mdash; the same property that makes encryption secure makes key loss catastrophic. So the mitigations are critical. Multi-region key replication, so if one data centre fails, you have a copy. Deletion safeguards &mdash; AWS KMS won&#39;t let you delete a key instantly; there&#39;s a mandatory waiting period of at least seven days, during which you can cancel. And dual-control procedures, meaning no single administrator can unilaterally destroy a key. You need two people to turn the key, like a nuclear launch.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s sobering. Let me ask about a practical scenario. A law firm client terminates their contract. You need to delete their data. How does key management help there?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That&#39;s sobering. Let me ask about a practical scenario. A law firm client terminates their contract. You need to delete their data. How does key management help there?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Great question. It&#39;s called crypto-shredding. If each client matter has its own data encryption key, you don&#39;t need to hunt down every copy of their data across your production database, backups, replicas, and caches. You just destroy their DEK. Without the key, the encrypted data is mathematically unrecoverable. It&#39;s faster, more complete, and more auditable than trying to find and delete every byte. For legal SaaS platforms that handle data subject access requests under GDPR or client offboarding, crypto-shredding is one of the cleanest architectural patterns available.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Great question. It&#39;s called crypto-shredding. If each client matter has its own data encryption key, you don&#39;t need to hunt down every copy of their data across your production database, backups, replicas, and caches. You just destroy their DEK. Without the key, the encrypted data is mathematically unrecoverable. It&#39;s faster, more complete, and more auditable than trying to find and delete every byte. For legal SaaS platforms that handle data subject access requests under GDPR or client offboarding, crypto-shredding is one of the cleanest architectural patterns available.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s a powerful pattern. Any real-world cautionary tales to close on?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, that&#39;s a powerful pattern. Any real-world cautionary tales to close on?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Adobe, 2013. They encrypted 153 million passwords using 3DES &mdash; an old algorithm &mdash; but the critical failure was using the same key for every single password. Identical passwords produced identical ciphertext. Attackers didn&#39;t need to crack the key. They just looked for the most common ciphertext pattern, assumed it was &quot;123456,&quot; and worked backwards. A hundred and fifty-three million accounts, and the key management was functionally nonexistent. More recently, the Orrick Herrington breach in 2023 exposed data on over 600,000 individuals and resulted in an eight million dollar settlement. The point is the same &mdash; encryption exists, but the key infrastructure around it determines whether it actually protects anything.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Adobe, 2013. They encrypted 153 million passwords using 3DES &mdash; an old algorithm &mdash; but the critical failure was using the same key for every single password. Identical passwords produced identical ciphertext. Attackers didn&#39;t need to crack the key. They just looked for the most common ciphertext pattern, assumed it was &quot;123456,&quot; and worked backwards. A hundred and fifty-three million accounts, and the key management was functionally nonexistent. More recently, the Orrick Herrington breach in 2023 exposed data on over 600,000 individuals and resulted in an eight million dollar settlement. The point is the same &mdash; encryption exists, but the key infrastructure around it determines whether it actually protects anything.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Secrets Management. API keys, database passwords, service tokens &mdash; the other set of keys that keep your entire system running.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Secrets Management. API keys, database passwords, service tokens &mdash; the other set of keys that keep your entire system running.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 

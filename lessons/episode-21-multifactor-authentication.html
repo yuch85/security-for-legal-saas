@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">In [Episode 17](../ep17/article.md), we examined how passwords are stored securely using hashing algorithms like bcrypt and Argon2id. But even a perfectly hashed password has a fundamental limitation: it is a single factor. If an attacker obtains a user&#39;s password &mdash; through phishing, credential stuffing, a breach of another service, or simple guesswork &mdash; they have everything they need to impersonate that user. Multi-factor authentication (MFA) addresses this by requiring evidence from two or mor</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">In Episode 17, we examined how passwords are stored securely using hashing algorithms like bcrypt and Argon2id. But even a perfectly hashed password has a fundamental limitation: it is a single factor. If an attacker obtains a user&#39;s password &mdash; through phishing, credential stuffing, a breach of another service, or simple guesswork &mdash; they have everything they need to impersonate that user. Multi-factor authentication (MFA) addresses this by requiring evidence from two or more independent categori</p>
 </div>
 
 <!-- Article -->
@@ -76,61 +76,118 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 21: Multi-Factor Authentication</strong></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why Passwords Alone Are Not Enough</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 17](../ep17/article.md), we examined how passwords are stored securely using hashing algorithms like bcrypt and Argon2id. But even a perfectly hashed password has a fundamental limitation: it is a single factor. If an attacker obtains a user&#39;s password &mdash; through phishing, credential stuffing, a breach of another service, or simple guesswork &mdash; they have everything they need to impersonate that user.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 17, we examined how passwords are stored securely using hashing algorithms like bcrypt and Argon2id. But even a perfectly hashed password has a fundamental limitation: it is a single factor. If an attacker obtains a user&#39;s password &mdash; through phishing, credential stuffing, a breach of another service, or simple guesswork &mdash; they have everything they need to impersonate that user.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Multi-factor authentication (MFA) addresses this by requiring evidence from two or more independent categories before granting access. Microsoft&#39;s analysis of account compromises found that [MFA blocks 99.9% of automated attacks](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html) on accounts.[^1] For legal SaaS platforms handling privileged client communications and case strategy, MFA is not optional &mdash; it is a baseline professional obligation.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Multi-factor authentication (MFA) addresses this by requiring evidence from two or more independent categories before granting access. Microsoft&#39;s analysis of account compromises found that <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MFA blocks 99.9% of automated attacks</a> on accounts. For legal SaaS platforms handling privileged client communications and case strategy, MFA is not optional &mdash; it is a baseline professional obligation.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Three Factor Categories</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Authentication factors fall into three categories:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Category</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Something you know</strong></td>
+                <td class="py-3 px-4">A secret the user has memorised</td>
+                <td class="py-3 px-4">Password, PIN, security question</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Something you have</strong></td>
+                <td class="py-3 px-4">A physical object the user possesses</td>
+                <td class="py-3 px-4">Phone (for TOTP codes), hardware security key, smart card</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Something you are</strong></td>
+                <td class="py-3 px-4">A biometric characteristic</td>
+                <td class="py-3 px-4">Fingerprint, face scan, iris pattern</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Category | Description | Examples |</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">True MFA requires factors from <strong class="text-ink">at least two different categories</strong>. Two passwords are not MFA &mdash; they are two instances of the same factor category. A password (something you know) combined with a six-digit code from an authenticator app on your phone (something you have) qualifies because it draws from two independent categories.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|-------------|----------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Something you know</strong> | A secret the user has memorised | Password, PIN, security question |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Something you have</strong> | A physical object the user possesses | Phone (for TOTP codes), hardware security key, smart card |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Something you are</strong> | A biometric characteristic | Fingerprint, face scan, iris pattern |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">True MFA requires factors from <strong class="text-ink">at least two different categories</strong>. Two passwords are not MFA &mdash; they are two instances of the same factor category. A password (something you know) combined with a six-digit code from an authenticator app on your phone (something you have) qualifies because it draws from two independent categories.[^2]</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST SP 800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html) formalises this through Authenticator Assurance Levels (AALs). AAL1 permits single-factor authentication. AAL2 requires multi-factor authentication &mdash; at minimum, a password plus a second factor. AAL3 requires hardware-based cryptographic authenticators, such as FIDO2 security keys.[^3] Any system handling personally identifiable information must implement at least AAL2.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-63B</a> formalises this through Authenticator Assurance Levels (AALs). AAL1 permits single-factor authentication. AAL2 requires multi-factor authentication &mdash; at minimum, a password plus a second factor. AAL3 requires hardware-based cryptographic authenticators, such as FIDO2 security keys. Any system handling personally identifiable information must implement at least AAL2.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">MFA Methods Compared</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not all second factors provide equal security. The table below ranks common methods from weakest to strongest:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Method</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Factor Type</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Phishing Resistant?</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strengths</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Weaknesses</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">SMS codes</strong></td>
+                <td class="py-3 px-4">Something you have (phone number)</td>
+                <td class="py-3 px-4">No</td>
+                <td class="py-3 px-4">Easy to deploy, familiar to users</td>
+                <td class="py-3 px-4">Vulnerable to SIM swapping, SS7 interception, real-time phishing relays</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Email codes</strong></td>
+                <td class="py-3 px-4">Something you have (email account)</td>
+                <td class="py-3 px-4">No</td>
+                <td class="py-3 px-4">No app installation required</td>
+                <td class="py-3 px-4">Depends on email security; phishable; delays in delivery</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">TOTP apps</strong> (Google Authenticator, Authy)</td>
+                <td class="py-3 px-4">Something you have (device with shared secret)</td>
+                <td class="py-3 px-4">No</td>
+                <td class="py-3 px-4">Works offline, no SMS dependency</td>
+                <td class="py-3 px-4">Codes can be phished in real time; shared secret can be extracted from compromised devices</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Push notifications</strong> (Duo, Microsoft Authenticator)</td>
+                <td class="py-3 px-4">Something you have (registered device)</td>
+                <td class="py-3 px-4">Partial</td>
+                <td class="py-3 px-4">Convenient; harder to phish than codes</td>
+                <td class="py-3 px-4">Vulnerable to MFA fatigue attacks (repeated push spam)</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Hardware security keys</strong> (YubiKey, Titan)</td>
+                <td class="py-3 px-4">Something you have (physical key)</td>
+                <td class="py-3 px-4">Yes</td>
+                <td class="py-3 px-4">Cryptographically bound to domain; immune to phishing</td>
+                <td class="py-3 px-4">Physical device required; cost per key; loss/replacement logistics</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><strong class="text-ink">Passkeys / WebAuthn</strong></td>
+                <td class="py-3 px-4">Something you have + something you are</td>
+                <td class="py-3 px-4">Yes</td>
+                <td class="py-3 px-4">Phishing resistant; no shared secret; synced across devices</td>
+                <td class="py-3 px-4">Ecosystem still maturing; platform lock-in concerns</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Method | Factor Type | Phishing Resistant? | Strengths | Weaknesses |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|------------|---------------------|-----------|------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SMS codes</strong> | Something you have (phone number) | No | Easy to deploy, familiar to users | Vulnerable to SIM swapping, SS7 interception, real-time phishing relays |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Email codes</strong> | Something you have (email account) | No | No app installation required | Depends on email security; phishable; delays in delivery |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">TOTP apps</strong> (Google Authenticator, Authy) | Something you have (device with shared secret) | No | Works offline, no SMS dependency | Codes can be phished in real time; shared secret can be extracted from compromised devices |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Push notifications</strong> (Duo, Microsoft Authenticator) | Something you have (registered device) | Partial | Convenient; harder to phish than codes | Vulnerable to MFA fatigue attacks (repeated push spam) |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Hardware security keys</strong> (YubiKey, Titan) | Something you have (physical key) | Yes | Cryptographically bound to domain; immune to phishing | Physical device required; cost per key; loss/replacement logistics |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Passkeys / WebAuthn</strong> | Something you have + something you are | Yes | Phishing resistant; no shared secret; synced across devices | Ecosystem still maturing; platform lock-in concerns |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key stat:</strong> NIST SP 800-63B explicitly deprecates SMS as a standalone second factor due to demonstrated vulnerabilities in the telephone network, including [SIM swap fraud and SS7 protocol exploitation](https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-out-of-band-authenticators).[^4]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key stat:</strong> NIST SP 800-63B explicitly deprecates SMS as a standalone second factor due to demonstrated vulnerabilities in the telephone network, including <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-out-of-band-authenticators" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIM swap fraud and SS7 protocol exploitation</a>.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">TOTP: The Current Workhorse</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Time-Based One-Time Passwords &mdash; TOTP, defined in [RFC 6238](https://datatracker.ietf.org/doc/html/rfc6238) &mdash; are the most widely deployed MFA method in legal SaaS today.[^5] During setup, the server generates a shared secret and displays it as a QR code. The user scans it with an authenticator app (Google Authenticator, Authy, 1Password). Every 30 seconds, both the server and the app independently compute a six-digit code from the shared secret combined with the current timestamp. At login, the user enters the current code to prove they possess the device holding the secret.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Time-Based One-Time Passwords &mdash; TOTP, defined in <a href="https://datatracker.ietf.org/doc/html/rfc6238" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 6238</a> &mdash; are the most widely deployed MFA method in legal SaaS today. During setup, the server generates a shared secret and displays it as a QR code. The user scans it with an authenticator app (Google Authenticator, Authy, 1Password). Every 30 seconds, both the server and the app independently compute a six-digit code from the shared secret combined with the current timestamp. At login, the user enters the current code to prove they possess the device holding the secret.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">TOTP is a substantial improvement over passwords alone. It works offline, requires no SMS delivery infrastructure, and is free to implement. But it has limitations:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Phishable.</strong> An attacker who creates a convincing fake login page can capture both the password and the TOTP code in real time, then relay them to the real server before the code expires. This is called a real-time phishing proxy.[^6]</li>
+        <li><strong class="text-ink">Phishable.</strong> An attacker who creates a convincing fake login page can capture both the password and the TOTP code in real time, then relay them to the real server before the code expires. This is called a real-time phishing proxy.</li>
         <li><strong class="text-ink">Shared secret exposure.</strong> The TOTP seed is a symmetric secret &mdash; if the server&#39;s database of TOTP seeds is breached, every user&#39;s second factor is compromised simultaneously.</li>
         <li><strong class="text-ink">Backup code risk.</strong> Most implementations generate one-time backup codes at enrolment. These are often stored insecurely by users (screenshots, notes apps, email to self) and become a secondary attack vector.</li>
     </ul>
@@ -139,59 +196,103 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Push-based MFA &mdash; where the user approves a login attempt by tapping &quot;Approve&quot; on their phone &mdash; improves usability over typing codes. But it introduced a new attack vector: <strong class="text-ink">MFA fatigue</strong>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: Uber, September 2022.</strong> An attacker purchased stolen credentials for an Uber contractor from a dark web marketplace. When MFA push notifications blocked the initial login, the attacker [sent over 40 push notifications in 30 minutes](https://www.upguard.com/blog/what-caused-the-uber-data-breach) to the contractor&#39;s phone, then contacted them via WhatsApp pretending to be Uber IT security, telling them to approve the notification to make it stop. The contractor complied. The attacker gained VPN access, found admin credentials in a PowerShell script, and escalated to full administrative control over Uber&#39;s cloud infrastructure.[^7]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: Uber, September 2022.</strong> An attacker purchased stolen credentials for an Uber contractor from a dark web marketplace. When MFA push notifications blocked the initial login, the attacker <a href="https://www.upguard.com/blog/what-caused-the-uber-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">sent over 40 push notifications in 30 minutes</a> to the contractor&#39;s phone, then contacted them via WhatsApp pretending to be Uber IT security, telling them to approve the notification to make it stop. The contractor complied. The attacker gained VPN access, found admin credentials in a PowerShell script, and escalated to full administrative control over Uber&#39;s cloud infrastructure.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mitigations for MFA fatigue include <strong class="text-ink">number matching</strong> (the user must type a number displayed on the login screen into the push notification, proving they can see both screens), <strong class="text-ink">location context</strong> (showing the geographic origin of the login attempt), and <strong class="text-ink">rate limiting</strong> push requests. Microsoft, Okta, and Duo have all added number matching as a default or recommended setting since the Uber incident.[^8]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mitigations for MFA fatigue include <strong class="text-ink">number matching</strong> (the user must type a number displayed on the login screen into the push notification, proving they can see both screens), <strong class="text-ink">location context</strong> (showing the geographic origin of the login attempt), and <strong class="text-ink">rate limiting</strong> push requests. Microsoft, Okta, and Duo have all added number matching as a default or recommended setting since the Uber incident.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Passkeys and WebAuthn: The Phishing-Resistant Endgame</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[WebAuthn](https://www.w3.org/TR/webauthn-3/), the web standard developed by the W3C and the FIDO Alliance, uses public-key cryptography instead of shared secrets.[^9] During registration, the authenticator generates a unique key pair. The private key never leaves the device. The public key is sent to the server. During authentication, the server sends a challenge; the authenticator signs it with the private key, and the server verifies the signature against the stored public key.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.w3.org/TR/webauthn-3/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">WebAuthn</a>, the web standard developed by the W3C and the FIDO Alliance, uses public-key cryptography instead of shared secrets. During registration, the authenticator generates a unique key pair. The private key never leaves the device. The public key is sent to the server. During authentication, the server sends a challenge; the authenticator signs it with the private key, and the server verifies the signature against the stored public key.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Critically, WebAuthn binds the credential to the <strong class="text-ink">origin</strong> (the website&#39;s domain). The authenticator checks that the domain requesting authentication matches the domain where the credential was registered. A phishing site at `login-legalplatform.com` cannot trick the authenticator into signing a challenge for `legalplatform.com`. Phishing becomes cryptographically impossible &mdash; not just difficult, but mathematically excluded.[^10]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Critically, WebAuthn binds the credential to the <strong class="text-ink">origin</strong> (the website&#39;s domain). The authenticator checks that the domain requesting authentication matches the domain where the credential was registered. A phishing site at `login-legalplatform.com` cannot trick the authenticator into signing a challenge for `legalplatform.com`. Phishing becomes cryptographically impossible &mdash; not just difficult, but mathematically excluded.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Passkeys</strong> are the consumer-friendly evolution of WebAuthn. They sync the private key across devices using platform-specific vaults (iCloud Keychain, Google Password Manager, 1Password). This solves the hardware key&#39;s biggest usability problem &mdash; loss of a single device no longer means lockout. The tradeoff is that the security now depends on the platform account&#39;s protection (which should itself be MFA-protected).[^11]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Passkeys</strong> are the consumer-friendly evolution of WebAuthn. They sync the private key across devices using platform-specific vaults (iCloud Keychain, Google Password Manager, 1Password). This solves the hardware key&#39;s biggest usability problem &mdash; loss of a single device no longer means lockout. The tradeoff is that the security now depends on the platform account&#39;s protection (which should itself be MFA-protected).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Regulatory momentum:</strong> The U.S. Cybersecurity and Infrastructure Security Agency (CISA) [explicitly recommends phishing-resistant MFA](https://www.idmanagement.gov/playbooks/altauthn/) based on FIDO2/WebAuthn for all organisations, with special urgency for high-value targets &mdash; a category that includes law firms holding litigation strategy and M&amp;A communications.[^12]</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Regulatory momentum:</strong> The U.S. Cybersecurity and Infrastructure Security Agency (CISA) <a href="https://www.idmanagement.gov/playbooks/altauthn/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">explicitly recommends phishing-resistant MFA</a> based on FIDO2/WebAuthn for all organisations, with special urgency for high-value targets &mdash; a category that includes law firms holding litigation strategy and M&amp;A communications.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Recovery Flows: The Weakest Link</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The strongest MFA is only as good as its recovery process. If a user loses their second factor, how do they regain access?</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Common recovery mechanisms and their risks:</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recovery Method</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">SMS-based recovery code</td>
+                <td class="py-3 px-4">Defeats the purpose of hardware keys; vulnerable to SIM swap</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Email-based recovery link</td>
+                <td class="py-3 px-4">Security depends on email account protection</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Pre-generated backup codes</td>
+                <td class="py-3 px-4">Often stored insecurely by users</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Admin manual override</td>
+                <td class="py-3 px-4">Social engineering risk; requires identity verification procedure</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4">Secondary hardware key</td>
+                <td class="py-3 px-4">Strongest option; requires users to register two keys at enrolment</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Recovery Method | Risk |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------------|------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| SMS-based recovery code | Defeats the purpose of hardware keys; vulnerable to SIM swap |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Email-based recovery link | Security depends on email account protection |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pre-generated backup codes | Often stored insecurely by users |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Admin manual override | Social engineering risk; requires identity verification procedure |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Secondary hardware key | Strongest option; requires users to register two keys at enrolment |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The [OWASP Multi-Factor Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html) recommends treating factor replacement as a high-risk action requiring reauthentication with an existing enrolled factor, never relying solely on the active session.[^13] For legal SaaS platforms, the recommended approach is: require users to register at least two independent second factors at enrolment, and verify identity through an out-of-band process (phone call with identity verification, physical office visit) before resetting MFA for users who have lost all factors.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Multi-Factor Authentication Cheat Sheet</a> recommends treating factor replacement as a high-risk action requiring reauthentication with an existing enrolled factor, never relying solely on the active session. For legal SaaS platforms, the recommended approach is: require users to register at least two independent second factors at enrolment, and verify identity through an out-of-band process (phone call with identity verification, physical office visit) before resetting MFA for users who have lost all factors.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Breaches That MFA Would Have Prevented</h2>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Incident | Year | Root Cause | MFA Impact |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|------|------------|------------|</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [Colonial Pipeline](https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack) | 2021 | Compromised VPN password on dormant account with no MFA | Basic MFA on the VPN would have blocked the attack entirely[^14] |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [Uber](https://www.upguard.com/blog/what-caused-the-uber-data-breach) | 2022 | MFA fatigue &mdash; push notification spam | Phishing-resistant MFA (FIDO2) would have been immune to the social engineering[^7] |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [Okta (Lapsus$)](https://sec.okta.com/articles/2022/03/oktas-investigation-of-the-january-2022-compromise) | 2022 | Compromised support contractor credentials | Hardware key requirement for privileged access would have prevented lateral movement |</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| [MGM Resorts](https://www.bleepingcomputer.com/news/security/mgm-resorts-shuts-down-it-systems-after-cyberattack/) | 2023 | Social engineering of help desk to reset MFA | Stronger identity verification in recovery flow would have blocked the reset[^15] |</p>
+    <div class="overflow-x-auto my-6">
+    <table class="w-full text-sm text-ink-light border-collapse">
+        <thead>
+            <tr class="border-b-2 border-rule-dark">
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Incident</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Year</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Root Cause</th>
+                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">MFA Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Colonial Pipeline</a></td>
+                <td class="py-3 px-4">2021</td>
+                <td class="py-3 px-4">Compromised VPN password on dormant account with no MFA</td>
+                <td class="py-3 px-4">Basic MFA on the VPN would have blocked the attack entirely</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://www.upguard.com/blog/what-caused-the-uber-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Uber</a></td>
+                <td class="py-3 px-4">2022</td>
+                <td class="py-3 px-4">MFA fatigue &mdash; push notification spam</td>
+                <td class="py-3 px-4">Phishing-resistant MFA (FIDO2) would have been immune to the social engineering</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://sec.okta.com/articles/2022/03/oktas-investigation-of-the-january-2022-compromise" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Okta (Lapsus$)</a></td>
+                <td class="py-3 px-4">2022</td>
+                <td class="py-3 px-4">Compromised support contractor credentials</td>
+                <td class="py-3 px-4">Hardware key requirement for privileged access would have prevented lateral movement</td>
+            </tr>
+            <tr class="border-b border-rule">
+                <td class="py-3 px-4"><a href="https://www.bleepingcomputer.com/news/security/mgm-resorts-shuts-down-it-systems-after-cyberattack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MGM Resorts</a></td>
+                <td class="py-3 px-4">2023</td>
+                <td class="py-3 px-4">Social engineering of help desk to reset MFA</td>
+                <td class="py-3 px-4">Stronger identity verification in recovery flow would have blocked the reset</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Mandatory MFA for Legal SaaS: Professional Obligation</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The ABA&#39;s [2023 Legal Technology Survey Report](https://www.americanbar.org/groups/law_practice/resources/tech-report/) found that fewer than half of solo practitioners and small firms use MFA &mdash; despite ABA Model Rule 1.6(c) requiring &quot;reasonable efforts&quot; to prevent unauthorised access to client information.[^16] Cyber insurance underwriters have responded: as of 2025, most carriers require MFA on all accounts, 24/7 endpoint monitoring, and a written incident response plan as preconditions for coverage.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The ABA&#39;s <a href="https://www.americanbar.org/groups/law_practice/resources/tech-report/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2023 Legal Technology Survey Report</a> found that fewer than half of solo practitioners and small firms use MFA &mdash; despite ABA Model Rule 1.6(c) requiring &quot;reasonable efforts&quot; to prevent unauthorised access to client information. Cyber insurance underwriters have responded: as of 2025, most carriers require MFA on all accounts, 24/7 endpoint monitoring, and a written incident response plan as preconditions for coverage.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS vendors, the calculus is straightforward:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
@@ -199,47 +300,45 @@
         <li><strong class="text-ink">Offer phishing-resistant MFA</strong> (WebAuthn/passkeys) for firms handling high-sensitivity matters &mdash; litigation strategy, M&amp;A, government investigations.</li>
         <li><strong class="text-ink">Design recovery flows carefully.</strong> Never allow SMS-only recovery to bypass a hardware key enrolment. Require a second registered factor or an identity-verified admin override.</li>
         <li><strong class="text-ink">Log all MFA events</strong> &mdash; enrolment, successful verification, failed attempts, recovery &mdash; with immutable audit trails.</li>
-    </ul>
+    </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 22 covers <strong class="text-ink">Single Sign-On, SAML, and Enterprise Identity</strong> &mdash; how law firms centralise authentication across dozens of SaaS platforms and what security guarantees SSO actually provides (and which it does not).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
-
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: OWASP, [Multifactor Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html) (citing Microsoft analysis: MFA blocks 99.9% of automated account compromises).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multifactor Authentication Cheat Sheet</a> (citing Microsoft analysis: MFA blocks 99.9% of automated account compromises).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: OWASP, [Authentication Cheat Sheet &mdash; Multi-Factor Authentication](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authentication Cheat Sheet — Multi-Factor Authentication</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: NIST, [SP 800-63B: Digital Identity Guidelines &mdash; Authentication and Lifecycle Management](https://pages.nist.gov/800-63-3/sp800-63b.html), Sections 4.2 (AAL2) and 4.3 (AAL3).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63B: Digital Identity Guidelines — Authentication and Lifecycle Management</a>, Sections 4.2 (AAL2) and 4.3 (AAL3).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: NIST, [SP 800-63B Section 5.1.3.3](https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-out-of-band-authenticators) &mdash; restricted status for SMS-based authenticators.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-out-of-band-authenticators" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63B Section 5.1.3.3</a> &mdash; restricted status for SMS-based authenticators.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: IETF, [RFC 6238: TOTP: Time-Based One-Time Password Algorithm](https://datatracker.ietf.org/doc/html/rfc6238).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IETF, <a href="https://datatracker.ietf.org/doc/html/rfc6238" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 6238: TOTP: Time-Based One-Time Password Algorithm</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Evilginx / real-time phishing proxy &mdash; documented in OWASP Testing Guide, [Testing Multi-Factor Authentication](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/11-Testing_Multi-Factor_Authentication).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Evilginx / real-time phishing proxy &mdash; documented in OWASP Testing Guide, <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/11-Testing_Multi-Factor_Authentication" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Testing Multi-Factor Authentication</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: UpGuard, [What Caused the Uber Data Breach in 2022?](https://www.upguard.com/blog/what-caused-the-uber-data-breach).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: UpGuard, <a href="https://www.upguard.com/blog/what-caused-the-uber-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Caused the Uber Data Breach in 2022?</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Microsoft, [Number matching in multifactor authentication](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-number-match); Duo and Okta adopted similar defaults post-2022.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Microsoft, <a href="https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-number-match" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Number matching in multifactor authentication</a>; Duo and Okta adopted similar defaults post-2022.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: W3C, [Web Authentication: An API for accessing Public Key Credentials](https://www.w3.org/TR/webauthn-3/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: W3C, <a href="https://www.w3.org/TR/webauthn-3/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Web Authentication: An API for accessing Public Key Credentials</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Token2, [Why FIDO2 Is More Secure Than TOTP](https://www.token2.com/site/page/why-fido2-is-more-secure-than-totp-understanding-phishing-protection).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Token2, <a href="https://www.token2.com/site/page/why-fido2-is-more-secure-than-totp-understanding-phishing-protection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Why FIDO2 Is More Secure Than TOTP</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: FIDO Alliance, [Passkeys &mdash; FIDO Alliance Specifications](https://fidoalliance.org/specifications/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: FIDO Alliance, <a href="https://fidoalliance.org/specifications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Passkeys — FIDO Alliance Specifications</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^12]: CISA / IDManagement.gov, [Phishing-Resistant Authenticator Playbook](https://www.idmanagement.gov/playbooks/altauthn/).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CISA / IDManagement.gov, <a href="https://www.idmanagement.gov/playbooks/altauthn/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Phishing-Resistant Authenticator Playbook</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^13]: OWASP, [Multifactor Authentication Cheat Sheet &mdash; Factor Update Security](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multifactor Authentication Cheat Sheet — Factor Update Security</a>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^14]: Wikipedia, [Colonial Pipeline Ransomware Attack](https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack) &mdash; VPN account with no MFA enabled.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wikipedia, <a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Colonial Pipeline Ransomware Attack</a> &mdash; VPN account with no MFA enabled.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^15]: BleepingComputer, [MGM Resorts Shuts Down IT Systems After Cyberattack](https://www.bleepingcomputer.com/news/security/mgm-resorts-shuts-down-it-systems-after-cyberattack/) (September 2023).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: BleepingComputer, <a href="https://www.bleepingcomputer.com/news/security/mgm-resorts-shuts-down-it-systems-after-cyberattack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MGM Resorts Shuts Down IT Systems After Cyberattack</a> (September 2023).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^16]: ABA, [2023 Legal Technology Survey Report](https://www.americanbar.org/groups/law_practice/resources/tech-report/) &mdash; MFA adoption rates across firm sizes.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/law_practice/resources/tech-report/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2023 Legal Technology Survey Report</a> &mdash; MFA adoption rates across firm sizes.</p>
 
 </article>
 
@@ -254,63 +353,63 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. So Episode 21 &mdash; multi-factor authentication, or MFA. Alice, we spent the last few episodes on passwords, sessions, tokens, and OAuth. This feels like the natural next step &mdash; what happens when a password isn&#39;t enough?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan. So Episode 21 &mdash; multi-factor authentication, or MFA. Alice, we spent the last few episodes on passwords, sessions, tokens, and OAuth. This feels like the natural next step &mdash; what happens when a password isn&#39;t enough?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And the short answer is: a password is never enough on its own. We talked in Episode 17 about how passwords are stored using hashing, and in Episode 14 we covered credential stuffing &mdash; attackers taking leaked passwords from one breach and trying them everywhere else. MFA exists because no matter how well you store a password, you can&#39;t control whether the user reuses it on a site that gets breached tomorrow. So you add a second lock to the door.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And the short answer is: a password is never enough on its own. We talked in Episode 17 about how passwords are stored using hashing, and in Episode 14 we covered credential stuffing &mdash; attackers taking leaked passwords from one breach and trying them everywhere else. MFA exists because no matter how well you store a password, you can&#39;t control whether the user reuses it on a site that gets breached tomorrow. So you add a second lock to the door.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So what counts as a &quot;factor&quot; here?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So what counts as a &quot;factor&quot; here?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;There are three categories. Something you know &mdash; that&#39;s your password or a PIN. Something you have &mdash; a physical object, like your phone or a hardware key. And something you are &mdash; a biometric, like your fingerprint or face scan. True MFA means combining factors from at least two different categories. Two passwords is not MFA. A password plus a code from an app on your phone &mdash; that qualifies, because the password is something you know and the phone is something you have.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> There are three categories. Something you know &mdash; that&#39;s your password or a PIN. Something you have &mdash; a physical object, like your phone or a hardware key. And something you are &mdash; a biometric, like your fingerprint or face scan. True MFA means combining factors from at least two different categories. Two passwords is not MFA. A password plus a code from an app on your phone &mdash; that qualifies, because the password is something you know and the phone is something you have.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That makes sense. So what are the common ways people implement that second factor?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. That makes sense. So what are the common ways people implement that second factor?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The most common today is TOTP &mdash; time-based one-time passwords. Those six-digit codes that change every thirty seconds, from apps like Google Authenticator or Authy. When you set it up, the server creates a shared secret and shows you a QR code. You scan it with the app. From then on, both the server and your app independently calculate the same code from the secret plus the current time. At login, you type the code to prove you have the device with the secret on it.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The most common today is TOTP &mdash; time-based one-time passwords. Those six-digit codes that change every thirty seconds, from apps like Google Authenticator or Authy. When you set it up, the server creates a shared secret and shows you a QR code. You scan it with the app. From then on, both the server and your app independently calculate the same code from the secret plus the current time. At login, you type the code to prove you have the device with the secret on it.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And that&#39;s pretty solid, right?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And that&#39;s pretty solid, right?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; It&#39;s better than nothing &mdash; far better. But it has a real weakness. The code can be phished. Imagine an attacker sets up a fake login page that looks exactly like your legal SaaS platform. You type your password and your six-digit code. The attacker&#39;s server captures both in real time and immediately submits them to the real server. The code is valid for thirty seconds &mdash; plenty of time for an automated relay. So TOTP protects you against someone who stole your password from a database dump. It does not protect you against a sophisticated phishing page that intercepts your login in real time.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> &lt;sigh&gt; It&#39;s better than nothing &mdash; far better. But it has a real weakness. The code can be phished. Imagine an attacker sets up a fake login page that looks exactly like your legal SaaS platform. You type your password and your six-digit code. The attacker&#39;s server captures both in real time and immediately submits them to the real server. The code is valid for thirty seconds &mdash; plenty of time for an automated relay. So TOTP protects you against someone who stole your password from a database dump. It does not protect you against a sophisticated phishing page that intercepts your login in real time.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. That&#39;s a bit unsettling. What about those push notifications &mdash; where your phone buzzes and you just tap Approve?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Hmm. That&#39;s a bit unsettling. What about those push notifications &mdash; where your phone buzzes and you just tap Approve?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Push-based MFA, like you&#39;d see with Duo or Microsoft Authenticator. It&#39;s more convenient than typing codes, and it&#39;s slightly harder to phish because there&#39;s no code to intercept. But it introduced a new kind of attack called MFA fatigue. The Uber breach in September 2022 is the textbook case. An attacker bought stolen credentials for an Uber contractor from the dark web. The account had push MFA, so the attacker couldn&#39;t just log in. Instead, they sent over forty push notifications to the contractor&#39;s phone in thirty minutes. Then they messaged the contractor on WhatsApp pretending to be Uber IT, saying &quot;approve the notification to make it stop.&quot; The contractor did. The attacker was in.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Push-based MFA, like you&#39;d see with Duo or Microsoft Authenticator. It&#39;s more convenient than typing codes, and it&#39;s slightly harder to phish because there&#39;s no code to intercept. But it introduced a new kind of attack called MFA fatigue. The Uber breach in September 2022 is the textbook case. An attacker bought stolen credentials for an Uber contractor from the dark web. The account had push MFA, so the attacker couldn&#39;t just log in. Instead, they sent over forty push notifications to the contractor&#39;s phone in thirty minutes. Then they messaged the contractor on WhatsApp pretending to be Uber IT, saying &quot;approve the notification to make it stop.&quot; The contractor did. The attacker was in.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Forty notifications. That&#39;s social engineering on top of a technical attack.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Forty notifications. That&#39;s social engineering on top of a technical attack.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And it worked. Once inside, the attacker found admin credentials in a script file and escalated to full control of Uber&#39;s cloud systems. Since then, vendors have added number matching &mdash; where the login screen shows a two-digit number and you have to type it into the push notification on your phone, proving you can see both screens. That blocks the fatigue attack because you can&#39;t just tap blindly.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. And it worked. Once inside, the attacker found admin credentials in a script file and escalated to full control of Uber&#39;s cloud systems. Since then, vendors have added number matching &mdash; where the login screen shows a two-digit number and you have to type it into the push notification on your phone, proving you can see both screens. That blocks the fatigue attack because you can&#39;t just tap blindly.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So where do hardware keys and passkeys fit in? I keep hearing passkeys are the future.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. So where do hardware keys and passkeys fit in? I keep hearing passkeys are the future.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;They are. Hardware security keys &mdash; like a YubiKey &mdash; and passkeys both use a standard called WebAuthn, developed by the W3C and the FIDO Alliance. Here&#39;s the key difference from TOTP: there&#39;s no shared secret. When you register the key, it creates a unique pair of cryptographic keys. The private key stays on your device and never leaves. The public key goes to the server. When you log in, the server sends a challenge, your key signs it, and the server checks the signature. No code to type. No code to intercept.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> They are. Hardware security keys &mdash; like a YubiKey &mdash; and passkeys both use a standard called WebAuthn, developed by the W3C and the FIDO Alliance. Here&#39;s the key difference from TOTP: there&#39;s no shared secret. When you register the key, it creates a unique pair of cryptographic keys. The private key stays on your device and never leaves. The public key goes to the server. When you log in, the server sends a challenge, your key signs it, and the server checks the signature. No code to type. No code to intercept.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, but what stops a phishing site from using that same process?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Yeah, but what stops a phishing site from using that same process?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is the clever part. The key checks the website&#39;s domain before signing anything. If you&#39;re on the real site &mdash; legalplatform.com &mdash; the key signs the challenge. If you&#39;re on a fake site &mdash; login-legalplatform.com &mdash; the key refuses because the domain doesn&#39;t match what was registered. It&#39;s not just harder to phish. It&#39;s cryptographically impossible. The maths won&#39;t work on the wrong domain.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is the clever part. The key checks the website&#39;s domain before signing anything. If you&#39;re on the real site &mdash; legalplatform.com &mdash; the key signs the challenge. If you&#39;re on a fake site &mdash; login-legalplatform.com &mdash; the key refuses because the domain doesn&#39;t match what was registered. It&#39;s not just harder to phish. It&#39;s cryptographically impossible. The maths won&#39;t work on the wrong domain.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. That&#39;s a meaningful difference. But hardware keys &mdash; people lose them. What happens then?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm-hmm. That&#39;s a meaningful difference. But hardware keys &mdash; people lose them. What happens then?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s exactly where recovery flows come in, and honestly, recovery is the weakest link in any MFA system. If your recovery mechanism is &quot;we&#39;ll send you an SMS code,&quot; then an attacker who can SIM-swap your phone number can bypass your hardware key. You&#39;ve installed a vault door and left the window open. The best practice is to register two independent second factors at setup. Two hardware keys stored in different locations, or a hardware key and a passkey synced to your platform account. If both are lost, the platform should require an out-of-band identity verification &mdash; a phone call with your firm&#39;s IT admin, or in some cases, physical verification. Not just &quot;click this email link.&quot;&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&#39;s exactly where recovery flows come in, and honestly, recovery is the weakest link in any MFA system. If your recovery mechanism is &quot;we&#39;ll send you an SMS code,&quot; then an attacker who can SIM-swap your phone number can bypass your hardware key. You&#39;ve installed a vault door and left the window open. The best practice is to register two independent second factors at setup. Two hardware keys stored in different locations, or a hardware key and a passkey synced to your platform account. If both are lost, the platform should require an out-of-band identity verification &mdash; a phone call with your firm&#39;s IT admin, or in some cases, physical verification. Not just &quot;click this email link.&quot;</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Let me ask the business case question. For a legal SaaS vendor, is MFA just a security feature, or is there a professional obligation here?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Right. Let me ask the business case question. For a legal SaaS vendor, is MFA just a security feature, or is there a professional obligation here?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It&#39;s both. ABA Model Rule 1.6(c) &mdash; which we first mentioned back in Episode 1 &mdash; requires lawyers to make reasonable efforts to prevent unauthorised access to client information. A recent ABA survey found that fewer than half of solo and small firm lawyers use MFA at all. Meanwhile, cyber insurance carriers now require MFA on all accounts as a precondition for coverage. If a legal SaaS platform doesn&#39;t enforce MFA, it&#39;s actively making it harder for its lawyer-customers to meet their ethical obligations and their insurance requirements.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It&#39;s both. ABA Model Rule 1.6(c) &mdash; which we first mentioned back in Episode 1 &mdash; requires lawyers to make reasonable efforts to prevent unauthorised access to client information. A recent ABA survey found that fewer than half of solo and small firm lawyers use MFA at all. Meanwhile, cyber insurance carriers now require MFA on all accounts as a precondition for coverage. If a legal SaaS platform doesn&#39;t enforce MFA, it&#39;s actively making it harder for its lawyer-customers to meet their ethical obligations and their insurance requirements.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So the vendor should enforce it, not just offer it?&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the vendor should enforce it, not just offer it?</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Enforce it for everyone. TOTP as the baseline &mdash; it&#39;s free, every phone can do it. Passkeys as the recommended upgrade for firms handling high-sensitivity matters. And design the recovery flow carefully. Never let SMS-only recovery defeat a hardware key enrolment. Log every MFA event &mdash; enrolment, verification, failed attempts, recovery &mdash; because auditors and regulators will ask. There&#39;s a full comparison table of all the MFA methods with their strengths and weaknesses in the episode notes.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Enforce it for everyone. TOTP as the baseline &mdash; it&#39;s free, every phone can do it. Passkeys as the recommended upgrade for firms handling high-sensitivity matters. And design the recovery flow carefully. Never let SMS-only recovery defeat a hardware key enrolment. Log every MFA event &mdash; enrolment, verification, failed attempts, recovery &mdash; because auditors and regulators will ask. There&#39;s a full comparison table of all the MFA methods with their strengths and weaknesses in the episode notes.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Quick real-world reminder for anyone who needs motivating &mdash; Colonial Pipeline, 2021. The attackers got in through a single VPN password on a dormant account. No MFA. That was the entire attack surface for an infrastructure company that supplies nearly half the fuel for the US East Coast.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Mm. Quick real-world reminder for anyone who needs motivating &mdash; Colonial Pipeline, 2021. The attackers got in through a single VPN password on a dormant account. No MFA. That was the entire attack surface for an infrastructure company that supplies nearly half the fuel for the US East Coast.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;One password. No second factor. Basic MFA would have stopped it entirely. And the Uber case shows that even when you have MFA, the type matters. Push notifications failed against social engineering. Phishing-resistant MFA &mdash; passkeys, hardware keys &mdash; would have been immune.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> One password. No second factor. Basic MFA would have stopped it entirely. And the Uber case shows that even when you have MFA, the type matters. Push notifications failed against social engineering. Phishing-resistant MFA &mdash; passkeys, hardware keys &mdash; would have been immune.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Single Sign-On, SAML, and Enterprise Identity. How law firms centralise authentication across all their SaaS platforms.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Single Sign-On, SAML, and Enterprise Identity. How law firms centralise authentication across all their SaaS platforms.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&#39;m Alice.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&#39;m Dan.</p>
 
-        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
         <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
 
