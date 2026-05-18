@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 32 &mdash; Database Security Hardening &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 32 &middot; Module 7 &middot; Data Protection</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Database Security Hardening</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 7:57 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-32-database-security-hardening.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">7:57</span>
+                <span>7:57</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-32-database-security-hardening.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Every security control we have discussed in this series &mdash; authentication, encryption, input validation, access control &mdash; exists to protect the data that ultimately lives in your database. Client communications, case strategy, financial records, privileged documents &mdash; they all converge in one place. If an attacker reaches your database with unrestricted access, every other defence has failed. This episode covers the layers of protection that surround a production database: network isolation, conn</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 32: Database Security Hardening</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Your Database Is the Crown Jewels</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every security control we have discussed in this series &mdash; authentication, encryption, input validation, access control &mdash; exists to protect the data that ultimately lives in your database. Client communications, case strategy, financial records, privileged documents &mdash; they all converge in one place. If an attacker reaches your database with unrestricted access, every other defence has failed.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This episode covers the layers of protection that surround a production database: network isolation, connection security, access control, audit logging, and backup protection. We will use PostgreSQL as the primary example because it is the most common database in modern legal SaaS, but the principles apply to any relational database.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Network Isolation: Databases Should Never Face the Internet</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The most fundamental database security rule is also the most frequently violated: <strong class="text-ink">your database should not be reachable from the public internet.</strong> It should sit in a private subnet &mdash; a network segment that has no public IP address and no route to the internet. The only systems that can connect to it are your application servers, which sit in a separate subnet with controlled ingress.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Architecture | Risk Level | Description |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------------|------------|-------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Database with public IP | <strong class="text-ink">Critical</strong> | Directly attackable from anywhere on the internet |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Database in private subnet, app in public subnet | <strong class="text-ink">Moderate</strong> | Only reachable via the application; but app compromise = DB access |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Database in private subnet, app in private subnet, load balancer public | <strong class="text-ink">Recommended</strong> | Database is two network hops from the internet |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Database in private subnet with VPC peering / Private Link | <strong class="text-ink">Strongest</strong> | No internet path exists; accessed only via private cloud network[^1] |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">On AWS, this means placing your RDS instance in a VPC (Virtual Private Cloud &mdash; an isolated private network, as we covered in [Episode 11](../ep11/article.md)) with no public accessibility. On GCP, Cloud SQL instances should use private IP only. Security groups (AWS) or firewall rules (GCP) should restrict inbound connections to only the IP addresses or security groups of your application servers &mdash; not `0.0.0.0/0`, which means &quot;anywhere.&quot;[^2]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal SaaS reality check:</strong> Halcyon tracked over 200 ransomware incidents targeting law firms between 2025 and early 2026. The INC Ransom group specifically exploits known vulnerabilities in remote access tools to reach internal databases. Network isolation is not theoretical &mdash; it is the primary barrier against these attacks.[^3]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Connection Security: TLS Required, Always</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every connection between your application and the database must be encrypted using TLS (Transport Layer Security, which we covered in [Episode 13](../ep13/article.md)). PostgreSQL supports TLS natively, but it is <strong class="text-ink">not enabled by default</strong> in many configurations.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configuration requirements:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Set `sslmode=verify-full` on the client.</strong> This ensures the client verifies the server&#39;s TLS certificate and checks that the hostname matches. Weaker modes like `sslmode=prefer` will silently fall back to unencrypted connections if TLS negotiation fails &mdash; which is exactly what a man-in-the-middle attacker causes.[^4]</li>
+        <li><strong class="text-ink">Use certificates from your internal CA or cloud provider.</strong> AWS RDS provides managed certificates. For self-hosted PostgreSQL, generate certificates through your PKI (public key infrastructure, from [Episode 15](../ep15/article.md)) or HashiCorp Vault&#39;s PKI secrets engine.</li>
+        <li><strong class="text-ink">Reject unencrypted connections.</strong> In `pg_hba.conf`, use `hostssl` instead of `host` to require TLS for all connections.</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Connection Pooling Credentials</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most production applications use a <strong class="text-ink">connection pool</strong> &mdash; a set of pre-established database connections shared across request threads. The pool itself authenticates to the database using a service account. This creates a credential management challenge:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>The pooler (e.g., PgBouncer, built-in pool in your ORM) needs database credentials.</li>
+        <li>Those credentials must be rotated without dropping active connections.</li>
+        <li>Dynamic secrets from a secrets manager (as covered in [Episode 30](../ep30/article.md)) are ideal: the pool authenticates with short-lived credentials that are automatically rotated.</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Principle of Least Privilege: Minimal Permissions</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your application&#39;s database account should have the minimum permissions necessary for its function. In [Episode 8](../ep08/article.md), we introduced this concept in the context of SQL injection. Here it applies to the database account itself:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Permission | Your Application Needs | Your Application Does NOT Need |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|----------------------|-------------------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| SELECT, INSERT, UPDATE, DELETE on application tables | Yes | &mdash; |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| CREATE TABLE, ALTER TABLE, DROP TABLE | No (run migrations with a separate admin account) | Yes &mdash; your app should never restructure the schema at runtime |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| SUPERUSER / rds_superuser | Never | Yes &mdash; this bypasses all access controls |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Access to `pg_catalog` system tables | Rarely | Attackers use these to map the database structure |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Create separate database roles for different application functions. Your read-only reporting service should not have write access to the case management tables. Your search indexer should not have access to billing data. If your application has a background job that sends email notifications, it needs access to the notification queue &mdash; not to client documents.[^5]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Row-Level Security Revisited</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 8](../ep08/article.md), we covered PostgreSQL&#39;s Row-Level Security (RLS) as a defence against SQL injection escalation. RLS is equally critical for multi-tenant legal SaaS: every query is automatically filtered by the current tenant&#39;s identifier, enforced by the database engine &mdash; not by application code that might have a bug.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```sql</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">-- Enable RLS on the documents table</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ALTER TABLE documents ENABLE ROW LEVEL SECURITY;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">-- Policy: users can only see documents belonging to their tenant</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">CREATE POLICY tenant_isolation ON documents</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">USING (tenant_id = current_setting(&#39;app.current_tenant&#39;)::uuid);</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Even if application code fails to include a `WHERE tenant_id = ?` clause, the database rejects cross-tenant access.[^6]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Audit Logging: Who Queried What, When</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Database-level audit logging records every operation &mdash; who connected, what they queried, and when. This is distinct from application-level logging (which records what the application did) and is critical because it captures direct database access that bypasses the application.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For PostgreSQL, the [pgAudit extension](https://www.pgaudit.org/) provides detailed session and object-level audit logging:[^7]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Log Type | What It Captures | Use Case |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|-----------------|----------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Connection logging</strong> (`log_connections`, `log_disconnections`) | Every connection attempt and disconnection | Detecting unauthorised access attempts |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Statement logging</strong> (pgAudit) | SQL statements executed, with parameters | Forensic investigation; compliance audits |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Object-level audit</strong> (pgAudit) | Access to specific tables or columns | Monitoring access to privileged client data |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The [CIS PostgreSQL Benchmark](https://www.cisecurity.org/benchmark/postgresql) &mdash; a prescriptive collection of security controls from the Center for Internet Security &mdash; mandates enabling `log_connections` as a baseline requirement. It also recommends configuring `log_statement = &#39;ddl&#39;` at minimum to capture schema changes.[^8]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Storage and retention:</strong> Audit logs must be shipped to a separate system (a SIEM &mdash; Security Information and Event Management, as we introduced in [Episode 7](../ep07/article.md)) where they cannot be tampered with by someone who compromises the database server. If the attacker can delete the logs, the audit trail is worthless.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Backup Encryption and Access Controls</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Database backups are copies of your crown jewels. They deserve the same protection as the production database &mdash; possibly more, because backups are often stored in less-monitored locations.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Requirements:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Encrypt backups at rest.</strong> AWS RDS supports automated encrypted backups using KMS keys (from [Episode 29](../ep29/article.md)). For self-hosted databases, use `pg_basebackup` with output piped through encryption.[^9]</li>
+        <li><strong class="text-ink">Restrict backup access.</strong> The IAM roles or accounts that can access backup storage should be separate from those that access the production database.</li>
+        <li><strong class="text-ink">Test restore procedures.</strong> An encrypted backup you cannot restore is not a backup. Regularly test that you can decrypt and restore from backups &mdash; including with rotated keys.</li>
+        <li><strong class="text-ink">Apply the same network isolation to backup storage.</strong> S3 buckets (or equivalent) holding database backups should not be publicly accessible. Enable S3 Block Public Access and use VPC endpoints for access.[^10]</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Hardening Checklist</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Control | Default State | Hardened State |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|--------------|----------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Public accessibility | Often enabled | Disabled; private subnet only |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| TLS for connections | Optional | Required (`hostssl` in pg_hba.conf) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Default `postgres` superuser | Exists with password | Renamed or disabled; no direct login |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Application account permissions | Often SUPERUSER for convenience | Minimal: DML only, no DDL, no superuser |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Audit logging | Disabled | pgAudit enabled; logs shipped to SIEM |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Backup encryption | Depends on provider | Always on; KMS-managed keys |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| pg_hba.conf | Permissive defaults | Strict IP allowlist per role |</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 33 begins <strong class="text-ink">Module 8: AI-Specific Security</strong> with <strong class="text-ink">Prompt Injection Attacks</strong> &mdash; why the most dangerous vulnerability in AI-powered legal tools is fundamentally different from SQL injection, and why there is no parameterised query equivalent to fix it.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: AWS, [Amazon VPC &mdash; Private Subnets](https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: AWS, [Security Best Practices for Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.Security.html).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Halcyon, [INC Ransom Group Mounts Rapid Campaign Against Law Firms](https://www.halcyon.ai/ransomware-alerts/inc-ransom-group-mounts-rapid-campaign-against-law-firms).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: PostgreSQL, [SSL Support &mdash; Client Verification](https://www.postgresql.org/docs/current/libpq-ssl.html).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: CIS, [CIS PostgreSQL Benchmarks](https://www.cisecurity.org/benchmark/postgresql).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: PostgreSQL, [Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: pgAudit, [PostgreSQL Audit Extension](https://www.pgaudit.org/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: SOCFortress, [PostgreSQL Hardening Guide Aligned with CIS Benchmark](https://socfortress.medium.com/postgresql-hardening-guide-8b8554e22336).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Crunchy Data, [Secure PostgreSQL 14 with the CIS Benchmark](https://www.crunchydata.com/blog/secure-postgresql-14-with-the-cis-benchmark).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Embroker, [Law Firm Cyberattacks: Stats and Trends for 2025](https://www.embroker.com/blog/law-firm-cyberattacks/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: HexaCluster, [PGDSAT &mdash; PostgreSQL Database Security Assessment Tool](https://github.com/HexaCluster/pgdsat).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^12]: CodeOps Trek, [Secure Your PostgreSQL Database: Dockerized &amp; Hardened with CIS Benchmarks](https://codeopstrek.com/dockerize-secure-harden-postgresql-cis-benchmarks/).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 32 &mdash; database security hardening. Alice, we&#39;ve spent the last few episodes on encryption, key management, secrets, and PII. This feels like the episode where all of that converges &mdash; because the database is where everything actually lives.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s exactly right. Every security control we&#39;ve discussed &mdash; authentication, encryption, input validation, access control &mdash; exists to protect data that ultimately lives in a database. Client communications, case strategy, privileged documents, financial records. If an attacker reaches your database with unrestricted access, every other defence has failed. So this episode is about the last line of defence &mdash; and ideally the first line too.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Let&#39;s start with the most basic question. Where should the database sit in your infrastructure?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;As far from the internet as physically possible. The most fundamental database security rule &mdash; and the most frequently violated &mdash; is that your database should not be reachable from the public internet. Period. It should sit in a private subnet, which is a network segment with no public IP address and no direct route to the internet. The only things that can talk to it are your application servers, which sit in a different subnet. Think of it like a vault inside a building. The public walks into the lobby. Employees can reach the offices. But the vault is behind a locked corridor that only authorised staff can access &mdash; and there&#39;s no window to the street.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And in practice, on a cloud provider like AWS?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;On AWS, your RDS database instance goes in a VPC &mdash; a Virtual Private Cloud, which we covered back in Episode 11 &mdash; with public accessibility explicitly turned off. Then you set up security groups &mdash; essentially firewall rules &mdash; that only allow inbound connections from your application servers&#39; security group. Not from 0.0.0.0/0, which means &quot;anywhere on the internet.&quot; That&#39;s the single most dangerous misconfiguration in cloud databases, and I&#39;ve seen it in production.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. That&#39;s a scary default. What about the connections themselves?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; TLS. Every connection between your application and the database must be encrypted with TLS &mdash; which we covered in Episode 13. PostgreSQL supports it natively, but here&#39;s the catch &mdash; it is not enforced by default in many configurations. You have to explicitly set your client&#39;s connection mode to &quot;verify-full,&quot; which means the client checks the server&#39;s certificate and verifies the hostname. Weaker modes like &quot;prefer&quot; will silently fall back to an unencrypted connection if TLS negotiation fails. And that silent fallback is exactly what a man-in-the-middle attacker exploits.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So encrypt the connection and verify you&#39;re talking to the right server. What about the account the application uses to connect?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is where the principle of least privilege &mdash; which we first discussed in Episode 8 &mdash; becomes critical. Your application&#39;s database account should have the absolute minimum permissions it needs. It needs to read, write, update, and delete records in the application tables. It does not need the ability to create or drop tables &mdash; that&#39;s for database migrations, which should run under a separate admin account. And it absolutely should never have superuser access. Superuser bypasses every access control PostgreSQL has.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. And I imagine this matters even more for multi-tenant legal SaaS &mdash; where one database holds data for many different law firm clients?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And that&#39;s where Row-Level Security comes back &mdash; we introduced it in Episode 8 in the context of SQL injection. RLS is a PostgreSQL feature that automatically filters every query based on the current user&#39;s tenant identifier. You define a policy that says &quot;this user can only see rows where the tenant ID matches their own.&quot; Even if the application code has a bug &mdash; a missing WHERE clause, a broken filter &mdash; the database engine itself blocks cross-tenant access. It&#39;s defence in depth at the data layer. Your application code should filter by tenant. RLS guarantees it.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s a powerful safety net. What about logging &mdash; knowing who accessed what?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Database audit logging is your forensic record. It captures every connection, every query, every schema change &mdash; at the database level, not the application level. This matters because it catches direct database access that bypasses your application entirely. For PostgreSQL, the pgAudit extension is the standard. It provides detailed session and object-level logging. The CIS PostgreSQL Benchmark &mdash; a security hardening guide from the Center for Internet Security &mdash; mandates enabling connection logging as a baseline and recommends statement logging for all data definition changes at minimum.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And where do those logs go?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Critically &mdash; not on the database server itself. If an attacker compromises the database and the audit logs are stored on the same machine, the first thing they&#39;ll do is delete the logs. Your audit trail disappears. The logs need to be shipped to a separate system &mdash; a SIEM, which we introduced back in Episode 7 &mdash; where they&#39;re stored immutably. The attacker would need to compromise two independent systems to cover their tracks.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that makes sense. Now, backups &mdash; those seem like an obvious target too.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Backups are copies of your crown jewels. An unencrypted database backup stored in a misconfigured cloud storage bucket is every attacker&#39;s dream &mdash; all the data, none of the access controls. Requirements are straightforward: encrypt backups at rest using KMS keys from Episode 29. Restrict access so the accounts that can reach backup storage are separate from production database accounts. And test your restores &mdash; regularly. An encrypted backup you can&#39;t actually decrypt and restore is not a backup. It&#39;s a false sense of security.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Any real-world context on why this matters for law firms specifically?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Halcyon tracked over 200 ransomware incidents targeting law firms between 2025 and early 2026. The INC Ransom group specifically exploits vulnerabilities in remote access tools &mdash; Citrix, Fortinet, SimpleHelp &mdash; to reach internal networks, and from there, the database. The average cost of a data breach for law firms in 2024 was 5.08 million dollars. Network isolation, encrypted connections, least-privilege accounts, audit logging, encrypted backups &mdash; these aren&#39;t theoretical best practices. They&#39;re the controls that determine whether a breach costs you five million dollars or whether the attacker hits a wall and moves on to an easier target.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; we start Module 8, AI-Specific Security, with Prompt Injection Attacks. Why the biggest vulnerability in AI-powered legal tools is fundamentally different from anything we&#39;ve covered so far.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-31-pii-handling-and-anonymisation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 31 &mdash; PII Handling and Anonymisation</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-33-prompt-injection-attacks.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 33 &mdash; Prompt Injection Attacks</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

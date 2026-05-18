@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 50 &mdash; Developer Workstation Security &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 50 &middot; Module 10 &middot; Infrastructure</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Developer Workstation Security</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 8:02 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-50-developer-workstation-security.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">8:02</span>
+                <span>8:02</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-50-developer-workstation-security.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Your production servers sit behind firewalls, intrusion detection systems (IDS &mdash; software that monitors network traffic for suspicious activity), and strict access controls. Your staging environment mirrors production security policies. But the laptop sitting on your developer&#39;s desk &mdash; the one with an SSH key to every environment, saved cloud console sessions, and a browser full of logged-in admin panels &mdash; has antivirus software from 2019 and no disk encryption. Developer workstations have becom</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 50: Developer Workstation Security</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Softest Target on Your Network</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your production servers sit behind firewalls, intrusion detection systems (IDS &mdash; software that monitors network traffic for suspicious activity), and strict access controls. Your staging environment mirrors production security policies. But the laptop sitting on your developer&#39;s desk &mdash; the one with an SSH key to every environment, saved cloud console sessions, and a browser full of logged-in admin panels &mdash; has antivirus software from 2019 and no disk encryption.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Developer workstations have become the preferred initial access vector for sophisticated attackers. A [CSO Online analysis](https://www.csoonline.com/article/4169635/developer-workstations-are-the-new-beachhead.html) found that three unrelated threat actor groups independently converged on the same conclusion: the developer laptop offers the best return on investment for initial access, because the gap between the value of developer credentials and the maturity of the controls protecting them is enormous.[^1]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The Codecov breach illustrates this perfectly. Attackers compromised Codecov&#39;s Bash Uploader script &mdash; a tool that runs in developers&#39; CI/CD pipelines (automated build and deployment systems). For two months, the [modified script silently exfiltrated environment variables](https://www.bleepingcomputer.com/news/security/hundreds-of-networks-reportedly-hacked-in-codecov-supply-chain-attack/) containing API keys, cloud credentials, and tokens from every customer who ran it.[^2] Federal investigators found the attackers used automation to leverage those stolen credentials and [tap into hundreds of downstream client networks](https://www.cybersecuritydive.com/news/codecov-breach-solarwinds-software-supply-chain/598950/).[^3]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal tech team, the stakes are acute. A compromised developer workstation doesn&#39;t just expose source code &mdash; it exposes SSH keys to servers holding privileged client communications, database credentials for case management systems, and API tokens for court filing integrations.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Lives on a Developer&#39;s Machine</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Before hardening workstations, audit what&#39;s actually there. The typical legal SaaS developer&#39;s laptop contains:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Asset | Risk if Compromised |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|-------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SSH private keys</strong> | Direct access to production servers, databases, deployment pipelines |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cloud console sessions</strong> | Browser cookies grant full AWS/GCP/Azure access without re-authentication |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Source code</strong> | Intellectual property; may contain hardcoded secrets in older commits |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">`.env` files</strong> | Database URLs, API keys, third-party service credentials in plaintext |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Browser extensions</strong> | Extensions with broad permissions can read every page, including admin consoles |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Password manager vaults</strong> | If unlocked, contains credentials for every system the developer touches |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">AI assistant history</strong> | Prompts may contain pasted credentials, architecture details, or client data |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal-specific risk:</strong> Developers building e-discovery tools or contract review platforms may have test datasets containing real client documents on their local machines. A workstation compromise becomes a client data breach, triggering notification obligations under [ABA Formal Opinion 483](https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/) and state breach notification laws.[^4]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Credential Theft Vectors</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Attackers don&#39;t need sophisticated exploits when developers hand them the keys. Common credential theft patterns include:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Keyloggers and clipboard access.</strong> Malware that records keystrokes or monitors the clipboard captures passwords, TOTP codes (as we covered in [Episode 21](../ep21/article.md)), and even SSH passphrases as developers type them.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Browser session hijacking.</strong> Modern browsers keep users logged into cloud consoles for days or weeks. Malware that extracts browser cookies &mdash; stored in SQLite databases on disk &mdash; can replay those sessions from any machine without needing passwords or MFA.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Memory dumps.</strong> Tools like Mimikatz can extract credentials from process memory. If a developer has AWS CLI configured with long-lived access keys, those keys exist in memory and in `~/.aws/credentials` in plaintext.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">AI assistant leakage.</strong> Developers routinely paste code snippets, error messages, and configuration files into AI coding assistants. If those snippets include API keys or database connection strings, they may be logged by third-party servers. [NIST SP 800-218](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf) (the Secure Software Development Framework) explicitly addresses the risk of exposing sensitive data through development tooling.[^5]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Browser Extension Risks</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Browser extensions represent a uniquely dangerous attack surface because they operate with the developer&#39;s full authenticated context. An extension with `&lt;all_urls&gt;` permission can:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Read the contents of every page, including cloud consoles, code repositories, and admin panels</li>
+        <li>Intercept form submissions, capturing credentials as they&#39;re typed</li>
+        <li>Modify page content, potentially injecting malicious code into CI/CD dashboards</li>
+        <li>Exfiltrate data to external servers without triggering network-level security controls</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A developer who installs a &quot;productivity&quot; extension with broad permissions has effectively granted a third party read access to every authenticated session in their browser &mdash; including your legal SaaS platform&#39;s admin interface.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Mitigation:&lt;/strong&gt; Maintain an approved extension allowlist. Block installation of unapproved extensions via browser management policies. Audit existing extensions quarterly. Use separate browser profiles &mdash; one for development (restricted extensions), one for general browsing.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Hardening the Developer Workstation</h2>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Full Disk Encryption</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Non-negotiable. If a laptop is stolen or lost, full disk encryption (FileVault on macOS, BitLocker on Windows, LUKS on Linux) ensures the data is inaccessible without the decryption key. [CIS Benchmarks](https://learn.microsoft.com/en-us/compliance/regulatory/offering-cis-benchmark) for all major operating systems list disk encryption as a Level 1 control &mdash; the baseline that every organisation should implement.[^6]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Hardware Security Keys for Authentication</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Replace SSH key files with hardware-backed keys. FIDO2 security keys (as we discussed in [Episode 21](../ep21/article.md)) can store SSH keys in tamper-resistant hardware. The private key never touches the filesystem. Even if the workstation is fully compromised, the attacker cannot extract the SSH key &mdash; they&#39;d need to physically steal the hardware token.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Credential Helpers Over Plaintext</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Never store cloud credentials in plaintext files. Use credential helpers that integrate with your operating system&#39;s secure keychain or with short-lived tokens:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">AWS:</strong> Use IAM Identity Center (SSO) with session tokens that expire in hours, not long-lived access keys in `~/.aws/credentials`</li>
+        <li><strong class="text-ink">Git:</strong> Use credential managers that store tokens in the OS keychain, not `.netrc` files</li>
+        <li><strong class="text-ink">Database:</strong> Use IAM-based database authentication where supported, avoiding static passwords</li>
+    </ul>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Endpoint Detection and Response (EDR)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">EDR tools &mdash; software that continuously monitors endpoint devices for threats and provides automated response &mdash; go beyond traditional antivirus. They detect behavioural anomalies: a process reading SSH key files, unusual outbound connections, credential dumping tools in memory. For small teams, [SentinelOne](https://www.sentinelone.com/cybersecurity-101/identity-security/remote-access-security-best-practices/) and CrowdStrike offer cloud-managed EDR that requires minimal IT overhead.[^7]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Device Management for Small Teams</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mobile Device Management (MDM) &mdash; software that enforces security policies on enrolled devices &mdash; lets you:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Enforce disk encryption and screen lock policies</li>
+        <li>Push security updates and verify patch status</li>
+        <li>Remotely wipe a lost or stolen device</li>
+        <li>Block unapproved application installations</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Offboarding discipline:&lt;/strong&gt; When a developer leaves, revoking their Git access is not enough. Rotate every credential they had access to: SSH keys, cloud IAM roles, API tokens, database passwords, CI/CD secrets. If they had a personal device enrolled in MDM, trigger a remote wipe of corporate data. The developer may have had credentials cached locally for months.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The AI Credential Leakage Problem</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is a newer risk that didn&#39;t exist five years ago. Developers using cloud-hosted AI assistants routinely paste:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Error messages containing database connection strings</li>
+        <li>Configuration files with API keys</li>
+        <li>Code snippets with hardcoded secrets</li>
+        <li>Architecture diagrams describing internal network topology</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each paste potentially transmits sensitive data to a third-party service. Even if the AI provider&#39;s privacy policy says they don&#39;t train on your data, the data still traverses their infrastructure.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigations:</strong> Use locally-hosted AI assistants for sensitive work. Implement pre-commit hooks (automated scripts that run before code is saved to version control) that scan for secrets and block commits containing API keys or credentials. Enforce `.env` file exclusions in `.gitignore` from day one.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Minimum Viable Workstation Security Checklist</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Control | Effort | Impact |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|--------|--------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Full disk encryption | One-time setup | Protects against physical theft |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Hardware security keys for SSH | Per-developer setup | Eliminates extractable SSH keys |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Short-lived cloud credentials (SSO) | Infrastructure setup | No persistent keys to steal |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Browser extension allowlist | Policy + enforcement | Blocks malicious extensions |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| EDR on all developer machines | Per-device license | Detects credential theft in progress |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pre-commit secret scanning | Repository setup | Prevents accidental secret commits |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Separate AI assistant for sensitive work | Policy | Prevents credential leakage to third parties |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Offboarding credential rotation checklist | Process | Eliminates stale access after departure |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your production infrastructure can be hardened to military specifications. If the developer workstation that accesses it runs with local admin rights, no disk encryption, and SSH keys sitting in `~/.ssh/` as plaintext files, the weakest link in your security chain is the one that matters.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: we examine the security risks of AI-generated code &mdash; what happens when the developer writing your authentication middleware is a probabilistic model that might hallucinate a back door.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: CSO Online, [Developer workstations are the new beachhead](https://www.csoonline.com/article/4169635/developer-workstations-are-the-new-beachhead.html).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: BleepingComputer, [Hundreds of networks reportedly hacked in Codecov supply-chain attack](https://www.bleepingcomputer.com/news/security/hundreds-of-networks-reportedly-hacked-in-codecov-supply-chain-attack/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Cybersecurity Dive, [Codecov hack &mdash; likened to SolarWinds &mdash; targets software supply chain](https://www.cybersecuritydive.com/news/codecov-breach-solarwinds-software-supply-chain/598950/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: ABA, [When Should Law Firms Notify Clients About Data Breaches?](https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: NIST, [SP 800-218: Secure Software Development Framework](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: CIS Benchmarks, [Overview and Compliance Mapping](https://learn.microsoft.com/en-us/compliance/regulatory/offering-cis-benchmark).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: SentinelOne, [Remote Access Security Best Practices](https://www.sentinelone.com/cybersecurity-101/identity-security/remote-access-security-best-practices/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: NIST, [NISTIR 8587: Protecting Tokens and Assertions from Forgery, Theft, and Misuse](https://csrc.nist.gov/pubs/ir/8587/ipd).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Sonatype, [What You Need to Know About the Codecov Incident](https://www.sonatype.com/blog/what-you-need-to-know-about-the-codecov-incident-a-supply-chain-attack-gone-undetected-for-2-months).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Palo Alto Networks, [When Security Scanners Become the Weapon: Breaking Down the Trivy Supply Chain Attack](https://www.paloaltonetworks.com/blog/cloud-security/trivy-supply-chain-attack/).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 50 &mdash; developer workstation security. Alice, we&#39;ve spent the last several episodes on cloud infrastructure, deployment pipelines, and IAM permissions. But today we&#39;re zooming in on something much more personal &mdash; the actual laptop sitting on a developer&#39;s desk.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And it&#39;s the thing most teams harden last, if they harden it at all. Think about it this way. Your production servers are behind firewalls, intrusion detection, strict access controls. Your cloud IAM policies &mdash; which we covered last episode &mdash; enforce least privilege. But the developer&#39;s laptop? It has an SSH key that connects directly to every one of those environments. It has saved browser sessions to the cloud console. It has dot-env files with database passwords in plaintext. And it probably has antivirus that hasn&#39;t been updated since it was first set up.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So the laptop is basically the keys to the kingdom, sitting on a desk in a coffee shop.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; That&#39;s not even the worst version. The worst version is the laptop sitting on the desk of someone who just left the company. But yes &mdash; a security researcher at CSO Online described developer workstations as &quot;the new beachhead.&quot; Three separate threat actor groups independently decided that the developer laptop was the single best entry point into an organisation. Not the servers, not the cloud &mdash; the laptop. Because the value of what&#39;s on it is enormous and the security around it is often minimal.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Can you give us a real example of this going wrong?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The Codecov breach. Codecov was a code coverage tool &mdash; it tells developers how much of their code is tested. Attackers compromised a script that ran inside developers&#39; build pipelines. For two months, that script silently collected environment variables &mdash; things like API keys, cloud credentials, authentication tokens &mdash; from every customer who used it. Federal investigators found the attackers then used those stolen credentials to break into hundreds of downstream companies. The developers never knew. They ran their normal build process and it sent their secrets to the attacker.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. Two months undetected. And for a legal tech team, what&#39;s actually at risk on a developer&#39;s machine?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Let me walk through it. SSH keys &mdash; those are the cryptographic keys that let developers log into servers remotely. If stolen, the attacker gets direct server access. Cloud console sessions &mdash; developers stay logged into AWS or Azure in their browser, and those login sessions can be extracted from the browser&#39;s storage and replayed from any other machine. Source code &mdash; which may contain hardcoded secrets in older versions. Dot-env files &mdash; configuration files with database passwords, API keys, all in plain text. And here&#39;s one people miss: if your developers are building a document review tool or an e-discovery platform, they might have test datasets on their laptops that contain real client documents. A workstation compromise becomes a client data breach, and that triggers notification obligations under ABA rules and state law.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s a hard one. Real client documents on a test machine. What about browser extensions? I&#39;ve heard you mention those as a risk.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Browser extensions are uniquely dangerous. An extension with broad permissions &mdash; and many request access to all websites &mdash; can read the content of every page the developer visits. That includes cloud admin consoles, code repositories, internal dashboards. It can intercept form submissions, capturing passwords as they&#39;re typed. It can modify what the developer sees on screen. And it can send data to external servers without triggering any of your network security. A developer who installs a random productivity extension has basically given a stranger read access to every authenticated session in their browser.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So what&#39;s the fix? What does a properly secured developer workstation look like?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Start with the basics. Full disk encryption &mdash; FileVault on Mac, BitLocker on Windows, LUKS on Linux. Non-negotiable. If a laptop is lost or stolen, encryption means the data is unreadable without the key. The Center for Internet Security lists this as a Level 1 control &mdash; the bare minimum every organisation should have.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Next, replace file-based SSH keys with hardware security keys. We talked about FIDO2 keys back in Episode 21. The same hardware keys that protect your login can store SSH keys in tamper-resistant hardware. The private key never exists as a file on the laptop. Even if the machine is fully compromised, the attacker can&#39;t extract it.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And cloud credentials?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Stop using long-lived access keys. Use single sign-on with session tokens that expire in hours. AWS has IAM Identity Center for this. The idea is: no persistent credentials on the filesystem. If there&#39;s nothing to steal, a compromised machine gives the attacker a much smaller window.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What about the AI angle? Developers are pasting code into AI assistants all the time.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is a newer risk. Developers routinely paste error messages, configuration files, and code snippets into AI coding tools. If those snippets include API keys or database connection strings, that data is now on a third-party server. Even if the AI provider says they don&#39;t train on your data, it still traversed their infrastructure. The fix is policy and tooling: use locally-hosted AI for sensitive work, and set up pre-commit hooks &mdash; those are automated scripts that scan code before it&#39;s saved &mdash; to catch secrets before they get committed.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. And offboarding &mdash; when someone leaves?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Revoking their Git access is about ten percent of the job. You need to rotate every credential they had access to. SSH keys, cloud IAM roles, API tokens, database passwords, CI/CD secrets &mdash; the automated deployment pipeline credentials. If they used a personal device, wipe the corporate data remotely. The developer may have had credentials cached on that machine for months. If you don&#39;t rotate, those credentials still work, and you&#39;ll never know if they&#39;re being used by someone they shouldn&#39;t be.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So to summarise &mdash; disk encryption, hardware keys instead of file-based SSH keys, short-lived cloud tokens, browser extension controls, endpoint detection software, pre-commit secret scanning, and a real offboarding process.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the minimum. And the principle behind all of it is: assume the workstation will be compromised, and make sure that compromise gives the attacker as little as possible. No persistent credentials to steal, no plaintext secrets on disk, no browser extensions with god-mode permissions. Your production infrastructure can be hardened perfectly &mdash; but if the laptop that accesses it is wide open, that&#39;s where the attacker walks in.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; what happens when the developer writing your code is itself an AI. Verifying agent-generated code and the risks of hallucinated dependencies.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-49-cloud-iam-and-least-privilege.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 49 &mdash; Cloud IAM and Least Privilege</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 51 &mdash; Trusting the AI Developer &mdash; Verifying Agent-Generated Code</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

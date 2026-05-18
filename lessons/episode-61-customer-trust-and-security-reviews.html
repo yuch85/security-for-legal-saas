@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 61 &mdash; Customer Trust and Security Reviews &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 61 &middot; Module 12 &middot; Compliance &amp; Governance</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Customer Trust and Security Reviews</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 7:53 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-61-customer-trust-and-security-reviews.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">7:53</span>
+                <span>7:53</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-61-customer-trust-and-security-reviews.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">It arrives in your inbox at 4:47pm on a Friday. A 300-question security questionnaire from the procurement team at a firm you&#39;ve been courting for six months. Your answers &mdash; and how fast you deliver them &mdash; will determine whether you close the deal on Monday or lose it to a competitor who was ready. [According to a 2026 industry survey by Tribble AI](https://tribble.ai/blog/security-questionnaire-ddq-automation-hub/), the average enterprise SaaS vendor receives hundreds of security questionnaires</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 61: Customer Trust and Security Reviews</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Friday Afternoon Questionnaire</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">It arrives in your inbox at 4:47pm on a Friday. A 300-question security questionnaire from the procurement team at a firm you&#39;ve been courting for six months. Your answers &mdash; and how fast you deliver them &mdash; will determine whether you close the deal on Monday or lose it to a competitor who was ready.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[According to a 2026 industry survey by Tribble AI](https://tribble.ai/blog/security-questionnaire-ddq-automation-hub/), the average enterprise SaaS vendor receives hundreds of security questionnaires per year, each containing 50 to 400 questions.[^1] Across your sales pipeline, that represents millions in productivity costs and delayed deals. The vendors who handle this efficiently don&#39;t just answer faster &mdash; they win more business.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security Questionnaires: What Enterprise Procurement Wants</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Enterprise law firms evaluate vendors through standardised security questionnaires. The most common frameworks include:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Framework | Source | Typical Length | Common In |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|--------|---------------|-----------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SIG Lite</strong> | Shared Assessments | ~150 questions | Financial services, large enterprises |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SIG Full</strong> | Shared Assessments | 1,000+ questions | High-security environments |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">CAIQ</strong> | Cloud Security Alliance | ~300 questions | Cloud service providers |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Custom</strong> | Individual procurement team | Varies widely | Law firms with in-house security teams |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">VSAQ</strong> | Google | ~100 questions | Tech-forward organisations |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The questions map to the security domains we&#39;ve covered across this series: access control ([Episodes 23&ndash;27](../ep23/article.md)), encryption ([Episode 13](../ep13/article.md)), incident response ([Episodes 52&ndash;56](../ep52/article.md)), vulnerability management ([Episode 60](../ep60/article.md)), business continuity, and data protection ([Episode 59](../ep59/article.md)).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key concept:&lt;/strong&gt; A &lt;em&gt;security questionnaire&lt;/em&gt; (also called a &lt;em&gt;vendor risk assessment questionnaire&lt;/em&gt; or &lt;em&gt;due diligence questionnaire / DDQ&lt;/em&gt;) is a structured document used by enterprise procurement teams to evaluate a vendor&#39;s security posture before approving a purchase. It is the single most common gate between you and an enterprise contract.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Answers That Actually Matter</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not all 300 questions carry equal weight. [Procurement teams consistently prioritise](https://cynomi.com/learn/vendor-risk-assessment-questionnaire/) a core set of areas:[^2]</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Do you have SOC 2 Type II?</strong> &mdash; A yes with a current report attached eliminates dozens of follow-up questions</li>
+        <li><strong class="text-ink">How do you handle data encryption?</strong> &mdash; At rest and in transit, with specific algorithms and key management practices</li>
+        <li><strong class="text-ink">What is your incident response process?</strong> &mdash; Including breach notification timelines (typically 24&ndash;72 hours contractually)</li>
+        <li><strong class="text-ink">Where is data stored?</strong> &mdash; Geographic location, cloud provider, data residency options</li>
+        <li><strong class="text-ink">Do you have a penetration test report?</strong> &mdash; Annual external pentest with remediation evidence</li>
+        <li><strong class="text-ink">How do you handle sub-processors?</strong> &mdash; List of third parties who access customer data</li>
+        <li><strong class="text-ink">What access controls are in place?</strong> &mdash; RBAC (role-based access control, as we covered in [Episode 23](../ep23/article.md)), MFA enforcement, access reviews</li>
+        <li><strong class="text-ink">Do you have a DPA ready?</strong> &mdash; Data Processing Agreement per GDPR Article 28</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Building a Trust Centre</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A trust centre is a public or gated webpage that centralises your security documentation &mdash; making it available to prospects before they even need to send a questionnaire.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Research by SecureSlate](https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster) found that vendors with trust centres experienced 2x faster deal velocity because prospects could self-serve answers to common security questions before engaging the sales team.[^3]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An effective trust centre includes:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Component | Description |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|-------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SOC 2 report summary</strong> | High-level overview (full report available under NDA) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">ISO 27001 certificate</strong> | If applicable, with valid dates |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Penetration test summary</strong> | Scope, date, and overall findings profile (full report under NDA) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data Processing Agreement</strong> | Downloadable DPA template |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Sub-processor list</strong> | Current third parties with data access, updated regularly |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Architecture overview</strong> | High-level infrastructure diagram showing encryption, segmentation, cloud provider |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Privacy policy</strong> | Comprehensive privacy policy covering data handling practices |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Compliance certifications</strong> | Cyber Essentials, SOC 2, ISO 27001, any sector-specific certifications |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fffbeb; border-left: 4px solid #f59e0b; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Legal SaaS tip:&lt;/strong&gt; Include a section on legal professional privilege in your trust centre. Explain how your platform supports matter-level access controls, privilege classification, and litigation holds. Law firm procurement teams will look for this, and no generic SaaS trust centre template covers it. This is your differentiation.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">DPA Negotiation: What Clients Actually Care About</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every law firm client under GDPR will require a Data Processing Agreement, as we covered in [Episode 59](../ep59/article.md). But DPA negotiation is rarely just about ticking the Article 28 boxes. The points that generate the most back-and-forth:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Breach notification timelines.</strong> GDPR requires processors to notify controllers &quot;without undue delay.&quot; Your DPA will specify a concrete number. [Law firms commonly negotiate for 24-hour notification](https://gdpr-info.eu/art-33-gdpr/), which is aggressive but increasingly standard for platforms handling privileged data.[^4]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sub-processor consent.</strong> Some firms require specific prior written consent before you engage any new sub-processor. Others accept general authorisation with a notification and objection period. Your DPA should offer both options.[^5]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Audit rights.</strong> Controllers have the right to audit processors under Article 28(3)(h). Negotiate the practical terms: reasonable notice periods, cost allocation, and the option to substitute a third-party audit report (your SOC 2) for on-site inspections.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Data deletion on termination.</strong> Define precisely what happens to client data when the contract ends &mdash; deletion timelines, certification of deletion, any retention required by law.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Liability caps.</strong> The most commercially sensitive clause. Some DPAs attempt to uncap liability for data protection breaches. Negotiate carefully, and understand your insurance coverage limits.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Breach Notification Clauses in MSAs</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Beyond the DPA, your Master Service Agreement (MSA) will contain breach notification provisions. What enterprise procurement teams look for:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Notification timeline</strong> &mdash; 24&ndash;72 hours from discovery, not from confirmation. The clock starts when you become aware, not when you&#39;ve completed your investigation</li>
+        <li><strong class="text-ink">Scope of notification</strong> &mdash; what information you&#39;ll provide: nature of the breach, data affected, remedial measures taken, point of contact</li>
+        <li><strong class="text-ink">Ongoing updates</strong> &mdash; commitment to provide regular updates until the incident is resolved</li>
+        <li><strong class="text-ink">Root cause analysis</strong> &mdash; commitment to deliver a post-incident report within a defined period (typically 30 days)</li>
+        <li><strong class="text-ink">Remediation plan</strong> &mdash; documented steps to prevent recurrence</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Vendor Risk Reviews &mdash; From the Vendor&#39;s Side</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Understanding what the enterprise procurement team sees when they evaluate you helps you prepare:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tier 1 (Critical vendors)</strong> &mdash; platforms that store or process sensitive client data. Full security review, on-site audit rights, annual reassessment. This is where legal SaaS typically falls.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tier 2 (Important vendors)</strong> &mdash; platforms with limited data access. Questionnaire-based review, SOC 2 report sufficient, biennial reassessment.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tier 3 (Low-risk vendors)</strong> &mdash; no sensitive data access. Self-assessment checklist, minimal ongoing review.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Google&#39;s Vendor Security Risk Assessment framework](https://cloud.google.com/security/vendor-security-assessment) provides a publicly available model for how large enterprises structure their vendor review process &mdash; it is a useful reference for understanding what your evaluators are looking at.[^6]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Automating the Response Process</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">As questionnaire volume grows, manual responses become unsustainable. Modern tools like [Vanta, Drata, SecureFrame, and Hyperproof](https://hyperproof.io/resource/security-questionnaire/) maintain a centralised knowledge base of approved answers that can be mapped to incoming questionnaires automatically.[^7] This reduces response time from weeks to days and ensures consistency &mdash; the answer you give Firm A about encryption matches what you told Firm B.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 62 &mdash; the series finale &mdash; covers <strong class="text-ink">Security Roadmapping: From Here to Production</strong>. We&#39;ll synthesise everything from sixty-one episodes into a practical roadmap: what to implement first, how to prioritise, and what to do Monday morning.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: Tribble AI, [Security Questionnaire &amp; DDQ Automation Hub: The Complete 2026 Guide](https://tribble.ai/blog/security-questionnaire-ddq-automation-hub/) &mdash; questionnaire volume and productivity impact statistics.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Cynomi, [Vendor Risk Assessment Questionnaire: Key Questions That Matter](https://cynomi.com/learn/vendor-risk-assessment-questionnaire/) &mdash; prioritised assessment question categories.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: SecureSlate, [How Top SaaS Use Trust Centers to Close Deals 2x Faster](https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster) &mdash; trust centre ROI and deal velocity data.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: GDPR-Info.eu, [Article 33 &mdash; Notification of a Personal Data Breach to the Supervisory Authority](https://gdpr-info.eu/art-33-gdpr/) &mdash; breach notification requirements.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: GDPR-Info.eu, [Article 28 &mdash; Processor](https://gdpr-info.eu/art-28-gdpr/) &mdash; sub-processor consent mechanisms.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Google Cloud, [Vendor Security Risk Assessment](https://cloud.google.com/security/vendor-security-assessment) &mdash; enterprise vendor review framework.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Hyperproof, [Security Questionnaire: What Is It and How to Respond](https://hyperproof.io/resource/security-questionnaire/) &mdash; questionnaire response automation.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: SteerLab, [20 Security Questionnaire Questions &amp; Sample Answers](https://www.steerlab.ai/blog/security-questionnaire-questions-examples) &mdash; common question patterns with guidance.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: HyperComply, [SaaS Buyer&#39;s Guide: Security Questionnaire Response Tool with Trust Center](https://www.hypercomply.com/blog/security-questionnaire-buyers-guide) &mdash; combined questionnaire and trust centre platforms.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Trava Security, [SaaS Security Assessment Questionnaire](https://travasecurity.com/saas-security-assessment-questionnaire/) &mdash; SaaS-specific assessment framework.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Targhee Security, [Security Questionnaire: The 2026 Guide for Vendors &amp; Buyers](https://www.targheesec.com/resources/security-questionnaire-the-2026-guide-for-vendors-amp-buyers) &mdash; comprehensive vendor response strategy.</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 61 &mdash; customer trust and security reviews. Alice, last episode we talked about getting certifications. This episode is about what happens when a prospective client puts you under the microscope.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. And the microscope usually arrives as a spreadsheet. Four forty-seven on a Friday afternoon. Three hundred questions. Your answers determine whether you close the deal on Monday or lose it to a competitor who was ready.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Security questionnaires. I&#39;ve heard these are a huge time sink for SaaS vendors.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;They are. The average enterprise vendor receives hundreds of these per year, each with fifty to four hundred questions covering encryption, access control, incident response, data handling, business continuity &mdash; every security domain we&#39;ve discussed across this series. Across your entire sales pipeline, the cost in staff time and delayed deals is enormous. But they&#39;re not going away, because for the law firm on the other end, this is how they prove due diligence. If they buy a platform that gets breached and they never did a security review, that&#39;s negligent.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So what are these questionnaires actually asking?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;They map to the same topics we&#39;ve covered for sixty episodes. Do you encrypt data at rest and in transit &mdash; Episode 13. How do you handle authentication &mdash; Episodes 17 through 22. What&#39;s your incident response process &mdash; Episodes 52 through 56. Where is data stored geographically. Do you have a SOC 2 Type II report. Do you have a recent penetration test. Who are your sub-processors &mdash; meaning which third parties touch customer data. Do you have a Data Processing Agreement ready to sign.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. That&#39;s a lot of ground. Is there a shortcut?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The best shortcut is having a SOC 2 Type II report. When a procurement team asks &quot;do you have SOC 2 Type II&quot; and you say yes and attach the report, it eliminates dozens of follow-up questions. The auditor has already verified your controls across security, availability, and confidentiality. That doesn&#39;t mean the questionnaire goes away entirely, but it dramatically reduces the back-and-forth.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. What about a trust centre? I keep hearing that term.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;A trust centre is a dedicated page &mdash; public or gated &mdash; that centralises all your security documentation in one place. Your SOC 2 report summary, your ISO 27001 certificate if you have one, a penetration test summary, your Data Processing Agreement as a downloadable template, a list of your sub-processors, an architecture overview showing your infrastructure and encryption approach, and your privacy policy. Research shows that vendors with trust centres close deals roughly twice as fast, because prospects can self-serve answers to common questions before the formal review even starts.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So you&#39;re front-loading the information instead of drip-feeding it through email chains.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Exactly. And here&#39;s a tip specific to legal SaaS that most trust centre templates miss: include a section on legal professional privilege. Explain how your platform handles matter-level access controls, privilege classification, and litigation holds. A law firm&#39;s procurement team will look for this, and generic SaaS trust centres never cover it. This is where you differentiate from platforms that happen to sell to law firms versus platforms built for law firms.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That makes sense. Now, DPA negotiation &mdash; we covered the basics in Episode 59. What does it look like in practice when a client actually wants to negotiate one?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Most of the DPA is standard &mdash; it covers the Article 28 requirements. Where negotiations get intense is around five specific clauses. First, breach notification timelines. GDPR says &quot;without undue delay,&quot; but your client will want a concrete number. Twenty-four hours from discovery is increasingly the standard for platforms handling privileged legal data. Second, sub-processor consent &mdash; some firms want specific approval before you engage any new vendor. Third, audit rights &mdash; the client technically has the right to audit you, but you can negotiate practical terms: reasonable notice, cost sharing, and the option to substitute your SOC 2 report for an on-site visit. Fourth, data deletion on termination &mdash; exactly what happens to their data when the contract ends, including deletion timelines and a certificate of destruction. And fifth &mdash; the commercially sensitive one &mdash; liability caps for data protection breaches.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. The liability question is always the hardest.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. Some DPAs try to uncap liability for data breaches entirely. You need to understand your insurance coverage and negotiate a cap that&#39;s defensible but doesn&#39;t expose you to existential risk. This is one area where having a lawyer on your own side of the table &mdash; not just the client&#39;s side &mdash; matters enormously.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What about the breach notification clauses in the main contract &mdash; the MSA?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Beyond the DPA, your Master Service Agreement will have its own breach notification provisions. What procurement teams want to see: a notification timeline of twenty-four to seventy-two hours from discovery, not from the completion of your investigation. The scope of what you&#39;ll report &mdash; nature of the breach, data affected, remedial measures. A commitment to ongoing updates until the incident is resolved. A root cause analysis delivered within thirty days. And a remediation plan documenting what you&#39;ll do to prevent recurrence.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. The key point there is &quot;from discovery,&quot; not &quot;from confirmation.&quot; The clock starts the moment you know something might be wrong.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Clients have been burned by vendors who delayed notification for weeks while they investigated. The expectation now is early notification even if the picture is incomplete, with progressive updates as you learn more.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. One last thing &mdash; as the questionnaire volume grows, can you automate any of this?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You can and you should. Tools like Vanta, Drata, SecureFrame, and Hyperproof maintain a centralised knowledge base of your approved answers. When a new questionnaire arrives, the tool maps the questions to your existing answers, pre-fills what it can, and flags only the questions that need fresh input. This cuts response time from weeks to days and ensures consistency &mdash; the answer you give one firm about your encryption matches what you told every other firm.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Consistency matters because these firms talk to each other.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;They do. And conflicting answers between two questionnaires is a red flag that raises more questions than it answers.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode is the series finale &mdash; Episode 62. Security Roadmapping. Sixty-one episodes of security knowledge, compressed into a practical plan of what to do first.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-60-soc-2-penetration-testing-and-security-certification.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 60 &mdash; SOC 2, Penetration Testing and Security Certification</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-62-security-roadmapping-from-here-to-production-series-finale.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 62 &mdash; Security Roadmapping &mdash; From Here to Production (Series Finale)</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

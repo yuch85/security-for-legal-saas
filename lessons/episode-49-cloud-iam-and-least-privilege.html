@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 49 &mdash; Cloud IAM and Least Privilege &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 49 &middot; Module 10 &middot; Infrastructure</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Cloud IAM and Least Privilege</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 9:33 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-49-cloud-iam-and-least-privilege.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">9:33</span>
+                <span>9:33</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-49-cloud-iam-and-least-privilege.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Every cloud resource your legal SaaS platform depends on &mdash; databases, storage buckets, message queues, AI services, compute instances &mdash; is protected by an Identity and Access Management (IAM) system. IAM determines who can access what, under what conditions, and with what permissions. It is the control plane for your entire cloud infrastructure. The theory is straightforward: every principal (user, service, application) should have only the minimum permissions required to perform its function. T</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 49: Cloud IAM and Least Privilege</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">That Service Account Has Owner Permissions Because Someone Needed It Once</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every cloud resource your legal SaaS platform depends on &mdash; databases, storage buckets, message queues, AI services, compute instances &mdash; is protected by an Identity and Access Management (IAM) system. IAM determines who can access what, under what conditions, and with what permissions. It is the control plane for your entire cloud infrastructure.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The theory is straightforward: every principal (user, service, application) should have only the minimum permissions required to perform its function. This is the principle of least privilege, which we first discussed in [Episode 8](/lessons/ep08/) in the context of database access. Applied to cloud infrastructure, it means your document processing service should be able to read from the document storage bucket and write to the processed output bucket &mdash; and nothing else. Not access the database. Not read other services&#39; logs. Not modify IAM policies.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The reality is different. [Research on cloud security patterns](https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/) [1] consistently finds that over-permissioned cloud roles are the norm, not the exception. A developer needed broad access during initial setup, granted their service account Owner or Administrator permissions, moved on to the next task, and never scoped it down. Now every compromised container runs as God.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">How Cloud IAM Works &mdash; Principals, Policies, and Permission Evaluation</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">All three major cloud providers &mdash; AWS, Google Cloud (GCP), and Microsoft Azure &mdash; use the same conceptual model, with different terminology:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Concept | AWS | GCP | Azure |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|-----|-----|-------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Identity</strong> | IAM User, IAM Role | Google Account, Service Account | Azure AD User, Managed Identity |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Permission</strong> | IAM Policy (JSON) | IAM Role binding | Role Assignment (RBAC) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Resource scope</strong> | Account-level, resource-level | Project, folder, organisation | Subscription, resource group |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Machine identity</strong> | IAM Role (assumed by EC2/Lambda) | Service Account | Managed Identity |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The permission evaluation chain follows a common pattern: when a principal attempts an action on a resource, the IAM system checks all applicable policies. In AWS, this means evaluating identity-based policies, resource-based policies, permission boundaries, session policies, and service control policies. A single `Deny` anywhere in the chain overrides all `Allow` statements.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Google Cloud&#39;s service account best practices](https://docs.cloud.google.com/iam/docs/best-practices-service-accounts) [2] emphasise that &quot;service accounts are not just a mechanism for authentication &mdash; they define the permissions envelope for everything running under that identity.&quot; Every container, every serverless function, every background job running as a given service account inherits all of that account&#39;s permissions.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Service Accounts and Workload Identity &mdash; Machines Need Identities Too</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a legal SaaS platform, most API calls are made not by humans but by services: the document parser calling the storage API, the AI engine calling the model endpoint, the billing service writing to the database. Each of these services needs an identity to authenticate, and that identity must be tightly scoped.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Common anti-pattern:&lt;/strong&gt; A single &quot;app&quot; service account shared by all microservices, with permissions to access every resource in the project. If any one service is compromised, the attacker inherits the combined permissions of every service. This is the blast radius problem &mdash; the scope of damage from a single breach.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The correct approach is one service account per service, each with the minimum permissions required:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Service | Needs | Should NOT Have |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|-------|-----------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Document Parser | Read from upload bucket, write to parsed output bucket | Database access, IAM admin |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| AI Engine | Call model API, read from parsed output bucket | Direct storage access, billing data |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Billing Service | Write billing records to database | Document access, model API access |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Audit Logger | Write to audit log storage | Read any other data |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Admin API | Read/write user management database | Direct access to document storage |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The Cyscale IAM best practices guide](https://cyscale.com/blog/iam-best-practices-from-aws-azure-gcp/) [3] recommends creating service accounts with names that describe their purpose (`sa-document-parser`, `sa-billing-writer`) and reviewing their permissions quarterly.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Workload Identity Federation</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern cloud platforms offer workload identity &mdash; a mechanism where your Kubernetes pods, CI/CD pipelines, or serverless functions receive cloud credentials automatically, without storing long-lived keys. [GCP Workload Identity Federation](https://cloud.google.com/iam/docs/workload-identity-federation) [4], AWS IAM Roles for Service Accounts (IRSA), and Azure Workload Identity all eliminate the need for service account key files &mdash; which are long-lived credentials that can be stolen, copied, and reused from anywhere.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Temporary Credentials and Role Assumption</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Long-lived credentials &mdash; API keys, service account key files, access keys that never expire &mdash; are a liability. If stolen, they provide indefinite access. If leaked to a log file, a configuration dump, or a developer&#39;s notebook, they remain valid until manually revoked.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The principle-of-least-privilege guide from Inventive HQ](https://inventivehq.com/blog/principle-of-least-privilege) [5] emphasises temporary credentials as a core IAM practice:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">AWS:</strong> Use IAM Roles and `AssumeRole` for temporary credentials (default: 1 hour). Use `aws sts get-session-token` for CLI access with expiration.</li>
+        <li><strong class="text-ink">GCP:</strong> Service account keys should be avoided entirely. Use Workload Identity for GKE workloads and service account impersonation for developer access.</li>
+        <li><strong class="text-ink">Azure:</strong> Use Managed Identities for Azure resources. For developer access, use `az login` with Azure AD &mdash; no stored credentials.</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms, the rule is simple: if a credential doesn&#39;t have an expiration time, it&#39;s a risk. Temporary credentials that automatically rotate eliminate an entire class of vulnerabilities &mdash; stolen keys, leaked credentials, forgotten access.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Over-Permissioned Cloud Roles &mdash; The Real-World Pattern</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Security Boulevard&#39;s analysis of permission creep](https://securityboulevard.com/2025/10/dont-let-your-cloud-security-catch-a-bad-case-of-permission-creep/) [6] documents the pattern: permissions accumulate over time. A developer needs access to debug a production issue &mdash; they&#39;re granted a broad role. The issue is resolved, but the permissions remain. Six months later, that developer&#39;s account has accumulated permissions across eight projects, including resources they no longer work with.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The statistics are stark: [23% of all cloud security incidents stem from misconfigurations](https://securityboulevard.com/2025/10/dont-let-your-cloud-security-catch-a-bad-case-of-permission-creep/) [6], with overly permissive access policies being a leading cause. Permission creep &mdash; the gradual accumulation of excessive and unused cloud permissions &mdash; creates a dangerous attack surface that is difficult to manage manually.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Detecting Over-Permission</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each cloud provider offers tools to identify unused and excessive permissions:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Provider | Tool | What It Shows |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|------|---------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">AWS</strong> | [IAM Access Analyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html) [7] | Unused permissions, excess privileges, external access findings |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">GCP</strong> | [IAM Recommender](https://cloud.google.com/iam/docs/recommender-overview) [8] | &quot;Excess / Total permissions&quot; &mdash; permissions the principal has but hasn&#39;t used |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Azure</strong> | [Microsoft Permissions Management](https://learn.microsoft.com/en-us/azure/defender-for-cloud/recommendations-reference-identity-access) [9] | Over-provisioned identities, unused permissions, permission creep alerts |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The GoCodeo guide to implementing least privilege](https://www.gocodeo.com/post/implementing-least-privilege-in-cloud-and-devops-workflows) [10] recommends a practical workflow: deploy with minimal permissions, let the application run for 30-90 days, then use IAM analyzers to identify permissions that were never used. Remove them. This &quot;right-sizing&quot; approach avoids the upfront difficulty of predicting exact permission needs.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Practical approach:&lt;/strong&gt; Start with the broadest role that lets the service function (to avoid blocking development), then right-size after 30-90 days using IAM analyzers. This is pragmatic least privilege &mdash; you&#39;ll never get permissions perfect on the first try, but you should never leave them un-reviewed.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Privilege Escalation Inside Cloud Environments</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">IAM misconfigurations are not just about over-permission. They can be active attack paths. An attacker who compromises a service with permission to modify IAM policies can grant themselves any permission &mdash; effectively escalating from a limited role to full administrator access.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The shared responsibility model analysis](https://ambacia.eu/careers-post/cloud-security-in-aws-azure-and-gcp-what-they-wont-tell-you-about-the-shared-responsibility-model/) [11] highlights that cloud providers secure the platform, but IAM configuration is entirely the customer&#39;s responsibility. Common privilege escalation paths include:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">IAM policy modification</strong> &mdash; a service with `iam:PutRolePolicy` in AWS or `setIamPolicy` in GCP can grant itself any permission</li>
+        <li><strong class="text-ink">Role chaining</strong> &mdash; assuming a more privileged role from a less privileged one</li>
+        <li><strong class="text-ink">Service account key creation</strong> &mdash; creating a new key for a privileged service account, gaining its permissions</li>
+        <li><strong class="text-ink">Compute resource hijacking</strong> &mdash; launching a new instance or container with a more privileged role attached</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform, audit IAM-modifying permissions with special attention. Very few services should have the ability to change IAM policies. Separate the &quot;create infrastructure&quot; role from the &quot;run application&quot; role &mdash; and ensure the running application cannot modify its own permissions.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Just-in-Time (JIT) Access</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For human operators who occasionally need elevated permissions &mdash; debugging a production issue, performing a database migration, responding to a security incident &mdash; just-in-time access provides temporary privilege elevation with automatic expiration.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Automated remediation approaches](https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/) [1] can automatically revoke unused permissions, tighten overly broad IAM policies, or trigger JIT access workflows. The pattern:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Operator requests elevated access through a ticketing system</li>
+        <li>Approval workflow (peer review, manager approval, or automated policy check)</li>
+        <li>Temporary role granted &mdash; typically 1-4 hours</li>
+        <li>All actions during the elevated session are logged</li>
+        <li>Role automatically revokes at expiration</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This eliminates standing privileges &mdash; permissions that are always active, waiting to be exploited. For legal SaaS platforms handling privileged communications, JIT access is both a security control and an audit trail for regulator inquiries: who had admin access, when, for how long, and what did they do?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Cloud IAM is the gatekeeper for your entire infrastructure. Over-permissioned service accounts are the most common and most dangerous misconfiguration in cloud environments. Use one service account per service, scope permissions tightly, prefer temporary credentials over long-lived keys, use IAM analyzers to detect permission creep, and implement JIT access for human operators. If a single compromised container can access every resource in your cloud project, your IAM configuration is your biggest vulnerability &mdash; not your application code.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we shift from infrastructure to the people who build on it &mdash; developer workstation security. Your production servers are hardened. Your developer&#39;s laptop has Slack, Chrome, and an SSH key to every environment.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>[Rolling Out/Enforcing Least Privilege in AWS/GCP/Azure &mdash; P0 Security](https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/)</li>
+        <li>[Best Practices for Using Service Accounts Securely &mdash; Google Cloud](https://docs.cloud.google.com/iam/docs/best-practices-service-accounts)</li>
+        <li>[IAM Best Practices for AWS, Google Cloud, and Azure &mdash; Cyscale](https://cyscale.com/blog/iam-best-practices-from-aws-azure-gcp/)</li>
+        <li>[Workload Identity Federation &mdash; Google Cloud](https://cloud.google.com/iam/docs/workload-identity-federation)</li>
+        <li>[Principle of Least Privilege: A Complete Guide for Cloud Security &mdash; Inventive HQ](https://inventivehq.com/blog/principle-of-least-privilege)</li>
+        <li>[Don&#39;t Let Your Cloud Security Catch a Bad Case of Permission Creep &mdash; Security Boulevard](https://securityboulevard.com/2025/10/dont-let-your-cloud-security-catch-a-bad-case-of-permission-creep/)</li>
+        <li>[IAM Access Analyzer &mdash; AWS Documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html)</li>
+        <li>[IAM Recommender &mdash; Google Cloud](https://cloud.google.com/iam/docs/recommender-overview)</li>
+        <li>[Identity and Access Security Recommendations &mdash; Microsoft Defender for Cloud](https://learn.microsoft.com/en-us/azure/defender-for-cloud/recommendations-reference-identity-access)</li>
+        <li>[Implementing Least Privilege in Cloud and DevOps Workflows &mdash; GoCodeo](https://www.gocodeo.com/post/implementing-least-privilege-in-cloud-and-devops-workflows)</li>
+        <li>[Cloud Security: The Shared Responsibility Model &mdash; Ambacia](https://ambacia.eu/careers-post/cloud-security-in-aws-azure-and-gcp-what-they-wont-tell-you-about-the-shared-responsibility-model/)</li>
+        <li>[Microsoft Cloud Security Benchmark &mdash; Privileged Access](https://learn.microsoft.com/en-us/security/benchmark/azure/mcsb-privileged-access)</li>
+    </ul>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 49 &mdash; cloud IAM and least privilege. Alice, every legal SaaS platform runs on cloud infrastructure. IAM is the system that controls who can access what. But I suspect most teams don&#39;t give it the attention it deserves.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;They don&#39;t. And the reason is that IAM is invisible when it&#39;s working. Nobody notices that the document parser can only read from the upload bucket and write to the output bucket. What they notice is when something is blocked &mdash; when a deployment fails because the service account doesn&#39;t have the right permission. And the path of least resistance in that moment is to grant a broad permission and move on. That&#39;s how you end up with service accounts that have Owner-level access to your entire cloud project &mdash; because someone needed it once, six months ago, and never scoped it down.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And Owner-level means...?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Everything. Full control over every resource &mdash; databases, storage, compute, networking, and IAM itself. A compromised container running as that service account can read every document in storage, query every database, modify IAM policies to grant itself even more access, and delete audit logs to cover its tracks. The blast radius of a single breach is your entire infrastructure.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So IAM &mdash; what does that actually stand for, and how does it work?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Identity and Access Management. It&#39;s the system that answers three questions. Who are you &mdash; that&#39;s authentication, which we&#39;ve covered extensively. What are you allowed to do &mdash; that&#39;s authorization, the permissions attached to your identity. And under what conditions &mdash; that might include time, location, or which resource you&#39;re accessing. Every cloud provider &mdash; AWS, Google Cloud, Azure &mdash; has its own IAM system, but they all follow the same pattern. You have principals &mdash; users and service accounts. You have policies that define what those principals can do. And you have resources that the policies apply to.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And service accounts are the machine identities? The identities that your services use to talk to cloud APIs?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. In a microservice architecture &mdash; which we discussed back in Episode 18 &mdash; your document parser, your AI engine, your billing service, your audit logger are all separate services. Each one needs to authenticate to cloud resources. Each one gets a service account. The critical question is: does each service get its own tightly scoped account, or do they all share one overly broad one?&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, let me guess &mdash; the common pattern is one shared account with too many permissions.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Almost universally. One service account called &quot;app-service-account&quot; with project-level Editor or Owner permissions, shared by every microservice. It&#39;s convenient. It never blocks deployments. And it means that if any single service is compromised &mdash; say, a vulnerability in your PDF parsing library &mdash; the attacker inherits the combined permissions of your entire platform. They can access client documents, query the database, call the AI model, and read billing records. All from one compromised service.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. So the fix is one account per service, each with just what it needs?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;One account per service. The document parser gets read access to the upload bucket and write access to the output bucket. That&#39;s it. The AI engine gets permission to call the model API and read from the parsed document bucket. The billing service gets write access to the billing database. Each service&#39;s blast radius is limited to its own scope. A compromised document parser can&#39;t touch billing data or IAM policies.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What about the credentials themselves? How do services authenticate?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is where many teams make a dangerous mistake. The traditional approach is a service account key file &mdash; a JSON file containing long-lived credentials. You download it, put it on the server, and the service uses it to authenticate. The problem: that key file never expires. If it&#39;s leaked &mdash; in a log file, in a configuration dump, in a developer&#39;s code repository &mdash; it provides access until someone manually revokes it. The modern approach is workload identity. Your cloud provider issues temporary credentials to your service automatically, based on where it&#39;s running. No key files to store, leak, or rotate. In GCP, that&#39;s Workload Identity Federation. In AWS, it&#39;s IAM Roles for Service Accounts. In Azure, it&#39;s Managed Identities.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Temporary credentials that expire. That&#39;s a much smaller window for an attacker.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Typically one hour. If stolen, the credential is useless after it expires. Compare that to a key file that&#39;s valid indefinitely. For legal SaaS platforms, the rule is simple: if a credential doesn&#39;t have an expiration time, it&#39;s a risk. Eliminate long-lived credentials wherever possible.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Now, you mentioned permission creep. How does that happen in practice?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Gradually. A developer needs access to debug a production issue. They&#39;re granted a broad role &mdash; Editor or Administrator. The issue is resolved, but the permissions stay. Six months later, that developer&#39;s account has accumulated permissions across multiple projects, including resources they no longer work with. Multiply that by every developer, every service account, every one-off script. The research is clear &mdash; 23% of cloud security incidents come from misconfigurations, with overly permissive access as a leading cause.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So how do you detect and fix it?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Every cloud provider has tools for this. AWS has IAM Access Analyzer, which shows unused permissions and excess privileges. Google Cloud has IAM Recommender, which compares granted permissions against actual usage and recommends reductions. Azure has Permissions Management, which flags over-provisioned identities. The practical workflow is: let your services run for 30 to 90 days, then use these analysers to identify permissions that were never used. Remove them. You&#39;ll never get permissions perfect on the first try, but you should never leave them un-reviewed.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And for humans who occasionally need higher access &mdash; like during an incident?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Just-in-time access. Instead of giving someone permanent admin permissions &quot;in case they need it,&quot; you set up a workflow where they request elevated access when they actually need it. The request goes through an approval process. They get temporary admin access for one to four hours. Everything they do during that window is logged. The access revokes automatically when time expires. No standing privileges waiting to be exploited.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s the same idea as the temporary credentials &mdash; make everything time-bound.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And for legal SaaS specifically, JIT access provides a clean audit trail. When a regulator or client asks &quot;who had admin access to the systems holding our documents, and when?&quot; &mdash; you can answer precisely. Not &quot;these twelve people have permanent admin access,&quot; but &quot;admin access was granted three times in the last quarter, for specific incidents, for specific durations, and here are the audit logs of every action taken.&quot;&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. One more thing &mdash; you mentioned that IAM misconfigurations can be actual attack paths, not just passive risks?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Yes. If a compromised service has permission to modify IAM policies &mdash; even if it was granted for some legitimate automation &mdash; the attacker can use that to grant themselves any permission. They escalate from a limited document-parser identity to full administrator. Other paths include creating new keys for more privileged service accounts, or launching new compute resources with more privileged roles attached. The defensive rule is: audit IAM-modifying permissions with extreme care. Very few services should have the ability to change permissions. Separate the &quot;create infrastructure&quot; role from the &quot;run application&quot; role, and make sure running applications cannot modify their own permissions.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Strong finish. Next episode &mdash; developer workstation security. Your production servers are hardened, but your developer&#39;s laptop has Slack, Chrome, and an SSH key to every environment.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-48-environment-configuration-and-secure-defaults.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 48 &mdash; Environment Configuration and Secure Defaults</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-50-developer-workstation-security.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 50 &mdash; Developer Workstation Security</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

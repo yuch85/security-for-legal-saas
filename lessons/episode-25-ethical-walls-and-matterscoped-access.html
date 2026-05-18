@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 25 &mdash; Ethical Walls and Matter-Scoped Access &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 25 &middot; Module 6 &middot; Authorization &amp; Access Control</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Ethical Walls and Matter-Scoped Access</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 9:02 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-25-ethical-walls-and-matterscoped-access.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">9:02</span>
+                <span>9:02</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-25-ethical-walls-and-matterscoped-access.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Two partners at the same firm. One advises the acquiring company. The other advises the target. Same firm, opposite sides of the same transaction. If either partner sees the other&#39;s client communications &mdash; deal strategy, negotiation positions, privileged legal advice &mdash; it&#39;s not just a security incident. It&#39;s a professional ethics violation that can result in disqualification, sanctions, and malpractice liability. This is the problem ethical walls solve. And for legal SaaS platforms, it&#39;s not opt</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 25: Ethical Walls and Matter-Scoped Access</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Conflict Problem</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Two partners at the same firm. One advises the acquiring company. The other advises the target. Same firm, opposite sides of the same transaction. If either partner sees the other&#39;s client communications &mdash; deal strategy, negotiation positions, privileged legal advice &mdash; it&#39;s not just a security incident. It&#39;s a professional ethics violation that can result in disqualification, sanctions, and malpractice liability.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is the problem ethical walls solve. And for legal SaaS platforms, it&#39;s not optional &mdash; it&#39;s a regulatory requirement that your software must enforce.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Professional Rules: ABA Model Rules 1.7, 1.9, and 1.10</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The obligation to prevent conflicts of interest is codified in [ABA Model Rule 1.7](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_7_conflict_of_interest_current_clients/) (concurrent conflicts) and [Rule 1.9](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_9_duties_to_former_clients/) (duties to former clients). When a conflict exists, [Rule 1.10](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_10_imputation_of_conflicts_of_interest_general_rule/) addresses imputation &mdash; the principle that one lawyer&#39;s conflict is imputed to every lawyer in the same firm.[^1]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Rule 1.10(a)(2) provides the critical exception: if the conflicted lawyer is <strong class="text-ink">timely screened</strong> from any participation in the matter and receives no part of the fee, the imputation can be overcome. The screen must include:[^2]</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Written notice to affected parties</li>
+        <li>A description of screening procedures employed</li>
+        <li>Affirmation of compliance</li>
+        <li>An agreement to respond to inquiries about the screen</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key insight for software builders:</strong> The rules don&#39;t just require that the wall exists &mdash; they require proof that it works. Your platform must produce evidence: audit logs showing who accessed what, when the wall was erected, and that screened individuals never accessed restricted material.[^1]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Ethical Walls vs. Multi-Tenancy</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is a crucial distinction that will matter in [Episode 27](../ep27/article.md):</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Concept | Scope | Example |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|-------|---------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Ethical wall</strong> | <strong class="text-ink">Intra-tenant</strong> &mdash; within a single firm | Partner A cannot see Partner B&#39;s matter files |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Multi-tenant isolation</strong> | <strong class="text-ink">Inter-tenant</strong> &mdash; between different firms | Firm A cannot see Firm B&#39;s data at all |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Ethical walls are harder to implement than multi-tenant isolation because you&#39;re creating information barriers within a shared environment. Both users have legitimate accounts in the same firm&#39;s instance. Both have roles that would normally grant them access to the same categories of resources. The wall is an exception &mdash; a targeted restriction that overrides normal permissions.[^3]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Matter-Scoped Access: The Foundation</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The foundation of ethical walls in legal SaaS is <strong class="text-ink">matter-scoped access</strong> &mdash; ensuring that every data access decision includes not just &quot;what role does this user have?&quot; but &quot;is this user assigned to this matter?&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 23](../ep23/article.md), we covered RBAC roles. In [Episode 24](../ep24/article.md), we covered ABAC attributes. Matter scoping combines both:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Access granted IF:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>User has the required ROLE permission (e.g., Associate can read documents)</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AND</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>User is ASSIGNED to this specific matter</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AND</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>No ethical wall BLOCKS this user from this matter</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The matter assignment is the default access scope. The ethical wall is an additional restriction layer that can override normal access &mdash; even for users who would otherwise qualify.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Technical Implementation</h2>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Static Walls vs. Dynamic Walls</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Static walls</strong> are configured manually by a firm administrator: &quot;Attorney X must not access Matter Y.&quot; These are simple to implement &mdash; a deny-list checked on every access request &mdash; but they require someone to know the conflict exists and remember to configure the wall.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Dynamic walls</strong> are triggered automatically by <strong class="text-ink">conflict checking systems</strong>. When a new matter is opened, the system compares the parties involved against existing matters and identifies potential conflicts. If a conflict is found, the wall is erected automatically &mdash; no manual step required.[^4]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms, dynamic walls are the standard. A new matter for a client creates a conflict with any existing adverse representation. The system should:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Run a conflict check when the matter is created</li>
+        <li>Identify all lawyers with conflicting matter assignments</li>
+        <li>Automatically erect walls barring those lawyers from the new matter</li>
+        <li>Notify the affected parties (per Rule 1.10&#39;s notice requirement)</li>
+        <li>Log the wall creation with a timestamp and reason</li>
+    </ul>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Database-Level Enforcement</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Ethical walls must be enforced at the <strong class="text-ink">database query level</strong>, not just the application layer. Every query that retrieves matter data must include a wall check:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```sql</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SELECT d.* FROM documents d</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">JOIN matter_assignments ma ON d.matter_id = ma.matter_id</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">WHERE ma.user_id = :current_user</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AND d.matter_id NOT IN (</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SELECT matter_id FROM ethical_walls</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">WHERE blocked_user_id = :current_user</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AND active = true</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">)</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your wall enforcement only exists in the application layer and a developer writes a new database query that skips the check, the wall is breached. Defence in depth &mdash; a concept from [Episode 4](../ep04/article.md) &mdash; means implementing wall enforcement at multiple layers:[^5]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Layer | Enforcement |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Database</strong> | Row-level security policies or view-based filtering that exclude walled matters |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">API middleware</strong> | Permission check that rejects requests for walled matters before reaching business logic |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">UI</strong> | Walled matters are invisible in search results, matter lists, and navigation |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Search index</strong> | Walled matter documents are excluded from full-text search results |</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Cross-Matter Search: The Hard Problem</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Law firms need firm-wide search &mdash; the ability to search across all matters for precedent, prior work product, or knowledge management. But firm-wide search creates a conflict with ethical walls: how do you let a lawyer search across hundreds of matters without returning results from a matter they&#39;re walled off from?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The solution is <strong class="text-ink">pre-filtered search indexing</strong>:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>The search index (Elasticsearch, Solr, or similar) is tagged with matter IDs and wall metadata</li>
+        <li>At search time, the query includes a filter that excludes all matters where the current user has an active wall</li>
+        <li>Results from walled matters are never returned &mdash; not even snippets or metadata</li>
+        <li>The user has no indication that results were suppressed (to avoid revealing the existence of the conflict)</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Critical detail:</strong> Even revealing that a wall exists can be a confidentiality breach. If a lawyer searches for &quot;Acme Corp acquisition&quot; and sees a message saying &quot;2 results hidden due to an ethical wall,&quot; they now know the firm has an adverse matter involving Acme Corp. The correct behaviour is silent suppression &mdash; walled results simply don&#39;t appear.[^6]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Audit Requirements</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Proving wall integrity is as important as implementing it. Regulators, clients, and opposing counsel may demand evidence that the wall was effective. Your audit log must capture:[^7]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Event | Required Data |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|--------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Wall creation</strong> | Timestamp, triggering conflict, affected matter(s), affected user(s), creator |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Wall modification</strong> | What changed, who authorised it, why |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Access attempts</strong> | Every request where a wall was evaluated, including denials |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Wall removal</strong> | When the wall was lifted, who authorised it, certification of no breach |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Periodic attestation</strong> | Quarterly or annual confirmation that walls remain in place |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These logs must be immutable &mdash; once written, they cannot be edited or deleted, even by firm administrators. This is a case where your audit infrastructure (which we&#39;ll cover in later episodes) directly supports a professional conduct obligation.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The SRA Perspective</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The UK Solicitors Regulation Authority (SRA) imposes similar requirements under its [Code of Conduct](https://www.sra.org.uk/solicitors/standards-regulations/code-conduct-solicitors/) paragraphs 6.2-6.5.[^8] The SRA has been explicit that firms relying on information barriers must demonstrate that the barriers are effective in practice &mdash; not just documented in policy. Software-enforced walls with audit trails are increasingly the expected standard, not just a best practice.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Real-World Failures</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Information barrier failures have led to firm disqualification in multiple jurisdictions:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>In <strong class="text-ink">Petter v EMC Europe Ltd</strong> [2015] EWCA Civ 828, the English Court of Appeal examined whether an information barrier at a law firm was sufficient to prevent imputation of knowledge between lawyers working on opposite sides of a dispute.[^9]</li>
+        <li>US courts have disqualified firms where ethical screens were found to be &quot;paper screens&quot; &mdash; documented procedures that were not actually enforced in practice. Software-enforced walls with access logs provide stronger evidence than policy documents alone.</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 26 covers <strong class="text-ink">Zero Trust Architecture</strong> &mdash; the security model that assumes no user, device, or network location should be trusted by default, and how it extends the defence-in-depth principles from Episode 4 into continuous verification.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: ABA, [Model Rule 1.10: Imputation of Conflicts of Interest](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_10_imputation_of_conflicts_of_interest_general_rule/) &mdash; screening requirements and notice obligations.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: ABA, [Model Rule 1.7: Conflict of Interest &mdash; Current Clients](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_7_conflict_of_interest_current_clients/) &mdash; concurrent conflict rules.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: GreenPoint Legal, [Building Ethical Walls Using Modern Technology](https://www.greenpointlegal.com/resources/building-ethical-walls-using-modern-technology) &mdash; technology implementation of ethical walls.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Tessaract, [Chinese Walls: What Are They?](https://blog.tessaract.io/chinese-walls-what-are-they) &mdash; practical overview of information barriers in legal practice.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: OWASP, [Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) &mdash; defence in depth for access control.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Wikipedia, [Chinese Wall](https://en.wikipedia.org/wiki/Chinese_wall) &mdash; history and application across industries.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: US Legal Forms, [Ethical Wall: Legal Definition and Importance](https://legal-resources.uslegalforms.com/e/ethical-wall) &mdash; audit and compliance requirements.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: SRA, [Code of Conduct for Solicitors](https://www.sra.org.uk/solicitors/standards-regulations/code-conduct-solicitors/) &mdash; paragraphs 6.2-6.5 on conflicts and information barriers.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Thomson Reuters Practical Law, [Chinese Walls: Maintaining Client Confidentiality](https://uk.practicallaw.thomsonreuters.com/3-100-8763) &mdash; UK legal framework for information barriers.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Downey Law Group, [Elements of an Effective Ethics Screen](https://www.downeylawgroup.com/wp-content/uploads/sites/34/2018/12/Ethics-Screens-BNA-2011-Downey-Law-Group.pdf) &mdash; screening procedure design.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: ABI, [The Unsavory Origins of the Term &quot;Chinese Wall&quot;](https://www.abi.org/feed-item/the-unsavory-origins-of-the-term-chinese-wall) &mdash; terminology history and modern alternatives.</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Ethical Walls and Matter-Scoped Access</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 25 &mdash; ethical walls and matter-scoped access. Alice, this one feels very specific to legal software. What&#39;s the problem we&#39;re solving?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Picture this. Two partners at the same law firm. Partner A advises the company trying to make an acquisition. Partner B advises the company being acquired. Same firm. Opposite sides of the same deal. If Partner A sees Partner B&#39;s client communications &mdash; the target&#39;s negotiation strategy, their bottom line, their privileged legal advice &mdash; that&#39;s not just a data breach. It&#39;s a professional ethics violation. The firm can be disqualified from representing either client. There can be sanctions, malpractice claims, and regulatory action. Your software has to prevent that from happening.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So this is a regulatory requirement, not just a nice-to-have security feature?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Absolutely. The ABA Model Rules &mdash; Rule 1.7 for current client conflicts, Rule 1.9 for former clients, and Rule 1.10 for imputation &mdash; require that when a conflict exists, the conflicted lawyer is &quot;timely screened&quot; from any participation in the matter. And the screening has to include written notice to affected parties, a description of the procedures, and ongoing compliance. The rules don&#39;t just say &quot;put up a wall.&quot; They say &quot;put up a wall and prove it works.&quot;&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And the proof part is where the software comes in?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. An ethical wall in software means that a screened lawyer cannot see the conflicting matter&#39;s documents, cannot search for them, cannot access them through any path in the application. And every time the system evaluates that wall &mdash; every time it blocks an access attempt or even runs the check &mdash; it logs it. Those logs are the proof. When a regulator or opposing counsel asks &quot;was this wall effective?&quot;, you can show timestamped records of every access decision.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. How is this different from the multi-tenant isolation we&#39;ll talk about later? That&#39;s about keeping different firms&#39; data separate, right?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Good distinction. Multi-tenant isolation &mdash; which we&#39;ll cover in Episode 27 &mdash; is about keeping Firm A&#39;s data completely separate from Firm B&#39;s data. That&#39;s inter-tenant isolation. Ethical walls are intra-tenant &mdash; within a single firm. And they&#39;re actually harder to implement, because both users have legitimate accounts in the same firm. Both have roles that would normally grant them access. The wall is an exception &mdash; a targeted restriction that overrides their normal permissions for specific matters.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So you&#39;re carving out exceptions from the RBAC system we talked about in Episode 23?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. The access decision has three layers now. First, does the user&#39;s role grant them permission for this type of action? That&#39;s RBAC. Second, is the user assigned to this specific matter? That&#39;s matter scoping. Third, is there an active ethical wall that blocks this user from this matter? That&#39;s the wall check. All three must pass, and the wall check is a hard deny &mdash; it overrides the first two even if they would normally allow access.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Now, you said these walls can be static or dynamic. What&#39;s the difference?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;A static wall is set up manually by a firm administrator. Someone identifies a conflict and configures the wall: &quot;Attorney X cannot access Matter Y.&quot; It works, but it depends on someone knowing about the conflict and remembering to configure the wall. A dynamic wall is triggered automatically by the conflict checking system. When a new matter is opened, the system compares the parties involved against all existing matters. If it finds a potential conflict &mdash; same party, adverse representation &mdash; it erects the wall automatically. No manual step.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Dynamic sounds much safer.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. And it&#39;s the expected standard in modern legal SaaS. The system should run the conflict check on matter creation, identify all lawyers with conflicting assignments, automatically block their access to the new matter, notify the affected parties &mdash; which the ABA rules require &mdash; and log everything with timestamps and reasons.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Where should the wall actually be enforced technically? In the application code?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Not just the application code. This is defence in depth &mdash; we talked about that concept in Episode 4. If the wall only exists in your application layer and someone writes a new database query that skips the check, the wall is breached. You need enforcement at multiple layers. At the database level &mdash; row-level security policies or filtered views that exclude walled matters. At the API middleware level &mdash; every request for matter data gets checked before reaching business logic. At the UI level &mdash; walled matters don&#39;t appear in matter lists, document views, or navigation. And at the search index level &mdash; this is the one people miss.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. The search index &mdash; that&#39;s the full-text search?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. Law firms need firm-wide search. Lawyers search across hundreds of matters to find precedent or prior work product. But if a lawyer is walled off from a matter, the search results must not include documents from that matter. Not even snippets. Not even metadata like the document title. And here&#39;s the critical detail &mdash; the system should not indicate that results were suppressed. If a lawyer searches for &quot;Acme Corp acquisition&quot; and sees a message saying &quot;two results hidden due to an ethical wall,&quot; they now know the firm is working on something involving Acme Corp on the other side. That itself is a confidentiality breach. The correct behaviour is silent suppression. The walled results simply don&#39;t appear.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s subtle but important. The absence of information is itself information.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And this is why search is the hardest part of ethical wall implementation. You need to filter at query time, not just at display time. The search engine needs to know which matters each user is walled from and exclude those documents before generating results.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What about audit? You mentioned the rules require proof that the wall works.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Your audit log needs to capture five things. When the wall was created, including the triggering conflict and who created it. Any modifications to the wall. Every access attempt where the wall was evaluated &mdash; both grants and denials. When the wall was removed, who authorised it, and certification that no breach occurred. And periodic attestations &mdash; quarterly or annual confirmation that the wall is still in place. These logs have to be immutable. Once written, nobody can edit or delete them &mdash; not even the firm administrator.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Because if the admin could delete the logs, the proof disappears.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Precisely. And courts have taken this seriously. In the UK, the case of Petter v EMC Europe in 2015 examined whether an information barrier at a law firm was sufficient. US courts have disqualified firms where screens were found to be &quot;paper screens&quot; &mdash; documented procedures that weren&#39;t actually enforced in practice. Software-enforced walls with access logs provide much stronger evidence than policy documents alone.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So for anyone building legal SaaS &mdash; ethical walls aren&#39;t a feature you can add later. They need to be baked into the data model from the start.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. Matter-scoped access is the foundation. Every query must be scoped to the user&#39;s matter assignments. Ethical walls add a deny layer on top. Dynamic conflict checking triggers walls automatically. Silent search suppression prevents metadata leakage. And immutable audit logs prove it all works. If you&#39;re building legal SaaS and you don&#39;t have this &mdash; your enterprise law firm clients will find out during the security assessment, and the deal is over.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Zero Trust Architecture. The security model that says nothing should be trusted by default, whether it&#39;s inside your network or outside it.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-24-abac-and-policy-engines.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 24 &mdash; ABAC and Policy Engines</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-26-zero-trust-architecture.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 26 &mdash; Zero Trust Architecture</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

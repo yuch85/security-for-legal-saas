@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 35 &mdash; Embedding Security and Vector Database Isolation &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 35 &middot; Module 8 &middot; AI Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Embedding Security and Vector Database Isolation</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 9:07 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-35-embedding-security-and-vector-database-isolation.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">9:07</span>
+                <span>9:07</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-35-embedding-security-and-vector-database-isolation.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">In [Episode 8](../ep08/article.md), we covered Row-Level Security (RLS) in PostgreSQL &mdash; the database engine automatically filtering queries so that Tenant A can never see Tenant B&#39;s data. In [Episode 32](../ep32/article.md), we hardened the database with network isolation, audit logging, and least-privilege access. Your relational database has decades of security architecture behind it. Your vector database does not.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 35: Embedding Security and Vector Database Isolation</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Relational vs. Vector Security Gap</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 8](../ep08/article.md), we covered Row-Level Security (RLS) in PostgreSQL &mdash; the database engine automatically filtering queries so that Tenant A can never see Tenant B&#39;s data. In [Episode 32](../ep32/article.md), we hardened the database with network isolation, audit logging, and least-privilege access. Your relational database has decades of security architecture behind it.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your vector database does not.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Vector databases &mdash; Pinecone, Weaviate, Qdrant, Milvus, pgvector &mdash; are the storage layer for AI-powered legal tools. They hold the embeddings (numerical representations of documents) that make retrieval-augmented generation (RAG) work, as we discussed in [Episode 34](../ep34/article.md). But they were designed for similarity search performance, not security. Most lack the fine-grained access controls that relational databases take for granted. The [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) added a new entry &mdash; <strong class="text-ink">LLM08: Vector and Embedding Weaknesses</strong> &mdash; specifically because this gap is being exploited.[^1]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This episode covers three threats: embedding inversion attacks (extracting sensitive text from embeddings), multi-tenant isolation failures (one client&#39;s data leaking to another), and access control gaps in the vector layer.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">How Embeddings Encode Sensitive Information</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An embedding is a vector &mdash; a list of numbers (typically 768 to 3072 dimensions) &mdash; that represents the meaning of a text passage. When your legal SaaS platform indexes a client&#39;s contract, the embedding model converts each passage into a vector and stores it in the vector database. The original text is either stored alongside the vector or in a linked relational database.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The security assumption is that embeddings are opaque &mdash; a list of floating-point numbers that cannot be reverse-engineered back into the original text. <strong class="text-ink">This assumption is wrong.</strong></p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Embedding Inversion Attacks</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Recent research has demonstrated that embeddings can be inverted to reconstruct significant portions of the original text. A [study documented by security researchers](https://tianpan.co/blog/2026-04-19-privacy-architecture-embeddings-vector-store) achieved <strong class="text-ink">over 92% accuracy reconstructing exact token sequences</strong> &mdash; including full names, health diagnoses, and email addresses &mdash; from text embeddings alone, without access to the original embedding model.[^2]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The attack works by training a neural network to map embeddings back to text. Critically, these inversion models are <strong class="text-ink">transferable</strong>: an attacker can train their inversion model on a different embedding model than the one you use, and it still works with reduced but meaningful accuracy. This means the attacker does not need access to your specific embedding model &mdash; they can build a surrogate that approximates yours.[^3]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, the implication is direct: if an attacker gains read access to your vector database, they can potentially reconstruct privileged client communications, contract terms, case strategy notes, and other sensitive text from the embeddings alone.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Multi-Tenant Vector Database Isolation</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal SaaS platforms are typically multi-tenant &mdash; one platform serves multiple law firms or clients. The relational database enforces tenant isolation through RLS. But what about the vector database?</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Isolation Approaches Compared</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Approach | Isolation Level | Performance | Cost | Risk |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|----------------|-------------|------|------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Single collection, metadata filtering</strong> | Logical (query-time filter) | Best | Lowest | <strong class="text-ink">Highest</strong> &mdash; a bug in the filter = cross-tenant leak |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Namespace per tenant</strong> (Pinecone) | Logical (server-enforced partitioning) | Good | Low | Moderate &mdash; namespaces are logically but not physically isolated[^4] |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Collection per tenant</strong> (Weaviate, Qdrant) | Physical (separate storage, indices, and vectors) | Good | Higher | <strong class="text-ink">Lowest</strong> &mdash; operations on one tenant cannot touch another&#39;s shard |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Separate database instance per tenant</strong> | Complete | Worst | Highest | Lowest &mdash; but operationally complex |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS handling privileged data, the minimum acceptable approach is <strong class="text-ink">namespace-per-tenant</strong> with server-enforced partitioning. The recommended approach is <strong class="text-ink">collection-per-tenant</strong>, where each tenant has physically separate storage. The metadata-filtering approach &mdash; storing all tenants in one collection and filtering at query time &mdash; is the most dangerous because a single missing filter parameter returns results across all tenants.[^5]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The pgvector exception:</strong> If you use [pgvector](https://github.com/pgvector/pgvector) &mdash; PostgreSQL&#39;s vector extension &mdash; you get RLS for free. Because pgvector stores vectors in regular PostgreSQL tables, the same Row-Level Security policies that protect your relational data also protect your embeddings. This is a significant security advantage over standalone vector databases.[^6]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Common Misconfiguration: Frontend API Keys</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A frequently observed vulnerability: embedding vector database API keys in frontend JavaScript code. [Security researchers have documented](https://rafter.so/blog/vector-db-embeddings-security-risk) that developers commonly place Pinecone or Weaviate API keys in client-side code, giving any user &mdash; or attacker &mdash; full read and write access to the entire knowledge base. API keys for vector databases belong in backend services, managed through the secrets management infrastructure covered in [Episode 30](../ep30/article.md).[^7]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Access Control on Retrieval</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Even with proper tenant isolation, the retrieval layer needs its own access controls. The question is not just &quot;which tenant does this embedding belong to?&quot; but also &quot;within this tenant, is the requesting user authorised to see this document?&quot;</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Permission-Aware Retrieval</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The retrieval pipeline should enforce document-level permissions before returning results to the model:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">User queries the AI.</strong> The query is converted to an embedding.</li>
+        <li><strong class="text-ink">Vector similarity search returns candidate documents.</strong> These are the mathematically closest embeddings to the query.</li>
+        <li><strong class="text-ink">Permission filter.</strong> Before any candidate is included in the model&#39;s context, the system checks: does this user have access to this document? This requires mapping each embedding back to its source document and checking the document&#39;s access control list (ACL).</li>
+        <li><strong class="text-ink">Filtered results go to the model.</strong> Only documents the user is authorised to see are included in the generation context.</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Without step 3, a junior associate asking a question could inadvertently retrieve &mdash; and the model could reveal &mdash; content from a partner-only matter, a different client&#39;s case, or a document under a restricted access protocol.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Nearest-Neighbour Probing</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An attacker with query access to the vector database can exploit similarity search to probe for information. By sending crafted queries and observing which documents are returned (or which similarity scores change), the attacker can infer the presence and approximate content of documents in the database &mdash; even without direct read access. This is the vector database equivalent of a [timing attack](https://en.wikipedia.org/wiki/Timing_attack), which we discussed in the context of password comparison in [Episode 17](../ep17/article.md).[^8]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mitigations include rate limiting on vector queries, monitoring for anomalous query patterns, and adding noise to similarity scores returned to the client.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Embedding Model Selection: Privacy Implications</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The choice of embedding model affects privacy:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Consideration | Implication |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------------|-------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cloud-hosted embedding APIs</strong> (OpenAI, Cohere, Google) | Your text is sent to a third-party server for embedding. The provider may log inputs. For privileged legal content, this may violate confidentiality obligations |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Self-hosted embedding models</strong> (sentence-transformers, local models) | Text never leaves your infrastructure. Full control over logging and retention. Higher operational cost |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Model dimensionality</strong> | Higher-dimensional embeddings encode more information &mdash; potentially making inversion attacks more effective |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Fine-tuned models</strong> | Models fine-tuned on your domain data may encode domain-specific patterns that are easier to invert |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS handling privileged information, self-hosted embedding models are the conservative choice. If using cloud-hosted APIs, ensure the provider offers a data processing agreement that prohibits logging and training on your inputs, and verify that the processing jurisdiction is acceptable under your data protection obligations.[^9]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Architecture: Secure Embedding Pipeline</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A minimal secure embedding pipeline for multi-tenant legal SaaS:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Embed locally.</strong> Use self-hosted models for privileged content. Cloud APIs only for non-sensitive content with appropriate DPAs.</li>
+        <li><strong class="text-ink">Isolate per tenant.</strong> Separate vector collections or namespaces per tenant. Never store multiple tenants in a single flat collection with metadata filtering as the sole isolation mechanism.</li>
+        <li><strong class="text-ink">Enforce permissions at retrieval.</strong> Check document-level ACLs before returning any result to the model.</li>
+        <li><strong class="text-ink">Audit retrieval operations.</strong> Log every vector query: who queried, what was returned, which tenant&#39;s data was accessed. Ship logs to your SIEM (from [Episode 7](../ep07/article.md)).</li>
+        <li><strong class="text-ink">Rotate embedding keys.</strong> If using API-based embedding services, rotate API keys regularly through your secrets manager ([Episode 30](../ep30/article.md)).</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 36 covers <strong class="text-ink">Model Inversion and Membership Inference</strong> &mdash; can an attacker determine whether a specific privileged document was in your AI&#39;s training data? For legal AI, that question has direct privilege implications.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: OWASP, [LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: TianPan.co, [The Privacy Architecture of Embeddings: What Your Vector Store Knows About Your Users](https://tianpan.co/blog/2026-04-19-privacy-architecture-embeddings-vector-store).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Rafter, [Vector DBs &amp; Embeddings: The Overlooked Security Risk](https://rafter.so/blog/vector-db-embeddings-security-risk).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Blockchain Council, [Securing and Governing Vector Databases in 2026](https://www.blockchain-council.org/ai/securing-and-governing-vector-databases-privacy-prompt-injection-multi-tenant-access-control/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Indusface, [OWASP LLM08: Vector and Embedding Security Risks (2025)](https://www.indusface.com/learning/owasp-llm-vector-and-embedding-weaknesses/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: pgvector, [Open-Source Vector Similarity Search for PostgreSQL](https://github.com/pgvector/pgvector).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Security Boulevard / FireTail, [LLM08: Vector &amp; Embedding Weaknesses](https://securityboulevard.com/2025/11/llm08-vector-embedding-weaknesses-firetail-blog/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Securityium, [A Guide to Mitigating LLM08:2025 Vector and Embedding Weaknesses](https://www.securityium.com/a-guide-to-mitigating-llm082025-vector-and-embedding-weaknesses/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Cobalt, [Vector and Embedding Weaknesses: Vulnerabilities and Mitigations](https://www.cobalt.io/blog/vector-and-embedding-weaknesses).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Ackuity AI, [Mitigating Vector and Embedding Weaknesses](https://ackuity.ai/blog/mitigating-vector-and-embedding-weaknesses).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: PointGuard AI, [Vector Embedding Weaknesses](https://www.pointguardai.com/glossary/vector-embedding-weaknesses).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 35 &mdash; embedding security and vector database isolation. Alice, last two episodes covered prompt injection and RAG poisoning. This feels like we&#39;re going one layer deeper &mdash; into the infrastructure that makes RAG work. What&#39;s the vector database, and why does it need its own security episode?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Because it&#39;s the biggest security gap in most AI-powered legal tools. Let me set the scene. Over the last thirty-some episodes, we&#39;ve hardened your relational database &mdash; PostgreSQL with Row-Level Security, network isolation, audit logging, encrypted connections, the works. Your relational database has decades of security engineering behind it. Your vector database has almost none.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And the vector database is where all the AI knowledge base stuff lives?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. When your legal SaaS platform indexes a client&#39;s documents for AI search, it converts each passage into an embedding &mdash; a list of numbers, typically hundreds or thousands of dimensions, that represents the meaning of the text. These embeddings are stored in a vector database &mdash; Pinecone, Weaviate, Qdrant, or pgvector. When a lawyer asks the AI a question, the question gets converted to an embedding, and the vector database finds the most similar stored embeddings. Those similar documents get fed to the model. That&#39;s retrieval-augmented generation, which we covered last episode.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So the vector database is like a specialised filing cabinet for AI searches. What&#39;s the security problem?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Three problems. First, embeddings are not as opaque as people think. Most developers assume that a list of floating-point numbers can&#39;t be reversed back into the original text. That assumption is wrong. Recent research achieved over 92 percent accuracy reconstructing exact token sequences &mdash; full names, email addresses, medical diagnoses &mdash; from embeddings alone. Without access to the original model that created them.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. Ninety-two percent? So if someone gets read access to your vector database, they can essentially reconstruct the original documents?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Large portions of them, yes. The technique is called embedding inversion. An attacker trains a neural network to map embeddings back to text. And the frightening part is that these inversion models are transferable. The attacker doesn&#39;t need your specific embedding model &mdash; they build a surrogate that approximates yours, and it still works. For a legal SaaS platform, this means that a vector database breach could expose privileged attorney-client communications, case strategy, contract terms &mdash; reconstructed from numbers that were supposed to be meaningless.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s the first problem. What&#39;s the second?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Multi-tenant isolation &mdash; or the lack of it. Your legal SaaS platform serves multiple law firms. In your PostgreSQL database, Row-Level Security ensures Firm A can never see Firm B&#39;s data. The database engine enforces it. But most vector databases don&#39;t have an equivalent. The most common approach &mdash; and the most dangerous &mdash; is to store all tenants&#39; embeddings in a single collection and filter by a tenant ID metadata field at query time. If that filter has a bug, or if someone forgets to include it in a query, the similarity search returns results across all tenants. One missing parameter and Client A&#39;s privileged documents show up in Client B&#39;s AI responses.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So what&#39;s the safe way to do multi-tenant isolation in a vector database?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;There&#39;s a spectrum. The minimum acceptable approach is namespace-per-tenant, which platforms like Pinecone support &mdash; each tenant gets a logically separated namespace, and queries are scoped to one namespace per call. Better is collection-per-tenant, which Weaviate offers &mdash; each tenant gets physically separate storage, vectors, and indices. Operations on one tenant literally cannot touch another tenant&#39;s data because they&#39;re separate shards. The best option for security, though it costs more to operate, is separate database instances per tenant.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And there&#39;s a cheat code, isn&#39;t there? If you use PostgreSQL for vectors?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;pgvector. It&#39;s PostgreSQL&#39;s vector extension &mdash; it stores embeddings in regular PostgreSQL tables. Which means all the security infrastructure you&#39;ve already built &mdash; Row-Level Security, audit logging, network isolation, encrypted connections &mdash; automatically applies to your embeddings. You don&#39;t need a separate isolation strategy for vectors because your relational security already covers them. It&#39;s a significant argument for pgvector over standalone vector databases, at least from a security perspective.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s elegant &mdash; using the security you already have. What&#39;s the third problem?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Access control at retrieval. Even with proper tenant isolation, you need document-level permissions within a tenant. When the AI searches for relevant documents, the vector database returns the mathematically closest matches. But &quot;closest match&quot; is not the same as &quot;document this user is authorised to see.&quot; A junior associate asking a question could retrieve content from a partner-only matter, a different client&#39;s case file, or a document under restricted access &mdash; unless the retrieval pipeline checks permissions before returning results to the model.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So the retrieval layer needs to be permission-aware.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. The pipeline runs the similarity search, gets candidate documents, then checks: does this user have access to each candidate document? Only authorised documents make it into the model&#39;s context. Without that permission check, your AI becomes an accidental privilege escalation tool &mdash; users can ask questions and get answers based on documents they wouldn&#39;t normally be able to read.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And I imagine the choice of embedding model matters too &mdash; whether you host it yourself or use a cloud API?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It matters a lot. If you use a cloud-hosted embedding API &mdash; OpenAI, Cohere, Google &mdash; you&#39;re sending your client&#39;s text to a third-party server to be converted to vectors. That server may log the input. For privileged legal content, that may violate confidentiality obligations. The conservative choice for legal SaaS is self-hosted embedding models &mdash; sentence-transformers or similar open models running on your own infrastructure. The text never leaves your environment. If you do use cloud APIs, make sure you have a data processing agreement that prohibits logging and training on your inputs.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And there&#39;s an attack where someone just sends lots of queries to probe the vector database?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Nearest-neighbour probing. An attacker with query access sends carefully crafted queries and observes which documents come back and what similarity scores they get. By systematically probing, they can infer the presence and approximate content of documents &mdash; even without direct read access to the embeddings. It&#39;s the vector database equivalent of the timing attacks we discussed in Episode 17 for password comparison. The mitigations are similar too &mdash; rate limiting on queries, monitoring for anomalous patterns, and adding noise to similarity scores.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Let me try to sum this up. Your relational database has Row-Level Security, network isolation, audit logging &mdash; decades of security architecture. Your vector database is the new kid with almost none of that built in. So you need to build those controls yourself or choose infrastructure that gives them to you.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s it exactly. The relational versus vector security gap is real, and most legal SaaS platforms haven&#39;t closed it yet. The minimum checklist: isolate per tenant using collections or namespaces, never flat metadata filtering. Enforce document-level permissions at retrieval time. Audit every vector query. Consider self-hosted embedding models for privileged content. And if you can, use pgvector &mdash; let your existing PostgreSQL security infrastructure do the heavy lifting.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Model Inversion and Membership Inference. Can an attacker tell whether a specific privileged document was used to train your AI? And what does that mean for attorney-client privilege?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-34-rag-poisoning-and-document-trust-tiers.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 34 &mdash; RAG Poisoning and Document Trust Tiers</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-36-model-inversion-and-membership-inference.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 36 &mdash; Model Inversion and Membership Inference</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

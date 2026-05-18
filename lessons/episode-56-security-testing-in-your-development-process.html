@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 56 &mdash; Security Testing in Your Development Process &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 56 &middot; Module 11 &middot; Monitoring &amp; Incident Response</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Security Testing in Your Development Process</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 8:50 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-56-security-testing-in-your-development-process.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">8:50</span>
+                <span>8:50</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-56-security-testing-in-your-development-process.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">If your security testing happens once a year in a penetration test, you&#39;re finding bugs 364 days too late. Every vulnerability that exists in production between pen tests is a vulnerability an attacker can exploit. The modern approach &mdash; and the only one that scales &mdash; is continuous security testing embedded in your development process, from the moment code is written to the moment it runs in production. [OWASP&#39;s guidance on integrating security into the SDLC](https://owasp.org/www-project-integra</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 56: Security Testing in Your Development Process</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Finding Bugs 364 Days Before the Pen Test</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your security testing happens once a year in a penetration test, you&#39;re finding bugs 364 days too late. Every vulnerability that exists in production between pen tests is a vulnerability an attacker can exploit. The modern approach &mdash; and the only one that scales &mdash; is continuous security testing embedded in your development process, from the moment code is written to the moment it runs in production.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[OWASP&#39;s guidance on integrating security into the SDLC](https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/) (Software Development Lifecycle) is unambiguous: security testing must happen at every phase &mdash; requirements, design, implementation, verification, and deployment &mdash; not as a gate at the end.[^1] The shift-left movement (moving security activities earlier in the development process) has been the dominant trend in application security since 2020, and for good reason: [fixing a vulnerability in development costs a fraction](https://cymulate.com/cybersecurity-glossary/shift-left-security/) of fixing it after deployment.[^2]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS teams &mdash; where a vulnerability might expose attorney-client privileged communications or allow manipulation of case records &mdash; the cost of a late-discovered bug extends beyond engineering time into professional liability, regulatory penalties, and client trust.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Security Testing Pyramid</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Borrow from the testing pyramid concept: lots of automated checks at the base, fewer manual reviews in the middle, rare comprehensive assessments at the top.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/\</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/  \        Annual penetration tests</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/    \       (1-2 per year)</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/------\</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/        \     Manual code reviews for</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/          \    security-critical changes</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/------------\</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/              \  Automated testing in CI/CD:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/                \ SAST, DAST, SCA, secrets scanning</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/------------------\</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Layer | Frequency | Scope | Finds |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|-----------|-------|-------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SAST in CI</strong> | Every pull request | Source code patterns | SQL injection, XSS, insecure crypto, hardcoded secrets |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SCA in CI</strong> | Every pull request | Third-party dependencies | Known CVEs in libraries you use |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Secrets scanning</strong> | Every commit (pre-commit hook) | Repository content | API keys, passwords, tokens accidentally committed |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">DAST in staging</strong> | Every deployment to staging | Running application | Authentication flaws, injection in HTTP responses, header misconfigurations |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Manual code review</strong> | Security-critical changes | Authentication, authorisation, encryption code | Logic flaws, business logic bypasses |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Penetration test</strong> | 1-2 times per year | Full application + infrastructure | Complex attack chains, multi-step exploits |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Shift Left: SAST in the IDE</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SAST (Static Application Security Testing) analyses source code without executing it, looking for patterns that indicate vulnerabilities. [Modern SAST tools](https://techspective.net/2026/03/16/is-sast-still-relevant-in-2026-rethinking-static-code-analysis/) integrate directly into developers&#39; editors, flagging issues as code is written &mdash; before it even reaches a pull request.[^3]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Tools like [Semgrep](https://semgrep.dev/) (open-source, rule-based pattern matching), [CodeQL](https://codeql.github.com/) (GitHub&#39;s code analysis engine, which we mentioned in [Episode 8](../ep08/article.md)), and SonarQube scan for:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">SQL injection patterns</strong> &mdash; string concatenation in database queries instead of parameterised queries</li>
+        <li><strong class="text-ink">XSS vulnerabilities</strong> &mdash; unescaped output in templates, use of `dangerouslySetInnerHTML` (as covered in [Episode 9](../ep09/article.md))</li>
+        <li><strong class="text-ink">Insecure cryptographic operations</strong> &mdash; weak algorithms, hardcoded keys, missing TLS verification</li>
+        <li><strong class="text-ink">Taint tracking</strong> &mdash; following untrusted input from an API endpoint through to a sensitive operation like a database query or file write</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;For legal SaaS:&lt;/strong&gt; Configure SAST rules specifically for your risk profile. Add custom rules for: access control checks on every endpoint that serves client data (IDOR prevention &mdash; &lt;a href=&quot;../ep06/article.md&quot;&gt;Episode 6&lt;/a&gt;), tenant isolation in multi-tenant queries (row-level security &mdash; &lt;a href=&quot;../ep08/article.md&quot;&gt;Episode 8&lt;/a&gt;), and audit logging on every data access operation.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">DAST in Staging</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">DAST (Dynamic Application Security Testing) tests your running application from the outside &mdash; like an automated attacker. [It sends crafted requests](https://checkmarx.com/learn/dast/what-is-dynamic-application-security-testing-dast-2026-guide/) to your application and analyses the responses for vulnerabilities that only manifest at runtime.[^4]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Where SAST finds &quot;this code builds a SQL query unsafely,&quot; DAST finds &quot;this endpoint actually returns data it shouldn&#39;t when I manipulate the request.&quot; DAST catches:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Authentication bypasses</strong> visible only when testing the full request/response cycle</li>
+        <li><strong class="text-ink">Security header misconfigurations</strong> &mdash; missing HSTS (as covered in [Episode 12](../ep12/article.md)), CSP, X-Frame-Options</li>
+        <li><strong class="text-ink">Server information leakage</strong> &mdash; error messages exposing stack traces, database versions, internal paths</li>
+        <li><strong class="text-ink">CORS misconfigurations</strong> that allow cross-origin data theft (as covered in [Episode 12](../ep12/article.md))</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Run DAST against your staging environment (a copy of your application that mirrors production but uses test data) on every deployment. Tools like OWASP ZAP (open-source), Burp Suite (commercial), and [SecureLayer7](https://blog.securelayer7.net/dast-tools/) provide DAST capabilities ranging from free to enterprise-grade.[^5]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Why Both SAST and DAST?</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[They find different things.](https://deepstrike.io/blog/sast-vs-dast-vs-iast-vs-rasp-2025) SAST examines your code and finds potential vulnerabilities. DAST examines your running application and finds actual exploitable issues. Some vulnerabilities (business logic flaws, complex authentication bypasses) are invisible to SAST. Some (dead code paths, internal utility functions) are invisible to DAST. Using both provides complementary coverage.[^6]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Dependency Scanning: Your Supply Chain Check</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every third-party library in your application is code you didn&#39;t write, didn&#39;t review, and might contain known vulnerabilities. SCA (Software Composition Analysis) tools continuously scan your dependencies against vulnerability databases.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">As we discussed in [Episode 51](../ep51/article.md), AI-generated code exacerbates this risk by suggesting vulnerable package versions. Automated dependency scanning catches these before deployment:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">`npm audit`</strong> / <strong class="text-ink">`pip audit`</strong> &mdash; built-in vulnerability scanning for Node.js and Python</li>
+        <li><strong class="text-ink">Snyk</strong> &mdash; commercial SCA with automated pull requests for vulnerable dependencies</li>
+        <li><strong class="text-ink">Dependabot</strong> (GitHub) / <strong class="text-ink">Renovate</strong> &mdash; automated dependency update PRs</li>
+        <li><strong class="text-ink">OWASP Dependency-Check</strong> &mdash; [open-source SCA tool](https://owasp.org/www-project-dependency-check/) maintaining the National Vulnerability Database (NVD) feed[^7]</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configure your CI pipeline to <strong class="text-ink">fail the build</strong> when a dependency has a known critical or high-severity CVE (Common Vulnerabilities and Exposures &mdash; the standardised identifier for publicly known security vulnerabilities, as covered in [Episode 8](../ep08/article.md)). A red build for a vulnerable dependency forces the issue to be addressed before deployment.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Penetration Testing: The Expert Assessment</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Automated tools have blind spots. Penetration testing &mdash; where skilled security professionals manually attempt to exploit your application &mdash; finds vulnerabilities that automated tools miss: business logic flaws, complex multi-step attack chains, social engineering vulnerabilities, and novel attack patterns.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Scoping a Pen Test for Legal SaaS</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Define the scope before engagement:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| In Scope | Typically Out of Scope |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|----------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Application authentication and authorisation | Third-party IdP infrastructure (Okta, Azure AD) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| API endpoints and data access controls | Client-owned networks |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Tenant isolation (can Firm A access Firm B&#39;s data?) | Physical security |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| File upload and document processing | Social engineering of end users |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Session management and token handling | Denial of service attacks against production |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Infrastructure (cloud configuration, network) | Testing outside agreed hours |</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Frequency</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For most legal SaaS platforms: annually at minimum, plus after any major architectural change (new authentication system, new data storage layer, new API surface). If you handle highly sensitive data (active litigation strategy, government legal work), semi-annual pen tests are appropriate.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">What to Do with the Findings</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A penetration test report is not a trophy &mdash; it&#39;s a to-do list. Prioritise findings by severity and exploitability. Critical and high findings should be remediated before the next deployment. Medium findings within 30 days. Track every finding to resolution. Re-test to verify fixes.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Bug Bounty Programmes</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Bug bounties &mdash; public or private programmes where external security researchers are rewarded for finding and reporting vulnerabilities &mdash; extend your testing surface beyond your team and your pen tester.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">When to start:</strong> Not on day one. Start a bug bounty after you have: (1) automated security testing in CI, (2) at least one pen test completed, and (3) a process for triaging and fixing reported issues. A bug bounty before these basics are in place generates a flood of reports you can&#39;t handle.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Platform options:</strong> HackerOne and Bugcrowd provide managed platforms with triage support, legal safe harbour for researchers, and structured reward tiers.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Legal SaaS consideration:</strong> Your bounty scope must explicitly exclude access to real client data. Use a dedicated testing environment with synthetic data. Make this clear in the programme policy.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Automated Security Regression Tests</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The most frustrating vulnerability is one you already fixed that comes back. Regression testing &mdash; automated tests that verify previously fixed vulnerabilities remain fixed &mdash; prevents this.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For every security bug found (whether by SAST, DAST, pen test, or bug bounty):</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Write an automated test that reproduces the vulnerability</li>
+        <li>Verify the test fails before the fix and passes after</li>
+        <li>Add the test to your CI suite permanently</li>
+        <li>The test runs on every pull request, forever</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Over time, this builds a growing library of security-specific regression tests &mdash; a permanent immune system for your application.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Example for legal SaaS:&lt;/strong&gt; A pen test discovers that &lt;code&gt;/api/cases/:id/documents&lt;/code&gt; doesn&#39;t verify the requesting user belongs to the case&#39;s firm (an IDOR vulnerability). You fix it by adding a tenant check. The regression test: authenticate as User A from Firm A, request a document belonging to Firm B&#39;s case, assert 403 Forbidden. This test runs on every PR. If anyone refactors the access control code and accidentally removes the tenant check, the test catches it.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Security Testing Minimum</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Control | When | What It Catches |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|------|----------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pre-commit secret scanning | Every commit | Accidental credential exposure |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| SAST in CI | Every pull request | Code-level vulnerabilities |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| SCA / dependency scanning in CI | Every pull request | Known vulnerabilities in libraries |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| DAST in staging | Every deployment | Runtime vulnerabilities and misconfigurations |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Manual review of security-critical code | As needed | Logic flaws, business rule bypasses |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Annual penetration test | Yearly + major changes | Complex, multi-step vulnerabilities |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Security regression tests | Every pull request | Previously fixed bugs don&#39;t return |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security testing is not a phase. It&#39;s a layer that runs continuously, at every stage of development, catching different classes of vulnerabilities at the earliest possible moment. The pen test finds what the automation missed. The automation prevents the pen test from finding the same things twice.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: access reviews and least privilege audits &mdash; how to ensure that the contractor who left six months ago doesn&#39;t still have an active API key.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: OWASP, [OWASP in SDLC &mdash; Integration Standards](https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Cymulate, [Shift Left Security for DevOps &amp; AppSec Teams](https://cymulate.com/cybersecurity-glossary/shift-left-security/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: TechSpective, [Is SAST Still Relevant in 2026? Rethinking Static Code Analysis](https://techspective.net/2026/03/16/is-sast-still-relevant-in-2026-rethinking-static-code-analysis/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Checkmarx, [What Is Dynamic Application Security Testing (DAST)? 2026 Guide](https://checkmarx.com/learn/dast/what-is-dynamic-application-security-testing-dast-2026-guide/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: SecureLayer7, [Top DAST Tools in 2026: Features, Pros &amp; Cons](https://blog.securelayer7.net/dast-tools/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Deepstrike, [SAST vs DAST vs IAST vs RASP Explained (2025)](https://deepstrike.io/blog/sast-vs-dast-vs-iast-vs-rasp-2025).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: OWASP, [Dependency-Check: Software Composition Analysis](https://owasp.org/www-project-dependency-check/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: OX Security, [SAST and DAST Tools: Still Essential Security Testing Tools in 2025](https://www.ox.security/blog/sast-and-dast-tools-still-essential-security-solutions-in-2025/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Cybersecurity Dive, [The Future of DAST in an AI-First World](https://www.cybersecuritydive.com/spons/the-future-of-dast-in-an-ai-first-world-why-runtime-security-testing-remai/811891/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Netalith, [Automated DevSecOps Testing Workflows: Integrating Security into CI/CD Pipelines](https://netalith.com/blogs/quality-assurance/automated-devsecops-testing-2026).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Deepstrike, [Software Testing &amp; Security Testing 2025](https://deepstrike.io/blog/software-testing-security-testing).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 56 &mdash; security testing in your development process. Alice, we&#39;ve been through monitoring, incident response, disaster recovery. Now we&#39;re closing the loop &mdash; how do you find the vulnerabilities before the attackers do?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And the key word is &quot;before.&quot; If your security testing happens once a year in a penetration test, you&#39;re finding bugs three hundred and sixty-four days too late. Every vulnerability that exists in production between pen tests is one an attacker can exploit. The modern approach is continuous security testing &mdash; embedded in your development process, running on every code change, catching different types of issues at different stages.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So walk me through the layers. Where does it start?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Start at the very bottom: pre-commit secret scanning. Before code even reaches your version control system, a hook &mdash; an automated script that runs before the commit is saved &mdash; scans for accidental secrets. API keys, database passwords, tokens. We covered this back in Episode 52 with the day-zero checklist. This is your first line of defence against the most common mistake developers make.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And then what runs in the CI pipeline?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Two things run on every pull request. First: SAST &mdash; Static Application Security Testing. These are tools that examine your source code without running it, looking for patterns that indicate vulnerabilities. SQL injection patterns &mdash; where someone builds a database query by concatenating strings instead of using parameterised queries. XSS patterns &mdash; where user input gets rendered without escaping. Insecure cryptographic operations. Tools like Semgrep and CodeQL can catch these as the developer writes the code &mdash; some even run in the editor, flagging issues in real time.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And the second thing?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Dependency scanning &mdash; also called Software Composition Analysis or SCA. Every third-party library in your application is code you didn&#39;t write and might contain known vulnerabilities. SCA tools check your dependency list against vulnerability databases. npm audit, pip audit, Snyk, Dependabot &mdash; they all do versions of this. Configure your pipeline to fail the build when a dependency has a known critical or high-severity vulnerability. A red build forces the team to address it before deployment.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. We talked about hallucinated packages in Episode 51. This catches those too?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It catches known-vulnerable real packages. For hallucinated packages &mdash; the slopsquatting risk &mdash; you need the private registry approach we discussed. But SCA catches the other half of the AI code risk: when the AI suggests a real package at a vulnerable version. Combined with a locked dependency file, you get comprehensive supply chain protection.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So SAST looks at code, SCA looks at dependencies. What about the running application?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s DAST &mdash; Dynamic Application Security Testing. DAST tests your running application from the outside, like an automated attacker. It sends crafted requests and analyses the responses. Where SAST finds &quot;this code builds a SQL query unsafely,&quot; DAST finds &quot;this endpoint actually returns data it shouldn&#39;t when I manipulate the request.&quot; It catches authentication bypasses, security header misconfigurations, information leakage in error messages, CORS issues &mdash; things that only manifest when the full application is running.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And you run that against staging, not production?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Against staging &mdash; a copy of your application that mirrors production but uses test data. Run it on every deployment to staging. OWASP ZAP is a solid open-source option. Burp Suite is the commercial standard. The key is that SAST and DAST find different things. Some vulnerabilities are invisible in the code but obvious in the running application. Some are obvious in the code but can&#39;t be triggered in a running test. Using both gives you complementary coverage.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Now, all of that is automated. Where does manual testing come in?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Manual testing &mdash; penetration testing &mdash; is where you find the things automation can&#39;t. Business logic flaws. Complex multi-step attack chains. The scenario where an attacker creates two accounts, uses one to invite the other to a case, then exploits a permission gap that only exists during the invitation flow. No automated scanner is going to find that. A skilled pen tester will.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. How often should a legal SaaS platform do pen tests?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Annually at minimum. Plus after any major architectural change &mdash; a new authentication system, a new data storage layer, a new API surface. For platforms handling highly sensitive data like active litigation strategy, semi-annual. And scope it carefully. For legal SaaS, the critical targets are: tenant isolation &mdash; can Firm A&#39;s users access Firm B&#39;s data? Authentication and session management. API access controls. File upload and document processing. These are where the highest-impact vulnerabilities live.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And what do you do with the findings?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;A pen test report is a to-do list, not a trophy. Prioritise by severity and exploitability. Critical and high findings get fixed before the next deployment. Medium within thirty days. Track every finding to resolution, and re-test to verify the fixes work. And here&#39;s the crucial step most teams skip: for every vulnerability found, write an automated regression test. A test that reproduces the vulnerability, fails before the fix, passes after, and runs on every pull request forever.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So the bug can never come back.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Over time, you build a growing library of security-specific regression tests. Think of it as your application&#39;s immune system. Every infection it survives makes it stronger. The pen tester finds an IDOR vulnerability &mdash; someone can access another firm&#39;s case documents by changing the ID in the URL. You fix it. You write a test: authenticate as User A from Firm A, request a document belonging to Firm B, assert 403 Forbidden. That test runs on every pull request. If anyone refactors the access control code and accidentally removes the tenant check, the test catches it immediately.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. What about bug bounties? When does a legal SaaS team start one of those?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Not on day one. Start a bug bounty after you have automated testing in CI, at least one pen test completed, and a process for triaging and fixing reports. A bug bounty before those basics just generates a flood of reports you can&#39;t handle. When you&#39;re ready, platforms like HackerOne and Bugcrowd provide managed programmes with triage support and legal safe harbour for researchers. For legal SaaS, the bounty scope must explicitly exclude access to real client data. Use a dedicated testing environment with synthetic data.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So to sum up the layers: pre-commit secret scanning on every commit. SAST and dependency scanning on every pull request. DAST on every deployment to staging. Manual code review for security-critical changes. Pen tests annually. And regression tests that grow with every bug found.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the security testing pyramid. Lots of cheap, fast, automated checks at the base. Fewer, deeper manual reviews in the middle. Rare, comprehensive expert assessments at the top. The automated layer prevents the pen test from finding the same things twice. The pen test finds what automation can&#39;t see. And regression tests ensure that nothing ever comes back. It&#39;s not a phase of development. It&#39;s a layer that runs continuously.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; access reviews and least privilege audits. That contractor who left six months ago? Their API key is probably still active.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-55-disaster-recovery-and-business-continuity.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 55 &mdash; Disaster Recovery and Business Continuity</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-57-access-reviews-and-least-privilege-audits.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 57 &mdash; Access Reviews and Least Privilege Audits</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

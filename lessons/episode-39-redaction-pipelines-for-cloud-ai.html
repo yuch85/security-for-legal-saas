@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 39 &mdash; Redaction Pipelines for Cloud AI &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 39 &middot; Module 8 &middot; AI Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Redaction Pipelines for Cloud AI</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 8:57 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-39-redaction-pipelines-for-cloud-ai.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">8:57</span>
+                <span>8:57</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-39-redaction-pipelines-for-cloud-ai.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">In [Episode 38](../ep38/article.md), we built the inference gateway that controls access to cloud AI providers. This episode addresses what flows through that gateway: the actual content of your prompts. Before you send a contract, a legal memo, or a case summary to a cloud LLM, you should ask a simple question &mdash; does the AI provider actually need to see your client&#39;s name, their social security number, the dollar amount of the deal, or the names of the parties in litigation? Usually, the answer</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 39: Redaction Pipelines for Cloud AI</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Does the Cloud Need to See Your Client&#39;s Name?</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 38](../ep38/article.md), we built the inference gateway that controls access to cloud AI providers. This episode addresses what flows through that gateway: the actual content of your prompts. Before you send a contract, a legal memo, or a case summary to a cloud LLM, you should ask a simple question &mdash; does the AI provider actually need to see your client&#39;s name, their social security number, the dollar amount of the deal, or the names of the parties in litigation?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Usually, the answer is no. A cloud LLM can summarise a contract, extract obligations, or review clause language without knowing that the parties are Acme Corp and Baker Industries. It just needs the structure and the text. Everything else is a leak waiting to happen.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why Redaction Matters for Legal AI</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When you send a prompt to OpenAI, Anthropic, Google, or any other cloud LLM provider, that data leaves your network and enters the provider&#39;s infrastructure. Even with zero-data-retention agreements, the data traverses networks you don&#39;t control, is processed on hardware you don&#39;t own, and is subject to the provider&#39;s security posture &mdash; not yours.[^1]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal data, this creates specific risks:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Risk | Description | Legal Consequence |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------|-------------|-------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Privilege waiver</strong> | Privileged content shared with a third-party service | Potential waiver of attorney-client privilege (see EP36, <em>Heppner</em>) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Confidentiality breach</strong> | Client PII or deal terms accessible to the provider | Violation of ABA Model Rule 1.6(c), data protection regulations |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cross-contamination</strong> | Provider uses your data to improve models (if not contractually prohibited) | Client data influences outputs for other users |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Subpoena exposure</strong> | Provider served with subpoena for data they hold | Your client&#39;s data produced in litigation involving the provider, not your client |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ABA Formal Opinion 512 specifically requires lawyers to understand &quot;how GAI uses data&quot; and to implement &quot;adequate safeguards to ensure that data processed by GAI is secure.&quot;[^2] Technical redaction is one of the most direct safeguards available.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Named Entity Recognition: The Core Technology</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Named Entity Recognition &mdash; NER &mdash; is a natural language processing technique that identifies and classifies specific entities in text: person names, organisation names, locations, dates, financial amounts, identification numbers, and other structured data. NER is the engine that powers automated redaction.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern NER systems use multiple approaches in combination:[^3]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Approach | How It Works | Strengths | Weaknesses |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|-------------|-----------|------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Rule-based (regex)</strong> | Pattern matching for structured data (SSNs, phone numbers, emails) | High precision on structured formats | Cannot handle unstructured names or context-dependent entities |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Statistical NER models</strong> | Machine learning models trained on labelled text (spaCy, Flair) | Good general-purpose entity detection | May miss domain-specific entities (case numbers, matter IDs) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Transformer-based NER</strong> | Deep learning models (BERT, GLiNER) fine-tuned for entity recognition | Highest accuracy, context-aware | Computationally expensive; requires GPU for real-time use |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Hybrid</strong> | Combines rules, statistical models, and transformers | Best overall performance | More complex to maintain and tune |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A recent study on financial documents reported that a hybrid NER approach achieved 94.7% precision, 89.4% recall, and an F1 score of 91.1%.[^4] Legal documents present similar challenges &mdash; a mix of structured identifiers (case numbers, statute references) and unstructured entities (party names, judge names) that require both pattern matching and contextual understanding.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Microsoft Presidio: An Open-Source Reference</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Microsoft Presidio](https://github.com/microsoft/presidio) is the most widely adopted open-source PII redaction framework. It combines NER models (spaCy by default), regular expressions, and checksum validation to detect over 30 entity types including names, addresses, Social Security numbers, financial account numbers, and email addresses.[^5]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Presidio&#39;s architecture has two components:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Analyzer</strong>: Detects PII entities in text, returning their type, location, and confidence score</li>
+        <li><strong class="text-ink">Anonymizer</strong>: Replaces, masks, hashes, or encrypts detected entities based on configurable rules</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Important caveat:</strong> Presidio&#39;s documentation explicitly states: &quot;Because it is using automated detection mechanisms, there is no guarantee that Presidio will find all sensitive information.&quot;[^5] For legal applications, this means Presidio (or any automated tool) should be a first pass, not the only pass. Defence in depth applies to redaction too.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Configurable Redaction Levels</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not all prompts require the same level of redaction. A pipeline should support multiple levels depending on the data sensitivity and the task:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Level | What&#39;s Redacted | Example | Use Case |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|----------------|---------|----------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Full redaction</strong> | All PII replaced with type tags | &quot;The agreement between [ORG_1] and [ORG_2] dated [DATE_1]...&quot; | Sending to cloud AI for clause analysis |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Partial redaction</strong> | Names and identifiers redacted; dates and amounts preserved | &quot;The agreement between [ORG_1] and [ORG_2] dated January 15, 2026 for $2.5M...&quot; | Financial analysis where amounts matter |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Pseudonymised</strong> | PII replaced with consistent fake values | &quot;The agreement between Maple Corp and Pine Industries dated March 3, 2025...&quot; | When the AI needs realistic-looking data for better results |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">None</strong> | No redaction (local model only) | Original text sent as-is | Self-hosted model within your network perimeter |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Pseudonymisation deserves special attention. Some AI tasks produce better results when the input looks like real data rather than placeholder tags. Replacing &quot;[ORG_1]&quot; with a consistent fake name like &quot;Maple Corp&quot; throughout the document preserves the readability that helps the LLM understand context &mdash; while ensuring the actual client name never reaches the cloud.[^6]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Round-Trip Reconstruction: Redact, Send, Re-Hydrate</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Redaction is only half the pipeline. When the AI returns its response, you need to map the redacted entities back to their real values &mdash; a process called re-hydration or reconstruction.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Pipeline</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Original document enters pipeline</li>
+        <li>NER identifies entities → stored in a REDACTION MAP (entity → placeholder)</li>
+        <li>Document redacted using the map</li>
+        <li>Redacted document sent to cloud LLM</li>
+        <li>LLM response received (contains placeholders)</li>
+        <li>Redaction map applied in reverse → real entities restored</li>
+        <li>Reconstructed response delivered to the user</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The redaction map is the sensitive artefact. It must be stored securely &mdash; encrypted at rest, access-controlled, and never sent to the cloud provider. If the map is compromised, every redacted prompt can be reconstructed.[^7]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Handling Edge Cases</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Edge Case | Problem | Solution |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|---------|----------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Entity in AI response not in original</strong> | LLM generates new entity references | Map only applies to known entities; new references pass through unchanged |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Partial entity matches</strong> | &quot;John&quot; appears both as a name and in &quot;St. John&#39;s Court&quot; | Context-aware NER; maintain an exclusion list for legal terminology |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cross-reference consistency</strong> | Same entity must get the same placeholder across a multi-document prompt | Use deterministic mapping (e.g., hash-based) with a session-scoped map |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Nested entities</strong> | &quot;John Smith of Baker &amp; McKenzie LLP&quot; contains both a person and an organisation | Redact from longest match first; maintain entity hierarchy |</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Contractual Protections vs. Technical Protections</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Enterprise agreements with AI providers often include zero-data-retention clauses, prohibitions on using customer data for model training, and SOC 2 / ISO 27001 compliance attestations. These are important but insufficient on their own.[^8]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Protection Type | What It Covers | What It Doesn&#39;t Cover |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------------|---------------|----------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Contractual (DPA, BAA)</strong> | Provider&#39;s obligations regarding data handling, breach notification, liability | Data in transit, provider-side vulnerabilities, subpoena exposure |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Technical (redaction)</strong> | Prevents sensitive data from reaching the provider at all | Entities missed by NER, context that reveals sensitive information without named entities |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The strongest position is both: a contractual agreement that restricts data use, combined with technical redaction that ensures sensitive data never reaches the provider regardless of contract compliance. If the contract is breached, your data wasn&#39;t there to be exposed.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Building a Legal-Specific NER Model</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Generic NER models miss legal-specific entities. Consider extending your redaction pipeline to detect:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Matter numbers and case identifiers</strong> (e.g., &quot;Case No. 2025-CV-04521&quot;)</li>
+        <li><strong class="text-ink">Court names and judge names</strong> that reveal jurisdiction and strategy</li>
+        <li><strong class="text-ink">Law firm names</strong> that reveal representation relationships</li>
+        <li><strong class="text-ink">Privilege designations</strong> (&quot;Attorney-Client Privileged&quot;, &quot;Work Product&quot;)</li>
+        <li><strong class="text-ink">IOLTA account numbers</strong> and trust account references</li>
+        <li><strong class="text-ink">Bar numbers</strong> and attorney registration identifiers</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Tools like [GLiNER](https://dev.to/aairom/the-next-generation-of-privacy-using-docling-gliners-advanced-ner-to-masterfully-detect-and-75p) support zero-shot NER &mdash; you define entity types without retraining the model &mdash; making it practical to add legal-specific entity types without a machine learning team.[^9]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Architecture</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform using cloud AI:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Inference gateway</strong> (Episode 38) intercepts every outbound prompt</li>
+        <li><strong class="text-ink">NER pipeline</strong> scans the prompt, generates a redaction map, and redacts the text</li>
+        <li><strong class="text-ink">Redacted prompt</strong> is forwarded to the cloud LLM provider</li>
+        <li><strong class="text-ink">Response</strong> is received and re-hydrated using the redaction map</li>
+        <li><strong class="text-ink">Redaction map</strong> is stored encrypted, access-controlled, and retained per your data retention policy</li>
+        <li><strong class="text-ink">Audit log</strong> records what was redacted, when, and which provider received the redacted version</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This pipeline adds latency &mdash; typically 100-500ms for NER processing depending on document length and model complexity. For most legal workflows (contract review, research, drafting), this latency is imperceptible.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 40 addresses <strong class="text-ink">Local vs. Cloud AI &mdash; Security Boundaries</strong> &mdash; the decision framework for when to send data to the cloud (with redaction) versus when to keep everything on premises by running the model locally.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: Prediction Guard, [The Complete Guide to PII Detection and Redaction Tools for AI Pipelines in Regulated Industries](https://predictionguard.com/blog/pii-detection-redaction-llm-pipelines-regulated-industries).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: ABA, [Formal Opinion 512: Generative Artificial Intelligence Tools](https://www.americanbar.org/news/abanews/aba-news-archives/2024/07/aba-issues-first-ethics-guidance-ai-tools/) (July 2024).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Elastic Observability Labs, [Using NLP and Pattern Matching to Detect, Assess, and Redact PII in Logs](https://www.elastic.co/observability-labs/blog/pii-ner-regex-assess-redact-part-1).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Nature Scientific Reports, [A Hybrid Rule-Based NLP and Machine Learning Approach for PII Detection and Anonymization in Financial Documents](https://www.nature.com/articles/s41598-025-04971-9).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Microsoft, [Presidio: Data Protection and De-Identification SDK](https://github.com/microsoft/presidio).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Justee, [Redact PII from Legal Documents for AI](https://justee.ai/pii-redaction/redact-pii-from-legal-documents-for-ai).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Protecto, [Comparing Best NER Models for PII Identification](https://www.protecto.ai/blog/best-ner-models-for-pii-identification/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Spellbook, [Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026](https://www.spellbook.legal/learn/most-private-ai).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: DEV Community, [The Next Generation of Privacy: Using Docling &amp; GLiNER&#39;s Advanced NER](https://dev.to/aairom/the-next-generation-of-privacy-using-docling-gliners-advanced-ner-to-masterfully-detect-and-75p).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Tonic.ai, [Named Entity Recognition for Data Compliance Automation](https://www.tonic.ai/guides/named-entity-recognition-data-compliance-automation).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Microsoft Learn, [Transparency Note &mdash; Named Entity Recognition Feature of Azure AI Language](https://learn.microsoft.com/en-us/legal/cognitive-services/language-service/transparency-note-named-entity-recognition).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 39 &mdash; redaction pipelines for cloud AI. Alice, last episode we talked about protecting the API keys that connect to cloud AI. This time we&#39;re talking about what actually goes through that connection?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Right. Here&#39;s the question every legal AI builder should ask before sending a prompt to OpenAI or Anthropic or Google: does the cloud provider actually need to see your client&#39;s name? The dollar amount of the deal? The names of the parties in litigation? Usually, the answer is no. The AI can summarise a contract, extract obligations, review clause language without knowing it&#39;s about Acme Corp and Baker Industries. It just needs the structure and the text. Everything identifiable is a leak waiting to happen.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So you strip that stuff out before sending it?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. That&#39;s a redaction pipeline. Before any prompt leaves your network, it passes through a system that identifies sensitive information &mdash; client names, organisation names, dates, financial amounts, case numbers, identification numbers &mdash; and replaces them with placeholders. The prompt that reaches the cloud says &quot;The agreement between ORG_1 and ORG_2 dated DATE_1&quot; instead of the real names and dates. The AI processes it, sends back its analysis, and then your system maps the placeholders back to the real values. Your user sees the full result. The cloud provider never saw the sensitive data.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And the technology that identifies those entities in the text &mdash; that&#39;s NER? Named Entity Recognition?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;NER, yes &mdash; it&#39;s a natural language processing technique that identifies and classifies specific entities in text. Person names, organisations, locations, dates, financial figures, identification numbers. Modern NER systems combine multiple approaches. Pattern matching with regular expressions &mdash; that&#39;s great for structured data like Social Security numbers or email addresses, anything with a predictable format. Statistical models trained on labelled text &mdash; those handle names and organisations. And then deep learning transformer models &mdash; those are the most accurate because they understand context.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. How accurate are we talking?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;A recent study on financial documents &mdash; which have similar complexity to legal text &mdash; reported a hybrid approach achieving about 95% precision and 89% recall. That&#39;s good, but notice what it means: roughly one in ten sensitive entities might be missed. For legal AI, that&#39;s why automated redaction should be a first pass, not the only pass. Defence in depth applies to redaction the same way it applies to everything else we&#39;ve discussed in this series.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. What&#39;s the go-to tool for building this?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Microsoft Presidio is the most widely adopted open-source option. It combines NER models, regular expressions, and checksum validation to detect over 30 entity types. It has two components &mdash; an Analyzer that finds the entities and scores its confidence, and an Anonymizer that replaces, masks, or encrypts them based on rules you configure. It uses spaCy&#39;s NER model by default, but you can swap in more powerful models. And to their credit, the documentation is honest &mdash; it says explicitly that automated detection cannot guarantee it will find all sensitive information.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So what does the actual pipeline look like end to end?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Five steps. First, the original document enters the pipeline &mdash; let&#39;s say a contract a lawyer wants summarised. Second, the NER system scans it and identifies every entity &mdash; &quot;John Smith&quot; is a person, &quot;Acme Corporation&quot; is an organisation, &quot;$2.5 million&quot; is a financial amount. Each entity gets mapped to a placeholder &mdash; John Smith becomes PERSON_1, Acme Corporation becomes ORG_1. That mapping is stored in what we call a redaction map. Third, the redacted document is sent to the cloud LLM. Fourth, the response comes back with placeholders in it. Fifth, the redaction map is applied in reverse &mdash; the placeholders are replaced with the real values, and the user sees the complete result.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And that redaction map &mdash; that&#39;s now the sensitive thing you need to protect?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Exactly. The redaction map is the Rosetta Stone. If someone gets the map, they can reconstruct every redacted prompt. So it has to be encrypted at rest, access-controlled, and stored according to your data retention policy. Never send the map to the cloud. Never store it in the same system as the redacted prompts. It stays within your perimeter.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. There&#39;s something I want to ask about the redaction levels. Does every prompt need full redaction? What about cases where the AI needs to see dates or dollar amounts to do its job properly?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Good question. A well-designed pipeline supports multiple levels. Full redaction replaces everything identifiable &mdash; names, dates, amounts, all of it. That&#39;s appropriate when you&#39;re asking the AI to analyse clause structure or identify obligation types. Partial redaction keeps dates and amounts but strips names and identifiers &mdash; useful when the AI needs to do financial analysis. And then there&#39;s pseudonymisation, which is interesting. Instead of replacing &quot;Acme Corporation&quot; with a placeholder tag, you replace it with a fake but realistic name like &quot;Maple Corp.&quot; The AI gets data that looks real, which can actually improve the quality of the response, but the actual client identity never reaches the cloud.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. That pseudonymisation approach is clever. The AI doesn&#39;t know the difference between a fake name and a real one.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And the results are often better than with placeholder tags, because the model was trained on text that contains real names, not tags like ORG_1. The consistency matters too &mdash; &quot;Maple Corp&quot; needs to be &quot;Maple Corp&quot; throughout the entire document and across related prompts in the same session. Deterministic mapping handles this &mdash; the same input entity always produces the same pseudonym within a session.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. What about legal-specific entities that a general NER model might miss?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;This is where generic tools fall short. A general NER model catches names and addresses, but it won&#39;t recognise a matter number like &quot;Case No. 2025-CV-04521&quot; as sensitive. It won&#39;t flag judge names that reveal which court your case is in. It won&#39;t catch IOLTA trust account numbers or bar registration numbers. For legal AI, you need to extend the NER pipeline with legal-specific entity types. Newer tools like GLiNER support zero-shot entity recognition &mdash; you define the entity types you want without retraining the model. You tell it &quot;find matter numbers, court names, privilege designations&quot; and it learns to identify them from context.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Now, I have to ask &mdash; some firms sign data processing agreements with AI providers that say &quot;we won&#39;t train on your data, we won&#39;t retain your prompts.&quot; Isn&#39;t that enough?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It&#39;s necessary but not sufficient. Contractual protections cover the provider&#39;s obligations. But they don&#39;t protect data in transit. They don&#39;t protect against a vulnerability on the provider&#39;s side. They don&#39;t protect you if the provider is served with a subpoena for data they processed. The strongest position is both &mdash; a contract that restricts data use AND technical redaction that ensures the sensitive data was never there in the first place. If the contract is breached, your client&#39;s data wasn&#39;t exposed because it never left your network.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Belt and suspenders.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;For privileged legal data, it&#39;s the minimum standard. ABA Formal Opinion 512 requires lawyers to understand how AI tools use data and implement &quot;adequate safeguards.&quot; A redaction pipeline running through your inference gateway is one of the most concrete safeguards you can point to.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Local vs. Cloud AI. When does it make sense to skip the cloud entirely and run the model on your own hardware?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-38-llm-api-key-isolation-and-inference-gateways.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 38 &mdash; LLM API Key Isolation and Inference Gateways</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-40-local-vs-cloud-ai-security-boundaries.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 40 &mdash; Local vs. Cloud AI &mdash; Security Boundaries</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

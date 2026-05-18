@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 45 &mdash; Docker Security and Container Hardening &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 45 &middot; Module 10 &middot; Infrastructure</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Docker Security and Container Hardening</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 8:57 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-45-docker-security-and-container-hardening.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">8:57</span>
+                <span>8:57</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-45-docker-security-and-container-hardening.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Welcome to Module 10. For the next several episodes, we shift from application-level security to the infrastructure your application runs on &mdash; the containers, pipelines, dependencies, configuration, and cloud services that make up the deployment environment. A perfectly secure application deployed on poorly configured infrastructure is still vulnerable. We start with containers. ---</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 45: Docker Security and Container Hardening</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Module 10 &mdash; Infrastructure and Deployment</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Welcome to Module 10. For the next several episodes, we shift from application-level security to the infrastructure your application runs on &mdash; the containers, pipelines, dependencies, configuration, and cloud services that make up the deployment environment. A perfectly secure application deployed on poorly configured infrastructure is still vulnerable. We start with containers.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Is a Container, and Why Should You Care?</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A container is a lightweight, portable package that bundles your application with everything it needs to run &mdash; the code, the runtime, the libraries, the configuration files. Think of it as a sealed shipping container for software: everything required is packed inside, isolated from whatever else is running on the same server. [Docker](https://docs.docker.com/get-started/docker-overview/) is the most widely used container platform, though the underlying technology is built on Linux kernel features &mdash; namespaces for isolation and cgroups for resource limits.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Containers solve a real problem for legal SaaS teams. &quot;It works on my machine&quot; becomes irrelevant when the container is identical everywhere &mdash; development, testing, production. Your contract review tool runs the same way on a developer&#39;s laptop and on your production servers.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">But containers are not virtual machines. They share the host operating system&#39;s kernel. This means a vulnerability in the kernel can affect every container on the host. [NIST SP 800-190, the Application Container Security Guide](https://csrc.nist.gov/pubs/sp/800-190/final) [1], identifies this shared kernel as the fundamental security consideration: &quot;Containers provide less isolation than virtual machines since they share the host OS kernel.&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Critical mindset:&lt;/strong&gt; A container is not a security boundary. But a well-configured container is a useful speed bump &mdash; it limits what an attacker can do if they compromise your application. The goal is defence in depth (layering multiple independent controls, as we covered in &lt;a href=&quot;/lessons/ep04/&quot;&gt;Episode 4&lt;/a&gt;), not relying on any single layer.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Base Image Selection &mdash; Your Foundation Matters</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every container starts from a base image &mdash; a starting template that includes the operating system and core libraries. The most common mistake is using `ubuntu:latest` or `node:latest` as your base.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The problems:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">`latest` is a moving target.</strong> Today&#39;s `latest` is different from last month&#39;s. Your build is not reproducible.</li>
+        <li><strong class="text-ink">Full OS images include hundreds of packages you don&#39;t need.</strong> Each package is an additional attack surface &mdash; software that could contain vulnerabilities.</li>
+        <li><strong class="text-ink">Unpinned images cannot be audited.</strong> You cannot prove what was in the image at deployment time.</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker) [2] &mdash; a set of security configuration guidelines published by the Center for Internet Security &mdash; recommends:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Practice | Why |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|-----|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Use minimal base images (`alpine`, `distroless`, `chainguard`) | Fewer packages = smaller attack surface |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pin images by digest, not tag | `node:20-alpine@sha256:abc123...` is immutable; `node:20-alpine` can change |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Rebuild regularly | Even pinned images accumulate vulnerabilities over time |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Scan before deployment | Catch known CVEs (Common Vulnerabilities and Exposures &mdash; standardised vulnerability identifiers, introduced in [Episode 8](/lessons/ep08/)) before they reach production |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform, the difference is stark. A full `node:20` image contains over 900 packages. A `node:20-alpine` image contains around 30. Every eliminated package is one fewer thing that can go wrong.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Running as Non-Root &mdash; The Single Most Important Change</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">By default, processes inside a Docker container run as root &mdash; the most privileged user on a Linux system. If an attacker exploits a vulnerability in your application and escapes the container, they inherit root privileges on the host. Game over.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Docker security hardening guides](https://www.onlinehashcrack.com/guides/best-practices/docker-security-2025-hardening-containers.php) [3] consistently rank running as non-root as the single most impactful security improvement:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```dockerfile</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"># In your Dockerfile</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">RUN addgroup --system appgroup &amp;&amp; adduser --system appuser --ingroup appgroup</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">USER appuser</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The `USER` instruction switches the container&#39;s runtime user to a non-privileged account. If an attacker escapes the container, they land as an unprivileged user &mdash; still bad, but dramatically less catastrophic than root.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST SP 800-190](https://csrc.nist.gov/pubs/sp/800-190/final) [1] explicitly recommends: &quot;Organizations should prohibit containers from running as root whenever possible.&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Read-Only Filesystems, Dropped Capabilities, and Seccomp</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Beyond running as non-root, three additional hardening layers significantly reduce what a compromised container can do:</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Read-Only Filesystem</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mount the container&#39;s filesystem as read-only. If an attacker gains code execution inside the container, they cannot write malicious files, modify binaries, or plant persistence mechanisms.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```bash</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">docker run --read-only --tmpfs /tmp myapp</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The `--tmpfs /tmp` flag provides a writable temporary directory in memory for applications that need it, while keeping the rest of the filesystem immutable.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Dropped Capabilities</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Linux capabilities are fine-grained permissions that break root&#39;s all-or-nothing power into individual privileges. By default, Docker grants containers a set of capabilities that most applications never need. [The CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker) [2] recommends dropping all capabilities and adding back only what your application requires:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```bash</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">docker run --cap-drop=ALL --cap-add=NET_BIND_SERVICE myapp</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This container can bind to privileged ports (below 1024) but cannot do anything else that requires elevated privileges &mdash; no raw network access, no kernel module loading, no changing file ownership.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Seccomp Profiles</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Seccomp (Secure Computing Mode) restricts which system calls &mdash; low-level requests to the operating system kernel &mdash; a container can make. Docker&#39;s [default seccomp profile](https://docs.docker.com/engine/security/seccomp/) [4] blocks approximately 44 of the 300+ available system calls, including dangerous ones like `reboot`, `mount`, and `clock_settime`. For higher security, create a custom profile that allows only the specific system calls your application uses.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Layered defence:&lt;/strong&gt; Non-root user + read-only filesystem + dropped capabilities + seccomp profile = four independent barriers. An attacker who breaches one still faces three more. This is defence in depth applied to container configuration.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Secrets in Containers &mdash; Never Bake, Always Inject</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Secrets &mdash; API keys, database passwords, encryption keys &mdash; must never be baked into container images. An image is a static artifact. Anyone with access to the image (your container registry, your CI/CD pipeline logs, your developer&#39;s laptop) can extract every secret embedded in it.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[GitGuardian&#39;s research](https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/) [5] found that container images and CI/CD configuration files are among the primary vectors for secret exposure, with millions of secrets discovered in public repositories annually.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The correct approach:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Method | How It Works | Security Level |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|-------------|----------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Environment variables | Injected at runtime via orchestrator (Kubernetes Secrets, Docker Compose) | Baseline &mdash; visible in process listings |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Mounted secrets | Files mounted into the container at runtime from a secrets manager | Better &mdash; not visible in process listings |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Vault integration | Application fetches secrets from HashiCorp Vault (introduced in [Episode 15](/lessons/ep15/)) at startup | Best &mdash; secrets are short-lived, rotated, audited |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms handling privileged client data, Vault integration is the recommended approach. Secrets are never stored on disk, are automatically rotated, and every access is logged.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Container Scanning &mdash; Catching Vulnerabilities Before Deployment</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Container images accumulate vulnerabilities. A base image that was clean last month may have three new critical CVEs today. Scanning tools analyse your images against vulnerability databases and report known issues before they reach production.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Docker&#39;s own security scanning](https://docs.docker.com/dhi/core-concepts/cis/) [6] and third-party tools like Trivy, Grype, and Snyk Container check every layer of your image against the National Vulnerability Database and other sources. [The CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker) [2] recommends scanning images both in your CI/CD pipeline (before they&#39;re published to a registry) and continuously in your registry (because new vulnerabilities are discovered after deployment).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A practical scanning policy for legal SaaS:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Block critical and high CVEs</strong> &mdash; no image with a known critical vulnerability reaches production</li>
+        <li><strong class="text-ink">Set fix deadlines for medium CVEs</strong> &mdash; 30 days to patch or document an exception</li>
+        <li><strong class="text-ink">Rebuild base images weekly</strong> &mdash; pick up security patches automatically</li>
+        <li><strong class="text-ink">Scan running containers</strong> &mdash; detect vulnerabilities discovered after deployment</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Aqua Security&#39;s CIS Docker Benchmark guide](https://www.aquasec.com/cloud-native-academy/docker-container/docker-cis-benchmark/) [7] notes that many organizations scan images during build but forget to rescan running containers &mdash; leaving a window where newly discovered vulnerabilities go undetected.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Docker Bench for Security &mdash; Auditing Your Configuration</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Docker Bench for Security](https://github.com/docker/docker-bench-security) [8] is an open-source script that audits your Docker installation against the CIS Docker Benchmark. It checks over 100 configuration items including:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Host configuration (kernel parameters, audit rules)</li>
+        <li>Docker daemon configuration (TLS, logging, user namespaces)</li>
+        <li>Container runtime settings (capabilities, read-only root, seccomp)</li>
+        <li>Image and build file best practices</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Run it regularly. Treat failures as security bugs. For a legal SaaS platform where data protection obligations apply &mdash; ABA Model Rule 1.6(c), GDPR Article 32&#39;s requirement for &quot;appropriate technical measures,&quot; SOC 2 infrastructure controls &mdash; a clean Docker Bench report is evidence of due diligence.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Containers are not inherently secure. They are as secure as you configure them. Minimal base images, non-root users, read-only filesystems, dropped capabilities, seccomp profiles, runtime secret injection, and continuous scanning &mdash; together, these transform a container from a convenient packaging format into a meaningful security layer. Skip any one of them, and you&#39;ve left a door open.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we turn to the pipeline that builds and deploys those containers &mdash; CI/CD pipeline security. Your CI/CD system has production credentials and runs arbitrary code. It is the most powerful system you own. We&#39;ll talk about how to treat it that way.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>[NIST SP 800-190 &mdash; Application Container Security Guide](https://csrc.nist.gov/pubs/sp/800-190/final)</li>
+        <li>[CIS Docker Benchmark &mdash; Center for Internet Security](https://www.cisecurity.org/benchmark/docker)</li>
+        <li>[Docker Security 2025: Hardening Containers &mdash; OnlineHashCrack](https://www.onlinehashcrack.com/guides/best-practices/docker-security-2025-hardening-containers.php)</li>
+        <li>[Docker Seccomp Security Profiles &mdash; Docker Documentation](https://docs.docker.com/engine/security/seccomp/)</li>
+        <li>[CI/CD Secrets Management &mdash; GitGuardian](https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/)</li>
+        <li>[CIS Benchmark &mdash; Docker Documentation](https://docs.docker.com/dhi/core-concepts/cis/)</li>
+        <li>[Docker CIS Benchmark: Best Practices &mdash; Aqua Security](https://www.aquasec.com/cloud-native-academy/docker-container/docker-cis-benchmark/)</li>
+        <li>[Docker Bench for Security &mdash; GitHub](https://github.com/docker/docker-bench-security)</li>
+        <li>[Docker Security Hardening: Rootless, Seccomp, AppArmor &mdash; Virtua Cloud](https://www.virtua.cloud/learn/en/tutorials/docker-security-hardening-rootless-seccomp)</li>
+        <li>[Scanning Docker Infrastructure Against CIS Benchmark &mdash; Wazuh](https://wazuh.com/blog/scanning-docker-infrastructure-against-cis-benchmark/)</li>
+        <li>[CIS Benchmarks for Docker Security &mdash; Sathiya Shunmugasundaram](https://medium.com/@vagees/cis-benchmarks-for-docker-security-c12a802f298b)</li>
+    </ul>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 45 &mdash; Docker security and container hardening. We&#39;re starting a new module today &mdash; Module 10, Infrastructure and Deployment. Alice, containers are everywhere in modern software. But I suspect most of our audience hasn&#39;t thought much about what they actually are.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Let&#39;s fix that. A container is like a sealed shipping container for your software. You pack everything your application needs to run inside it &mdash; the code, the libraries, the configuration &mdash; and it runs the same way everywhere. On a developer&#39;s laptop, on a test server, in production. That consistency is why containers won through Docker. Your legal SaaS platform &mdash; whether it&#39;s a contract review tool or a case management system &mdash; gets packaged into one or more containers, and those containers get deployed to your servers.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And that sounds great from a reliability perspective. What&#39;s the security concern?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The concern is that containers are not virtual machines. A virtual machine has its own entire operating system &mdash; fully isolated from the host. A container shares the host&#39;s operating system kernel. That means a vulnerability in the kernel can affect every container running on that host. NIST&#39;s container security guide &mdash; SP 800-190 &mdash; puts it directly: containers provide less isolation than virtual machines. A container is not a security boundary.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So what is it, then?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;A useful speed bump. A well-configured container limits what an attacker can do if they compromise your application. It&#39;s not the wall &mdash; it&#39;s one layer in your defence in depth strategy, which we covered in Episode 4. The key word is &quot;well-configured.&quot; An out-of-the-box Docker container with default settings is convenience-optimised, not security-optimised. You have to actively harden it.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Okay. Where do you start?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Base images. Every container starts from a base image &mdash; a template that includes the operating system and core libraries. The most common mistake is using a full operating system image like the standard Node.js image. It contains over 900 packages. Nine hundred pieces of software, most of which your application never uses. Every one of those is something that could contain a vulnerability. Switch to a minimal image &mdash; Alpine Linux-based images have around 30 packages. That&#39;s 870 fewer things that can go wrong.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s a dramatic difference. What about the version? I see a lot of tutorials using things like &quot;node colon latest.&quot;&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; The &quot;latest&quot; tag is a moving target. Today&#39;s &quot;latest&quot; is different from last month&#39;s. Your build is not reproducible &mdash; you cannot prove what was in that image when you deployed it. The fix is to pin by digest. That&#39;s a cryptographic hash of the image contents &mdash; like the SHA-256 fingerprints we&#39;ve talked about before. A digest never changes. If you deploy with a pinned digest, you know exactly what&#39;s in that container, and you can prove it to an auditor six months later.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Okay, base image sorted. What&#39;s next?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Running as non-root. This is the single most impactful security change you can make. By default, processes inside a Docker container run as root &mdash; the most powerful user on a Linux system. If an attacker exploits a vulnerability in your application and manages to escape the container, they inherit root privileges on the host. They own the server. The fix is two lines in your Dockerfile &mdash; create an unprivileged user and switch to it. Now if the attacker escapes, they land as a nobody user. Still bad, but dramatically less catastrophic.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. That&#39;s the principle of least privilege from Episode 8 &mdash; give the process only the permissions it actually needs.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And you can go further with three more hardening layers. First &mdash; read-only filesystems. Mount the container&#39;s filesystem so nothing can be written to it. An attacker who gains code execution can&#39;t plant malicious files, can&#39;t modify binaries, can&#39;t install tools. You provide a small writable temporary directory in memory for logs and temp files, but everything else is locked.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What&#39;s the second layer?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Dropped capabilities. Linux breaks root&#39;s all-or-nothing power into individual capabilities &mdash; like binding to low-numbered ports, or loading kernel modules, or changing file ownership. Docker gives containers a default set, but most applications need almost none of them. The CIS Docker Benchmark &mdash; that&#39;s the industry-standard security configuration guide from the Center for Internet Security &mdash; recommends dropping all capabilities and adding back only the specific ones your application requires. Most web applications need zero special capabilities.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And the third?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Seccomp profiles. Seccomp &mdash; Secure Computing Mode &mdash; restricts which system calls a container can make. System calls are low-level requests to the operating system &mdash; &quot;open this file,&quot; &quot;create a network connection,&quot; &quot;allocate memory.&quot; Docker&#39;s default profile blocks about 44 dangerous system calls out of 300-plus available, things like reboot and mount. For higher security, you create a custom profile that allows only the specific calls your application uses. Everything else is denied.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. So you&#39;re stacking these &mdash; non-root, read-only filesystem, dropped capabilities, seccomp. Each one independent.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Four independent barriers. An attacker who gets past one still faces three more. That&#39;s defence in depth applied to container configuration.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Makes sense. Let me ask about secrets &mdash; database passwords, API keys. Where do those live in a containerised world?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Never in the image. This is a hard rule. A container image is a static file. Anyone who gets access to it &mdash; through your container registry, your CI/CD logs, a developer&#39;s laptop &mdash; can extract every secret embedded in it. Secrets must be injected at runtime. The simplest approach is environment variables &mdash; your orchestrator passes them in when the container starts. Better is mounting secrets as files from a secrets manager. Best is having the application fetch secrets from a tool like HashiCorp Vault &mdash; which we covered in Episode 15 &mdash; at startup. With Vault, secrets are short-lived, automatically rotated, and every access is logged.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And scanning &mdash; how do you know if your container image has vulnerabilities?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You scan it. Tools like Trivy, Grype, and Snyk Container analyse every layer of your image against vulnerability databases. The important thing is when you scan. Most teams scan during the build process &mdash; which is good. But they forget to rescan running containers. A base image that was clean last month might have three new critical vulnerabilities today. You need continuous scanning. Block critical vulnerabilities from reaching production, set deadlines for fixing medium ones, and rebuild your base images at least weekly to pick up security patches.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And there&#39;s an automated audit tool for all of this?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Docker Bench for Security. It&#39;s an open-source script that checks your Docker installation against the CIS Benchmark &mdash; over 100 configuration items. Host settings, daemon configuration, container runtime settings, image best practices. Run it regularly. Treat failures as security bugs. For a legal SaaS platform where you have professional obligations around data protection &mdash; ABA rules, SOC 2, potentially GDPR &mdash; a clean Docker Bench report is evidence that you&#39;re doing your due diligence on infrastructure security.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Good overview. Next episode &mdash; CI/CD pipeline security. The system that builds and deploys all of this.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Your CI/CD pipeline has production credentials and runs arbitrary code. It&#39;s the most powerful system you own. Next episode, we&#39;ll talk about treating it that way. Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-44-correlation-ids-and-distributed-tracing.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 44 &mdash; Correlation IDs and Distributed Tracing</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-46-cicd-pipeline-security.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 46 &mdash; CI/CD Pipeline Security</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

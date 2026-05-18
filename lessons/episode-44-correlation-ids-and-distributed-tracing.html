@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 44 &mdash; Correlation IDs and Distributed Tracing &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 44 &middot; Module 9 &middot; Audit &amp; Logging</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Correlation IDs and Distributed Tracing</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 9:10 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-44-correlation-ids-and-distributed-tracing.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">9:10</span>
+                <span>9:10</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-44-correlation-ids-and-distributed-tracing.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">A lawyer using your legal SaaS platform clicks &quot;Generate Summary&quot; on a 200-page disclosure bundle. The spinner runs for thirty seconds. Then an error: &quot;Something went wrong. Please try again.&quot; The lawyer contacts support. Your team opens the logs. The request touched the API gateway, the authentication service, the document parser, the AI summarisation engine, the billing service, and the audit logger. Six services, six separate log files, six different timestamps. Which log entry belongs to thi</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 44: Correlation IDs and Distributed Tracing</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">A User Reports &quot;Something Went Wrong.&quot; Now What?</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A lawyer using your legal SaaS platform clicks &quot;Generate Summary&quot; on a 200-page disclosure bundle. The spinner runs for thirty seconds. Then an error: &quot;Something went wrong. Please try again.&quot; The lawyer contacts support. Your team opens the logs. The request touched the API gateway, the authentication service, the document parser, the AI summarisation engine, the billing service, and the audit logger. Six services, six separate log files, six different timestamps. Which log entry belongs to this request?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Without a correlation ID, you are searching a haystack for a needle that might be in a different haystack entirely. With one, you have a thread connecting every log entry, every service call, and every database query that this single request triggered.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Is a Correlation ID?</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A correlation ID is a unique identifier &mdash; typically a UUID (Universally Unique Identifier, a 128-bit random string we first mentioned in [Episode 10](/lessons/ep10/)) &mdash; generated at the entry point of a request and propagated through every service that request touches. Every log entry, every inter-service call, every database query includes this ID. When something goes wrong, you search for that single ID and instantly see the complete journey of the request across your entire system.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Microsoft&#39;s Engineering Fundamentals Playbook](https://microsoft.github.io/code-with-engineering-playbook/observability/correlation-id/) [1] defines correlation IDs as identifiers that &quot;track one request end-to-end across all services while staying the same from entry point to final response.&quot; The concept is simple. The discipline of propagating it consistently through every layer of your stack is where most teams fail.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key distinction:&lt;/strong&gt; A correlation ID stays the same across the entire request. A &lt;em&gt;span ID&lt;/em&gt; identifies a single operation within that request &mdash; one database query, one API call, one function execution. A &lt;em&gt;trace ID&lt;/em&gt; groups all spans into a tree structure showing parent-child relationships. Together, they form a complete picture: the trace shows you the shape of the request, spans show you the individual steps, and the correlation ID ties it all to the original user action.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">From Correlation IDs to Distributed Tracing</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Correlation IDs tell you which log entries belong together. Distributed tracing goes further &mdash; it shows you the structure, timing, and dependencies of every operation within the request. Think of it as the difference between knowing which pages of a case file relate to the same matter (correlation ID) and having a full timeline of events with causal links between them (distributed trace).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[OpenTelemetry](https://opentelemetry.io/docs/concepts/context-propagation/) [2] is the industry standard for distributed tracing. It is an open-source observability framework &mdash; a set of tools, APIs, and SDKs that instrument your applications to collect traces, metrics, and logs in a standardised format. OpenTelemetry is vendor-neutral, meaning your traces can be sent to any compatible backend: Jaeger, Zipkin, Datadog, Grafana Tempo, or AWS X-Ray.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">How Context Propagation Works</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When Service A calls Service B, the trace context &mdash; including the trace ID and current span ID &mdash; must travel with the request. [OpenTelemetry&#39;s context propagation](https://opentelemetry.io/docs/concepts/context-propagation/) [2] handles this automatically through HTTP headers:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This single header carries the trace ID, the parent span ID, and trace flags. The receiving service extracts the context, creates a new span as a child of the incoming span, and continues propagation to the next service.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform, a single &quot;summarise this document&quot; request might generate a trace like:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Span | Service | Duration | Notes |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------|---------|----------|-------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `api-gateway` | Gateway | 15,230ms | Auth check, rate limit |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `auth-verify` | Auth Service | 12ms | JWT validation |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `doc-parse` | Document Parser | 3,400ms | PDF extraction |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `ai-summarise` | AI Engine | 11,200ms | LLM inference |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `audit-log` | Audit Logger | 45ms | Provenance record (EP43) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `billing-record` | Billing | 18ms | Usage metering |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The trace waterfall &mdash; a visual representation showing each span as a horizontal bar on a timeline &mdash; immediately reveals that the AI inference took 11.2 seconds of the total 15.2 seconds. That is actionable information for both performance tuning and incident investigation.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security Applications of Distributed Tracing</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Distributed tracing is not just a performance tool. It is a security tool. [Traces provide incident reconstruction capability](https://oneuptime.com/blog/post/2026-02-06-trace-correlation-root-cause-analysis/view) [3] that logs alone cannot match.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Incident Reconstruction</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When a security incident occurs &mdash; unauthorized data access, a privilege escalation, an injection attempt &mdash; traces let you reconstruct exactly what happened. Which service received the malicious input? Where did it propagate? Which downstream services were affected? Traditional log analysis requires correlating timestamps across services and hoping the clocks are synchronised. Traces give you the causal chain directly.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Anomaly Detection</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Traces establish baseline patterns for normal behaviour. A document review request that normally touches four services suddenly touching eight &mdash; including the admin API &mdash; is an anomaly worth investigating. [Trace-based anomaly detection](https://javapro.io/2025/09/22/improving-platform-observability-with-distributed-tracing-and-opentelemetry/) [4] can flag these patterns automatically.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Access Pattern Auditing</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For multi-tenant legal SaaS (where multiple law firms share the same infrastructure, isolated by tenant boundaries as we discussed in [Episode 8](/lessons/ep08/)), traces can verify that a request from Firm A never touched Firm B&#39;s data partition. The trace shows every service hop and every database query, making cross-tenant access violations visible.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Security warning:&lt;/strong&gt; Traces themselves can leak sensitive information. &lt;a href=&quot;https://opentelemetry.io/docs/concepts/context-propagation/&quot;&gt;OpenTelemetry&#39;s documentation warns&lt;/a&gt; &lt;sup&gt;[2]&lt;/sup&gt; that internal trace IDs, span IDs, or baggage items might reveal information about internal architecture. Avoid putting sensitive data &mdash; user credentials, API keys, client names, case details &mdash; in span attributes or baggage. Trace the &lt;em&gt;structure&lt;/em&gt; of the request, not the &lt;em&gt;content&lt;/em&gt;.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Implementing Correlation IDs in Your Legal SaaS</h2>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Step 1: Generate at the Edge</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The correlation ID should be generated at the first point of entry &mdash; your API gateway or load balancer. If the incoming request already carries a correlation ID (from a client SDK or a frontend), validate its format but accept it. If not, generate a new UUID.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Step 2: Propagate Through Every Layer</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every inter-service call must forward the correlation ID. For HTTP calls, use a standard header like `X-Correlation-ID` or the W3C `traceparent` header. For message queues (Kafka, RabbitMQ, SQS), include it in message metadata. For database queries, include it in query comments or context fields.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Step 3: Include in Every Log Entry</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every log line in every service must include the correlation ID. This is typically implemented through middleware that extracts the ID from the incoming request and injects it into the logging context. [Structured logging](https://www.groundcover.com/learn/logging/distributed-tracing-logs) [5] &mdash; logging in JSON format with consistent field names &mdash; makes this searchable.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```json</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">{</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;timestamp&quot;: &quot;2026-05-18T14:32:07Z&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;level&quot;: &quot;info&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;correlation_id&quot;: &quot;7f3a2b91-4e5c-4d2a-9f1b-3c8d7e6f5a4b&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;trace_id&quot;: &quot;4bf92f3577b34da6a3ce929d0e0e4736&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;span_id&quot;: &quot;00f067aa0ba902b7&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;service&quot;: &quot;document-parser&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;message&quot;: &quot;PDF extraction complete&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;document_id&quot;: &quot;doc_8821&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;pages&quot;: 200,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;duration_ms&quot;: 3400</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">}</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Step 4: Connect to Your Alerting</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Correlating traces with logs and metrics](https://docs.datadoghq.com/opentelemetry/correlate/logs_and_traces/) [6] through shared identifiers creates a unified observability stack. When an alert fires &mdash; high error rate, unusual latency, failed authentication spike &mdash; you can drill directly from the alert to the affected traces to the individual log entries. No more guessing which log file to grep.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Sampling Strategies &mdash; You Cannot Trace Everything</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a high-throughput legal SaaS platform processing thousands of document reviews per hour, tracing every single request generates enormous volumes of data. [Sampling strategies](https://last9.io/blog/correlation-id-vs-trace-id/) [7] balance observability with cost:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Strategy | How It Works | Best For |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|-------------|----------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Head-based</strong> | Decide at request start whether to trace (e.g., 10% of requests) | Steady-state monitoring |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Tail-based</strong> | Trace everything, but only keep traces that meet criteria (errors, high latency) | Incident investigation |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Priority-based</strong> | Always trace requests from specific users, endpoints, or tenants | VIP clients, admin operations |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, always trace: authentication failures, admin operations, cross-tenant queries, and AI generation requests (these connect to the provenance chains from Episode 43). Sample everything else based on volume.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Connecting Tracing to Your Security Posture</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Distributed tracing integrates with your existing security infrastructure. Feed trace data into your SIEM (Security Information and Event Management &mdash; the system that aggregates security logs and alerts, introduced in [Episode 7](/lessons/ep07/)) for correlation with other security signals. [Cross-signal correlation](https://oneuptime.com/blog/post/2026-02-06-opentelemetry-signal-correlation-traces-logs-metrics/view) [8] &mdash; linking traces with metrics (like CPU spikes) and logs (like error messages) &mdash; gives you the most complete picture of what happened and why.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The provenance chains from Episode 43 and the correlation IDs from this episode are complementary. Provenance records <em>what</em> an AI system produced and from what inputs. Correlation IDs trace <em>how</em> the request moved through your system. Together, they give you complete accountability &mdash; from the user&#39;s click to the AI&#39;s output and everything in between.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Correlation IDs and distributed tracing are not DevOps luxuries. They are security infrastructure. Without them, incident investigation is guesswork, anomaly detection is impossible, and proving what happened to a regulator requires stitching together fragments from a dozen separate log files. Build them in from the start.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we move to Module 10 &mdash; Infrastructure and Deployment. We&#39;ll start with Docker security and container hardening: what containers actually are, why &quot;a container is not a security boundary,&quot; and how to configure them so they&#39;re at least a useful speed bump.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>[Correlation IDs &mdash; Microsoft Engineering Fundamentals Playbook](https://microsoft.github.io/code-with-engineering-playbook/observability/correlation-id/)</li>
+        <li>[Context Propagation &mdash; OpenTelemetry](https://opentelemetry.io/docs/concepts/context-propagation/)</li>
+        <li>[Trace Correlation for Root Cause Analysis &mdash; OneUptime](https://oneuptime.com/blog/post/2026-02-06-trace-correlation-root-cause-analysis/view)</li>
+        <li>[Improving Platform Observability with Distributed Tracing &mdash; JAVAPRO](https://javapro.io/2025/09/22/improving-platform-observability-with-distributed-tracing-and-opentelemetry/)</li>
+        <li>[Distributed Tracing Logs: How They Work &mdash; Groundcover](https://www.groundcover.com/learn/logging/distributed-tracing-logs)</li>
+        <li>[Correlate OpenTelemetry Traces and Logs &mdash; Datadog](https://docs.datadoghq.com/opentelemetry/correlate/logs_and_traces/)</li>
+        <li>[Trace ID vs Correlation ID &mdash; Last9](https://last9.io/blog/correlation-id-vs-trace-id/)</li>
+        <li>[OpenTelemetry Signal Correlation &mdash; OneUptime](https://oneuptime.com/blog/post/2026-02-06-opentelemetry-signal-correlation-traces-logs-metrics/view)</li>
+        <li>[Observability Beyond Monitoring: OpenTelemetry &mdash; Java Code Geeks](https://www.javacodegeeks.com/2026/02/observability-beyond-monitoring-opentelemetry-and-distributed-tracing.html)</li>
+        <li>[AI Dial Core &mdash; Correlation IDs Delivery (GitHub Issue)](https://github.com/epam/ai-dial-core/issues/1253)</li>
+    </ul>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 44 &mdash; correlation IDs and distributed tracing. This sounds like it might get deep into the weeds, Alice. Break it down for me.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Let me set the scene. A lawyer using your legal SaaS platform clicks &quot;Generate Summary&quot; on a 200-page disclosure bundle. The spinner runs. Then an error &mdash; &quot;Something went wrong. Please try again.&quot; The lawyer contacts support. Your team opens the logs. The problem is, that single click triggered activity across six different services &mdash; the API gateway, the authentication service, the document parser, the AI engine, the billing service, and the audit logger. Six services, six separate log files. Which log entries belong to this particular request?&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That&#39;s like looking at six different filing cabinets for documents related to one matter, except none of them have the same case number.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And that&#39;s the problem a correlation ID solves. It&#39;s a unique identifier &mdash; think of it as a case reference number &mdash; that gets created when a request first enters your system and then travels with that request through every single service it touches. Every log entry, every service call, every database query includes this ID. When something goes wrong, you search for that one ID and you instantly see the complete journey of the request across your entire platform.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So it&#39;s generated once and just... passed along?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s it. Your API gateway &mdash; the front door of your system &mdash; either receives one from the client or generates a fresh one. Then every time one service calls another, it includes the correlation ID in the request header. Every service writes the ID into its logs. One thread connecting everything.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Okay, so that&#39;s correlation IDs. What&#39;s distributed tracing? Is that different?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It builds on top of it. A correlation ID tells you which log entries belong together. Distributed tracing goes further &mdash; it shows you the structure, the timing, and the parent-child relationships of every operation within the request. Think of the difference between knowing which pages of a case file relate to the same matter versus having a full timeline of events with causal links between them. A trace shows you: this service called that service, which took 3 seconds, then called this other service, which took 11 seconds. You can see the shape of the request &mdash; where it went, in what order, and where the time was spent.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. So if I&#39;m looking at that failed summary request, the trace would show me that the document parser took 3 seconds, the AI engine took 11 seconds, and then timed out?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. You&#39;d see each step as a horizontal bar on a timeline &mdash; that&#39;s called a trace waterfall. And you&#39;d immediately see that the AI inference was the bottleneck. No guessing, no correlating timestamps across different log files, no hoping the clocks are in sync.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And the industry standard for this is OpenTelemetry, right? I&#39;ve heard the name.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;OpenTelemetry is the dominant open-source framework. It gives you a standardised way to instrument your applications &mdash; meaning you add hooks that automatically collect trace data &mdash; and it works with any backend. Jaeger, Datadog, Grafana, AWS X-Ray. The clever part is context propagation. When Service A calls Service B over HTTP, OpenTelemetry automatically includes the trace context in a header. The receiving service picks it up, creates a child span &mdash; that&#39;s the name for one individual operation within the trace &mdash; and continues the chain. You don&#39;t have to manually wire this up for every call.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that sounds manageable. But this is a security podcast, not a DevOps podcast. What&#39;s the security angle here?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; This is where most teams miss the point. They think tracing is only for performance debugging. But traces are one of the most powerful security tools you can deploy. First &mdash; incident reconstruction. When you have a security incident &mdash; an injection attempt, unauthorised data access, a privilege escalation &mdash; the trace shows you exactly what happened. Which service received the malicious input, where it propagated, which downstream services were affected. Without traces, you&#39;re stitching together fragments from a dozen log files.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What about detecting attacks in the first place?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the second use. Traces establish baseline patterns. A document review request normally touches four services. If one suddenly touches eight &mdash; including the admin API &mdash; that&#39;s an anomaly. You can build automated detection rules on trace patterns, not just on individual log entries. Third, for multi-tenant platforms &mdash; where multiple law firms share the same infrastructure &mdash; traces can verify that a request from Firm A never touched Firm B&#39;s data partition. The trace shows every service hop and every database query.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. But here&#39;s a concern &mdash; doesn&#39;t all this tracing data itself become a security risk? You&#39;re recording the path of every request.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Good instinct. Yes. OpenTelemetry&#39;s own documentation warns about this. Internal trace data can reveal your architecture &mdash; service names, dependencies, database structure. And if developers accidentally put sensitive data in span attributes &mdash; client names, case details, authentication tokens &mdash; then the tracing backend becomes a high-value target. The rule is: trace the structure of the request, not the content. Record that a database query ran and took 45 milliseconds. Don&#39;t record the query itself or the data it returned.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Makes sense. One practical question &mdash; can you trace everything? Doesn&#39;t this generate massive amounts of data?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It does. And you don&#39;t want to trace every single request in a high-volume system &mdash; that&#39;s expensive and mostly redundant. Sampling strategies help. Head-based sampling decides at the start &mdash; trace ten percent of requests. Tail-based sampling traces everything but only keeps traces that meet certain criteria, like errors or unusually high latency. And priority-based sampling always traces certain categories &mdash; admin operations, authentication failures, AI generation requests. For legal SaaS, my recommendation is: always trace security-relevant events and AI generation. Sample the rest.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, and that connects to the provenance chains from last episode, right? The AI generation traces feed into the provenance record?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;They&#39;re complementary. Provenance records what the AI produced and from which inputs &mdash; model version, source documents, retrieval results. The correlation ID and trace show how the request moved through your system to get to that generation step. Together, you have complete accountability. From the lawyer&#39;s click, through authentication, through document parsing, through AI inference, to the final output. Every step documented, every step traceable.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And when a regulator asks &quot;what happened to this client&#39;s document&quot; &mdash; you can answer definitively.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Down to the millisecond. That&#39;s the promise. The practical advice is: implement correlation IDs first &mdash; they&#39;re simple and immediately valuable. Generate a UUID at your API gateway, propagate it through headers, include it in every log line. Then add OpenTelemetry for full distributed tracing. The instrumentation is mostly automatic for common frameworks. The security value comes from connecting traces to your alerting and your SIEM &mdash; the security information system we covered in Episode 7 &mdash; so anomalous patterns trigger investigation, not just performance dashboards.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Good breakdown. Next episode &mdash; we start Module 10, Infrastructure and Deployment. Docker security and container hardening. What containers are, why they&#39;re not the security boundary people think they are, and how to lock them down.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-43-provenance-chains-for-ai-outputs.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 43 &mdash; Provenance Chains for AI Outputs</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-45-docker-security-and-container-hardening.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 45 &mdash; Docker Security and Container Hardening</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

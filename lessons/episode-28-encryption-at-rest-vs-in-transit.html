@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 28 &mdash; Encryption at Rest vs. in Transit &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 28 &middot; Module 7 &middot; Data Protection</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Encryption at Rest vs. in Transit</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 9:57 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-28-encryption-at-rest-vs-in-transit.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">9:57</span>
+                <span>9:57</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-28-encryption-at-rest-vs-in-transit.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Data exists in two states: at rest (stored on a disk, in a database, on a backup tape) and in transit (moving between your browser and a server, between microservices, between data centres). Each state faces a different threat: You need both. Encrypting data in transit without encrypting it at rest means a stolen database backup exposes everything in plaintext. Encrypting at rest without encrypting in transit means an attacker on the network can read data as it flows between services. For legal </p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 28: Encryption at Rest vs. in Transit</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Two States of Data, Two Threats</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Data exists in two states: at rest (stored on a disk, in a database, on a backup tape) and in transit (moving between your browser and a server, between microservices, between data centres). Each state faces a different threat:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Data at rest</strong> is vulnerable to physical theft (stolen laptop, decommissioned hard drive), unauthorized database access, and backup exposure</li>
+        <li><strong class="text-ink">Data in transit</strong> is vulnerable to eavesdropping, man-in-the-middle attacks, and network interception</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">You need both. Encrypting data in transit without encrypting it at rest means a stolen database backup exposes everything in plaintext. Encrypting at rest without encrypting in transit means an attacker on the network can read data as it flows between services. For legal SaaS platforms handling privileged client communications, both are non-negotiable.[^1]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Symmetric vs. Asymmetric Encryption</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Before diving into implementation, two fundamental encryption approaches &mdash; both referenced throughout this series:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Type | How It Works | Speed | Use Case |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------|-------------|-------|----------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Symmetric</strong> | Same key encrypts and decrypts. AES-256 is the standard | Fast &mdash; suitable for bulk data | Encrypting database records, files, backups |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Asymmetric</strong> | Different keys for encryption (public key) and decryption (private key). RSA, ECDSA | Slow &mdash; computationally expensive | Key exchange, digital signatures, TLS handshakes |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In practice, most systems use both: asymmetric encryption to securely exchange a symmetric key, then symmetric encryption for the actual data. This is exactly how TLS works, as we covered in [Episode 13](../ep13/article.md).[^2]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">AES-256</strong> (Advanced Encryption Standard with 256-bit keys) is the industry standard for symmetric encryption. NIST approved it for protecting classified information up to the Secret level. No successful attack against AES-256&#39;s core algorithm has ever been demonstrated in over two decades of cryptographic analysis.[^3]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Encryption at Rest</h2>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Transparent Data Encryption (TDE)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The simplest form of encryption at rest is <strong class="text-ink">Transparent Data Encryption</strong> &mdash; encryption handled by the database engine itself, invisible to the application. PostgreSQL, MySQL, SQL Server, and all major cloud databases support TDE:[^4]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Database | TDE Support |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">AWS RDS / Aurora</strong> | Enabled by default since 2022. AES-256 using AWS KMS keys |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Azure SQL</strong> | Enabled by default. AES-256 with service-managed or customer-managed keys |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Google Cloud SQL</strong> | Enabled by default. AES-256 with Google-managed or customer-managed keys |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">PostgreSQL (self-hosted)</strong> | Via `pgcrypto` extension or filesystem-level encryption |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">TDE encrypts the entire database at the storage level &mdash; data files, transaction logs, and backups are all encrypted on disk. When the database engine reads data, it decrypts it transparently. The application code is completely unaware that encryption exists.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Limitation:</strong> TDE protects against physical theft of storage media and unauthorized file system access. It does <strong class="text-ink">not</strong> protect against an attacker who has valid database credentials &mdash; they query the database through the normal interface, and TDE decrypts the data for them automatically. TDE is a floor, not a ceiling.[^5]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Application-Layer Encryption</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For stronger protection, sensitive fields can be encrypted at the <strong class="text-ink">application layer</strong> before they reach the database. The database stores ciphertext &mdash; encrypted data that is meaningless without the encryption key:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Client communication stored as:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AES-256-GCM(key, &quot;Privileged strategy discussion: recommend settling for...&quot;)</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">→ stored in database as: &quot;xK7mQ2p9bR4...&quot; (ciphertext)</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With application-layer encryption, even a database administrator with full access sees only ciphertext. The decryption key never exists in the database &mdash; it&#39;s held in a separate key management system.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tradeoff:</strong> Application-layer encryption breaks database features that need to read the plaintext &mdash; full-text search, sorting, range queries, and indexing on encrypted fields. For legal SaaS, this means you may need a separate, encrypted search index (like we discussed in [Episode 25](../ep25/article.md) for ethical walls) or selective encryption that protects the most sensitive fields while leaving searchable metadata unencrypted.[^6]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Envelope Encryption: The Key Management Pattern</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The fundamental question with encryption at rest is: where do you keep the key? If the encryption key is stored next to the encrypted data &mdash; in the same database, on the same server &mdash; then stealing the server gives the attacker both the lock and the key. This is security theatre.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Envelope encryption</strong> solves this by creating a key hierarchy:[^7]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Master Key (KEK &mdash; Key Encryption Key)</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── stored in a Hardware Security Module (HSM) or KMS</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── never leaves the HSM / KMS</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── encrypts/decrypts Data Encryption Keys</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Data Encryption Key (DEK)</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── unique per record, per table, or per tenant</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── encrypts the actual data</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── stored alongside the data &mdash; but encrypted with the Master Key</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The flow:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>To encrypt data: generate a new DEK → encrypt the data with the DEK → encrypt the DEK with the Master Key → store the encrypted DEK alongside the encrypted data</li>
+        <li>To decrypt data: retrieve the encrypted DEK → send it to the KMS to decrypt using the Master Key → use the decrypted DEK to decrypt the data → discard the DEK from memory</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The Master Key never leaves the hardware security module. The DEK is only in memory briefly during encryption/decryption operations. Even if an attacker steals the entire database &mdash; encrypted data and encrypted DEKs &mdash; they cannot decrypt anything without access to the KMS.[^8]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">AWS KMS</strong>, <strong class="text-ink">Google Cloud KMS</strong>, and <strong class="text-ink">Azure Key Vault</strong> all implement this pattern. They manage the master keys in FIPS 140-2 Level 3 certified HSMs and provide APIs for envelope encryption operations. For legal SaaS on any major cloud provider, there is no reason to build your own key management &mdash; use the provider&#39;s KMS.[^8]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Encryption in Transit</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered TLS in depth in [Episode 13](../ep13/article.md). The key points for this discussion:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Requirement | Standard |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------------|----------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Minimum TLS version</strong> | TLS 1.2 (NIST SP 800-52 Rev. 2). TLS 1.3 preferred |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Cipher suites</strong> | AES-256-GCM with ECDHE key exchange for forward secrecy |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Certificate management</strong> | Automated via Let&#39;s Encrypt / ACME protocol |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Internal traffic</strong> | mTLS between microservices (covered in [Episode 15](../ep15/article.md)) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform, encryption in transit covers:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Browser to server:</strong> HTTPS (TLS) for all client-facing traffic &mdash; no exceptions, no mixed content</li>
+        <li><strong class="text-ink">Server to database:</strong> TLS-encrypted database connections. Most cloud databases enforce this by default</li>
+        <li><strong class="text-ink">Service to service:</strong> mTLS between microservices, as covered in [Episode 15](../ep15/article.md)</li>
+        <li><strong class="text-ink">Server to external APIs:</strong> TLS for all outbound connections (e-filing systems, court APIs, document services)</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Callout: Don&#39;t forget internal traffic.</strong> Many teams encrypt browser-to-server traffic but leave internal service-to-service communication unencrypted. In a zero-trust architecture ([Episode 26](../ep26/article.md)), all traffic is encrypted &mdash; there is no &quot;trusted internal network.&quot;[^9]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Requirements</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Multiple regulatory frameworks mandate encryption for legal technology:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Regulation | Encryption Requirement |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|----------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">ABA Model Rule 1.6(c)</strong> | &quot;Reasonable efforts&quot; to prevent unauthorised access &mdash; encryption is increasingly the expected standard |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">GDPR Article 32</strong> | Encryption listed as an appropriate technical measure for data protection |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">HIPAA Security Rule</strong> | Encryption required for ePHI (electronic protected health information). AES-256 minimum. NIST SP 800-111 for at rest, SP 800-52 for in transit |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SOC 2 Type II</strong> | Encryption in transit and at rest required for Trust Services Criteria CC6.1 and CC6.7 |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">PCI DSS 4.0</strong> | Encryption of cardholder data in transit and at rest. AES-256 or equivalent |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Singapore PDPA</strong> | Encryption recommended as a reasonable security arrangement under Section 24 |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS specifically, the convergence is clear: every framework your clients care about requires encryption. The question is not whether to encrypt, but how thoroughly.[^10]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Performance Impact</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A common concern is that encryption adds latency. In practice:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Operation | Performance Impact |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|-------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">TLS handshake</strong> | ~1-2ms with TLS 1.3 (one round trip). Amortised across session &mdash; negligible |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">TDE (database)</strong> | 1-5% CPU overhead on modern hardware with AES-NI instruction support. All major cloud instances include AES-NI |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Application-layer encryption</strong> | Per-field AES-256-GCM: microseconds per operation. Negligible for individual records |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Envelope encryption</strong> | One KMS API call per decrypt operation (~5-20ms for network round trip). Mitigated by caching DEKs in memory for short periods |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern CPUs include dedicated hardware instructions for AES encryption (Intel AES-NI, ARM AES extensions). On a server with AES-NI, TDE is essentially free &mdash; the CPU can encrypt and decrypt at memory speed. The only non-trivial cost is the KMS API call for envelope encryption, which can be mitigated by caching decrypted DEKs in memory with a short TTL.[^11]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">When encryption costs:</strong> The main performance concern is not CPU but searchability. Application-layer encryption of database fields eliminates the ability to query, sort, or index those fields at the database level. For legal SaaS, this means careful architectural decisions about which fields to encrypt at the application layer (client names, communication content, strategy notes) versus which to protect only at the TDE level (timestamps, matter IDs, status flags).[^6]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 29 covers <strong class="text-ink">Key Management and Rotation</strong> &mdash; the operational practices that determine whether your encryption is actually secure, including key hierarchies, rotation strategies, and the disaster recovery question: &quot;what if we lose the key?&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: Censinet, [Encryption at Rest vs. Encryption in Transit: Differences](https://censinet.com/perspectives/encryption-at-rest-vs-encryption-in-transit-differences) &mdash; comprehensive comparison.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Kiteworks, [Beyond AES-256 Encryption: Multi-Layer Protection](https://www.kiteworks.com/secure-file-sharing/beyond-aes-256-encryption-multi-layer-protection/) &mdash; symmetric and asymmetric encryption in practice.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: NIST, [Advanced Encryption Standard (AES)](https://csrc.nist.gov/publications/detail/fips/197/final) &mdash; FIPS 197, the AES specification.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Microsoft, [Azure Data Encryption at Rest](https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-atrest) &mdash; TDE implementation on Azure.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Google Cloud, [Default Encryption at Rest](https://docs.google.com/docs/security/encryption/default-encryption) &mdash; Google&#39;s encryption-by-default architecture.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Netwrix, [Securing Data at Rest, in Use, and in Motion](https://netwrix.com/en/resources/blog/secure-data-at-rest-in-use-in-motion/) &mdash; comprehensive data protection guide.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: AWS, [AWS KMS Cryptographic Details](https://docs.aws.amazon.com/kms/latest/cryptographic-details/kms-crypto-details.pdf) &mdash; envelope encryption and key hierarchy architecture.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: AWS, [AWS KMS Key Hierarchy](https://docs.aws.amazon.com/kms/latest/cryptographic-details/key-hierarchy.html) &mdash; master keys, data keys, and HSM-backed storage.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: NIST, [SP 800-52 Rev. 2: Guidelines for TLS Implementations](https://csrc.nist.gov/publications/detail/sp/800-52/rev-2/final) &mdash; TLS version and cipher suite requirements.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: FDG Web, [NIST Encryption Standards for PHI](https://www.fdgweb.com/what-are-the-nist-encryption-standards-for-phi-on-websites-and-web-applications/) &mdash; NIST standards mapped to regulatory requirements.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: FileCloud, [Data at Rest vs. in Transit: Encryption &amp; Security Guide](https://www.filecloud.com/blog/data-at-rest-vs-transit/) &mdash; performance considerations and implementation guidance.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^12]: NIST, [SP 800-111: Guide to Storage Encryption Technologies for End User Devices](https://csrc.nist.gov/publications/detail/sp/800-111/final) &mdash; encryption at rest standard.</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Encryption at Rest vs. in Transit</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 28 &mdash; encryption at rest versus encryption in transit. Alice, we&#39;ve talked about TLS back in Episode 13. Now we&#39;re doing the full picture on data encryption. Where do we start?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;With the basic question: where is your data, and who could steal it? Data exists in two states. At rest &mdash; sitting on a hard drive, in a database, on a backup tape. And in transit &mdash; moving between the user&#39;s browser and your server, between your microservices, between your application and the database. Each state has different threats. Data at rest is vulnerable to physical theft &mdash; a stolen laptop, a decommissioned drive that wasn&#39;t wiped, an attacker who gets file system access to your database server. Data in transit is vulnerable to eavesdropping &mdash; someone on the network intercepting traffic between your services.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And you need encryption for both?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Both. No exceptions. If you encrypt data in transit but not at rest, a stolen database backup gives the attacker everything in plaintext. If you encrypt at rest but not in transit, someone intercepting network traffic between your services reads data as it flows. For a legal SaaS platform storing privileged client communications, leaving either gap is indefensible &mdash; literally, in the regulatory sense.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Let&#39;s start with encryption at rest. What&#39;s the simplest way to do it?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Transparent data encryption &mdash; TDE. This is encryption handled by the database engine itself, completely invisible to your application. Every major cloud database &mdash; AWS RDS, Azure SQL, Google Cloud SQL &mdash; has TDE enabled by default. It uses AES-256, which is the industry standard symmetric encryption algorithm. NIST approved AES for protecting classified information. No successful attack against it has been demonstrated in over twenty years of analysis.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. So the database encrypts everything on disk, and decrypts it when you query?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Your application code doesn&#39;t change at all. The database handles encryption and decryption transparently. Data files, transaction logs, backups &mdash; all encrypted at the storage level. And the performance impact is negligible &mdash; modern CPUs have dedicated hardware instructions for AES encryption. On a server with Intel AES-NI, TDE adds maybe one to five percent CPU overhead. Basically free.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. But what does TDE actually protect against?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Physical theft of storage media and unauthorised file system access. If someone walks off with a hard drive or gets access to the raw database files, they see encrypted bytes. But &mdash; and this is the important limitation &mdash; TDE does not protect against someone who has valid database credentials. They query the database through the normal interface, and the database decrypts the data for them automatically. TDE is a floor, not a ceiling.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So what&#39;s the ceiling?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Application-layer encryption. Instead of letting the database handle encryption, your application encrypts sensitive fields before they reach the database. The database stores ciphertext &mdash; encrypted data that&#39;s meaningless without the key. Even a database administrator with full access sees only gibberish. The decryption key lives in a separate system &mdash; a key management service &mdash; that the database never has access to.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That sounds stronger. What&#39;s the tradeoff?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Searchability. If a field is encrypted at the application layer, the database can&#39;t query it, sort by it, or index it. You can&#39;t do a full-text search across encrypted client communications. You can&#39;t sort by encrypted client names. So you have to make architectural choices about which fields get application-layer encryption &mdash; privileged communications, litigation strategy notes, confidential financial data &mdash; and which get TDE-only protection &mdash; timestamps, matter IDs, status flags that the database needs to query against.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. That&#39;s a real design decision. Now, where does the encryption key live? That seems like the critical question.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is the critical question. If the key is stored next to the data it protects &mdash; in the same database, on the same server &mdash; then stealing the server gives the attacker both the lock and the key. That&#39;s security theatre, not security. The solution is called envelope encryption. There&#39;s a hierarchy of keys. At the top is the Master Key &mdash; also called the Key Encryption Key. This lives in a Hardware Security Module, an HSM &mdash; a tamper-resistant piece of hardware specifically designed to store cryptographic keys. The master key never leaves the HSM.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And below that?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Below that are Data Encryption Keys &mdash; DEKs. Each one is unique &mdash; per record, per table, or per tenant. The DEK encrypts the actual data. Then the DEK itself is encrypted using the Master Key. The encrypted DEK is stored alongside the encrypted data. To decrypt, you send the encrypted DEK to the key management service, which decrypts it using the Master Key inside the HSM, gives you the plaintext DEK, and you use that to decrypt the data. Then you discard the DEK from memory.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So even if an attacker steals the entire database &mdash; the encrypted data and the encrypted DEKs &mdash; they can&#39;t decrypt anything without access to the KMS.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And AWS KMS, Google Cloud KMS, and Azure Key Vault all implement this pattern. The master keys live in certified hardware security modules. For legal SaaS on any major cloud provider, there&#39;s no reason to build your own key management. Use the provider&#39;s KMS. It&#39;s one of the few areas in security where the cloud provider&#39;s solution is genuinely better than anything you&#39;d build yourself.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Let&#39;s switch to encryption in transit. We covered TLS in Episode 13. What&#39;s the summary?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Four requirements. First, TLS 1.2 as the minimum version &mdash; TLS 1.3 preferred. Second, strong cipher suites &mdash; AES-256-GCM with ECDHE key exchange for forward secrecy. Third, automated certificate management &mdash; Let&#39;s Encrypt and the ACME protocol make this free and automatic. Fourth &mdash; and this is where teams slip up &mdash; encrypt internal traffic too. Browser to server is obvious. But service-to-service communication within your infrastructure needs mTLS &mdash; mutual TLS, which we covered in Episode 15. In a zero-trust architecture, which we covered last episode, there is no trusted internal network.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. No &quot;we&#39;re behind the firewall so it&#39;s fine.&quot;&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Every connection encrypted. Browser to load balancer. Load balancer to API server. API server to database. API server to search service. If it crosses a network boundary &mdash; any network boundary &mdash; it&#39;s encrypted.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What about the regulatory side? Is encryption legally required?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Every framework your clients care about requires it. ABA Model Rule 1.6(c) demands &quot;reasonable efforts&quot; to prevent unauthorised access &mdash; encryption is increasingly the expected standard for &quot;reasonable.&quot; GDPR Article 32 lists encryption as an appropriate technical measure. HIPAA requires encryption for electronic health information. SOC 2 requires encryption for Trust Services Criteria. PCI DSS requires it for cardholder data. Singapore&#39;s PDPA recommends it. The convergence is total &mdash; the question isn&#39;t whether to encrypt, it&#39;s how thoroughly.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Quick summary for builders. TDE as the baseline &mdash; it&#39;s basically free on cloud databases. Application-layer encryption for the most sensitive fields. Envelope encryption to keep keys separate from data. TLS everywhere, including internal service traffic. And use your cloud provider&#39;s KMS &mdash; don&#39;t build your own.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And one more thing. The performance concerns that stopped people from encrypting ten years ago are mostly gone. Modern hardware has AES built into the CPU. TLS 1.3 handshakes take one to two milliseconds. The only non-trivial cost is the KMS API call for envelope encryption &mdash; about five to twenty milliseconds &mdash; and you can cache decrypted keys in memory briefly to amortise that. Encryption is no longer expensive. Not encrypting is.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Key Management and Rotation. How you actually manage those encryption keys over time, including the scary question: what happens if you lose the key?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-27-multitenant-data-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 27 &mdash; Multi-Tenant Data Isolation</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-29-key-management-and-rotation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 29 &mdash; Key Management and Rotation</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

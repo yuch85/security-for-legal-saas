@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 41 &mdash; Audit Log Design &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 41 &middot; Module 9 &middot; Audit &amp; Logging</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Audit Log Design</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 8:49 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-41-audit-log-design.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">8:49</span>
+                <span>8:49</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-41-audit-log-design.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Welcome to Module 9 &mdash; Audit, Logging, and Provenance. Every security control we&#39;ve discussed across 40 episodes depends on one thing: a reliable record of what happened. If you can&#39;t prove a human reviewed that AI-generated filing (Episode 37), if you can&#39;t show that a prompt was redacted before reaching the cloud (Episode 39), if you can&#39;t demonstrate that API key access was properly scoped (Episode 38) &mdash; then those controls exist only in theory. This episode is about designing audit logs that </p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 41: Audit Log Design</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">An Audit Log Is Not a Debug Log</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Welcome to Module 9 &mdash; Audit, Logging, and Provenance. Every security control we&#39;ve discussed across 40 episodes depends on one thing: a reliable record of what happened. If you can&#39;t prove a human reviewed that AI-generated filing (Episode 37), if you can&#39;t show that a prompt was redacted before reaching the cloud (Episode 39), if you can&#39;t demonstrate that API key access was properly scoped (Episode 38) &mdash; then those controls exist only in theory.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This episode is about designing audit logs that serve their purpose: telling you who did what, when, from where, and to which resource. Done well, audit logs are the evidence trail that compliance officers, regulators, courts, and incident responders rely on. Done poorly, they are noise.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Audit Logs vs. Application Logs vs. Debug Logs</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The first design decision is understanding that these are three different things with different purposes, retention requirements, and access controls.[^1]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Log Type | Purpose | Audience | Retention | Sensitivity |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|---------|----------|-----------|-------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Debug logs</strong> | Troubleshoot code behaviour | Developers | Days to weeks | Low (may contain stack traces) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Application logs</strong> | Track system operations (requests, errors, performance) | DevOps, SRE | Weeks to months | Medium |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Audit logs</strong> | Record security-relevant human and system actions | Compliance, legal, security, courts | Years (often 7+) | High (who did what) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mixing these together &mdash; writing audit events to the same log file as debug output &mdash; is a common and dangerous mistake. Debug logs get rotated, truncated, or deleted for disk space. Application logs get filtered for noise. Audit logs must be preserved intact, with controlled access, for the duration required by your regulatory obligations.[^2]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">NIST SP 800-92</strong> (Guide to Computer Security Log Management) establishes the federal standard for log management: &quot;Organizations should establish policies and procedures for log management because they ensure a consistent approach throughout the organization as well as ensuring that laws and regulatory requirements are being met.&quot;[^3]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What to Log: The Six W&#39;s</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every audit log entry should answer six questions:[^4]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Field | Question | Example |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|----------|---------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Who</strong> | Which authenticated identity performed the action? | `user: &quot;sarah.chen@firm.com&quot;` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">What</strong> | What action was performed? | `action: &quot;document.classify&quot;` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">When</strong> | When did the action occur? | `timestamp: &quot;2026-05-18T14:23:07.442Z&quot;` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Where</strong> | From what location/device/IP? | `source_ip: &quot;203.0.113.42&quot;, device_id: &quot;laptop-SC-2024&quot;` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Which</strong> | Which resource was affected? | `resource: &quot;matter/2026-0142/doc/brief-v3.docx&quot;` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Outcome</strong> | Did the action succeed or fail? | `outcome: &quot;success&quot;` or `outcome: &quot;denied: insufficient_permission&quot;` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, additional fields are critical:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Matter ID</strong>: Which client matter does this action relate to?</li>
+        <li><strong class="text-ink">AI involvement</strong>: Was AI used in this action? Which model, which version?</li>
+        <li><strong class="text-ink">Approval chain</strong>: For governed writes (EP37), who approved the action?</li>
+        <li><strong class="text-ink">Data classification</strong>: What sensitivity level was the affected data?</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Structured Logging: JSON, Not Plaintext</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Audit logs must be machine-parseable. Unstructured plaintext &mdash; `&quot;Sarah updated the document at 2:23 PM&quot;` &mdash; is usable by humans reading individual entries but useless for automated analysis, alerting, correlation, and legal discovery across millions of records.[^5]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Structured JSON logging with a consistent schema is the industry standard:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```json</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">{</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;timestamp&quot;: &quot;2026-05-18T14:23:07.442Z&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;event_type&quot;: &quot;document.classify&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;actor&quot;: {</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;user_id&quot;: &quot;sarah.chen@firm.com&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;role&quot;: &quot;associate&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;auth_method&quot;: &quot;sso_mfa&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">},</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;resource&quot;: {</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;type&quot;: &quot;document&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;id&quot;: &quot;doc-a3f2c1&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;matter_id&quot;: &quot;2026-0142&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;classification&quot;: &quot;attorney_client_privileged&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">},</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;action&quot;: {</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;type&quot;: &quot;classify&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;ai_assisted&quot;: true,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;model&quot;: &quot;privilege-classifier-v2.1&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;confidence&quot;: 0.94,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;human_approved&quot;: true,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;approver&quot;: &quot;james.wong@firm.com&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">},</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;outcome&quot;: &quot;success&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;source&quot;: {</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;ip&quot;: &quot;203.0.113.42&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;user_agent&quot;: &quot;Chrome/125.0&quot;,</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;session_id&quot;: &quot;sess-8f2a1b3c&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">}</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">}</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every field follows a consistent schema documented and versioned alongside your application. When the schema changes &mdash; new fields, renamed fields, changed types &mdash; the version number increments, and old entries remain readable under their original schema.[^6]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Log Integrity: Append-Only and Access-Controlled</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An audit log that can be edited is not an audit log &mdash; it is a story that can be rewritten. Integrity requires three properties:[^7]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Append-Only Storage</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Audit logs should be written to append-only storage. New entries can be added; existing entries cannot be modified or deleted. Options include:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Append-only file systems</strong> with immutable flags (`chattr +a` on Linux)</li>
+        <li><strong class="text-ink">Cloud object storage</strong> with object lock (S3 Object Lock, GCS retention policies)</li>
+        <li><strong class="text-ink">Write-once databases</strong> (append-only tables with no UPDATE or DELETE permissions)</li>
+        <li><strong class="text-ink">Dedicated ledger databases</strong> (AWS QLDB &mdash; covered in Episode 42)</li>
+    </ul>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Access Controls</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Who can read audit logs? Who can write to them? The answers should be different from who runs the application.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Role | Read | Write | Delete |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------|------|-------|--------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Application service account</strong> | No | Yes (append only) | No |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Developers</strong> | No (unless investigating with approval) | No | No |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Security team</strong> | Yes | No | No |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Compliance/Legal</strong> | Yes | No | No |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">System administrators</strong> | Controlled (audit of the audit) | No | No |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The principle: the people who could benefit from modifying audit logs (developers, system administrators) should not have the ability to do so. Separation of duties applies to log access the same way it applies to financial controls.[^8]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Tamper Detection</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Even with append-only storage and access controls, you need a mechanism to detect if tampering occurred &mdash; because controls can be bypassed. Hash chains (Episode 42) provide this. Each entry&#39;s integrity hash includes the previous entry&#39;s hash, creating a mathematical chain where any modification to any entry breaks the chain for all subsequent entries.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Admissibility: What Makes a Log Trustworthy Evidence</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In litigation, regulatory investigations, and e-discovery, audit logs may need to serve as evidence. For a log to be admissible and persuasive, it should demonstrate:[^9]</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Contemporaneous recording</strong>: Entries were created at or near the time of the event, not reconstructed later</li>
+        <li><strong class="text-ink">Systematic process</strong>: The logging system operates automatically and consistently, not at the discretion of individuals</li>
+        <li><strong class="text-ink">Integrity controls</strong>: Demonstrable protections against tampering (append-only, hash chains, access controls)</li>
+        <li><strong class="text-ink">Chain of custody</strong>: A documented trail of who had access to the logs and when</li>
+        <li><strong class="text-ink">Completeness</strong>: Evidence that the logging system captures all relevant events, not a selective subset</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key insight:</strong> Courts assess the reliability of digital evidence based on the controls surrounding its creation and preservation. A log that can be shown to be append-only, hash-chained, and access-controlled is substantially more persuasive than one stored in a regular database table that any administrator could modify.[^10]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What to Log in Legal SaaS: A Checklist</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Category | Events to Log |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|--------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Authentication</strong> | Login success/failure, MFA events, session creation/destruction, password changes |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Authorization</strong> | Permission grants/revocations, role changes, access denials |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data access</strong> | Document views, downloads, searches, exports (especially across matter boundaries) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Data modification</strong> | Document edits, classification changes, metadata updates |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">AI operations</strong> | Model invocations, prompt content (may need redaction), response summaries, confidence scores |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Governed writes</strong> | AI draft creation, human review events, approval/rejection with reviewer identity |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Administrative</strong> | User provisioning/deprovisioning, system configuration changes, key rotations |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Security events</strong> | Failed access attempts, anomalous patterns, privilege escalation attempts |</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Retention Requirements</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Framework | Minimum Retention |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-----------|------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SOC 2</strong> | 1 year minimum; varies by trust service criteria |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">HIPAA</strong> | 6 years from creation date |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">GDPR</strong> | As long as necessary for the purpose; must justify retention period |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">SEC Rule 17a-4</strong> | 6 years for broker-dealers (relevant for financial litigation support) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">ABA Model Rules</strong> | As long as the matter is active, plus jurisdictional record retention requirements |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">PCI DSS</strong> | 1 year immediately available; longer for investigations |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, a default retention of 7 years &mdash; aligned with the longest common regulatory requirement &mdash; is a reasonable starting point, with the ability to extend retention for specific matters under legal hold.[^11]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Common Mistakes</h2>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Logging too little</strong>: Capturing only errors, not successful operations. You need both &mdash; an access denial is interesting, but knowing *who successfully accessed what* is equally important for investigations.</li>
+        <li><strong class="text-ink">Logging too much</strong>: Including full document content in audit entries. Log the action and the resource identifier, not the resource itself. This keeps log volumes manageable and avoids creating a second copy of sensitive data in the log store.</li>
+        <li><strong class="text-ink">Inconsistent schemas</strong>: Different services logging in different formats. Establish a firm-wide audit log schema and enforce it.</li>
+        <li><strong class="text-ink">No log integrity</strong>: Storing audit logs in a regular database table that DBAs can modify. Use append-only storage.</li>
+        <li><strong class="text-ink">Mixing log types</strong>: Combining debug, application, and audit logs in the same stream. Separate them.</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 42 covers <strong class="text-ink">Hash-Chained Immutable Logs</strong> &mdash; the specific technique for making audit logs tamper-evident, ensuring that if anyone modifies a single entry, the tampering is mathematically detectable.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: Sonar, [Audit Logging Best Practices, Components &amp; Challenges](https://www.sonarsource.com/resources/library/audit-logging/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Fortra, [Audit Log Best Practices for Security &amp; Compliance](https://www.fortra.com/blog/audit-log-best-practices-security-compliance).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: NIST, [SP 800-92: Guide to Computer Security Log Management](https://csrc.nist.gov/pubs/sp/800/92/final).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: UC Berkeley Information Security Office, [Security Audit Logging Guideline](https://security.berkeley.edu/security-audit-logging-guideline).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Pangea, [Understanding Audit Logs: What It Is &amp; How to Build One](https://pangea.cloud/blog/audit-logs-what-why-and-how/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Orca Security, [Audit Logs: Complete Guide to Cloud Security Monitoring](https://orca.security/glossary/audit-logs/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: Mattermost, [Compliance by Design: 18 Tips to Implement Tamper-Proof Audit Logs](https://mattermost.com/blog/compliance-by-design-18-tips-to-implement-tamper-proof-audit-logs/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Kiteworks, [Audit Log: What Is an Audit Log, Audit Logs &amp; Audit Logging](https://www.kiteworks.com/regulatory-compliance/audit-log/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: CX Today, [How to Build AI Audit Trails That Stand Up to Regulatory Scrutiny](https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Huntress, [Audit Logs Explained: Security &amp; Compliance Simplified](https://www.huntress.com/cybersecurity-101/topic/what-is-an-audit-log).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: NIST, [SP 800-92 Rev. 1 (Draft): Cybersecurity Log Management Planning Guide](https://csrc.nist.gov/pubs/sp/800/92/r1/ipd).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 41 &mdash; and we&#39;re starting a new module. Module 9, Audit and Logging. Alice, we&#39;ve spent forty episodes building security controls. Now we&#39;re talking about proving those controls actually work?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. An audit log is how you answer the question: what happened? Not what the code did &mdash; that&#39;s a debug log. Not what the server handled &mdash; that&#39;s an application log. An audit log tells you what humans and systems did to your data. Who accessed this document. Who approved that AI-generated filing. Who changed a user&#39;s permissions. When, from where, and whether it succeeded or failed. And critically &mdash; audit logs can hold up in court. Debug logs can&#39;t.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So the first thing is separating these from your regular application logs?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the most important design decision, and the one most teams get wrong. Debug logs, application logs, and audit logs serve different purposes, have different audiences, and need different retention. Debug logs are for developers and last days to weeks. Application logs are for operations teams and last weeks to months. Audit logs are for compliance, legal, security, and potentially courts &mdash; and they need to last years. Seven years is a common default because it covers most regulatory requirements. If you&#39;re mixing all three into the same log file, your audit events get rotated out with your debug noise, and your evidence disappears.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What goes into an audit log entry? What&#39;s the minimum?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Six questions, every entry. Who &mdash; which authenticated user or system performed the action. What &mdash; what action was performed, like &quot;document.view&quot; or &quot;privilege.classify&quot; or &quot;user.create.&quot; When &mdash; a precise timestamp with timezone. Where &mdash; the IP address, device, session identifier. Which &mdash; which specific resource was affected, down to the document ID and matter number. And outcome &mdash; did the action succeed or fail, and if it failed, why.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. And for legal SaaS specifically, there are extra fields?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Several. Matter ID &mdash; which client matter does this action relate to, because you need to be able to pull all activity on a specific matter for e-discovery or compliance. AI involvement &mdash; was AI used, which model, which version. For the governed writes pattern from Episode 37, you need the full approval chain &mdash; who the AI drafted it for, who reviewed it, who approved it, and the specific version they approved. And data classification &mdash; was this a privileged document, a confidential document, or a public one.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. And I&#39;m guessing these need to be in a structured format, not just free text?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;JSON, with a consistent schema. Every audit event follows the same structure, documented and versioned. The reason is simple &mdash; you will eventually need to search across millions of entries. &quot;Show me every document Sarah Chen accessed in matter 2026-0142 between January and March&quot; is a query you can run against structured JSON. Against free-text log lines that say &quot;Sarah updated the document at 2:23 PM,&quot; you&#39;re doing string matching and praying.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Let&#39;s talk about integrity. If someone can edit the audit log, you don&#39;t really have an audit log.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Exactly. And this is where most systems fail. The audit log sits in a regular database table. The database administrator has full access. A developer with production access can run an UPDATE query. The moment someone can modify or delete entries, the entire log is suspect. An audit log must be append-only. New entries can be added. Existing entries cannot be modified or deleted. Period.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. How do you enforce that technically?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Several options. Append-only file systems &mdash; on Linux, you can set an immutable append flag on a file so that even root can only add to it, not modify existing content. Cloud object storage with object lock &mdash; Amazon S3 and Google Cloud Storage both support retention policies that prevent deletion. Write-once database tables where the application&#39;s service account has INSERT permissions but not UPDATE or DELETE. And dedicated ledger databases like AWS QLDB, which we&#39;ll cover in detail next episode.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And the access control around the logs matters too?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Separation of duties. The application writes to the log &mdash; it has append-only access. Developers should not be able to read audit logs during normal operations. The security team reads the logs for monitoring and investigation. Compliance and legal read the logs for regulatory purposes. And here&#39;s the key &mdash; the people who would benefit most from modifying audit logs are the ones who should have the least access. A system administrator who made an unauthorised change would want to delete the audit entry that recorded it. That&#39;s exactly why they can&#39;t have delete access.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. What about legal admissibility? You said these logs can hold up in court. What makes them admissible?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Five things. First, contemporaneous recording &mdash; entries were created at the time of the event, not reconstructed later. Timestamps prove this. Second, systematic process &mdash; the logging runs automatically and consistently, not at someone&#39;s discretion. Third, integrity controls &mdash; you can demonstrate the logs haven&#39;t been tampered with. Append-only storage, hash chains, access controls. Fourth, chain of custody &mdash; you can document who had access to the logs and when. And fifth, completeness &mdash; evidence that the system captures all relevant events, not just the ones someone chose to log.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. That &quot;completeness&quot; one is interesting. How do you prove you&#39;re logging everything?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It&#39;s the hardest one. You can demonstrate it through your schema documentation &mdash; &quot;here are the event types we capture, here is the code that generates each event type, here is our test coverage proving each event type is emitted.&quot; And you can point to the absence of gaps in the log &mdash; sequential identifiers, consistent timestamps with no unexplained jumps. It&#39;s not perfect proof, but it&#39;s substantially more persuasive than no documentation at all.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What are the biggest mistakes you see teams make with audit logs?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Five common ones. Logging too little &mdash; only capturing errors, not successful operations. Knowing that a document access was denied is useful, but knowing who successfully accessed a document is equally important. Logging too much &mdash; including full document content in audit entries. You want the action and the resource identifier, not a copy of the document itself. That bloats your logs and creates a second copy of sensitive data. Inconsistent schemas across services. Storing logs in a regular database that admins can modify. And the original sin &mdash; mixing debug, application, and audit logs in one stream.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. For someone building a legal SaaS product today, what&#39;s the minimum viable audit log?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Structured JSON entries with the six W&#39;s. Append-only storage &mdash; even just S3 with object lock is a solid start. Separate from your application and debug logs. Access controls that enforce separation of duties. A documented schema. And a retention policy of at least seven years. That gets you to compliance-ready. Next episode, we&#39;ll add hash chains to make it tamper-evident &mdash; which takes you from &quot;we believe the logs haven&#39;t been modified&quot; to &quot;we can mathematically prove it.&quot;&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Hash-Chained Immutable Logs. Making audit logs provably tamper-proof.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-40-local-vs-cloud-ai-security-boundaries.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 40 &mdash; Local vs. Cloud AI &mdash; Security Boundaries</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-42-hashchained-immutable-logs.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 42 &mdash; Hash-Chained Immutable Logs</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

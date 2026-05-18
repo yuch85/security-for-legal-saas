@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 54 &mdash; Incident Response Playbooks &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 54 &middot; Module 11 &middot; Monitoring &amp; Incident Response</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Incident Response Playbooks</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 9:29 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-54-incident-response-playbooks.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">9:29</span>
+                <span>9:29</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-54-incident-response-playbooks.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">The worst time to figure out what to do during a security incident is during the incident. Adrenaline is high, information is incomplete, and every minute of delay means more data exposed or more systems compromised. Incident response playbooks &mdash; pre-written, rehearsed procedures for specific types of security events &mdash; transform a chaotic scramble into a structured process. [NIST SP 800-61 Revision 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final), finalised in April 2025, represents the first m</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 54: Incident Response Playbooks</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Worst Time to Write Your Plan</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The worst time to figure out what to do during a security incident is during the incident. Adrenaline is high, information is incomplete, and every minute of delay means more data exposed or more systems compromised. Incident response playbooks &mdash; pre-written, rehearsed procedures for specific types of security events &mdash; transform a chaotic scramble into a structured process.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST SP 800-61 Revision 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final), finalised in April 2025, represents the first major update to NIST&#39;s incident response guidance since 2012. It restructures incident response activities around the [NIST Cybersecurity Framework 2.0](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf) six core functions (Govern, Identify, Protect, Detect, Respond, Recover), integrating incident response into broader risk management rather than treating it as a standalone process.[^1][^2]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform &mdash; where a breach means compromised attorney-client privileged communications, case strategy documents, and personally identifiable information &mdash; the response window is measured in minutes, not days.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Incident Classification: Severity Levels</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not every security event is a crisis. Classification determines the speed and scope of the response.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Severity | Criteria | Example | Response Time |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|----------|---------|---------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Critical (P1)</strong> | Active data exfiltration; compromised admin access; client data confirmed exposed | Attacker downloading case files via compromised admin account | Immediate. All-hands. |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">High (P2)</strong> | Confirmed compromise with potential data exposure; production system breach | Malware on application server; database credentials found on dark web | Within 1 hour |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Medium (P3)</strong> | Suspicious activity requiring investigation; no confirmed data exposure | Unusual login patterns; failed exploit attempts against known vulnerability | Within 4 hours |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Low (P4)</strong> | Minor policy violation; potential vulnerability requiring assessment | Developer committed an API key to a public repo; outdated dependency found | Within 24 hours |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The trigger for escalation must be objective, not subjective. &quot;This looks serious&quot; is not a classification criteria. &quot;Successful authentication from a country where we have no users, followed by API calls to the document export endpoint&quot; is a P1.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Incident Lifecycle</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">NIST SP 800-61r3 maps incident response to five phases, aligned with the CSF 2.0 Respond and Recover functions:[^1]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Detection and Analysis</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is where [Episode 53](../ep53/article.md)&#39;s monitoring pays off. The monitoring system generates an alert. The on-call responder triages: Is this a real incident or a false positive? What systems are affected? What data may be at risk?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Key actions:</strong></p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>Verify the alert using multiple data sources (don&#39;t act on a single log entry)</li>
+        <li>Determine the scope: which systems, which users, which data</li>
+        <li>Assign severity based on the classification table above</li>
+        <li>Begin an incident log &mdash; timestamp every action from this point forward</li>
+    </ul>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Containment</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Stop the bleeding without destroying evidence. Containment has two stages:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Short-term containment:</strong> Immediate actions to prevent further damage. Block the attacker&#39;s IP. Terminate compromised sessions. Disable compromised accounts. Isolate affected servers from the network.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Long-term containment:</strong> More surgical actions while you prepare for eradication. Apply temporary patches. Redirect traffic away from compromised systems. Set up enhanced monitoring on affected systems.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Evidence preservation is critical for legal SaaS.&lt;/strong&gt; Do not wipe or rebuild a compromised system before capturing forensic images. If client privileged data was exposed, you may need those forensic records for regulatory notifications, insurance claims, or litigation. Containment must preserve evidence, not destroy it.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Eradication</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Remove the cause of the incident. If malware was involved, clean or rebuild affected systems from known-good images. If credentials were stolen, rotate every affected credential &mdash; not just the ones you know about, but every credential the compromised system had access to (as we discussed in [Episode 50](../ep50/article.md) regarding workstation compromise). If a vulnerability was exploited, patch it.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">4. Recovery</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Restore systems to normal operation. Verify that the root cause has been eliminated. Monitor recovered systems with heightened scrutiny for days or weeks after recovery &mdash; attackers often leave secondary access paths (backdoors) that activate after the initial breach appears resolved.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">5. Post-Incident Learning</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Conduct a blameless retrospective within one week of the incident. Document: What happened? When was it detected? How long until containment? What worked? What didn&#39;t? What changes prevent recurrence? Update your playbooks based on lessons learned.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Playbook Templates for Legal SaaS</h2>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Data Breach Playbook</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Trigger:</strong> Confirmed or suspected unauthorised access to client data.</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Contain:</strong> Isolate affected systems. Terminate all sessions for compromised accounts. Block attacker access.</li>
+        <li><strong class="text-ink">Assess scope:</strong> Which clients&#39; data was accessed? What type of data &mdash; case documents, communications, PII?</li>
+        <li><strong class="text-ink">Preserve evidence:</strong> Forensic image of affected systems before any cleanup.</li>
+        <li><strong class="text-ink">Legal assessment:</strong> Engage legal counsel (internal or external) to determine notification obligations.</li>
+        <li><strong class="text-ink">Notification chain:</strong> Client notification, regulatory notification, law enforcement (if applicable).</li>
+        <li><strong class="text-ink">Remediate:</strong> Patch the vulnerability, rotate credentials, enhance monitoring.</li>
+        <li><strong class="text-ink">Post-incident:</strong> Retrospective, playbook update, client follow-up.</li>
+    </ul>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Compromised Credentials Playbook</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Trigger:</strong> Credentials found on dark web, successful login from impossible geography, or credential stuffing with confirmed account access.</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Force password reset</strong> for all affected accounts immediately.</li>
+        <li><strong class="text-ink">Terminate all active sessions</strong> for those accounts.</li>
+        <li><strong class="text-ink">Review audit logs</strong> for actions taken while the account was compromised.</li>
+        <li><strong class="text-ink">Check for persistence:</strong> Did the attacker create new accounts, modify permissions, or install API keys?</li>
+        <li><strong class="text-ink">Notify affected users</strong> with specific guidance on what to do.</li>
+        <li><strong class="text-ink">Review MFA status</strong> &mdash; if compromised accounts lacked MFA, enforce it platform-wide.</li>
+    </ul>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Insider Threat Playbook</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Trigger:</strong> Unusual data access patterns from an authorised user &mdash; bulk downloads, access outside role scope, data transfers to personal devices.</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Do not alert the subject</strong> until legal and HR are consulted.</li>
+        <li><strong class="text-ink">Preserve logs</strong> and access records before any investigation conversation.</li>
+        <li><strong class="text-ink">Assess scope:</strong> What data was accessed? Was it transferred externally?</li>
+        <li><strong class="text-ink">Coordinate with legal</strong> for employment law implications and potential law enforcement referral.</li>
+        <li><strong class="text-ink">Revoke access</strong> once the investigation supports it.</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Communication Plans: Who to Notify, When, and What to Say</h2>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Legal Notification Obligations</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Breach notification is not optional. Timelines vary by jurisdiction:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Regulation | Notification Window | Who Must Be Notified |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|------------|-------------------|---------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">GDPR</strong> (EU) | [72 hours to supervisory authority](https://www.konfirmity.com/blog/gdpr-incident-response-plan)[^3] | Authority + affected individuals if high risk |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">PDPA</strong> (Singapore) | 3 calendar days to PDPC | Commission + affected individuals if significant harm |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">US State Laws</strong> | Varies (30-90 days typical) | State AG + affected individuals |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">HIPAA</strong> (US healthcare) | 60 days to HHS | HHS + affected individuals + media if &gt;500 people |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The GDPR imposes fines of up to EUR 20 million or 4% of global revenue](https://www.konfirmity.com/blog/gdpr-incident-response-plan) for serious breaches, and missing the 72-hour notification window increases penalties and erodes trust.[^3]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;For legal SaaS specifically:&lt;/strong&gt; &lt;a href=&quot;https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/&quot;&gt;NYC Bar Formal Opinion 2024-3&lt;/a&gt; and &lt;a href=&quot;https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/&quot;&gt;ABA Formal Opinion 483&lt;/a&gt; establish that lawyers must notify clients when a breach exposes material client confidential information that is &quot;likely to affect the position of the client or the outcome of the client&#39;s legal matter.&quot;&lt;sup&gt;[4][5]&lt;/sup&gt; A data breach doesn&#39;t automatically waive attorney-client privilege &mdash; but the firm must take affirmative steps to reaffirm privilege designations and prevent unauthorised use of leaked material.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Communication Rules During an Incident</h3>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Designate a single spokesperson.</strong> Inconsistent public statements create legal liability.</li>
+        <li><strong class="text-ink">Say what you know, not what you speculate.</strong> &quot;We detected unauthorised access and are investigating&quot; &mdash; not &quot;we think a Russian hacker group got in.&quot;</li>
+        <li><strong class="text-ink">Don&#39;t promise what you haven&#39;t verified.</strong> &quot;No data was compromised&quot; is a statement you may have to retract. &quot;Our investigation is ongoing&quot; is safe.</li>
+        <li><strong class="text-ink">Document everything.</strong> Every communication, every decision, every timestamp. This is evidence for regulators and potentially for litigation.</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Hold Preservation</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When a breach may involve litigation or regulatory investigation, implement a legal hold: a directive to preserve all potentially relevant documents, logs, communications, and forensic data. This means:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>No automated log rotation that deletes incident-period logs</li>
+        <li>No system rebuilds that destroy forensic evidence</li>
+        <li>No email deletion by involved employees</li>
+        <li>Forensic images of affected systems stored securely</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Failure to preserve evidence after a known incident can result in sanctions, adverse inference rulings, and regulatory penalties separate from the breach itself.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Playbook Maintenance Cycle</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A playbook that was written once and never updated is only slightly better than no playbook. Review and update quarterly:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>After every real incident (incorporate lessons learned)</li>
+        <li>After major infrastructure changes (new services, new data flows)</li>
+        <li>After regulatory changes (new notification requirements)</li>
+        <li>After tabletop exercises (simulated incidents reveal gaps)</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The goal is not perfection &mdash; it&#39;s preparation. A team with a decent playbook they&#39;ve rehearsed will outperform a team with a perfect playbook they&#39;ve never opened.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: disaster recovery and business continuity &mdash; what happens when the incident isn&#39;t a breach but a complete system failure, and your clients need their case files.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: NIST, [SP 800-61 Revision 3: Incident Response Recommendations and Considerations for Cybersecurity Risk Management](https://csrc.nist.gov/pubs/sp/800/61/r3/final).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: NIST, [Cybersecurity Framework 2.0](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Konfirmity, [GDPR Incident Response Plan: A Practical Guide with Steps &amp; Examples (2026)](https://www.konfirmity.com/blog/gdpr-incident-response-plan).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: NYC Bar Association, [Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident](https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: ABA, [When Should Law Firms Notify Clients About Data Breaches?](https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: UnderDefense, [Data Breach Incident Response Plan for 2026](https://underdefense.com/blog/data-breach-incident-response-plan/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: ABA, [Attorney-Client Privilege and Work Product Considerations Following Cyber Incidents](https://www.americanbar.org/groups/tort_trial_insurance_practice/resources/tortsource/2024-spring/attorney-client-privilege-work-product-considerations-following-cyber-incidents/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: Linford &amp; Company, [NIST SP 800-61 Rev 3: New Incident Response Framework Guide](https://linfordco.com/blog/nist-sp-800-61/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Tandem, [Updated NIST Incident Response Guidance: SP 800-61 Rev. 3](https://tandem.app/blog/updated-nist-incident-response-guidance-sp-800-61-rev-3).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Inside Privacy, [NIST Publishes Updated Incident Response Recommendations](https://www.insideprivacy.com/cybersecurity-2/nist-publishes-updated-incident-response-recommendations-and-considerations/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Epiq Global, [ABA Issues Opinion &mdash; How To Respond to Data Breaches](https://www.epiqglobal.com/en-us/resource-center/articles/aba-opinion-how-to-respond-to-data-breaches).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 54 &mdash; incident response playbooks. Last episode we talked about monitoring and detecting security events. This episode is what happens next. Alice, the alert fires, something bad is happening &mdash; what do you actually do?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And the most important thing I can say is: you figure that out before the incident happens, not during it. The worst time to write your incident response plan is while an attacker is actively downloading your clients&#39; case files. That&#39;s why you need playbooks &mdash; pre-written, rehearsed procedures for specific types of incidents. When something happens, you open the playbook and follow the steps. Adrenaline is high, information is incomplete, and having a checklist to follow is the difference between a contained incident and a catastrophe.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. NIST updated their guidance on this recently, right?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;They did. NIST SP 800-61 Revision 3 came out in April 2025 &mdash; the first major update since 2012. The biggest change is that it now maps incident response directly to the NIST Cybersecurity Framework 2.0. Instead of treating incident response as a standalone activity, it&#39;s integrated into the Detect, Respond, and Recover functions we introduced last episode. The message is clear: incident response isn&#39;t something that happens separately from your security programme. It&#39;s part of it.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So walk us through the lifecycle. An incident happens &mdash; what are the phases?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Five phases. First: detection and analysis. This is where last episode&#39;s monitoring pays off. An alert fires. The on-call person triages it. Is this real or a false positive? What systems are affected? What data might be at risk? You verify using multiple data sources &mdash; don&#39;t act on a single log entry. Then you classify severity. A successful admin login from an unknown country followed by document downloads is critical &mdash; that&#39;s all-hands, right now. Unusual login patterns with no confirmed access is medium &mdash; investigate within four hours.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. Then what &mdash; you try to stop it?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Phase two: containment. Stop the bleeding without destroying evidence. There are two stages. Short-term containment is immediate: block the attacker&#39;s IP, terminate compromised sessions, disable compromised accounts, isolate affected servers. Long-term containment is more surgical &mdash; apply temporary patches, redirect traffic, set up enhanced monitoring while you prepare for the full fix.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And the evidence part &mdash; that&#39;s especially important for legal SaaS, isn&#39;t it?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; Critically important. If client privileged data was exposed, you may need forensic records for regulatory notifications, insurance claims, or even litigation. Do not wipe or rebuild a compromised system before capturing a forensic image &mdash; that&#39;s a bit-for-bit copy of the affected system&#39;s storage. Containment must preserve evidence, not destroy it.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Phase three?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Eradication. Remove the root cause. If malware was involved, rebuild affected systems from known-good backups. If credentials were stolen &mdash; and we talked about this in Episode 50 with workstation security &mdash; rotate every credential the compromised system had access to. Not just the ones you know the attacker used. Every one. Because you can&#39;t be certain which credentials were accessed and which weren&#39;t. If a vulnerability was exploited, patch it across all systems, not just the one that was hit.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. Then recovery, I assume?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Phase four. Restore systems to normal operation. But &mdash; and this is key &mdash; monitor recovered systems with extra scrutiny for days or weeks after. Attackers commonly leave backdoors. Secondary access paths that activate after the initial breach looks resolved. You think you&#39;ve cleaned everything up, the attacker has a shell script set to phone home in seventy-two hours.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. And the final phase is the retrospective?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Phase five: post-incident learning. Within a week &mdash; while memories are fresh &mdash; do a blameless retrospective. What happened? When did we detect it? How long until containment? What worked in the playbook? What didn&#39;t? What changes would prevent this from happening again? Then update the playbook. Every real incident teaches you something your hypothetical planning missed.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. Let&#39;s talk about specific scenarios. What does a data breach playbook look like for a legal SaaS platform?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Step one: contain. Isolate affected systems, terminate all sessions for compromised accounts, block attacker access. Step two: assess scope. Which clients&#39; data was accessed? What type &mdash; case documents, communications, PII? This determines your notification obligations. Step three: preserve evidence. Forensic images before any cleanup. Step four: legal assessment. Engage legal counsel to determine your notification obligations, because they vary by jurisdiction.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And those notification timelines are tight.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Very tight. Under GDPR, you have seventy-two hours to notify the supervisory authority. Singapore&#39;s PDPA gives you three calendar days. US state laws vary but typically thirty to ninety days. And missing the GDPR window doesn&#39;t just look bad &mdash; the regulation imposes fines of up to twenty million euros or four percent of global revenue for serious breaches. Missing the notification deadline is treated as an aggravating factor.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And there&#39;s an extra layer for legal platforms, right? The attorney-client privilege issue.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The ABA issued Formal Opinion 483 establishing that lawyers must notify clients when a breach exposes material confidential information. And the NYC Bar&#39;s Opinion 2024-3 expanded on this &mdash; clarifying that the ethical obligations extend to the technology platforms lawyers choose to use. Here&#39;s a crucial point though: a data breach doesn&#39;t automatically waive attorney-client privilege. The privilege survives the breach. But the firm &mdash; and by extension, the platform &mdash; must take affirmative steps to reaffirm privilege designations and prevent unauthorised use of any leaked material.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. What about communication during the incident? What do you say publicly?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Four rules. One: designate a single spokesperson. Inconsistent statements create legal liability. Two: say what you know, not what you speculate. &quot;We detected unauthorised access and are investigating&quot; is safe. &quot;We think it was a Russian hacker group&quot; is not &mdash; and you may have to retract it. Three: don&#39;t promise what you haven&#39;t verified. &quot;No data was compromised&quot; is a statement you might have to walk back. &quot;Our investigation is ongoing&quot; is honest. Four: document everything. Every communication, every decision, every timestamp. This is evidence for regulators, insurers, and potentially for litigation.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And then there&#39;s legal hold &mdash; preserving evidence for potential legal proceedings?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;When a breach may involve litigation or regulatory investigation, you implement a legal hold. That means: no automated log rotation that deletes incident-period data. No system rebuilds that destroy forensic evidence. No email deletion by anyone involved. Forensic images stored securely. Failure to preserve evidence after a known incident can result in sanctions and adverse inference rulings &mdash; meaning the court assumes the destroyed evidence was unfavourable to you. That&#39;s separate from any penalties for the breach itself.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And these playbooks &mdash; they&#39;re not write-once documents?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Review quarterly. Update after every real incident, after major infrastructure changes, after regulatory changes, and after tabletop exercises &mdash; those are simulated incidents where your team walks through the playbook. The goal isn&#39;t a perfect document. It&#39;s a rehearsed team. A team with a decent playbook they&#39;ve actually practised will outperform a team with a perfect playbook sitting in a folder nobody&#39;s opened.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; disaster recovery and business continuity. What happens when the problem isn&#39;t a breach but a complete system failure, and your clients can&#39;t access their case files.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-53-monitoring-and-alerting-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 53 &mdash; Monitoring and Alerting Design</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-55-disaster-recovery-and-business-continuity.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 55 &mdash; Disaster Recovery and Business Continuity</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

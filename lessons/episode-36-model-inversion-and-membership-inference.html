@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 36 &mdash; Model Inversion and Membership Inference &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 36 &middot; Module 8 &middot; AI Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Model Inversion and Membership Inference</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 8:41 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-36-model-inversion-and-membership-inference.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">8:41</span>
+                <span>8:41</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-36-model-inversion-and-membership-inference.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">In [Episode 35](../ep35/article.md), we explored how vector databases can leak tenant data through embedding similarity queries. This episode moves one layer deeper: what happens when the model itself becomes the leak? Model inversion and membership inference are two classes of privacy attack that target machine learning models &mdash; not their infrastructure, not their APIs, but the mathematical patterns the model learned during training. For legal AI systems trained on privileged documents, these a</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 36: Model Inversion and Membership Inference</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">When Your AI Leaks What It Learned</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In [Episode 35](../ep35/article.md), we explored how vector databases can leak tenant data through embedding similarity queries. This episode moves one layer deeper: what happens when the model itself becomes the leak?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Model inversion and membership inference are two classes of privacy attack that target machine learning models &mdash; not their infrastructure, not their APIs, but the mathematical patterns the model learned during training. For legal AI systems trained on privileged documents, these attacks raise a question that no other industry faces quite so sharply: if an attacker can prove a specific document was in the training data, has the attorney-client privilege over that document been compromised?</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Model Inversion: Reconstructing What the Model Saw</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A model inversion attack attempts to reconstruct training data by carefully querying a model and analysing its outputs. Think of it like this: imagine a law firm&#39;s AI was trained to classify documents by matter type. An attacker who can query that classifier thousands of times &mdash; observing confidence scores, probability distributions, and output patterns &mdash; can gradually reconstruct characteristics of the documents the model was trained on.[^1]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The technique was first demonstrated by Fredrikson et al. in 2015, who showed that a facial recognition model could be queried to reconstruct recognisable images of individuals in the training set.[^2] For legal AI, the data at risk is not faces but privileged communications, litigation strategy memos, and client financial records.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Attack Type | What It Reveals | Legal Risk |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------------|----------------|------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Model inversion</strong> | Approximations of actual training data content | Privilege waiver if privileged content is reconstructable |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Membership inference</strong> | Whether a specific document was used in training | Proves exposure of confidential material to the model |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Attribute inference</strong> | Properties of training data (e.g., client names, matter types) | Reveals confidential client relationships |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal precedent alert:</strong> In <em>United States v. Bradley Heppner</em> (S.D.N.Y., February 2026), the court held that written exchanges with a publicly available AI platform are not protected by attorney-client privilege, partly because the AI provider&#39;s terms permitted data retention and use for model training.[^3] If a model trained on privileged data can be queried to reveal that data, the privilege argument becomes even harder to sustain.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Membership Inference: Proving a Document Was in the Training Set</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Where model inversion tries to reconstruct <em>what</em> the model learned, membership inference asks a simpler but equally dangerous question: was this specific document &mdash; this contract, this legal memo, this client communication &mdash; part of the training data?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The seminal work by Shokri et al. (2017) showed that machine learning models behave measurably differently on data they were trained on versus data they have never seen.[^4] A model tends to be more &quot;confident&quot; &mdash; returning higher probability scores &mdash; on its training examples. An attacker with access to both the target model and a sample of known training and non-training data can build a classifier that distinguishes between the two.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal AI, the implications are severe:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Privilege exposure:</strong> If an adversary can prove that a privileged memo was in a model&#39;s training data, they have evidence that the privileged information was disclosed to a third-party system &mdash; potentially waiving the privilege.[^3]</li>
+        <li><strong class="text-ink">Conflict discovery:</strong> A membership inference attack could reveal that a law firm&#39;s AI was trained on documents from a specific client, exposing confidential client relationships.</li>
+        <li><strong class="text-ink">Regulatory evidence:</strong> Under data protection laws like the GDPR, a membership inference result could serve as evidence that personal data was processed without adequate consent.</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">How Practical Are These Attacks?</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The honest answer: it depends on the model architecture, the attacker&#39;s access level, and the defences in place.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Factor | Lower Risk | Higher Risk |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|--------|-----------|-------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Model access</strong> | Black-box (API only, no confidence scores) | White-box (model weights available) or grey-box (confidence scores returned) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Training data size</strong> | Large, diverse datasets (individual documents less memorised) | Small, specialised datasets (legal corpora are often small and domain-specific) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Model complexity</strong> | Simple models (less capacity to memorise) | Large overparameterised models (GPT-scale models memorise more) |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| <strong class="text-ink">Output detail</strong> | Binary yes/no outputs | Full probability distributions or logits |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal AI systems sit in the higher-risk column on several factors. They are typically fine-tuned on small, specialised corpora of legal documents &mdash; exactly the scenario where memorisation is most likely. Research published in 2024 demonstrated that membership inference attacks against fine-tuned language models achieve significantly higher accuracy when the fine-tuning dataset is small and domain-specific.[^5]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">OWASP LLM Top 10 (2025):</strong> The [OWASP Top 10 for LLM Applications](https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/) lists training data poisoning (LLM04) and sensitive information disclosure (LLM06) as top risks. Model inversion and membership inference are attack techniques that exploit LLM06 &mdash; extracting sensitive information that the model inadvertently memorised during training.[^6]</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Defences: Reducing What the Model Reveals</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">No single defence eliminates these risks entirely. The strategy is defence in depth &mdash; layering multiple controls to make attacks progressively harder.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Differential Privacy</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Differential privacy adds carefully calibrated mathematical noise during training, ensuring that no single training example significantly influences the model&#39;s outputs. [NIST SP 800-226](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-226.pdf) provides guidelines for evaluating differential privacy guarantees.[^7] The tradeoff: stronger privacy guarantees reduce model accuracy. For legal AI, this means calibrating the privacy budget (epsilon) to balance confidentiality protection against the model&#39;s usefulness for document classification or contract review.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Output Perturbation</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Instead of modifying training, output perturbation adds noise to the model&#39;s responses at inference time. Rather than returning exact confidence scores (e.g., &quot;92.7% contract, 7.3% memo&quot;), the system rounds or randomises outputs (&quot;likely contract&quot;). This reduces the signal available to membership inference attacks without retraining the model.[^8]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Access Controls on Model Endpoints</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Rate-limit queries. Require authentication. Log every inference request. Monitor for the distinctive patterns of inference attacks &mdash; thousands of similar queries with slight variations, systematic probing of confidence boundaries. These controls do not prevent the attack mathematically, but they make it operationally harder and detectable.[^9]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">4. Restricting Confidence Scores</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Many membership inference attacks depend on observing the model&#39;s confidence scores. If your API returns only the top prediction without probabilities, the attack surface shrinks substantially. The [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) recommends minimising unnecessary information in model outputs as a privacy-preserving measure.[^10]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">5. Training Data Governance</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The most fundamental defence: do not train models on data that should not be in them. Maintain a clear inventory of training data. Separate privileged and non-privileged corpora. Use synthetic or anonymised data where possible. Document every dataset used in training with provenance metadata &mdash; which we will cover in detail in Episode 43.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">A Decision Framework for Legal AI Builders</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Question | If Yes | If No |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|----------|--------|-------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Does the model process privileged client data? | Apply differential privacy; restrict output detail; document training data provenance | Standard access controls may suffice |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Is the model fine-tuned on a small, client-specific corpus? | High memorisation risk &mdash; consider synthetic data or federated learning | Lower individual-document risk, but still apply output controls |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Does the API return confidence scores or logits? | Restrict to top-k predictions without scores; add output noise | Reduced membership inference surface |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Is the model accessible to external users? | Rate limiting, authentication, anomaly detection are mandatory | Internal-only access reduces but does not eliminate risk |</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Hogan Lovells Gets Right</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The law firm Hogan Lovells published a detailed analysis of model inversion and membership inference risks in the legal context, noting that &quot;organisations should evaluate whether the AI model or system they are deploying has been tested for susceptibility to such attacks&quot; and recommending that vendor contracts include specific provisions around training data governance and model security testing.[^11] This is the right instinct: technical controls and contractual protections are complementary, not alternatives.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Episode 37 tackles <strong class="text-ink">Governed Writes and Human-in-the-Loop</strong> &mdash; the principle that your AI can draft, analyse, and recommend, but it should never autonomously file a document, send a client communication, or modify a legal record without a human professional reviewing and approving the action.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: WitnessAI, [Model Inversion Attacks: How They Work, Risks, and Defenses](https://witness.ai/blog/model-inversion-attacks/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Zhou et al., [Model Inversion Attacks: A Survey of Approaches and Countermeasures](https://arxiv.org/html/2411.10023v1) (arXiv, November 2024).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: K&amp;L Gates, [Generative AI Data, Attorney-Client Privilege, and the Work-Product Doctrine](https://www.klgates.com/Litigation-Minute-Generative-AI-Data-Attorney-Client-Privilege-and-the-Work-Product-Doctrine-2-23-2026) (February 2026).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: Shokri et al., [Membership Inference Attacks Against Machine Learning Models](https://www.cs.cornell.edu/~shmat/shmat_oak17.pdf) (IEEE S&amp;P, 2017).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: Colwell, [The 2024-2025 MIA Landscape Reveals Relentless Evolution in Membership Inference Attack Sophistication](https://briandcolwell.com/the-2024-2025-mia-landscape-reveals-relentless-evolution-in-membership-inference-attack-sophistication/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: OWASP, [Top 10 for LLM Applications 2025](https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: NIST, [SP 800-226: Guidelines for Evaluating Differential Privacy Guarantees](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-226.pdf).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: PMC, [Algorithms That Remember: Model Inversion Attacks and Data Protection Law](https://pmc.ncbi.nlm.nih.gov/articles/PMC6191664/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: Hogan Lovells, [Model Inversion and Membership Inference: Understanding New AI Security Risks](https://www.hoganlovells.com/en/publications/model-inversion-and-membership-inference-understanding-new-ai-security-risks-and-mitigating-vulnerabilities).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: NIST, [AI Risk Management Framework (AI RMF 1.0)](https://nvlpubs.nist.gov/nistpubs/ai/nist.ai.100-1.pdf).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: Hogan Lovells / JD Supra, [Model Inversion and Membership Inference](https://www.jdsupra.com/legalnews/model-inversion-and-membership-7825767/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^12]: Springer Nature, [Defending Against Attacks in Deep Learning with Differential Privacy](https://link.springer.com/article/10.1007/s10462-025-11350-3).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 36 &mdash; we&#39;re staying in Module 8, AI security. Last time we talked about embedding security and vector databases. Today we&#39;re going deeper into something that honestly sounds like science fiction &mdash; model inversion and membership inference. Alice, what are we actually talking about here?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;We&#39;re talking about attacks that target the model itself. Not the server it runs on, not the API, not the database behind it &mdash; the actual mathematical patterns the model learned during training. Model inversion is when an attacker queries your AI over and over, carefully analysing the responses, and gradually reconstructs pieces of the data it was trained on. Membership inference is the simpler version &mdash; the attacker just wants to know whether a specific document was in the training data at all.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So for legal AI, that would mean &mdash; could someone figure out that a specific privileged memo was used to train a law firm&#39;s document classifier?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And that&#39;s not just a technical problem &mdash; it&#39;s a privilege problem. There was a federal case earlier this year, United States v. Heppner in the Southern District of New York, where the court ruled that exchanges with a public AI platform aren&#39;t protected by attorney-client privilege. Part of the reasoning was that the AI provider&#39;s terms of service allowed them to retain and train on user data. Now imagine a model that was fine-tuned on privileged documents. If someone can prove through a membership inference attack that a specific privileged document was in that training data, you&#39;ve got evidence that confidential information was disclosed to a third-party system. The privilege argument gets very difficult at that point.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So how does model inversion actually work? Walk me through it like I&#39;m not a machine learning researcher &mdash; because I&#39;m definitely not.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Think of it this way. Imagine your firm built an AI that classifies documents &mdash; it looks at a document and tells you whether it&#39;s a contract, a legal memo, a court filing, whatever. That classifier learned patterns from the documents it was trained on. Now, an attacker starts feeding it carefully crafted inputs &mdash; thousands of them &mdash; and watching the confidence scores. The model might say &quot;I&#39;m 94% sure this is a contract.&quot; By methodically varying the inputs and watching how confidence changes, the attacker can reverse-engineer characteristics of the actual documents the model saw during training. It&#39;s like someone figuring out what recipe you used by tasting your cooking a thousand times and adjusting their guess each time.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. And membership inference is different?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; It&#39;s actually simpler, which is what makes it scarier. Machine learning models behave differently on data they&#39;ve seen before versus data they haven&#39;t. They tend to be more confident on their own training examples. A researcher named Shokri demonstrated this back in 2017. You build a second model &mdash; an &quot;attack model&quot; &mdash; that learns to distinguish between &quot;the target model saw this data&quot; and &quot;the target model didn&#39;t see this data,&quot; based on the confidence patterns. And it works surprisingly well, especially on smaller, specialised datasets.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And legal datasets are exactly that &mdash; small and specialised.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the problem. If you&#39;re training on millions of random internet documents, any individual document has a tiny footprint in the model. But if you fine-tune on a few thousand legal memos from a specific practice area? Each document leaves a much larger imprint. The model memorises more. The membership inference attack gets easier. Research from 2024 and 2025 confirms this &mdash; fine-tuned models on small domain-specific corpora are significantly more vulnerable than large general-purpose models.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So what can you actually do about it? Can you prevent these attacks?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You can&#39;t eliminate them entirely, but you can make them much harder. The first defence is differential privacy &mdash; a technique where you add carefully calibrated noise during training. The noise is designed so that no single training example significantly changes the model&#39;s behaviour. NIST published guidelines for evaluating differential privacy, SP 800-226, because this is becoming a federal-level concern. The tradeoff is that stronger privacy reduces model accuracy. You&#39;re deliberately making the model slightly worse to protect the data.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. That sounds like a hard sell to a partner who wants the most accurate AI possible.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. But the alternative is a model that memorises privileged documents and can be queried to reveal them. The second defence is simpler &mdash; restrict what the model tells the outside world. Most membership inference attacks depend on seeing detailed confidence scores. If your API returns just the top prediction &mdash; &quot;this is a contract&quot; &mdash; without saying &quot;I&#39;m 92.7% sure,&quot; you&#39;ve cut off most of the signal the attacker needs. NIST&#39;s AI Risk Management Framework recommends minimising unnecessary detail in model outputs for exactly this reason.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What about just controlling who can access the model in the first place?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the third layer &mdash; access controls. Rate-limit queries. Require authentication. Monitor for the patterns that look like inference attacks &mdash; someone sending thousands of slightly different queries in quick succession. These controls don&#39;t make the attack mathematically impossible, but they make it operationally much harder and, critically, detectable. If your logs show someone making ten thousand classification requests in an hour, that should trigger an alert.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And there&#39;s also just not putting sensitive data in the training set in the first place?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the most fundamental defence, and it&#39;s the one people skip. Maintain a clear inventory of what&#39;s in your training data. Separate privileged documents from general legal knowledge. Use synthetic or anonymised data where you can. If your contract classifier doesn&#39;t need to see real client names and dollar amounts to learn what a contract looks like, strip those out before training. And document everything &mdash; which datasets were used, who authorised their inclusion, what the provenance is. We&#39;ll cover that documentation piece in Episode 43 when we talk about provenance chains.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. I want to make sure we&#39;re being honest with the audience here. How practical are these attacks right now? Is this something a solo practitioner building a case management tool needs to worry about, or is this more of a concern for large firms with custom AI systems?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Fair question. If you&#39;re using a commercial AI service like a hosted LLM through an API, the attack surface is mostly on the provider&#39;s side &mdash; and the major providers are applying defences. Where it gets real is when you&#39;re fine-tuning models on your own data, deploying models internally, or building custom classifiers trained on client documents. That&#39;s where the training data is yours, the model is yours, and the risk is yours. And the legal AI space is increasingly moving in that direction &mdash; firms want models customised to their practice areas, their precedents, their document styles. Every custom fine-tuned model is a potential target.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. So the advice is &mdash; think about this before you fine-tune, not after.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Apply differential privacy during training. Restrict confidence scores in your outputs. Rate-limit and monitor your endpoints. And most importantly, know what&#39;s in your training data and whether it should be there. If you wouldn&#39;t be comfortable explaining to a judge exactly which documents your model was trained on, you have a problem that no technical defence can solve.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Governed Writes and Human-in-the-Loop. Why your AI should draft but never file.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-35-embedding-security-and-vector-database-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 35 &mdash; Embedding Security and Vector Database Isolation</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-37-governed-writes-and-humanintheloop.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 37 &mdash; Governed Writes and Human-in-the-Loop</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

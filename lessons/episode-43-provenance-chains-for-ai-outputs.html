@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 43 &mdash; Provenance Chains for AI Outputs &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 43 &middot; Module 9 &middot; Audit &amp; Logging</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Provenance Chains for AI Outputs</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 8:38 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-43-provenance-chains-for-ai-outputs.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">8:38</span>
+                <span>8:38</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-43-provenance-chains-for-ai-outputs.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Legal technology is moving fast. Contract review tools suggest edits. Research platforms summarise case law. Document automation systems draft entire clauses. But when a lawyer sends that AI-generated clause to a client, a question follows: where did this come from? Which documents informed it? Which model version produced it? Which user triggered the generation? And if a regulator asks six months later, can you reconstruct the chain? This is the problem provenance chains solve. Provenance &mdash; fro</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 43: Provenance Chains for AI Outputs</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">When Your AI Drafts a Clause, Can You Prove Where It Came From?</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal technology is moving fast. Contract review tools suggest edits. Research platforms summarise case law. Document automation systems draft entire clauses. But when a lawyer sends that AI-generated clause to a client, a question follows: <em>where did this come from?</em> Which documents informed it? Which model version produced it? Which user triggered the generation? And if a regulator asks six months later, can you reconstruct the chain?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is the problem provenance chains solve. Provenance &mdash; from the Latin <em>provenire</em>, meaning &quot;to come from&quot; &mdash; is a concept lawyers already understand. Chain of custody for physical evidence. Audit trails for financial transactions. Provenance for AI outputs applies the same principle: recording the complete lineage of how a piece of AI-generated content came to exist.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[NIST&#39;s AI Risk Management Framework (AI RMF 1.0)](https://www.nist.gov/itl/ai-risk-management-framework) [1] identifies traceability as a core requirement for trustworthy AI systems. The framework&#39;s &quot;Govern&quot; and &quot;Monitor&quot; functions specifically call for documentation of AI system inputs, outputs, and decision processes throughout the lifecycle.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Provenance Metadata Looks Like</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A provenance record for an AI-generated legal output should capture, at minimum:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Field | Purpose | Example |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|-------|---------|---------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `model_id` | Exact model version used | `gpt-4-turbo-2024-04-09` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `model_config` | Temperature, top-p, system prompt hash | `temp=0.2, top_p=0.95, sys_hash=a3f8...` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `input_documents` | Source documents fed to the model | `[contract_v3.docx, precedent_2019.pdf]` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `retrieval_results` | RAG chunks retrieved and their scores | `[{chunk_id: &quot;c-4821&quot;, score: 0.94, source: &quot;NDA_template.md&quot;}]` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `user_id` | Who triggered the generation | `associate_jchen@firm.com` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `timestamp` | When the output was created | `2026-05-18T14:32:07Z` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `output_hash` | SHA-256 of the generated content | `e3b0c44298fc1c14...` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| `session_id` | Links to the broader interaction context | `sess_7f3a2b91` |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is not optional metadata. It is the difference between &quot;our AI suggested this clause&quot; and &quot;our AI suggested this clause based on these three precedent documents, using this model version, at this temperature setting, triggered by this user, at this time.&quot;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Why hashing matters:&lt;/strong&gt; The &lt;code&gt;output_hash&lt;/code&gt; field is a cryptographic fingerprint &mdash; a fixed-length string computed from the content using a one-way mathematical function (we covered hashing in &lt;a href=&quot;/lessons/ep17/&quot;&gt;Episode 17&lt;/a&gt;). If anyone modifies the output after generation, the hash won&#39;t match, proving the content was tampered with. Store the hash alongside the output, and you have tamper evidence built in.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Chain of Custody for AI-Generated Legal Content</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In litigation, chain of custody proves that evidence hasn&#39;t been altered between collection and courtroom. AI-generated legal content needs an analogous chain. [The NIST AI 600-1 framework for generative AI](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf) [2] specifically addresses content provenance as a primary consideration, recommending that organisations track data origins, model versions, and output lineage throughout the AI lifecycle.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Consider a contract review tool that flags a problematic indemnification clause and suggests alternative language. The provenance chain should record:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Input stage</strong> &mdash; which contract was uploaded, by whom, at what time</li>
+        <li><strong class="text-ink">Retrieval stage</strong> &mdash; which precedent clauses were retrieved from the knowledge base, with relevance scores</li>
+        <li><strong class="text-ink">Generation stage</strong> &mdash; which model version produced the suggestion, with what parameters</li>
+        <li><strong class="text-ink">Output stage</strong> &mdash; the exact text generated, hashed and timestamped</li>
+        <li><strong class="text-ink">Review stage</strong> &mdash; whether a human reviewed and approved, modified, or rejected the suggestion</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each stage links to the previous one through identifiers. Break any link, and you cannot reconstruct the full picture.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Reproducibility &mdash; The Hardest Problem</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Can you regenerate the same output given the same inputs? For deterministic software, this is straightforward. For large language models, it is genuinely difficult. Even with identical prompts, model weights, and temperature settings, floating-point arithmetic differences across hardware can produce slightly different outputs.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Practical approaches to AI reproducibility](https://galileo.ai/blog/ai-agent-compliance-governance-audit-trails-risk-management) [3] focus on <em>sufficient reproducibility</em> rather than exact reproduction:</p>
+    <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Pin model versions explicitly.</strong> Never use `latest` or unversioned endpoints. Record the exact model identifier, including the provider&#39;s version suffix.</li>
+        <li><strong class="text-ink">Store the complete input.</strong> Not just the user&#39;s query, but the full prompt including system instructions, retrieved context, and any few-shot examples.</li>
+        <li><strong class="text-ink">Log configuration parameters.</strong> Temperature, top-p, max tokens, stop sequences &mdash; all of them affect output.</li>
+        <li><strong class="text-ink">Snapshot retrieval state.</strong> If your system uses retrieval-augmented generation (RAG &mdash; where the AI pulls relevant documents from a knowledge base before generating a response, as we discussed in the context of SSRF risks in [Episode 11](/lessons/ep11/)), record which chunks were retrieved and their scores. The knowledge base changes over time; today&#39;s retrieval results may differ from last month&#39;s.</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fef3c7; border-left: 4px solid #d97706; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Practical tip:&lt;/strong&gt; Even if exact reproducibility is impossible, provenance metadata lets you demonstrate that the &lt;em&gt;process&lt;/em&gt; was consistent and auditable. Courts and regulators care about whether you followed a reasonable, documented process &mdash; not whether you can reproduce byte-identical output.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Storage Patterns for Provenance Data</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Provenance metadata should live alongside the AI output, not in a separate system that might fall out of sync. Two patterns dominate:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Envelope pattern:</strong> The AI output is wrapped in a metadata envelope &mdash; a JSON or XML structure containing the provenance fields plus the output itself. The envelope is stored as a single atomic unit. This is simple and self-contained, but increases storage size.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sidecar pattern:</strong> The AI output is stored normally, with a separate provenance record linked by a shared identifier. The provenance record is append-only (as we discussed in [Episode 42](/lessons/ep42/) on immutable logs). This keeps the output clean but requires maintaining the link between output and provenance.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[Emerging guidance from AI governance frameworks](https://underdefense.com/blog/ai-data-governance/) [4] recommends treating provenance records with the same retention policies as the outputs themselves. If you keep the contract for seven years, keep its provenance chain for seven years.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Regulatory Drivers &mdash; Why This Is Becoming Mandatory</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The regulatory landscape is tightening. [The EU AI Act, Article 13](https://artificialintelligenceact.eu/article/13/) [5], requires that high-risk AI systems be &quot;designed and developed in such a way as to ensure that their operation is sufficiently transparent to enable deployers to interpret a system&#39;s output and use it appropriately.&quot; For AI systems used in legal contexts &mdash; access to justice, contract analysis, case outcome prediction &mdash; this transparency requirement includes documenting training data provenance, system capabilities and limitations, and output traceability.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[The EU AI Act&#39;s technical documentation requirements (Annex IV)](https://www.euaiact.com/key-issue/5) [6] mandate that providers of high-risk AI systems document: the system&#39;s intended purpose, accuracy metrics, training and validation data descriptions with provenance, monitoring information, risk management documentation, and lifecycle change records.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In the United States, [the NIST AI RMF&#39;s 2025 updates](https://www.ispartnersllc.com/blog/nist-ai-rmf-2025-updates-what-you-need-to-know-about-the-latest-framework-changes/) [7] strengthen requirements around third-party model assessment and data integrity, recognising that most organisations now rely on external AI components rather than building from scratch. While the AI RMF is voluntary, federal agencies and regulators increasingly reference it in procurement and compliance standards.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS specifically, the professional conduct dimension adds urgency. ABA Model Rule 1.6(c) &mdash; which we first discussed in [Episode 1](/lessons/ep01/) &mdash; requires reasonable efforts to prevent unauthorised access to client information. When AI processes client documents, provenance chains are part of demonstrating that reasonable efforts included knowing exactly what happened to that data.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Building Provenance Into Your Legal SaaS Platform</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[AI audit trail best practices](https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/) [8] recommend starting with these implementation steps:</p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li><strong class="text-ink">Generate provenance at creation time.</strong> Retrofitting provenance onto existing outputs is nearly impossible. Build it into the generation pipeline from day one.</li>
+        <li><strong class="text-ink">Make provenance immutable.</strong> Use append-only storage (Episode 42&#39;s hash-chained logs are ideal here). Once a provenance record is written, it cannot be modified.</li>
+        <li><strong class="text-ink">Include provenance in your API responses.</strong> When your API returns AI-generated content, include a `provenance_id` that clients can use to retrieve the full chain.</li>
+        <li><strong class="text-ink">Expose provenance to end users.</strong> Lawyers using your tool should be able to click &quot;show sources&quot; and see exactly which documents informed a suggestion. This is not just good security &mdash; it is good product design.</li>
+        <li><strong class="text-ink">Test your reconstruction capability.</strong> Periodically verify that you can reconstruct the full provenance chain for historical outputs. If you discover gaps, fix the pipeline before a regulator discovers them for you.</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[AI governance frameworks increasingly require traceable IDs, versioning evidence, input provenance references, and retention controls](https://lawrence-emenike.medium.com/audit-trails-and-explainability-for-compliance-building-the-transparency-layer-financial-services-d24961bad987) [9] that support reconstruction and oversight. These are not future requirements &mdash; they are current expectations for any AI system handling sensitive data.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Provenance chains for AI outputs are not a nice-to-have feature. They are the mechanism by which you prove &mdash; to regulators, to courts, to clients &mdash; that your AI system operates transparently and accountably. If you cannot trace an AI output back to its inputs, model version, and generation parameters, you cannot defend it.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we&#39;ll look at correlation IDs and distributed tracing &mdash; the infrastructure that lets you follow a single user request as it travels through multiple services in your legal SaaS platform. If provenance chains tell you <em>what</em> your AI produced, correlation IDs tell you <em>how</em> the request moved through your system to get there.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
+        <li>[NIST AI Risk Management Framework (AI RMF 1.0)](https://www.nist.gov/itl/ai-risk-management-framework)</li>
+        <li>[NIST AI 600-1 &mdash; Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)</li>
+        <li>[AI Agent Compliance &amp; Governance &mdash; Galileo](https://galileo.ai/blog/ai-agent-compliance-governance-audit-trails-risk-management)</li>
+        <li>[AI Data Governance in 2026 &mdash; UnderDefense](https://underdefense.com/blog/ai-data-governance/)</li>
+        <li>[EU AI Act, Article 13 &mdash; Transparency and Provision of Information to Deployers](https://artificialintelligenceact.eu/article/13/)</li>
+        <li>[EU AI Act Key Issue 5 &mdash; Transparency Obligations](https://www.euaiact.com/key-issue/5)</li>
+        <li>[NIST AI RMF 2025 Updates &mdash; IS Partners](https://www.ispartnersllc.com/blog/nist-ai-rmf-2025-updates-what-you-need-to-know-about-the-latest-framework-changes/)</li>
+        <li>[How to Build AI Audit Trails That Stand Up to Regulatory Scrutiny &mdash; CX Today](https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/)</li>
+        <li>[Audit Trails and Explainability for Compliance &mdash; Lawrence Emenike](https://lawrence-emenike.medium.com/audit-trails-and-explainability-for-compliance-building-the-transparency-layer-financial-services-d24961bad987)</li>
+        <li>[LLM Security Frameworks: A CISO&#39;s Guide &mdash; Hacken](https://hacken.io/discover/llm-security-frameworks/)</li>
+    </ul>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 43 &mdash; provenance chains for AI outputs. Alice, we&#39;ve spent the last few episodes on audit logs and immutable records. Now we&#39;re getting into something that feels very specific to the AI era.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It is. Think about what&#39;s happening in legal tech right now. You&#39;ve got contract review tools suggesting alternative clauses. Research platforms summarising case law. Document automation systems drafting entire sections. And the question that every lawyer should be asking is: where did this output come from? Not just &quot;the AI wrote it&quot; &mdash; but which documents informed it, which model version produced it, and can you prove all of that six months from now when a client or a regulator asks?&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So provenance is basically chain of custody &mdash; but for AI-generated content?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. Lawyers already understand chain of custody for physical evidence. You track who handled it, when, and how, so you can prove it wasn&#39;t tampered with between collection and the courtroom. Provenance chains apply the same idea to AI outputs. You record the complete lineage &mdash; the inputs, the model, the settings, the user who triggered it, and the exact output &mdash; so you can reconstruct the story of how that content came to exist.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. What does that actually look like in practice? What are you recording?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;At minimum, you need the model identifier &mdash; not just &quot;GPT-4&quot; but the exact version string with the date suffix. You need the configuration &mdash; the temperature setting, which controls how creative versus deterministic the output is, and other parameters that affect generation. You need the input documents &mdash; which files were uploaded or which knowledge base chunks were retrieved. You need the user who triggered it, the timestamp, and critically, a hash of the output itself.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. The hash &mdash; that&#39;s the fingerprint concept from Episode 17, right? One-way function, fixed-length output?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. You compute a SHA-256 hash of the generated text and store it alongside the output. If anyone modifies the output later &mdash; even changes a single comma &mdash; the hash won&#39;t match. It&#39;s tamper evidence built into the record.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that makes sense for integrity. But what about reproducibility? If I feed the same inputs to the same model, do I get the same output?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; This is the hard part. For normal software, yes &mdash; same input, same output, every time. For large language models, it&#39;s genuinely difficult. Even with identical prompts and settings, tiny differences in how the hardware handles floating-point maths can produce slightly different results. So the practical approach is what I&#39;d call sufficient reproducibility. You can&#39;t guarantee byte-identical output. But you can prove that the process was consistent and documented &mdash; same model version, same inputs, same configuration. Courts and regulators care about whether you followed a reasonable, documented process, not whether you can reproduce the exact same paragraph.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. That&#39;s a useful distinction. So what&#39;s driving this from a regulatory perspective? Is provenance actually required, or is it just best practice?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It&#39;s becoming required. The EU AI Act &mdash; which hits full enforcement in August 2026 &mdash; has specific transparency requirements for high-risk AI systems. Article 13 says these systems must be &quot;sufficiently transparent to enable deployers to interpret the output and use it appropriately.&quot; For AI used in legal contexts &mdash; access to justice, contract analysis, case outcome prediction &mdash; that means you need to document what went in, what came out, and how.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And on the US side?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;NIST&#39;s AI Risk Management Framework was updated in 2025 with stronger requirements around third-party model assessment and data integrity. It&#39;s voluntary, but federal agencies and regulators increasingly reference it. And remember ABA Model Rule 1.6(c) from Episode 1 &mdash; lawyers must make reasonable efforts to prevent unauthorised access to client information. When AI processes client documents, provenance chains are part of demonstrating those reasonable efforts. You need to show you knew exactly what happened to that data.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. So how do you actually store this? Is the provenance metadata separate from the output, or bundled together?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Two main patterns. The envelope pattern wraps the AI output inside a metadata structure &mdash; like putting a letter inside a labelled evidence bag. The provenance fields and the output travel together as a single unit. Simple, self-contained, hard to lose one without the other. The alternative is the sidecar pattern &mdash; the output lives in its normal location, and a separate provenance record links to it through a shared identifier. The provenance record goes into an append-only store, like the hash-chained immutable logs we talked about in Episode 42.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And which is better?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The envelope is safer for critical outputs because the provenance can&#39;t get separated. The sidecar is more practical at scale because you&#39;re not bloating every output with metadata. Many systems use a hybrid &mdash; a lightweight provenance ID embedded in the output that links to the full record in an immutable store. The key rule is: whatever pattern you choose, the provenance record must have the same retention period as the output itself. If you keep the contract for seven years, keep its provenance chain for seven years.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;That&#39;s a good point. Let me ask the product design angle &mdash; should end users see this provenance, or is it just for auditors?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Both. And honestly, exposing provenance to end users is one of the best product decisions you can make. When a lawyer uses your contract review tool and it suggests alternative language, they should be able to click &quot;show sources&quot; and see exactly which precedent documents and which clauses informed that suggestion. It builds trust. It lets the lawyer exercise professional judgment about whether the sources are relevant. And it&#39;s a competitive advantage &mdash; the tool that shows its work beats the black box, every time.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, I can see that. Lawyers are trained to trace authority. A tool that shows its reasoning chain is speaking their language.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And from a security perspective, provenance also helps you detect problems. If your provenance logs show that a particular model version is pulling from unexpected sources, or that retrieval results are drifting over time, that&#39;s an early warning signal. Without provenance, you only discover those issues when a human notices a bad output &mdash; which might be too late.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. One more practical question &mdash; when do you start building this? Can you retrofit provenance onto an existing system?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;You cannot meaningfully retrofit it. Provenance must be generated at creation time &mdash; when the AI produces the output. If you try to add it after the fact, you&#39;re guessing about inputs, model versions, and retrieval state that you didn&#39;t record. That&#39;s not provenance; that&#39;s reconstruction. And reconstruction has gaps. The advice is clear: build provenance into your generation pipeline from day one. If you&#39;re building a legal AI tool today and you don&#39;t have provenance, stop adding features and add provenance. Everything else depends on it.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Strong advice. Next episode &mdash; correlation IDs and distributed tracing. How you follow a single user request through all the different services in your platform.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;If provenance tells you what your AI produced, correlation IDs tell you how the request got there. Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-42-hashchained-immutable-logs.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 42 &mdash; Hash-Chained Immutable Logs</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-44-correlation-ids-and-distributed-tracing.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 44 &mdash; Correlation IDs and Distributed Tracing</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

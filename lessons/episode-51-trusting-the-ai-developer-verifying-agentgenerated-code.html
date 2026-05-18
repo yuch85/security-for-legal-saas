@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 51 &mdash; Trusting the AI Developer &mdash; Verifying Agent-Generated Code &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 51 &middot; Module 10 &middot; Infrastructure</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Trusting the AI Developer &mdash; Verifying Agent-Generated Code</h1>
+    <p class="text-ink-muted font-sans text-base">19 May 2026 &middot; 7:59 &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">7:59</span>
+                <span>7:59</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">AI coding agents &mdash; tools like GitHub Copilot, Cursor, Claude Code, and Amazon Q Developer &mdash; have fundamentally changed how software is written. Developers describe what they want in natural language, and an AI generates the code. For legal tech teams building contract review tools, case management systems, and e-filing integrations, these tools accelerate development dramatically. But they introduce a threat model that traditional security practices never anticipated: the code writer itself is a</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 51: Trusting the AI Developer &mdash; Verifying Agent-Generated Code</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">When Your Developer Is a Probabilistic Model</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AI coding agents &mdash; tools like GitHub Copilot, Cursor, Claude Code, and Amazon Q Developer &mdash; have fundamentally changed how software is written. Developers describe what they want in natural language, and an AI generates the code. For legal tech teams building contract review tools, case management systems, and e-filing integrations, these tools accelerate development dramatically. But they introduce a threat model that traditional security practices never anticipated: the code writer itself is a source of risk.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Unlike a human developer who might introduce bugs through carelessness or ignorance, an AI agent can generate code that looks syntactically perfect, passes superficial review, and contains subtle security flaws &mdash; because the model is optimising for plausible-looking code, not provably correct code.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Research from [Endor Labs](https://www.endorlabs.com/learn/the-most-common-security-vulnerabilities-in-ai-generated-code) analysing vulnerabilities in AI-generated code found recurring patterns: missing input validation, improper error handling that leaks internal state, hardcoded credentials in example code that gets shipped to production, and insecure default configurations.[^1]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Hallucinated Dependencies: The Slopsquatting Threat</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The most novel risk from AI-generated code is &quot;slopsquatting&quot; &mdash; a term coined to describe what happens when AI models hallucinate package names that don&#39;t exist, and attackers register those names with malicious code.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A [University of Texas at San Antonio study](https://www.traxtech.com/blog/20-of-ai-generated-code-dependencies-dont-exist-creating-supply-chain-security-risks) analysing 576,000 code samples generated by 16 different large language models (LLMs &mdash; the AI systems behind tools like ChatGPT and Copilot) found that nearly <strong class="text-ink">20% of package dependencies referenced by AI don&#39;t actually exist</strong>.[^2] That&#39;s 205,474 unique hallucinated package names across the study &mdash; each one a potential attack vector.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The attack pattern:&lt;/strong&gt; An AI tells a developer to install &lt;code&gt;flask-auth-helper&lt;/code&gt;. The package doesn&#39;t exist on PyPI (Python&#39;s package registry &mdash; the central repository where Python libraries are published and downloaded). An attacker registers &lt;code&gt;flask-auth-helper&lt;/code&gt; on PyPI with malicious code. The next developer who follows the AI&#39;s suggestion installs malware. This is slopsquatting &mdash; &lt;a href=&quot;https://www.infosecurity-magazine.com/news/ai-hallucinations-slopsquatting/&quot;&gt;typosquatting powered by AI hallucination&lt;/a&gt;.&lt;sup&gt;[3]&lt;/sup&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">What makes this worse: the hallucinations aren&#39;t random. The study found that [43% of hallucinated package names appeared repeatedly](https://www.bleepingcomputer.com/news/security/ai-hallucinated-code-dependencies-become-new-supply-chain-risk/) across multiple queries.[^4] Attackers can predict which fake names the AI will suggest and pre-register them.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A security researcher demonstrated this in practice by registering `huggingface-cli` &mdash; a package name commonly hallucinated by AI tools. Within three months, it had [accumulated over 30,000 downloads](https://devops.com/ai-generated-code-packages-can-lead-to-slopsquatting-threat/).[^5]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Open-source models are worse.</strong> The study found open-source models hallucinated dependencies at a rate of nearly 22%, compared to just over 5% for commercial models.[^2] If your team uses locally-hosted models for cost savings (as we discussed in the context of local LLM deployments), the hallucination rate for package names may be significantly higher.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Beyond Hallucinations: Vulnerable Versions and Insecure Patterns</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Hallucinated packages aren&#39;t the only risk. A [separate academic study](https://simonroses.com/2026/05/the-dependency-trap-supply-chain-risks-in-ai-generated-code-part-4/) analysing 117,062 dependency changes found that AI agents select vulnerable versions of real packages at a rate of 2.46%, compared to 1.64% for human developers.[^6] Agent-driven development produced a net increase of 98 new vulnerabilities, while human-authored changes produced a net reduction of 1,316.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Common insecure patterns in AI-generated code include:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Pattern | Risk | Legal SaaS Impact |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">|---------|------|-------------------|</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Missing input validation on API endpoints | Injection attacks (SQL injection, as covered in [Episode 8](../ep08/article.md)) | Attacker modifies case records or extracts client data |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Hardcoded API keys in generated code | Credential exposure if code is committed to version control | Third-party service compromise; billing abuse |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Overly permissive CORS headers (as covered in [Episode 12](../ep12/article.md)) | Cross-origin data theft | Browser-based attacks against logged-in lawyers |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Default `admin/admin` credentials in scaffolded code | Trivial unauthorised access | Full platform compromise |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">| Disabled TLS certificate verification | Man-in-the-middle attacks (as covered in [Episode 13](../ep13/article.md)) | Intercepted client communications |</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Full-Auto Deployment: The Unreviewed Pipeline</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The most dangerous configuration is an AI agent that can write code, run tests, and deploy &mdash; all without human review. This &quot;full-auto&quot; mode is increasingly common in development workflows. The agent creates a feature branch, writes the code, generates tests, the tests pass, and the code ships.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The problem: the agent wrote both the code and the tests. An AI that generates an authentication bypass will also generate tests that don&#39;t check for authentication bypasses. The tests pass because they were designed by the same model that created the flaw.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[CSO Online](https://www.csoonline.com/article/4167465/supply-chain-attacks-take-aim-at-your-ai-coding-agents.html) documented cases where supply chain attacks specifically targeted AI coding agents, exploiting their tendency to follow instructions embedded in repository files, package descriptions, and even code comments.[^7]</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The legal obligation:&lt;/strong&gt; If your contract analysis tool processes privileged attorney-client communications, deploying AI-generated code without human security review creates a reasonable-efforts argument under &lt;a href=&quot;https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/&quot;&gt;ABA Model Rule 1.6(c)&lt;/a&gt; that you are not making adequate efforts to protect client data.&lt;sup&gt;[8]&lt;/sup&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Verification Strategies That Work</h2>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Lock Your Dependency Sources</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Maintain a private registry or mirror of approved packages. Configure your package manager to install only from this trusted source. When the AI suggests a dependency, it must exist in your registry before it can be installed. This eliminates slopsquatting entirely.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"># npm example: .npmrc restricting to internal registry</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">registry=https://registry.internal.yourfirm.com/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Require Human Review of Security-Critical Code</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Define security-critical paths in your codebase: authentication, authorisation, encryption, data access layers, and anything that handles client PII (Personally Identifiable Information). Require manual code review for changes to these paths, regardless of who (or what) wrote the code.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Force the Agent to Write Security Tests &mdash; Then Write Your Own</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Have the AI generate security tests for its own code: tests for SQL injection, tests for authentication bypass, tests for authorisation failures. Then have a human write additional security tests independently. If the human-written tests catch what the AI-written tests missed, you&#39;ve found a gap in the AI&#39;s security reasoning.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">4. Sandbox the Agent&#39;s Workspace</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The AI coding agent should never have access to production credentials, SSH keys, `.env` files, or deployment secrets during development. [ActiveState&#39;s analysis](https://www.activestate.com/blog/is-ai-generated-code-poisoning-your-software-supply-chain/) of AI supply chain risks recommends restricting agents to allow-listed tools and requiring human approval before any high-impact actions like dependency installation or deployment.[^9]</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">5. Run Static Analysis on Everything</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SAST tools (Static Application Security Testing &mdash; automated scanners that examine source code for vulnerabilities without running it) like Semgrep and CodeQL should run on every pull request, whether the code was written by a human or an AI. AI-generated code should receive the same &mdash; or stricter &mdash; automated scrutiny as human-written code.</p>
+
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">6. Pin and Audit Dependencies</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Lock every dependency to a specific, verified version. Use tools like `npm audit`, `pip audit`, or Snyk to continuously scan for known vulnerabilities. When the AI suggests adding a new package, verify: Does this package exist? Is it actively maintained? Does it have known vulnerabilities? Is there a more established alternative?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Trust Calibration</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AI coding agents are tools, not developers. They produce output that must be verified with the same rigour you&#39;d apply to code from an untrusted contractor &mdash; arguably more, because the AI cannot explain its reasoning, has no accountability, and will confidently generate insecure code without hesitation.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS teams, the standard is not &quot;does the code work?&quot; but &quot;can we demonstrate that we verified the code meets security requirements before it touched client data?&quot; The AI writes the first draft. Humans own the final version.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: Day Zero &mdash; bootstrapping security for a brand new project, from the very first commit.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">---</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^1]: Endor Labs, [The Most Common Security Vulnerabilities in AI-Generated Code](https://www.endorlabs.com/learn/the-most-common-security-vulnerabilities-in-ai-generated-code).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^2]: Trax Tech / University of Texas at San Antonio, [20% of AI-Generated Code Dependencies Don&#39;t Exist](https://www.traxtech.com/blog/20-of-ai-generated-code-dependencies-dont-exist-creating-supply-chain-security-risks).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^3]: Infosecurity Magazine, [AI Hallucinations Create &quot;Slopsquatting&quot; Supply Chain Threat](https://www.infosecurity-magazine.com/news/ai-hallucinations-slopsquatting/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^4]: BleepingComputer, [AI-hallucinated code dependencies become new supply chain risk](https://www.bleepingcomputer.com/news/security/ai-hallucinated-code-dependencies-become-new-supply-chain-risk/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^5]: DevOps.com, [AI-Generated Code Packages Can Lead to &#39;Slopsquatting&#39; Threat](https://devops.com/ai-generated-code-packages-can-lead-to-slopsquatting-threat/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^6]: Simon Roses Femerling, [The Dependency Trap: Supply Chain Risks in AI-Generated Code (Part 4)](https://simonroses.com/2026/05/the-dependency-trap-supply-chain-risks-in-ai-generated-code-part-4/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^7]: CSO Online, [Supply-chain attacks take aim at your AI coding agents](https://www.csoonline.com/article/4167465/supply-chain-attacks-take-aim-at-your-ai-coding-agents.html).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^8]: ABA, [When Should Law Firms Notify Clients About Data Breaches?](https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^9]: ActiveState, [Is AI-Generated Code Poisoning Your Software Supply Chain?](https://www.activestate.com/blog/is-ai-generated-code-poisoning-your-software-supply-chain/).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^10]: Capitol Technology University, [AI-Driven Hallucinations in Cyber Supply Chain Lead to New Threat: Slopsquatting](https://www.captechu.edu/blog/ai-driven-threats-in-software-supply-chains).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">[^11]: TechDebt.best, [AI Code Security Risks &mdash; Hallucinated Dependencies &amp; Beyond](https://techdebt.best/ai-security-risks/).</p>
+
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Trusting the AI Developer &mdash; Verifying Agent-Generated Code</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Welcome back to Security for Legal SaaS. I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan. Episode 51 &mdash; and this one feels very current. AI agents writing code. Copilot, Cursor, Claude Code, Amazon Q. Developers describe what they want in plain English, and an AI writes the code. Alice, we&#39;ve talked about threats from attackers, from misconfiguration, from human error. But what happens when the thing writing your code is itself a risk?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;It&#39;s a fundamentally different threat model. A human developer might introduce a bug because they&#39;re tired or they don&#39;t know better. An AI agent can generate code that looks perfect &mdash; clean syntax, good structure, reasonable variable names &mdash; and has a subtle security flaw baked in. Not because the AI is malicious, but because it&#39;s optimising for code that looks right, not code that is provably secure. It&#39;s a probabilistic model. It generates the most likely next token. And &quot;most likely&quot; is not the same as &quot;most secure.&quot;&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So what kinds of flaws are we talking about?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The most novel one is something called slopsquatting. Here&#39;s how it works. You ask an AI to write a Python script. The AI says: &quot;install this library called flask-auth-helper.&quot; You go to install it &mdash; and it doesn&#39;t exist. The AI made it up. It hallucinated a package name. Now here&#39;s where it gets dangerous. Researchers at the University of Texas studied over half a million AI-generated code samples from sixteen different language models. Nearly twenty percent of the package dependencies the AI recommended didn&#39;t exist. Two hundred thousand fake package names.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Hmm. Twenty percent. But if the package doesn&#39;t exist, the install just fails, right? Where&#39;s the attack?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;The attack is that someone registers that fake name before you try to install it. A security researcher proved this. They registered a package called &quot;huggingface-cli&quot; &mdash; a name that AI tools commonly hallucinate. Within three months, over thirty thousand people had downloaded it. If that package had contained malware instead of a proof-of-concept, thirty thousand development environments would have been compromised.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. And the AI keeps suggesting the same fake names?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Forty-three percent of the hallucinated names appeared repeatedly across different queries. They&#39;re not random &mdash; they&#39;re predictable. An attacker can study which fake names the popular AI models suggest, register them on package registries like PyPI or npm &mdash; those are the central repositories where Python and JavaScript libraries are published &mdash; and wait for developers to follow the AI&#39;s instructions.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah, that&#39;s clever. Disturbingly clever. What about beyond the fake packages &mdash; what about the code itself?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;A separate study looked at over a hundred thousand dependency changes and found that AI agents choose vulnerable versions of real packages more often than human developers do. Humans reduced net vulnerabilities by over thirteen hundred. AI agents increased them by almost a hundred. And the code patterns are concerning too &mdash; missing input validation on API endpoints, which we covered back in Episodes 7 and 8. Hardcoded API keys in generated code. Overly permissive security headers. Default credentials left in scaffolded projects. The AI generates it, the developer glances at it, it looks reasonable, they ship it.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm-hmm. And what about the full-auto scenario &mdash; where the AI writes the code, writes the tests, and deploys it, all without a human looking at it?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;&lt;sigh&gt; That&#39;s the configuration that keeps me up at night. Because the AI writes both the code and the tests. If the AI creates an authentication bypass &mdash; some subtle flaw where certain requests skip the login check &mdash; it&#39;s also going to write tests that don&#39;t test for that bypass. The tests pass because the same blind spot that caused the bug also shaped the tests. You get a green check mark on a pipeline that just deployed a security hole.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So the tests are only as good as the model&#39;s understanding of what could go wrong.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Exactly. And for legal SaaS &mdash; if your contract analysis tool handles privileged attorney-client communications, deploying code without human security review creates a real problem under ABA Model Rule 1.6(c). That&#39;s the rule requiring reasonable efforts to protect client information. &quot;The AI wrote it and the AI&#39;s own tests passed&quot; is not going to satisfy a regulator asking what you did to prevent a breach.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. So what does a safe workflow look like when you&#39;re using AI to write code?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;First &mdash; lock your dependency sources. Set up a private registry of approved packages. Configure your package manager so it can only install from that registry. When the AI suggests a package, it has to exist in your approved list. This kills slopsquatting completely. The AI can hallucinate all it wants &mdash; if the package isn&#39;t in your registry, it can&#39;t be installed.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Right. What about the code itself?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Define security-critical paths in your codebase. Authentication, authorisation, encryption, anything that touches client data. Require human review for changes to those paths, no matter who or what wrote the code. Then &mdash; and this is important &mdash; have the AI write security tests, but also have a human write independent security tests. If the human-written tests catch things the AI-written tests missed, you&#39;ve found the gap. You&#39;ve measured how much the AI doesn&#39;t know about security.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Yeah. Two sets of tests from two different sources.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;And sandbox the agent&#39;s workspace. The AI should never have access to production credentials, SSH keys, environment files, or deployment secrets during development. If a malicious instruction is hidden in a repository file or a package description &mdash; and researchers have documented exactly this kind of attack &mdash; the agent shouldn&#39;t be able to reach anything valuable even if it&#39;s tricked into executing something.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Mm. And then static analysis on top of all of that?&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Always. Run SAST tools &mdash; that&#39;s static application security testing, automated scanners that examine code for vulnerabilities without running it &mdash; on every pull request. Semgrep, CodeQL, whatever your team uses. AI-generated code should get the same automated scrutiny as human code. Arguably more, because the AI won&#39;t push back when you tell it to fix something.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;So to put it plainly &mdash; treat AI-generated code like code from an untrusted contractor who can&#39;t explain their reasoning.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;That&#39;s the right mental model. The AI is a tool, not a developer. It produces a first draft. Humans own the final version. For legal tech, the standard isn&#39;t &quot;does the code work.&quot; It&#39;s &quot;can we demonstrate we verified this code meets security requirements before it touched client data.&quot; The AI helps you build faster. Verification is what keeps your clients safe.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;Next episode &mdash; Day Zero. Bootstrapping security for a brand new project, from the very first commit.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Until then, I&#39;m Alice.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person2&gt;And I&#39;m Dan.&lt;/Person2&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">&lt;Person1&gt;Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.&lt;/Person1&gt;</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-50-developer-workstation-security.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 50 &mdash; Developer Workstation Security</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-52-day-zero-bootstrapping-security-for-a-new-project.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 52 &mdash; Day Zero &mdash; Bootstrapping Security for a New Project</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>
