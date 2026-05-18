@@ -74,25 +74,30 @@
 <article class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS — Episode 8: SQL Injection and ORM Safety</strong></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 8: SQL Injection and ORM Safety</strong></p>
 
-    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Attack That Won't Die</h2>
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Attack That Won&rsquo;t Die</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL injection was first documented in 1998. Twenty-eight years later, it remains <a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's A03 (Injection)</a> and continues to cause catastrophic breaches. <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-34362" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The MOVEit breach of 2023 — CVE-2023-34362, CVSS 9.8 — was a SQL injection that compromised 2,773 organisations</a>. A single injection point. Ninety-five million individuals' data exposed.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL injection was first documented in 1998. Twenty-eight years later, it remains <a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP&rsquo;s A03 (Injection)</a> and continues to cause catastrophic breaches. <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-34362" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The MOVEit breach of 2023 &mdash; CVE-2023-34362, CVSS 9.8 &mdash; was a SQL injection that compromised 2,773 organisations</a>. A single injection point. Ninety-five million individuals&rsquo; data exposed.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, SQL injection is existential. Your database contains privileged communications, litigation strategy, client identity, and billing records. An attacker who achieves SQL injection doesn't just read data — <a href="https://portswigger.net/web-security/sql-injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">they can modify records, escalate privileges, and in some configurations execute operating system commands</a>.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, SQL injection is existential. Your database contains privileged communications, litigation strategy, client identity, and billing records. An attacker who achieves SQL injection doesn&rsquo;t just read data &mdash; <a href="https://portswigger.net/web-security/sql-injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">they can modify records, escalate privileges, and in some configurations execute operating system commands</a>.</p>
 
     <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
-        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.hackerone.com/resources/reporting/top-10-vulnerabilities">HackerOne's 2023 report</a> found SQL injection in their top 10 most impactful vulnerability categories, with median bounty payouts reflecting its severity.</p>
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.hackerone.com/resources/reporting/top-10-vulnerabilities" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HackerOne's 2023 report</a> found SQL injection in their top 10 most impactful vulnerability categories, with median bounty payouts reflecting its severity.</p>
     </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">How SQL Injection Works</h2>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Vulnerable Pattern: String Concatenation</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL (Structured Query Language) is the standard language for querying and managing databases &mdash; it is how your application asks the database for data. SQL injection exploits the mixing of code and data in these database queries. When user input is concatenated directly into a SQL string, the database cannot distinguish between the developer&rsquo;s intended query structure and attacker-supplied SQL.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL injection exploits the mixing of code and data in database queries. When user input is concatenated directly into a SQL string, the database cannot distinguish between the developer&rsquo;s intended query structure and attacker-supplied SQL.</p>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code># VULNERABLE — never do this
+query = f&quot;SELECT * FROM matters WHERE citation = &#x27;{user_input}&#x27;&quot;</code></pre>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Here is how the attack works step by step. Your application builds a query like: <code>SELECT * FROM matters WHERE citation = '[user input here]'</code>. If <code>user_input</code> is a normal citation like <code>[2024] SGCA 15</code>, the query works as intended. But if <code>user_input</code> is <code>' OR '1'='1</code>, the query becomes: <code>SELECT * FROM matters WHERE citation = '' OR '1'='1'</code>. The injected <code>OR '1'='1'</code> is always true &mdash; one always equals one &mdash; so the database returns <strong class="text-ink">every row in the table</strong> instead of the one the user was authorised to see. The attacker has bypassed all access control with a few characters of input.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If <code>user_input</code> is <code>&#x27; OR &#x27;1&#x27;=&#x27;1</code>:</p>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code>SELECT * FROM matters WHERE citation = &#x27;&#x27; OR &#x27;1&#x27;=&#x27;1&#x27;</code></pre>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The query now returns every row in the table. The attacker has bypassed all access control.</p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Escalation: From Data Theft to Full Compromise</h3>
 
@@ -106,59 +111,115 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">Union-based</strong></td><td class="px-4 py-3"><code>UNION SELECT</code> to extract data from other tables</td><td class="px-4 py-3">Read any table: users, credentials, privileged documents</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong class="text-ink">Error-based</strong></td><td class="px-4 py-3">Force database errors that leak information</td><td class="px-4 py-3">Enumerate table names, column types, database version</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">Blind (boolean)</strong></td><td class="px-4 py-3">Ask true/false questions, observe response differences</td><td class="px-4 py-3">Extract data character by character</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong class="text-ink">Blind (time-based)</strong></td><td class="px-4 py-3">Use <code>SLEEP()</code> or <code>WAITFOR</code> to infer data</td><td class="px-4 py-3">Works even when no output difference is visible</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">Out-of-band</strong></td><td class="px-4 py-3">DNS or HTTP requests from the database server</td><td class="px-4 py-3">Exfiltrate data through side channels</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong class="text-ink">Stacked queries</strong></td><td class="px-4 py-3">Terminate query and start a new one</td><td class="px-4 py-3"><code>DROP TABLE</code>, <code>INSERT</code>, <code>UPDATE</code> — full write access</td></tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Union-based</strong></td>
+                    <td class="px-4 py-3"><code>UNION SELECT</code> to extract data from other tables</td>
+                    <td class="px-4 py-3">Read any table: users, credentials, privileged documents</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Error-based</strong></td>
+                    <td class="px-4 py-3">Force database errors that leak information</td>
+                    <td class="px-4 py-3">Enumerate table names, column types, database version</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Blind (boolean)</strong></td>
+                    <td class="px-4 py-3">Ask true/false questions, observe response differences</td>
+                    <td class="px-4 py-3">Extract data character by character</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Blind (time-based)</strong></td>
+                    <td class="px-4 py-3">Use <code>SLEEP()</code> or <code>WAITFOR</code> to infer data</td>
+                    <td class="px-4 py-3">Works even when no output difference is visible</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Out-of-band</strong></td>
+                    <td class="px-4 py-3">DNS or HTTP requests from the database server</td>
+                    <td class="px-4 py-3">Exfiltrate data through side channels</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Stacked queries</strong></td>
+                    <td class="px-4 py-3">Terminate query and start a new one</td>
+                    <td class="px-4 py-3"><code>DROP TABLE</code>, <code>INSERT</code>, <code>UPDATE</code> &mdash; full write access</td>
+                </tr>
             </tbody>
         </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/sql-injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger's SQL injection tutorial</a> demonstrates that even blind injection — where the attacker never sees query output directly — can extract entire databases given enough requests.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/sql-injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger&rsquo;s SQL injection tutorial</a> demonstrates that even blind injection &mdash; where the attacker never sees query output directly &mdash; can extract entire databases given enough requests.</p>
 
-    <div style="margin:1.5rem 0;" class="border-l-4 border-red bg-red-50 px-5 py-4 rounded-r">
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red-500 bg-red-50 px-5 py-4 rounded-r">
         <p class="text-base leading-relaxed text-ink-light"><strong>Legal SaaS scenario:</strong> An attacker finds a blind SQL injection in your case search endpoint. They can't see results directly, but they ask: "Is the first character of the admin's password hash greater than 'M'?" The response time differs by 5 seconds (time-based blind). In 2,000 requests — completed in minutes by automated tools — they have the full admin password hash. With admin access, they read every privileged document in the system.</p>
     </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Parameterised Queries: The Primary Defence</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's SQL Injection Prevention Cheat Sheet</a> identifies parameterised queries (prepared statements) as the primary defence. They work by separating SQL structure from data at the protocol level:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP&rsquo;s SQL Injection Prevention Cheat Sheet</a> identifies parameterised queries (prepared statements) as the primary defence. They work by separating SQL structure from data at the protocol level:</p>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code># SAFE — parameterised query
+cursor.execute(
+    &quot;SELECT * FROM matters WHERE citation = %s AND tenant_id = %s&quot;,
+    (user_input, current_tenant_id)
+)</code></pre>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The database engine receives the query structure and the parameters separately. The parameter is always treated as data — never as SQL code — regardless of its content. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">This defence is complete against first-order SQL injection</a>.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The database engine receives the query structure and the parameters separately. The parameter is always treated as data &mdash; never as SQL code &mdash; regardless of its content. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">This defence is complete against first-order SQL injection</a>.</p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">What You Cannot Parameterise</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Parameters work for values in <code>WHERE</code> clauses, <code>INSERT</code> data, and <code>UPDATE</code> sets. They do <strong class="text-ink">not</strong> work for:</p>
 
-    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
-        <li>Table names</li>
-        <li>Column names</li>
-        <li><code>ORDER BY</code> / <code>GROUP BY</code> directions</li>
-        <li>SQL keywords and operators</li>
-    </ul>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- Table names</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- Column names</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- <code>ORDER BY</code> / <code>GROUP BY</code> directions</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- SQL keywords and operators</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For these, use strict allowlists:</p>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code>ALLOWED_SORT_COLUMNS = {&#x27;filed_date&#x27;, &#x27;citation&#x27;, &#x27;status&#x27;, &#x27;created_at&#x27;}
+ALLOWED_DIRECTIONS = {&#x27;ASC&#x27;, &#x27;DESC&#x27;}
+
+if sort_column not in ALLOWED_SORT_COLUMNS:
+    raise ValueError(&quot;Invalid sort column&quot;)
+if direction not in ALLOWED_DIRECTIONS:
+    raise ValueError(&quot;Invalid sort direction&quot;)
+
+query = f&quot;SELECT * FROM matters ORDER BY {sort_column} {direction}&quot;</code></pre>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">ORM Safety and Its Limits</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern ORMs (Object-Relational Mappers, as we covered in Episode 7 &mdash; libraries that let you write database queries in your programming language instead of raw SQL) &mdash; <a href="https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma</a>, SQLAlchemy, TypeORM, Django ORM &mdash; use parameterised queries by default. When you use the ORM's query builder, you're generally safe:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern ORMs &mdash; <a href="https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma</a>, SQLAlchemy, TypeORM, Django ORM &mdash; use parameterised queries by default. When you use the ORM&rsquo;s query builder, you&rsquo;re generally safe:</p>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code>// Prisma — safe by default
+const matters = await prisma.matter.findMany({
+  where: { courtCode: userInput, tenantId: currentTenant }
+});</code></pre>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code># SQLAlchemy — safe via query builder
+matters = session.query(Matter).filter(
+    Matter.citation == user_input,
+    Matter.tenant_id == current_tenant_id
+).all()</code></pre>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Raw Query Escape Hatch</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every ORM provides a way to execute raw SQL. This is where injection returns:</p>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code>// Prisma — UNSAFE raw query with string interpolation
+const result = await prisma.$queryRawUnsafe(
+  `SELECT * FROM matters WHERE citation = &#x27;${userInput}&#x27;`
+);</code></pre>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code>// Prisma — SAFE raw query with parameters
+const result = await prisma.$queryRaw`
+  SELECT * FROM matters WHERE citation = ${userInput}
+`;</code></pre>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma's documentation explicitly warns</a> that <code>$queryRawUnsafe</code> accepts arbitrary strings and must never include unsanitised user input. The tagged template literal version (<code>$queryRaw</code>) automatically parameterises.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prisma&rsquo;s documentation explicitly warns</a> that <code>$queryRawUnsafe</code> accepts arbitrary strings and must never include unsanitised user input. The tagged template literal version (<code>$queryRaw</code>) automatically parameterises.</p>
 
-    <div style="margin:1.5rem 0;" class="border-2 border-amber-500 bg-amber-50 px-5 py-5 rounded-lg">
-        <h3 style="margin-top:0;margin-bottom:0.75rem;" class="text-lg font-bold text-ink">ORM Safety Rules</h3>
-        <p class="text-base leading-relaxed text-ink-light"><ol>
+    <div style="margin:1.5rem 0;" class="border-l-4 border-yellow-500 bg-yellow-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><h3 style="margin-top:0;">ORM Safety Rules</h3>
+<ol>
 <li>Use the query builder for all standard operations</li>
 <li>If you must use raw queries, use the parameterised variant</li>
 <li>Never interpolate user input into raw SQL strings</li>
 <li>Audit raw query usage in code reviews — search for <code>$queryRawUnsafe</code>, <code>text()</code>, <code>.raw()</code></li>
-<li>Lint rules: <a href="https://eslint.org/docs/latest/rules/">ESLint</a> custom rules can flag unsafe raw query patterns</li>
+<li>Lint rules: <a href="https://eslint.org/docs/latest/rules/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ESLint</a> custom rules can flag unsafe raw query patterns</li>
 </ol></p>
     </div>
 
@@ -168,29 +229,31 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Scenario:</strong></p>
 
-    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
-        <li>A user registers with username: <code>admin'--</code></li>
-        <li>The registration query uses parameterised statements — safe, value stored as-is</li>
-        <li>Later, an admin panel builds a query: <code>"SELECT * FROM audit_log WHERE username = '" + stored_username + "'"</code></li>
-        <li>The stored value, retrieved from the database, is now injected into a vulnerable query</li>
-    </ol>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">1. A user registers with username: <code>admin&#x27;--</code></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP documents second-order injection</a> as particularly insidious because the initial input point appears safe — parameterised queries protect it. The vulnerability exists in a completely different code path that reads the stored value and uses it unsafely.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">2. The registration query uses parameterised statements &mdash; safe, value stored as-is</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Defence:</strong> Treat all data as untrusted, even data from your own database. <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Every query that includes any variable data — regardless of its source — must use parameterised statements</a>.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">3. Later, an admin panel builds a query: <code>&quot;SELECT * FROM audit_log WHERE username = &#x27;&quot; + stored_username + &quot;&#x27;&quot;</code></p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">4. The stored value, retrieved from the database, is now injected into a vulnerable query</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP documents second-order injection</a> as particularly insidious because the initial input point appears safe &mdash; parameterised queries protect it. The vulnerability exists in a completely different code path that reads the stored value and uses it unsafely.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Defence:</strong> Treat all data as untrusted, even data from your own database. <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Every query that includes any variable data &mdash; regardless of its source &mdash; must use parameterised statements</a>.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SQL Injection Testing</h2>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Manual Testing</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/sql-injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger's methodology</a> starts with:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://portswigger.net/web-security/sql-injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger&rsquo;s methodology</a> starts with:</p>
 
-    <ol style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
-        <li>Submit a single quote <code>'</code> and observe error messages</li>
-        <li>Submit boolean conditions (<code>OR 1=1</code>, <code>OR 1=2</code>) and compare responses</li>
-        <li>Submit time-delay payloads (<code>'; WAITFOR DELAY '0:0:5'--</code>) and observe timing</li>
-        <li>Submit OWASP's SQL injection test strings from the <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Testing Guide</a></li>
-    </ol>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">1. Submit a single quote <code>&#x27;</code> and observe error messages</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">2. Submit boolean conditions (<code>OR 1=1</code>, <code>OR 1=2</code>) and compare responses</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">3. Submit time-delay payloads (<code>&#x27;; WAITFOR DELAY &#x27;0:0:5&#x27;--</code>) and observe timing</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">4. Submit OWASP&rsquo;s SQL injection test strings from the <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Testing Guide</a></p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Automated Testing</h3>
 
@@ -204,9 +267,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><a href="https://sqlmap.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">sqlmap</a></td><td class="px-4 py-3">Automated SQL injection detection and exploitation</td><td class="px-4 py-3">Gold standard for SQLi testing</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><a href="https://portswigger.net/burp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Burp Suite</a></td><td class="px-4 py-3">Proxy-based web security scanner</td><td class="px-4 py-3">Comprehensive scanning including SQLi</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><a href="https://www.zaproxy.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP ZAP</a></td><td class="px-4 py-3">Open-source web application scanner</td><td class="px-4 py-3">Free alternative to Burp</td></tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><a href="https://sqlmap.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">sqlmap</a></td>
+                    <td class="px-4 py-3">Automated SQL injection detection and exploitation</td>
+                    <td class="px-4 py-3">Gold standard for SQLi testing</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><a href="https://portswigger.net/burp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Burp Suite</a></td>
+                    <td class="px-4 py-3">Proxy-based web security scanner</td>
+                    <td class="px-4 py-3">Comprehensive scanning including SQLi</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><a href="https://www.zaproxy.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP ZAP</a></td>
+                    <td class="px-4 py-3">Open-source web application scanner</td>
+                    <td class="px-4 py-3">Free alternative to Burp</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -215,11 +290,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Static analysis tools can identify vulnerable patterns before deployment:</p>
 
-    <ul style="margin-bottom:1.5rem;margin-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Semgrep</strong> rules for raw SQL detection</li>
-        <li><strong class="text-ink">SonarQube</strong> SQL injection detection</li>
-        <li><strong class="text-ink">CodeQL</strong> queries for taint analysis (tracking user input to SQL queries)</li>
-    </ul>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- <strong class="text-ink">Semgrep</strong> rules for raw SQL detection</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- <strong class="text-ink">SonarQube</strong> SQL injection detection</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- <strong class="text-ink">CodeQL</strong> queries for taint analysis (tracking user input to SQL queries)</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Database-Level Hardening</h2>
 
@@ -234,22 +309,67 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">Principle of least privilege</strong></td><td class="px-4 py-3">Application DB user has only SELECT/INSERT/UPDATE on required tables — never DROP, CREATE, or sys admin</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong class="text-ink">Separate read/write credentials</strong></td><td class="px-4 py-3">Read-only endpoints use read-only DB credentials</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">Stored procedures</strong></td><td class="px-4 py-3">Encapsulate complex queries; restrict direct table access</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong class="text-ink">Row-level security</strong></td><td class="px-4 py-3"><a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PostgreSQL RLS</a> enforces tenant isolation at the database level</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong class="text-ink">Query logging</strong></td><td class="px-4 py-3">Log all queries for anomaly detection</td></tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Principle of least privilege</strong></td>
+                    <td class="px-4 py-3">Application DB user has only SELECT/INSERT/UPDATE on required tables &mdash; never DROP, CREATE, or sys admin</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Separate read/write credentials</strong></td>
+                    <td class="px-4 py-3">Read-only endpoints use read-only DB credentials</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Stored procedures</strong></td>
+                    <td class="px-4 py-3">Encapsulate complex queries; restrict direct table access</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Row-level security</strong></td>
+                    <td class="px-4 py-3"><a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PostgreSQL RLS</a> enforces tenant isolation at the database level</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Query logging</strong></td>
+                    <td class="px-4 py-3">Log all queries for anomaly detection</td>
+                </tr>
             </tbody>
         </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For multi-tenant legal SaaS, <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PostgreSQL Row-Level Security</a> provides a particularly strong defence. Even if an injection occurs, the database itself enforces that queries can only return rows belonging to the current tenant — a last-resort containment.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For multi-tenant legal SaaS, <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PostgreSQL Row-Level Security</a> provides a particularly strong defence. Even if an injection occurs, the database itself enforces that queries can only return rows belonging to the current tenant &mdash; a last-resort containment.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL injection is a solved problem at the code level — parameterised queries eliminate it entirely for value-position injection. Yet it persists because developers use raw queries for "just this one complex case," because ORMs offer unsafe escape hatches, and because second-order injection hides in code paths nobody thought to check. <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Use the ORM. Parameterise the exceptions. Treat stored data as untrusted. Test regularly.</a></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SQL injection is a solved problem at the code level &mdash; parameterised queries eliminate it entirely for value-position injection. Yet it persists because developers use raw queries for &ldquo;just this one complex case,&rdquo; because ORMs offer unsafe escape hatches, and because second-order injection hides in code paths nobody thought to check. <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Use the ORM. Parameterise the exceptions. Treat stored data as untrusted. Test regularly.</a></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Cross-Site Scripting (XSS)</strong> — when the attacker's code runs in your users' browsers, with access to their sessions, their documents, and their privileged data.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Cross-Site Scripting (XSS)</strong> &mdash; when the attacker&rsquo;s code runs in your users&rsquo; browsers, with access to their sessions, their documents, and their privileged data.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Sources and Further Reading</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP Top 10:2021, &ldquo;A03 Injection.&rdquo; https://owasp.org/Top10/A03_2021-Injection/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> NVD, CVE-2023-34362. MOVEit Transfer SQL injection, CVSS 9.8. https://nvd.nist.gov/vuln/detail/CVE-2023-34362</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> PortSwigger, &ldquo;SQL Injection.&rdquo; Comprehensive tutorial and lab exercises. https://portswigger.net/web-security/sql-injection</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> HackerOne, &ldquo;Top 10 Most Impactful Vulnerability Categories,&rdquo; 2023. https://www.hackerone.com/resources/reporting/top-10-vulnerabilities</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;SQL Injection Prevention Cheat Sheet.&rdquo; https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;Query Parameterization Cheat Sheet.&rdquo; https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Prisma, &ldquo;Raw database access.&rdquo; Documentation on safe and unsafe raw query methods. https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> ESLint, &ldquo;Rules Reference.&rdquo; Custom rule configuration for code quality. https://eslint.org/docs/latest/rules/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;SQL Injection.&rdquo; Attack description including second-order injection. https://owasp.org/www-community/attacks/SQL_Injection</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP Web Security Testing Guide, &ldquo;Testing for SQL Injection.&rdquo; https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> sqlmap, automated SQL injection detection and exploitation tool. https://sqlmap.org/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP ZAP (Zed Attack Proxy), open-source web application security scanner. https://www.zaproxy.org/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> PostgreSQL Documentation, &ldquo;Row Security Policies.&rdquo; https://www.postgresql.org/docs/current/ddl-rowsecurity.html</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><em>Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</em></p>
 </article>
 
 <!-- Transcript -->
@@ -263,6 +383,7 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
+
         <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 8 &mdash; SQL Injection and ORM Safety. Alice, this is a vulnerability that was first documented in 1998. Are we really still talking about it in 2026?</p>
@@ -271,11 +392,11 @@
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So explain the mechanics. How does injecting SQL actually work?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It exploits a fundamental flaw in how many applications build database queries. If you construct a SQL query by concatenating user input directly into the query string, you&rsquo;re mixing code and data. The database can&rsquo;t tell where your intended query ends and the attacker&rsquo;s additions begin.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It exploits a fundamental flaw in how many applications build database queries &mdash; a database query is the instruction your application sends to its database to retrieve or modify data, written in SQL, Structured Query Language. If you construct a SQL query by concatenating user input directly into the query string, you&rsquo;re mixing code and data. The database can&rsquo;t tell where your intended query ends and the attacker&rsquo;s additions begin.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Give me a concrete example in a legal context.</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> You have a case search endpoint. A lawyer types a citation into a search box, and your backend builds a query: &ldquo;SELECT FROM matters WHERE citation equals&rdquo; &mdash; and then you paste in whatever the user typed, wrapped in quotes. If the user types a normal citation, it works fine. But if they type: single-quote, space, OR, space, &rsquo;1&rsquo; equals &rsquo;1&rsquo; &mdash; now your query says &ldquo;select all matters where citation equals empty string OR one equals one.&rdquo; One always equals one. The query returns every matter in the database.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> You have a case search endpoint. A lawyer types a citation into a search box, and your backend builds a query: &quot;SELECT FROM matters WHERE citation equals&quot; &mdash; and then you paste in whatever the user typed, wrapped in quotes. If the user types a normal citation, it works fine. But if they type: single-quote, space, OR, space, &rsquo;1&rsquo; equals &rsquo;1&rsquo; &mdash; now your query says &quot;select all matters where citation equals empty string OR one equals one.&quot; One always equals one. The query returns every matter in the database.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Every matter. Across all tenants?</p>
 
@@ -283,35 +404,35 @@
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s the simple case. What about the more sophisticated versions?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Blind injection is the scary one. The attacker can&rsquo;t see query results directly &mdash; maybe the endpoint only returns &ldquo;found&rdquo; or &ldquo;not found.&rdquo; So they ask binary questions. &ldquo;Is the first character of the admin password hash greater than M?&rdquo; If the response comes back in 100 milliseconds, the answer is no. If it takes 5 seconds &mdash; because they added a conditional sleep command &mdash; the answer is yes. With automated tools like sqlmap, they extract entire databases this way. Character by character. It takes minutes, not hours.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Blind injection is the scary one. The attacker can&rsquo;t see query results directly &mdash; maybe the endpoint only returns &quot;found&quot; or &quot;not found.&quot; So they ask binary questions. &quot;Is the first character of the admin password hash greater than M?&quot; If the response comes back in 100 milliseconds, the answer is no. If it takes 5 seconds &mdash; because they added a conditional sleep command &mdash; the answer is yes. With automated tools like sqlmap &mdash; an open-source tool purpose-built for exploiting SQL injection &mdash; they extract entire databases this way. Character by character. It takes minutes, not hours.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> OK, so the fix. Parameterised queries.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The fix is absolute and it&rsquo;s been available since the late nineties. A parameterised query separates the SQL structure from the data at the protocol level. You write the query with placeholders &mdash; question marks or named parameters &mdash; and pass the user&rsquo;s input separately. The database engine receives them as two distinct things. The parameter is always treated as a data value, never as SQL code. No matter what characters it contains, it cannot alter the query structure.</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And modern ORMs do this automatically?</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And modern ORMs &mdash; Object-Relational Mappers, as we covered in episode seven &mdash; do this automatically?</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> When you use the ORM&rsquo;s query builder, yes. Prisma&rsquo;s findMany, SQLAlchemy&rsquo;s filter method, Django&rsquo;s ORM &mdash; they all generate parameterised queries under the hood. If you write prisma.matter.findMany where courtCode equals userInput, that&rsquo;s safe. The ORM parameterises it.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So why does injection still happen if ORMs prevent it?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because every ORM has an escape hatch. Prisma has $queryRawUnsafe. SQLAlchemy has text() with string formatting. Django has .raw() and .extra(). These exist for complex queries the query builder can&rsquo;t express &mdash; window functions, recursive CTEs, full-text search with custom ranking. Developers reach for them, and then they concatenate user input because it&rsquo;s faster than figuring out the parameterised syntax.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because every ORM has an escape hatch. Prisma has $queryRawUnsafe. SQLAlchemy has text() with string formatting. Django has .raw() and .extra(). These exist for complex queries the query builder can&rsquo;t express &mdash; window functions, recursive CTEs &mdash; Common Table Expressions, a way to build complex queries in stages &mdash; full-text search with custom ranking. Developers reach for them, and then they concatenate user input because it&rsquo;s faster than figuring out the parameterised syntax.</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the rule for code review is &mdash; search for those escape hatches?</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That makes sense. So the rule for code review is &mdash; search for those escape hatches?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. In a Prisma codebase, grep for $queryRawUnsafe. In SQLAlchemy, look for text() combined with f-strings or .format(). In Django, search for .raw() and .extra(). Every instance should be examined for user input flowing into the string. Static analysis tools &mdash; programs that scan your source code for vulnerabilities without running it &mdash; like Semgrep can automate this with taint tracking rules, which follow data flow from untrusted input to sensitive operations.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. In a Prisma codebase, grep for $queryRawUnsafe. In SQLAlchemy, look for text() combined with f-strings or .format() &mdash; both are Python ways of pasting variables directly into strings, which is exactly what you don&rsquo;t want near a database query. In Django, search for .raw() and .extra(). Every instance should be examined for user input flowing into the string. Static analysis tools &mdash; programs that scan your source code for vulnerabilities without running it &mdash; like Semgrep can automate this with taint tracking rules, which follow data flow from untrusted input to sensitive operations.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> You mentioned something called second-order injection in the research. That&rsquo;s a nastier variant?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Much nastier because the injection point and the vulnerability are in different code paths. Here&rsquo;s the scenario: a user registers with the username &ldquo;admin single-quote dash dash.&rdquo; Your registration code uses parameterised queries &mdash; perfectly safe. The value is stored as-is in the database. Six months later, someone writes an admin panel that builds an audit log query by reading usernames from the database and concatenating them. That stored username is now injected into a vulnerable query. The original input point was safe. The vulnerability is in completely different code that reads from the database.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Much nastier because the injection point and the vulnerability are in different code paths. Here&rsquo;s the scenario: a user registers with the username &quot;admin single-quote dash dash.&quot; Your registration code uses parameterised queries &mdash; perfectly safe. The value is stored as-is in the database. Six months later, someone writes an admin panel that builds an audit log query by reading usernames from the database and concatenating them. That stored username is now injected into a vulnerable query. The original input point was safe. The vulnerability is in completely different code that reads from the database.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s terrifying. How do you defend against it?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The principle is: treat all data as untrusted, including data from your own database. Every query that includes variable data must use parameterised statements, regardless of where that data originated. &ldquo;It came from our own database&rdquo; is not a safety guarantee. It came from user input at some point.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The principle is: treat all data as untrusted, including data from your own database. Every query that includes variable data must use parameterised statements, regardless of where that data originated. &quot;It came from our own database&quot; is not a safety guarantee. It came from user input at some point.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about database-level defences? Is there anything beyond parameterised queries?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Defence in depth. First &mdash; principle of least privilege. Your application&rsquo;s database user should have only the permissions it needs. SELECT, INSERT, UPDATE on specific tables. Never DROP, CREATE, or system admin privileges. If injection occurs, the attacker is constrained by the user&rsquo;s permissions. Second &mdash; for multi-tenant legal SaaS, PostgreSQL Row-Level Security. You define policies at the database level that restrict which rows each user can see. Even if an injection bypasses your application code, the database itself enforces tenant isolation.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Defence in depth. First &mdash; principle of least privilege. Your application&rsquo;s database user should have only the permissions it needs. SELECT, INSERT, UPDATE on specific tables. Never DROP, CREATE, or system admin privileges. If injection occurs, the attacker is constrained by the user&rsquo;s permissions. Second &mdash; for multi-tenant legal SaaS, PostgreSQL Row-Level Security &mdash; RLS for short. You define policies at the database level that restrict which rows each user can see. Even if an injection bypasses your application code, the database itself enforces tenant isolation.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s a genuine safety net. Even a successful injection can&rsquo;t cross tenant boundaries.</p>
 
@@ -319,11 +440,11 @@
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> How should teams test for SQL injection?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three levels. First, automated scanning &mdash; tools like sqlmap, Burp Suite, or OWASP ZAP against your staging environment. They&rsquo;ll find the obvious cases. Second, code review with static analysis &mdash; Semgrep or CodeQL rules that track data flow from API inputs to raw query functions. Third, manual testing on high-value endpoints. Submit a single quote and watch the error response. Submit boolean conditions and compare responses. Submit time-delay payloads and measure response times. Any variation means potential injection.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three levels. First, automated scanning &mdash; tools like sqlmap, Burp Suite, or OWASP ZAP, which are specialised security testing tools that probe your application for vulnerabilities &mdash; against your staging environment. They&rsquo;ll find the obvious cases. Second, code review with static analysis &mdash; Semgrep or CodeQL rules that track data flow from API inputs to raw query functions. Third, manual testing on high-value endpoints. Submit a single quote and watch the error response. Submit boolean conditions and compare responses. Submit time-delay payloads and measure response times. Any variation means potential injection.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And the error messages matter too, right? You don&rsquo;t want to leak database details.</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Never expose raw database errors to users. A stack trace showing &ldquo;PostgreSQL error near character 47&rdquo; tells the attacker exactly where their injection syntax broke. Return generic error messages to the client. Log detailed errors server-side for your team.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Never expose raw database errors to users. A stack trace showing &quot;PostgreSQL error near character 47&quot; tells the attacker exactly where their injection syntax broke. Return generic error messages to the client. Log detailed errors server-side for your team.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So the summary: parameterised queries prevent first-order injection completely, ORMs provide this by default but have escape hatches that reintroduce risk, second-order injection requires treating even database-sourced data as untrusted, and row-level security provides containment if everything else fails.</p>
 

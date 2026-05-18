@@ -78,15 +78,17 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Single Enforcement Point</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">As your legal SaaS grows from a monolith to multiple services, security logic scatters. Authentication checks in every microservice. Rate limiting reimplemented per endpoint. Logging inconsistent across teams. <a href="https://www.nginx.com/learn/api-gateway/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">An API gateway consolidates these concerns into a single enforcement layer &mdash; every request passes through one point where policy is applied consistently</a>.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">As your legal SaaS grows from a monolith to multiple services, security logic scatters. Authentication checks in every microservice &mdash; each small, independently deployed backend service. Rate limiting reimplemented per endpoint. Logging inconsistent across teams. An API gateway consolidates these concerns into a single enforcement layer &mdash; <a href="https://www.nginx.com/learn/api-gateway/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">every request passes through one point where policy is applied consistently</a>.</p>
 
     <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
-        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.akamai.com/resources/state-of-the-internet-report" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Akamai&rsquo;s State of the Internet report</a> found that API attacks grew 109% year-over-year, with credential abuse and resource exhaustion as the primary vectors. A gateway with proper rate limiting eliminates the majority of these automated attacks.</p>
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.akamai.com/resources/state-of-the-internet-report" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Akamai's State of the Internet report</a> found that API attacks grew 109% year-over-year, with credential abuse and resource exhaustion as the primary vectors. A gateway with proper rate limiting eliminates the majority of these automated attacks.</p>
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal tech, where a single unthrottled API call might export thousands of privileged documents, the gateway isn&rsquo;t a performance optimisation &mdash; it&rsquo;s a security boundary.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Gateway as Security Layer</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">What the Gateway Enforces</h3>
 
     <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
         <table class="w-full text-base text-ink-light border border-rule">
@@ -98,12 +100,36 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3">Authentication</td><td class="px-4 py-3">Each service validates tokens independently</td><td class="px-4 py-3">Gateway validates once; services trust internal traffic</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Rate limiting</td><td class="px-4 py-3">Per-service, inconsistent, often missing</td><td class="px-4 py-3">Centralised, per-user, per-endpoint, global</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3">Request validation</td><td class="px-4 py-3">Scattered schema checks</td><td class="px-4 py-3">Single schema enforcement point</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Logging/audit</td><td class="px-4 py-3">Inconsistent formats, gaps</td><td class="px-4 py-3">Every request logged uniformly</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3">TLS termination</td><td class="px-4 py-3">Each service manages certificates</td><td class="px-4 py-3">Gateway terminates TLS; internal traffic on private network</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">IP allowlisting</td><td class="px-4 py-3">Firewall rules per service</td><td class="px-4 py-3">Gateway-level enforcement</td></tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3">Authentication</td>
+                    <td class="px-4 py-3">Each service validates tokens independently</td>
+                    <td class="px-4 py-3">Gateway validates once; services trust internal traffic</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3">Rate limiting</td>
+                    <td class="px-4 py-3">Per-service, inconsistent, often missing</td>
+                    <td class="px-4 py-3">Centralised, per-user, per-endpoint, global</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3">Request validation</td>
+                    <td class="px-4 py-3">Scattered schema checks</td>
+                    <td class="px-4 py-3">Single schema enforcement point</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3">Logging/audit</td>
+                    <td class="px-4 py-3">Inconsistent formats, gaps</td>
+                    <td class="px-4 py-3">Every request logged uniformly</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3">TLS termination</td>
+                    <td class="px-4 py-3">Each service manages certificates</td>
+                    <td class="px-4 py-3">Gateway terminates TLS; internal traffic on private network</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3">IP allowlisting</td>
+                    <td class="px-4 py-3">Firewall rules per service</td>
+                    <td class="px-4 py-3">Gateway-level enforcement</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -113,6 +139,8 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Rate Limiting Strategies</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Rate limiting prevents resource exhaustion, credential stuffing, data scraping, and denial-of-service. The strategy you choose depends on what you&rsquo;re protecting.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Algorithm Comparison</h3>
 
     <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
         <table class="w-full text-base text-ink-light border border-rule">
@@ -124,21 +152,43 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Fixed window</strong></td><td class="px-4 py-3">Count requests per time window. Resets at boundary.</td><td class="px-4 py-3">Simple, predictable limits</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong>Sliding window</strong></td><td class="px-4 py-3">Weighted average of current and previous window.</td><td class="px-4 py-3">Most API rate limiting</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Token bucket</strong></td><td class="px-4 py-3">Tokens refill at steady rate; requests consume tokens.</td><td class="px-4 py-3">Allowing legitimate traffic bursts</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong>Leaky bucket</strong></td><td class="px-4 py-3">Requests queue and drain at fixed rate. Excess drops.</td><td class="px-4 py-3">Smoothing traffic to backend</td></tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Fixed window</strong></td>
+                    <td class="px-4 py-3">Count requests per time window (e.g., 100/minute). Resets at window boundary.</td>
+                    <td class="px-4 py-3">Simple, predictable limits</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Sliding window</strong></td>
+                    <td class="px-4 py-3">Weighted average of current and previous window. Smooths boundary spikes.</td>
+                    <td class="px-4 py-3">Most API rate limiting</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Token bucket</strong></td>
+                    <td class="px-4 py-3">Tokens refill at steady rate; requests consume tokens. Allows bursts up to bucket size.</td>
+                    <td class="px-4 py-3">Allowing legitimate traffic bursts</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Leaky bucket</strong></td>
+                    <td class="px-4 py-3">Requests queue and drain at fixed rate. Excess drops.</td>
+                    <td class="px-4 py-3">Smoothing traffic to backend</td>
+                </tr>
             </tbody>
         </table>
     </div>
 
     <div style="margin:1.5rem 0;" class="border-l-4 border-yellow-500 bg-yellow-50 px-5 py-4 rounded-r">
-        <p class="text-base leading-relaxed text-ink-light"><strong>Fixed window edge case:</strong> A user sends 100 requests at 11:59:59 and 100 more at 12:00:01. Both pass a 100/minute fixed window &mdash; but 200 requests hit your backend in 2 seconds. The <a href="https://blog.cloudflare.com/counting-things-a-lot-of-different-things/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">sliding window algorithm</a> solves this by weighting the overlapping window.</p>
+        <p class="text-base leading-relaxed text-ink-light"><strong>Fixed window edge case:</strong> A user sends 100 requests at 11:59:59 and 100 more at 12:00:01. Both pass a 100/minute fixed window — but 200 requests hit your backend in 2 seconds. The <a href="https://blog.cloudflare.com/counting-things-a-lot-of-different-things/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">sliding window algorithm</a> solves this by weighting the overlapping window.</p>
     </div>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Token Bucket for Legal SaaS</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://en.wikipedia.org/wiki/Token_bucket" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">token bucket algorithm</a> is ideal for legal applications because it accommodates legitimate bursts &mdash; a lawyer batch-downloading case files at the start of their day &mdash; while maintaining a steady-state limit. Bucket capacity sets the maximum burst size (e.g., 50 document downloads). Refill rate sets sustained throughput (e.g., 10 downloads per minute).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://en.wikipedia.org/wiki/Token_bucket" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">token bucket algorithm</a> is ideal for legal applications because it accommodates legitimate bursts &mdash; a lawyer batch-downloading case files at the start of their day &mdash; while maintaining a steady-state limit:</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- <strong class="text-ink">Bucket capacity:</strong> Maximum burst size (e.g., 50 document downloads)</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- <strong class="text-ink">Refill rate:</strong> Sustained throughput (e.g., 10 downloads per minute)</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">- <strong class="text-ink">Result:</strong> A lawyer can immediately download 50 files, then continues at 10/minute</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Per-User, Per-Endpoint, and Global Limits</h2>
 
@@ -154,10 +204,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Per-user</strong></td><td class="px-4 py-3">1000 API calls/hour per authenticated user</td><td class="px-4 py-3">Prevent compromised accounts from bulk exfiltration</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong>Per-endpoint</strong></td><td class="px-4 py-3">10 document downloads/minute</td><td class="px-4 py-3">Protect expensive operations</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Per-IP</strong></td><td class="px-4 py-3">100 unauthenticated requests/minute per IP</td><td class="px-4 py-3">Block credential stuffing before auth</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong>Global</strong></td><td class="px-4 py-3">10,000 requests/second across all users</td><td class="px-4 py-3">Protect infrastructure from DDoS</td></tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Per-user</strong></td>
+                    <td class="px-4 py-3">1000 API calls/hour per authenticated user</td>
+                    <td class="px-4 py-3">Prevent compromised accounts from bulk exfiltration</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Per-endpoint</strong></td>
+                    <td class="px-4 py-3">10 document downloads/minute on <code>/api/documents/{id}/download</code></td>
+                    <td class="px-4 py-3">Protect expensive operations</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Per-IP</strong></td>
+                    <td class="px-4 py-3">100 unauthenticated requests/minute per IP</td>
+                    <td class="px-4 py-3">Block credential stuffing before auth</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Global</strong></td>
+                    <td class="px-4 py-3">10,000 requests/second across all users</td>
+                    <td class="px-4 py-3">Protect infrastructure from DDoS</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -176,11 +242,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Full-text search endpoints are computationally expensive</a> and reveal data through query patterns. An attacker systematically queries terms to map your document corpus without downloading files directly.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigation:</strong> Rate limit search to 30 queries/minute per user. Log query patterns. Alert on systematic enumeration (sequential date ranges, alphabetical name lists).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigation:</strong> Rate limit search to 30 queries/minute per user. Log query patterns. Alert on systematic enumeration (sequential date ranges, alphabetical name lists). Consider differential privacy on result counts.</p>
 
     <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">E-Filing Deadline Denial</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An attacker targets your e-filing API with legitimate-looking but invalid requests during known deadline periods. The goal isn&rsquo;t data theft &mdash; it&rsquo;s consuming your rate limit slots so legitimate filings fail.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An attacker targets your e-filing API with legitimate-looking but invalid requests during known deadline periods (discovery deadlines, motion filing windows). The goal isn&rsquo;t data theft &mdash; it&rsquo;s consuming your rate limit slots so legitimate filings fail.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Mitigation:</strong> Priority queues for authenticated users with pending deadlines. Separate rate limit pools for filing operations vs. general API calls. <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Circuit breakers</a> that shed load from non-critical endpoints to protect filing pathways.</p>
 
@@ -197,19 +263,44 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Closed</strong> (normal)</td><td class="px-4 py-3">Requests flow through; failures counted</td></tr>
-                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong>Open</strong> (tripped)</td><td class="px-4 py-3">Requests fail immediately without calling the downstream service</td></tr>
-                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Half-open</strong> (testing)</td><td class="px-4 py-3">Limited requests probe whether the service has recovered</td></tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Closed</strong> (normal)</td>
+                    <td class="px-4 py-3">Requests flow through; failures counted</td>
+                </tr>
+                <tr class="border-t border-rule bg-paper">
+                    <td class="px-4 py-3"><strong class="text-ink">Open</strong> (tripped)</td>
+                    <td class="px-4 py-3">Requests fail immediately without calling the downstream service</td>
+                </tr>
+                <tr class="border-t border-rule">
+                    <td class="px-4 py-3"><strong class="text-ink">Half-open</strong> (testing)</td>
+                    <td class="px-4 py-3">Limited requests probe whether the service has recovered</td>
+                </tr>
             </tbody>
         </table>
     </div>
 
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS: if your document storage service becomes slow, a circuit breaker prevents the API gateway from queuing thousands of requests that overwhelm memory. Users see a fast &ldquo;service temporarily unavailable&rdquo; instead of a 30-second timeout followed by an error.</p>
+
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Response Headers for Rate Limit Transparency</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The IETF RateLimit header fields specification</a> standardises how servers communicate rate limit status. Include <code>RateLimit-Limit</code>, <code>RateLimit-Remaining</code>, and <code>RateLimit-Reset</code> on every response. Legitimate clients use them to self-throttle. <a href="https://docs.github.com/en/rest/using-the-rest-api/rate-limiting-for-the-rest-api" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GitHub&rsquo;s API</a> demonstrates this pattern well.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The IETF RateLimit header fields specification</a> standardises how servers communicate rate limit status:</p>
+    <pre style="margin:1rem 0;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.25rem;overflow-x:auto;font-size:0.875rem;line-height:1.5;"><code>RateLimit-Limit: 100
+RateLimit-Remaining: 67
+RateLimit-Reset: 1620000000</code></pre>
 
-    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
-        <p class="text-base leading-relaxed text-ink-light"><strong>Recommended stack:</strong> Gateway (Kong, AWS API Gateway, or Envoy). Rate limit store: <a href="https://redis.io/glossary/rate-limiting/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redis</a> (atomic INCR with TTL). Counters: sliding window with per-user and per-endpoint dimensions. Response: 429 Too Many Requests with RateLimit headers and Retry-After. Monitor when any user consistently hits 80% of their limit.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Include these on every response. Legitimate clients use them to self-throttle. Your own frontend uses them to display &ldquo;please wait&rdquo; instead of error messages. <a href="https://docs.github.com/en/rest/using-the-rest-api/rate-limiting-for-the-rest-api" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GitHub&rsquo;s API</a> demonstrates this pattern well &mdash; clients can check remaining quota before making expensive calls.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Implementation Architecture</h2>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red-500 bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Recommended stack:</strong>
+
+- **Gateway:** Kong, AWS API Gateway, or Envoy (depending on cloud/self-hosted preference)
+- **Rate limit store:** Redis (atomic INCR with TTL) — <a href="https://redis.io/glossary/rate-limiting/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redis rate limiting patterns</a>
+- **Counters:** Sliding window with per-user and per-endpoint dimensions
+- **Response:** 429 Too Many Requests with RateLimit headers and Retry-After
+- **Monitoring:** Alert when any user consistently hits 80% of their limit
+- **Bypass:** Internal service-to-service traffic bypasses user rate limits (uses separate auth; covered in Episode 15)</p>
     </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
@@ -217,6 +308,38 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An API gateway is where security policy becomes enforceable infrastructure. Rate limiting protects against both external attacks and internal abuse &mdash; compromised accounts, malicious insiders, and automated scraping. For legal SaaS, where a single unthrottled endpoint can exfiltrate an entire case file repository, the gateway is not optional architecture &mdash; it&rsquo;s a security control as fundamental as authentication.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Service-to-Service Authentication</strong> &mdash; because your internal services need to prove their identity to each other too.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Sources and Further Reading</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> NGINX, &ldquo;What is an API Gateway?&rdquo; Gateway architecture overview. https://www.nginx.com/learn/api-gateway/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Akamai, &ldquo;State of the Internet / Security Report.&rdquo; API attack trends and statistics. https://www.akamai.com/resources/state-of-the-internet-report</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Kong, &ldquo;Kong Gateway Documentation.&rdquo; Open-source API gateway. https://docs.konghq.com/gateway/latest/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> AWS, &ldquo;Amazon API Gateway Developer Guide.&rdquo; Managed API gateway service. https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Envoy Proxy, &ldquo;Envoy Documentation.&rdquo; High-performance service proxy. https://www.envoyproxy.io/docs/envoy/latest/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Traefik Labs, &ldquo;Traefik Documentation.&rdquo; Cloud-native reverse proxy. https://doc.traefik.io/traefik/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Cloudflare, &ldquo;Counting Things &mdash; A Lot of Different Things.&rdquo; Sliding window rate limiting at scale. https://blog.cloudflare.com/counting-things-a-lot-of-different-things/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Wikipedia, &ldquo;Token bucket.&rdquo; Algorithm description and properties. https://en.wikipedia.org/wiki/Token_bucket</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Stripe Engineering, &ldquo;Scaling your API with rate limiters.&rdquo; Production rate limiting patterns. https://stripe.com/blog/rate-limiters</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> OWASP, &ldquo;API4:2023 Unrestricted Resource Consumption.&rdquo; API security risk for resource exhaustion. https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Microsoft Azure, &ldquo;Circuit Breaker pattern.&rdquo; Resilience pattern for distributed systems. https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> IETF, &ldquo;RateLimit header fields for HTTP,&rdquo; Internet-Draft. Standardised rate limit response headers. https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> GitHub, &ldquo;Rate limiting for the REST API.&rdquo; Production rate limit header implementation. https://docs.github.com/en/rest/using-the-rest-api/rate-limiting-for-the-rest-api</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"> Redis, &ldquo;Rate Limiting.&rdquo; Redis-based rate limiting patterns with atomic operations. https://redis.io/glossary/rate-limiting/</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><em>Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</em></p>
 </article>
 
 <!-- Transcript -->
@@ -230,6 +353,7 @@
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
 
+
         <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 14 &mdash; API Gateway Patterns and Rate Limiting. Alice, why does a legal SaaS application need a gateway in front of its APIs?</p>
@@ -238,11 +362,11 @@
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What does that look like architecturally?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Client requests hit the gateway first. The gateway validates the authentication token, checks rate limits, validates the request schema, logs the request, and then &mdash; only if everything passes &mdash; forwards to the appropriate backend service. The backend services trust internal traffic from the gateway. They don&rsquo;t each need to re-validate tokens or implement their own rate limiting.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Client requests hit the gateway first. The gateway validates the authentication token &mdash; the credential that proves a request comes from a logged-in user &mdash; checks rate limits, validates the request schema, logs the request, and then &mdash; only if everything passes &mdash; forwards to the appropriate backend service. The backend services trust internal traffic from the gateway. They don&rsquo;t each need to re-validate tokens or implement their own rate limiting.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s focus on rate limiting. Why is it a security concern and not just a performance concern?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because without rate limits, a single compromised account can exfiltrate your entire document repository in minutes. A malicious insider can bulk-download every client&rsquo;s privileged files before anyone notices. An attacker can credential-stuff your login endpoint at thousands of attempts per second. An automated scraper can map your entire matter database through the search API. Rate limiting isn&rsquo;t about server performance &mdash; it&rsquo;s about limiting the blast radius of any successful attack.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because without rate limits, a single compromised account can exfiltrate your entire document repository in minutes. A malicious insider can bulk-download every client&rsquo;s privileged files before anyone notices. An attacker can credential-stuff &mdash; trying stolen username-password pairs from other breaches &mdash; your login endpoint at thousands of attempts per second. An automated scraper can map your entire matter database through the search API. Rate limiting isn&rsquo;t about server performance &mdash; it&rsquo;s about limiting the blast radius of any successful attack.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What are the main algorithms? I know there&rsquo;s more than one way to count requests.</p>
 
@@ -258,7 +382,7 @@
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Give me a specific attack scenario. What happens without proper rate limiting?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Scenario: opposing counsel compromises a junior associate&rsquo;s credentials through phishing. They log in during off-hours &mdash; say 2am Sunday. Without per-endpoint rate limiting on the document download API, they write a script that downloads every document the associate has access to. In legal SaaS with proper multi-tenant access controls, that associate might have access to dozens of matters, each with hundreds of files. Without rate limits, the entire corpus exfiltrates in under an hour. With a 50-downloads-per-hour limit and alerting at 80% &mdash; the attack gets 50 documents before triggering a security alert.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Scenario: opposing counsel compromises a junior associate&rsquo;s credentials through phishing. They log in during off-hours &mdash; say 2am Sunday. Without per-endpoint rate limiting on the document download API, they write a script that downloads every document the associate has access to. In legal SaaS with proper multi-tenant access controls &mdash; multi-tenant meaning one system serves many separate law firms, each seeing only their own data —, that associate might have access to dozens of matters, each with hundreds of files. Without rate limits, the entire corpus exfiltrates in under an hour. With a 50-downloads-per-hour limit and alerting at 80% &mdash; the attack gets 50 documents before triggering a security alert.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about search endpoint abuse? That&rsquo;s more subtle.</p>
 
@@ -266,23 +390,23 @@
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> You mentioned circuit breakers earlier. How do those fit in?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> When a downstream service fails &mdash; your document storage becomes slow, your search index is overloaded &mdash; naive retry logic makes it worse. Every client retries, overwhelming the already-struggling service. A circuit breaker detects the failure, stops sending requests, and returns fast errors instead. Three states &mdash; closed is normal operation, open means the service is down and requests fail immediately, half-open sends limited probes to detect recovery. For legal SaaS &mdash; if document storage is slow, you want users to see &ldquo;temporarily unavailable&rdquo; instantly rather than waiting 30 seconds for a timeout.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> When a downstream service fails &mdash; your document storage becomes slow, your search index is overloaded &mdash; naive retry logic makes it worse. Every client retries, overwhelming the already-struggling service. A circuit breaker detects the failure, stops sending requests, and returns fast errors instead. Three states &mdash; closed is normal operation, open means the service is down and requests fail immediately, half-open sends limited probes to detect recovery. For legal SaaS &mdash; if document storage is slow, you want users to see &quot;temporarily unavailable&quot; instantly rather than waiting 30 seconds for a timeout.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> There&rsquo;s a specific legal tech scenario here too &mdash; deadline-based denial of service.</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This one is nasty. An attacker doesn&rsquo;t need to take your whole platform down. They just need to overwhelm your e-filing endpoint during the window when their opponent has a filing deadline. Send thousands of malformed but authentication-valid requests that consume rate limit slots. Legitimate filing attempts get 429 Too Many Requests. The deadline passes. The fix is priority queues &mdash; authenticated users with pending court deadlines get separate rate limit pools from general API traffic. Filing operations get their own capacity that can&rsquo;t be starved by other endpoints.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This one is nasty. An attacker doesn&rsquo;t need to take your whole platform down. They just need to overwhelm your e-filing endpoint during the window when their opponent has a filing deadline. Send thousands of malformed but authentication-valid requests that consume rate limit slots. Legitimate filing attempts get a 429 Too Many Requests error &mdash; the server&rsquo;s way of saying &quot;slow down, you&rsquo;ve exceeded your limit.&quot; The deadline passes. The fix is priority queues &mdash; authenticated users with pending court deadlines get separate rate limit pools from general API traffic. Filing operations get their own capacity that can&rsquo;t be starved by other endpoints.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> How should the gateway communicate limits to clients?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Standard response headers. RateLimit-Limit tells the client their quota. RateLimit-Remaining tells them how many requests they have left. RateLimit-Reset tells them when the window resets. Include these on every response. Your own frontend uses them to show users &ldquo;you&rsquo;ve used 80% of your download limit today&rdquo; instead of just failing with no explanation. Well-behaved API clients self-throttle based on these headers &mdash; reducing load on your infrastructure organically.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Standard response headers. RateLimit-Limit tells the client their quota. RateLimit-Remaining tells them how many requests they have left. RateLimit-Reset tells them when the window resets. Include these on every response. Your own frontend uses them to show users &quot;you&rsquo;ve used 80% of your download limit today&quot; instead of just failing with no explanation. Well-behaved API clients self-throttle based on these headers &mdash; reducing load on your infrastructure organically.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Where do you store the rate limit counters?</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Redis &mdash; a fast in-memory data store. Atomic increment with TTL &mdash; time-to-live, an automatic expiry timer. The sliding window implementation stores the count for current and previous windows, computes a weighted sum, and rejects if it exceeds the limit. Redis handles this at tens of thousands of operations per second with sub-millisecond latency. For multi-region deployments, you need to decide &mdash; local rate limiting per region, or global via a central Redis cluster. Local is faster but means a user can multiply their limit by hitting different regions.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Redis &mdash; a fast in-memory data store. Atomic increment &mdash; meaning the count increases in a single indivisible step so two simultaneous requests can&rsquo;t both read the same number &mdash; with TTL &mdash; time-to-live, an automatic expiry timer. The sliding window implementation stores the count for current and previous windows, computes a weighted sum, and rejects if it exceeds the limit. Redis handles this at tens of thousands of operations per second with sub-millisecond latency. For multi-region deployments, you need to decide &mdash; local rate limiting per region, or global via a central Redis cluster. Local is faster but means a user can multiply their limit by hitting different regions.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode we&rsquo;re covering service-to-service authentication &mdash; because everything behind the gateway still needs to prove its identity.</p>
 
-        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Where mTLS, service mesh, and JWT service tokens replace the &ldquo;trust the network&rdquo; assumption that gets breached every time. Until then, I&rsquo;m Alice.</p>
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Where mTLS &mdash; mutual TLS, where both sides verify each other&rsquo;s identity &mdash; service mesh, and JWT service tokens &mdash; JSON Web Tokens, as we covered in Episode 6 &mdash; replace the &quot;trust the network&quot; assumption that gets breached every time. Until then, I&rsquo;m Alice.</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
 
