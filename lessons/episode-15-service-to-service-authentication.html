@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 15 &mdash; Service-to-Service Authentication &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 15 &middot; Module 4 &middot; Transport Security</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Service-to-Service Authentication</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; &mdash;:&mdash;&mdash; &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-15-service-to-service-authentication.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>&mdash;:&mdash;&mdash;</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-15-service-to-service-authentication.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Your API gateway authenticates external users &mdash; but what about the services behind it? Alice and Dan cover mutual TLS (mTLS), service mesh architectures (Istio, Linkerd), JWT service tokens, network segmentation for privileged legal data, and practical patterns for teams of every size &mdash; from shared secrets to Vault-managed certificates. The unifying principle: Zero Trust means no implicit trust based on network location.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 15: Service-to-Service Authentication</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Beyond the Perimeter: Internal Trust</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your API gateway authenticates external users. But what about the services behind it? When your document service calls your search index, when your billing service queries your matter database, when your AI inference service requests document content &mdash; how do these services prove their identity to each other? <a href="https://cloud.google.com/security/overview/whitepaper" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The &ldquo;trusted network&rdquo; assumption &mdash; that anything inside your VPC (Virtual Private Cloud &mdash; your isolated private network in the cloud) is legitimate &mdash; fails the moment an attacker gains internal access</a>.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.crowdstrike.com/blog/widespread-lateral-movement-as-a-service/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CrowdStrike reports</a> that lateral movement &mdash; attackers pivoting between internal services after initial compromise &mdash; is present in 70%+ of advanced threat campaigns. Internal service authentication is what stops initial access from becoming total compromise.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, the internal services carry the most sensitive data &mdash; the privilege classification engine, the document store, the billing system with trust account details. If any internal service can impersonate another, a single compromised container means total data access.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Mutual TLS (mTLS)</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Standard TLS authenticates the server to the client. <a href="https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mutual TLS (mTLS)</a> adds the reverse &mdash; the client also presents a certificate, and the server validates it. Both parties prove their identity cryptographically before any data flows.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">How mTLS Works Between Services</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Step</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">What Happens</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">1</td><td class="px-4 py-3">Service A connects to Service B</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">2</td><td class="px-4 py-3">Service B presents its certificate (standard TLS)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">3</td><td class="px-4 py-3">Service B requests Service A&rsquo;s certificate</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">4</td><td class="px-4 py-3">Service A presents its certificate</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">5</td><td class="px-4 py-3">Service B validates A&rsquo;s certificate against a trusted CA</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">6</td><td class="px-4 py-3">Connection established &mdash; both identities verified</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Certificate Management at Scale</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Concern</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Issuance</td><td class="px-4 py-3">Internal CA (e.g., <a href="https://developer.hashicorp.com/vault/docs/secrets/pki" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HashiCorp Vault PKI</a>, <a href="https://cert-manager.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">cert-manager</a> for Kubernetes)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Short-lived certificates</td><td class="px-4 py-3">24-hour validity with automatic rotation</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Revocation</td><td class="px-4 py-3">Short lifetimes make revocation less critical; combine with OCSP stapling</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Identity encoding</td><td class="px-4 py-3">Service name in certificate SAN (e.g., <code>document-service.internal.lawfirm.app</code>)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-yellow-500 bg-yellow-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Operational reality:</strong> Manual certificate management for mTLS at scale is unsustainable. <a href="https://developer.hashicorp.com/vault/docs/secrets/pki" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HashiCorp Vault&rsquo;s PKI engine</a> or Kubernetes cert-manager automates issuance and rotation. Without automation, teams disable mTLS when certificates expire during incidents &mdash; creating permanent security gaps.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Service Mesh: mTLS Without Application Changes</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A <a href="https://istio.io/latest/docs/concepts/security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">service mesh</a> is an infrastructure layer that handles service-to-service communication &mdash; including mTLS &mdash; transparently. Your application code doesn&rsquo;t change; the mesh&rsquo;s sidecar proxies handle authentication, encryption, and authorization.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Istio and Linkerd</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Feature</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold"><a href="https://istio.io/latest/docs/concepts/security/" target="_blank" rel="noopener" class="text-paper hover:text-paper/80 border-b border-paper/40 transition">Istio</a></th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold"><a href="https://linkerd.io/2.14/features/automatic-mtls/" target="_blank" rel="noopener" class="text-paper hover:text-paper/80 border-b border-paper/40 transition">Linkerd</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">mTLS</td><td class="px-4 py-3">Automatic between all meshed services</td><td class="px-4 py-3">Automatic with zero-config</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Authorization policies</td><td class="px-4 py-3">Fine-grained (service A can call service B&rsquo;s /api/documents but not /api/billing)</td><td class="px-4 py-3">Service-level only (L4)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Certificate management</td><td class="px-4 py-3">Built-in CA (istiod) or external CA integration</td><td class="px-4 py-3">Built-in identity with short-lived certs</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Complexity</td><td class="px-4 py-3">High (Envoy proxies, complex config)</td><td class="px-4 py-3">Lower (Rust proxy, simpler model)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Overhead</td><td class="px-4 py-3">~2&ndash;5ms latency per hop</td><td class="px-4 py-3">~1&ndash;2ms latency per hop</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Authorization Policies (Istio Example)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">mTLS proves identity. Authorization policies define what each identity can do:</p>
+
+    <pre style="margin-bottom:1.5rem;background:#1a1a1a;color:#e5e5e5;padding:1rem;border-radius:0.375rem;overflow-x:auto;font-family:monospace;font-size:0.875rem;line-height:1.5;"><code>apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: document-service-access
+spec:
+  selector:
+    matchLabels:
+      app: document-service
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/api-gateway"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/api/documents/*"]
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/ai-inference"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/api/documents/*/content"]</code></pre>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This says: the API gateway can GET any document endpoint. The AI inference service can only GET document content &mdash; nothing else. <a href="https://istio.io/latest/docs/concepts/security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Istio&rsquo;s security documentation</a> covers the full policy model.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">JWT Service Tokens</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For services that don&rsquo;t use a mesh &mdash; or for cross-cluster communication &mdash; <a href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">JWT (JSON Web Token) service tokens</a> provide request-level authentication. Each service has a signing key; tokens include claims about the calling service&rsquo;s identity and permitted scopes.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">JWT vs. mTLS</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Dimension</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">mTLS</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">JWT Service Tokens</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Authentication level</td><td class="px-4 py-3">Connection (long-lived)</td><td class="px-4 py-3">Per-request</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Identity proof</td><td class="px-4 py-3">Certificate from trusted CA</td><td class="px-4 py-3">Signed token with claims</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Scope/permissions</td><td class="px-4 py-3">Requires separate authz layer</td><td class="px-4 py-3">Encoded in token claims</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Revocation</td><td class="px-4 py-3">Certificate expiry/CRL</td><td class="px-4 py-3">Short-lived tokens + token blacklist</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Network dependency</td><td class="px-4 py-3">Requires TLS termination per service</td><td class="px-4 py-3">Works over any transport</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Best Practice: Combine Both</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Use mTLS for transport security (encryption + connection-level identity). Use JWTs for request-level authorization (scopes, permissions, audit trail). <a href="https://cloud.google.com/security/overview/whitepaper" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google&rsquo;s BeyondProd paper</a> describes this layered approach:</p>
+
+    <ul style="margin-bottom:1.5rem;padding-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li>mTLS ensures the network connection is between legitimate services</li>
+        <li>JWT ensures the specific request is authorized for the claimed operation</li>
+        <li>Short-lived tokens (5-minute validity) limit the window if a token leaks</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Network Segmentation for Privileged Data</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not all internal services should talk to all other services. <a href="https://www.nist.gov/publications/guide-secure-microservices-based-application" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Network segmentation</a> restricts communication paths so that compromise of one service doesn&rsquo;t grant access to everything.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Segmentation for Legal SaaS</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Zone</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Services</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Access Rules</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Public</strong></td><td class="px-4 py-3">API gateway, static assets</td><td class="px-4 py-3">Accepts external traffic</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong>Application</strong></td><td class="px-4 py-3">Business logic services</td><td class="px-4 py-3">Only reachable from gateway</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Data</strong></td><td class="px-4 py-3">Document store, search index, database</td><td class="px-4 py-3">Only reachable from application zone</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong>Privileged</strong></td><td class="px-4 py-3">Privilege classification engine, audit log, encryption key service</td><td class="px-4 py-3">Only reachable from specific application services with mTLS + authz policy</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red-600 bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Critical rule:</strong> The privilege classification engine &mdash; which determines whether a document is attorney-client privileged &mdash; must be in the most restricted zone. If an attacker can call it directly, they can reclassify documents to non-privileged and access them through normal channels. Network segmentation + mTLS + authorization policy = defence in depth.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Patterns for 3&ndash;5 Service Architectures</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not every legal SaaS team runs Kubernetes with a service mesh. For smaller deployments (3&ndash;5 services), practical options exist:</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Option 1: Shared Secret + HMAC (Simplest)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Services share a secret and sign requests with HMAC-SHA256. Simple, no certificate infrastructure. Breaks down at scale &mdash; secret rotation requires coordinating all services simultaneously.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Option 2: JWT with Asymmetric Keys (Moderate)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each service has a private key for signing. Other services have the public key for validation. <a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0&rsquo;s service-to-service documentation</a> describes the client credentials flow pattern. Scales better &mdash; adding a service means distributing one new public key.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Option 3: mTLS with Vault-Managed Certificates (Production)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.hashicorp.com/vault/docs/secrets/pki" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HashiCorp Vault</a> as internal CA. Each service requests short-lived certificates via the Vault API. Automatic rotation. No mesh overhead. Works with any HTTP framework that supports TLS client certificates.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Recommendation for legal SaaS startups:</strong> <strong>3 services or fewer:</strong> JWT with asymmetric keys (client credentials flow). Use <a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0</a> or roll your own with short-lived tokens. <strong>4&ndash;8 services:</strong> mTLS with Vault or cert-manager. Worth the infrastructure investment. <strong>9+ services or Kubernetes:</strong> Full service mesh (Linkerd for simplicity, Istio for fine-grained authz).</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Zero Trust: Never Trust the Network</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The unifying principle is <a href="https://www.nist.gov/publications/zero-trust-architecture" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zero Trust</a> &mdash; no implicit trust based on network location. Every service call is authenticated and authorized, whether it crosses the internet or travels between containers on the same host.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google&rsquo;s BeyondCorp</a> pioneered this model: &ldquo;The network is always hostile. Every request must be authenticated, authorized, and encrypted.&rdquo;</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means the document service doesn&rsquo;t trust a request just because it came from within the VPC. It validates the caller&rsquo;s identity (mTLS certificate or JWT), checks authorization (does this service have permission to read this client&rsquo;s documents?), and logs the access for audit.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Internal services are not inherently trustworthy. A compromised container, a leaked service credential, or a misconfigured network policy can turn internal access into total data breach. Service-to-service authentication &mdash; whether through mTLS, JWTs, service mesh, or a combination &mdash; ensures that every internal call is identified, authorized, and auditable. For legal SaaS carrying privileged data across service boundaries, this isn&rsquo;t architecture gold-plating &mdash; it&rsquo;s the control that prevents lateral movement from becoming catastrophic disclosure.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Email Security for SaaS</strong> &mdash; where we&rsquo;ll cover SPF, DKIM, DMARC, and why your transactional emails might be landing in spam or getting spoofed.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 15 &mdash; Service-to-Service Authentication. Alice, we covered API gateways last time &mdash; authenticating external users at the edge. But what about everything behind the gateway? How do internal services prove who they are?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> This is where most teams have a dangerous assumption baked in &mdash; &ldquo;if it&rsquo;s inside our network, it&rsquo;s trusted.&rdquo; Everything within the VPC &mdash; the Virtual Private Cloud, your isolated private network in the cloud &mdash; can talk to everything else. The document service can call the billing service. The search indexer can access the privilege classification engine. No authentication between them. The implicit model is: the network perimeter is the security boundary.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And that assumption breaks when?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> When an attacker gets inside. Which they will, eventually. A compromised container. A leaked service credential. A supply chain attack in a dependency. Once they have a foothold on any internal service, the lack of service-to-service authentication means they can talk to every other service. CrowdStrike reports that lateral movement &mdash; attackers pivoting between internal services &mdash; is present in over 70% of advanced threat campaigns. The perimeter doesn&rsquo;t hold forever. Internal authentication is what limits the damage when it doesn&rsquo;t.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So what&rsquo;s the solution? mTLS is the term I hear most often.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Mutual TLS. In standard TLS, only the server proves its identity &mdash; it shows a certificate, the client validates it. In mTLS, both sides present certificates. The client proves its identity to the server too. When your document service calls your search index, the search index knows it&rsquo;s actually talking to the document service &mdash; not to an attacker who happened to gain network access to the same subnet.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> How does that work in practice? Every service needs its own certificate?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Every service gets a certificate from your internal Certificate Authority. The certificate encodes the service&rsquo;s identity in the Subject Alternative Name &mdash; something like document-service.internal.lawfirm.app. When two services connect, they each present their certificate, validate the other against the trusted CA, and only then establish the connection. Both sides cryptographically prove their identity.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That sounds like a lot of certificates to manage.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It is, and that&rsquo;s the operational challenge. Manual certificate management at scale is unsustainable. Teams that try it end up with expired certificates causing outages, then they disable mTLS during incidents &ldquo;temporarily&rdquo; and it never comes back. The solution is automation &mdash; HashiCorp Vault&rsquo;s PKI engine &mdash; PKI being Public Key Infrastructure, the system for managing digital certificates &mdash; or Kubernetes cert-manager. Kubernetes is the container orchestration platform most teams use to deploy and manage their services. Short-lived certificates &mdash; 24-hour validity &mdash; with automatic rotation. The certificate expires before an attacker can use a stolen one, and rotation happens without human intervention.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about service mesh? Istio, Linkerd &mdash; how do those fit in?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> A service mesh handles mTLS transparently. Your application code doesn&rsquo;t change at all. The mesh deploys a sidecar proxy &mdash; a small helper process running alongside each service &mdash; in Istio it&rsquo;s Envoy, in Linkerd it&rsquo;s their Rust-based proxy. All service-to-service traffic goes through the sidecar, which handles mTLS automatically. You get encryption and authentication between every service with zero code changes.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And authorization? mTLS tells you who&rsquo;s calling, but not whether they&rsquo;re allowed to make that specific call.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> mTLS is authentication &mdash; proving identity. Authorization is the next layer. Istio lets you write policies like: &ldquo;the API gateway service can call GET on document endpoints, but the AI inference service can only call GET on document content &mdash; nothing else.&rdquo; Fine-grained, per-path, per-method access control between services. If a compromised AI container tries to call the billing API, the policy blocks it even though mTLS succeeds &mdash; it&rsquo;s a valid service, just not authorized for that operation.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about JWT tokens for service authentication? I&rsquo;ve seen that pattern too.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> JWTs &mdash; JSON Web Tokens, which we covered in Episode 6 &mdash; work well for request-level authentication &mdash; especially for cross-cluster communication or when you don&rsquo;t want the overhead of a mesh. Each service has a signing key and issues short-lived tokens with claims about what it&rsquo;s authorized to do. The receiving service validates the signature and checks the claims. Five-minute token validity limits the window if one leaks. The best approach is actually combining both &mdash; mTLS for transport security and connection-level identity, JWTs for request-level authorization with specific scopes.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> For a smaller team &mdash; say three to five services, no Kubernetes, no mesh &mdash; what&rsquo;s practical?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three tiers of complexity. Simplest &mdash; shared secrets with HMAC-signed requests. HMAC &mdash; Hash-based Message Authentication Code &mdash; is a way to stamp each request with a cryptographic fingerprint proving it came from someone who knows the shared secret. Each service pair shares a secret, signs requests with HMAC-SHA256. Works for three services. Breaks down at scale because rotating secrets requires coordinating all services simultaneously. Middle ground &mdash; JWT with asymmetric keys. Each service has a private key for signing, other services have the public keys for validation. Adding a service means distributing one new public key, not updating every secret everywhere. This is the client credentials flow &mdash; Auth0 documents it well.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And for production-grade?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> mTLS with Vault-managed certificates. Vault acts as your internal CA. Each service requests a short-lived certificate via the Vault API using its own authentication &mdash; maybe a Kubernetes service account token, maybe an AppRole &mdash; Vault&rsquo;s built-in method for machines to prove their identity. Certificates rotate automatically. No mesh overhead, no sidecar proxies, works with any HTTP framework that supports TLS client certificates. This is where most legal SaaS teams should land once they have four or more services.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Network segmentation comes into this too, right? Not every service needs to talk to every other service.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Critical. Even with mTLS, you want defence in depth. Divide your infrastructure into zones &mdash; public zone for the API gateway, application zone for business logic, data zone for databases and document stores, and a privileged zone for the most sensitive services. The privilege classification engine &mdash; which determines whether a document is attorney-client privileged &mdash; lives in the most restricted zone. Only specific application services, authenticated via mTLS with explicit authorization policies, can reach it. Network rules enforce this independently of the authentication layer.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> The principle here is Zero Trust?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. Zero Trust means no implicit trust based on network location. Every request is authenticated, authorized, and encrypted &mdash; whether it crosses the internet or travels between containers on the same host. Google&rsquo;s BeyondCorp pioneered this: the network is always hostile. For legal SaaS, this means your document service doesn&rsquo;t trust a request just because it came from the same VPC. It validates the caller&rsquo;s mTLS certificate, checks their JWT claims, verifies the authorization policy, and logs the access for audit.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What happens when teams don&rsquo;t do this?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> A single compromised service becomes total compromise. An attacker lands on the search indexer through a dependency vulnerability. The search indexer has unrestricted network access to the document store, the billing database, the privilege classification engine. No authentication between services means no access control. The attacker queries every document, every client record, every billing entry. With mTLS and authorization policies, they&rsquo;re contained. The compromised indexer can only access what the indexer is authorized to access &mdash; search indices, nothing more.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Email Security for SaaS. SPF, DKIM, DMARC &mdash; and why your transactional emails might be getting spoofed or landing in spam.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://cloud.google.com/security/overview/whitepaper" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google Cloud, &ldquo;BeyondProd: A new approach to cloud-native security.&rdquo; Zero-trust service-to-service model</a></li>
+        <li id="fn-2"><a href="https://www.crowdstrike.com/blog/widespread-lateral-movement-as-a-service/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CrowdStrike, &ldquo;Lateral Movement as a Service.&rdquo; Attack campaign lateral movement statistics</a></li>
+        <li id="fn-3"><a href="https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloudflare, &ldquo;What is mutual TLS (mTLS)?&rdquo; Mutual authentication explained</a></li>
+        <li id="fn-4"><a href="https://developer.hashicorp.com/vault/docs/secrets/pki" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HashiCorp, &ldquo;Vault PKI Secrets Engine.&rdquo; Automated internal CA for service certificates</a></li>
+        <li id="fn-5"><a href="https://cert-manager.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">cert-manager, &ldquo;cert-manager Documentation.&rdquo; Kubernetes-native certificate management</a></li>
+        <li id="fn-6"><a href="https://istio.io/latest/docs/concepts/security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Istio, &ldquo;Security &mdash; Istio.&rdquo; Service mesh security architecture including mTLS and authorization policies</a></li>
+        <li id="fn-7"><a href="https://linkerd.io/2.14/features/automatic-mtls/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Linkerd, &ldquo;Automatic mTLS.&rdquo; Zero-config mutual TLS in Linkerd</a></li>
+        <li id="fn-8"><a href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF RFC 7519, &ldquo;JSON Web Token (JWT),&rdquo; May 2015. Token-based authentication standard</a></li>
+        <li id="fn-9"><a href="https://www.nist.gov/publications/guide-secure-microservices-based-application" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-204, &ldquo;Security Strategies for Microservices-based Application Systems,&rdquo; August 2019</a></li>
+        <li id="fn-10"><a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0, &ldquo;Client Credentials Flow.&rdquo; Service-to-service authentication pattern</a></li>
+        <li id="fn-11"><a href="https://www.nist.gov/publications/zero-trust-architecture" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207, &ldquo;Zero Trust Architecture,&rdquo; August 2020</a></li>
+        <li id="fn-12"><a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google Cloud, &ldquo;BeyondCorp.&rdquo; Enterprise zero-trust network model</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-14-api-gateway-patterns-and-rate-limiting.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 14 &mdash; API Gateway Patterns and Rate Limiting</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-16-email-security-for-saas.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 16 &mdash; Email Security for SaaS</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

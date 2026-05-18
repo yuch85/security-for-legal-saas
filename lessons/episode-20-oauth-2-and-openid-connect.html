@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 20 &mdash; OAuth 2.0 and OpenID Connect &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 20 &middot; Module 5 &middot; Authentication &amp; Identity</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">OAuth 2.0 and OpenID Connect</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; &mdash;:&mdash;&mdash; &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-20-oauth-2-and-openid-connect.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>&mdash;:&mdash;&mdash;</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-20-oauth-2-and-openid-connect.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Every law firm already has an identity provider. Alice and Dan cover why legal SaaS should delegate authentication rather than managing passwords, the difference between OAuth 2.0 (authorization) and OpenID Connect (authentication), the Authorization Code + PKCE flow, why the Implicit flow is deprecated, the Backend-for-Frontend pattern for SPAs, scope minimisation, Client Credentials for service-to-service communication, multi-tenant IdP routing, court system and e-filing integrations, and the five most common OAuth implementation mistakes.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 20: OAuth 2.0 and OpenID Connect</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Delegated Authentication &mdash; Why Build Your Own When You Can&rsquo;t?</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every law firm already has an identity provider (IdP) &mdash; the system that manages user accounts and authenticates logins. Active Directory, Google Workspace, Okta, Azure AD. When your legal SaaS platform asks lawyers to create yet another username and password, you&rsquo;re not just adding friction &mdash; you&rsquo;re creating a credential that will be reused, forgotten, or compromised. <a href="https://datatracker.ietf.org/doc/html/rfc6749" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OAuth 2.0 (RFC 6749)</a> solves authorization delegation. <a href="https://openid.net/specs/openid-connect-core-1_0.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OpenID Connect (OIDC)</a> layers authentication on top. Together, they let users authenticate with their existing identity provider while your application receives only the claims it needs.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key distinction:</strong> OAuth 2.0 is an <em>authorization</em> framework &mdash; it answers &ldquo;what is this application allowed to do?&rdquo; OIDC is an <em>authentication</em> layer &mdash; it answers &ldquo;who is this user?&rdquo; <a href="https://oauth.net/articles/authentication/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Using OAuth 2.0 alone for authentication is a well-documented anti-pattern</a>. Always use OIDC when you need to verify user identity.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, OIDC integration means: single sign-on (SSO &mdash; logging in once and gaining access to multiple systems) with the firm&rsquo;s existing IdP, centralized access revocation when a lawyer leaves the firm, and no platform-specific passwords to manage, leak, or stuff.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">OAuth 2.0 Flows &mdash; Choosing the Right One</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Authorization Code + PKCE (Recommended)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc7636" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Authorization Code flow with PKCE (Proof Key for Code Exchange, RFC 7636)</a> is the recommended flow for all client types &mdash; web apps, SPAs, mobile apps, and native applications.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Flow:</strong></p>
+
+    <ol style="margin-bottom:1rem;padding-left:1.5rem;" class="list-decimal text-base leading-relaxed text-ink-light space-y-1">
+        <li>Client generates a random <code>code_verifier</code> (43&ndash;128 characters) and computes <code>code_challenge = SHA256(code_verifier)</code></li>
+        <li>Client redirects user to authorization server with <code>code_challenge</code></li>
+        <li>User authenticates at the authorization server</li>
+        <li>Authorization server redirects back with an authorization <code>code</code></li>
+        <li>Client exchanges <code>code</code> + <code>code_verifier</code> for tokens at the token endpoint</li>
+        <li>Authorization server verifies <code>SHA256(code_verifier) == code_challenge</code> before issuing tokens</li>
+    </ol>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Why PKCE?</strong> Without it, an attacker who intercepts the authorization code (via a compromised redirect URI, browser history, or referrer header) can exchange it for tokens. PKCE binds the code to the original client &mdash; only the party that generated the <code>code_verifier</code> can complete the exchange.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OAuth 2.1 (draft)</a> mandates PKCE for all authorization code grants. It&rsquo;s no longer optional.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Client Credentials (Service-to-Service)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For backend services communicating without user context &mdash; batch processing, scheduled jobs, inter-service API calls. No user interaction. The service authenticates directly with its own credentials. <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 6749 Section 4.4</a> defines this flow. For legal SaaS, this is how your document processing service authenticates to your API &mdash; with narrowly scoped permissions and rotated credentials.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Implicit Flow &mdash; Deprecated</h3>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red-600 bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Do not use.</strong> The Implicit flow returns tokens directly in the URL fragment. This exposes tokens to browser history, referrer headers, and any JavaScript on the page. <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OAuth 2.1 formally removes it</a>. If your legal SaaS still uses Implicit flow, migrate to Authorization Code + PKCE immediately.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">OpenID Connect as the Authentication Layer</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">OAuth 2.0 alone does not tell you who the user is &mdash; it tells you what they&rsquo;re authorized to access. <a href="https://openid.net/specs/openid-connect-core-1_0.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OIDC adds an <code>id_token</code></a> &mdash; a JWT containing identity claims:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Claim</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>sub</code></td><td class="px-4 py-3">Subject identifier (unique, stable)</td><td class="px-4 py-3"><code>auth0|507f1f77bcf86cd799439011</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>email</code></td><td class="px-4 py-3">User&rsquo;s email</td><td class="px-4 py-3"><code>partner@bakermckenzie.com</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>email_verified</code></td><td class="px-4 py-3">Whether email is confirmed</td><td class="px-4 py-3"><code>true</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>name</code></td><td class="px-4 py-3">Display name</td><td class="px-4 py-3"><code>Sarah Chen</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>iss</code></td><td class="px-4 py-3">Token issuer</td><td class="px-4 py-3"><code>https://accounts.google.com</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>aud</code></td><td class="px-4 py-3">Intended audience (your client_id)</td><td class="px-4 py-3"><code>your-legal-saas-client-id</code></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>exp</code></td><td class="px-4 py-3">Expiration</td><td class="px-4 py-3"><code>1716003600</code></td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>nonce</code></td><td class="px-4 py-3">Replay protection</td><td class="px-4 py-3"><code>n-0S6_WzA2Mj</code></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Critical validation steps</strong> (<a href="https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">per OIDC Core spec Section 3.1.3.7</a>): verify the signature using the IdP&rsquo;s published keys (JWKS endpoint), verify <code>iss</code> matches the expected issuer, verify <code>aud</code> contains your client_id, verify <code>exp</code> is in the future, and verify <code>nonce</code> matches what you sent in the authorization request. Skipping any of these checks opens specific attack vectors &mdash; issuer confusion, token injection, replay attacks.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Token Storage in SPAs</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Single-page applications (SPAs) &mdash; where the entire app runs in the user&rsquo;s browser &mdash; cannot keep secrets. There is no <code>client_secret</code>. This makes token storage critical.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Strategy</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Security</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">UX</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>Backend-for-Frontend (BFF) pattern</strong></td><td class="px-4 py-3">Tokens stay server-side; SPA gets httpOnly session cookie</td><td class="px-4 py-3">Best &mdash; seamless</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><strong>In-memory (JavaScript variable)</strong></td><td class="px-4 py-3">Lost on refresh; no XSS exfiltration risk</td><td class="px-4 py-3">Requires silent re-auth on refresh</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><strong>httpOnly cookie via token endpoint</strong></td><td class="px-4 py-3">Needs same-origin token endpoint</td><td class="px-4 py-3">Good &mdash; cookie-based</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><s>localStorage</s></td><td class="px-4 py-3">XSS = full token theft</td><td class="px-4 py-3"><strong>Never use</strong></td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><s>sessionStorage</s></td><td class="px-4 py-3">XSS = full token theft (slightly better &mdash; tab-scoped)</td><td class="px-4 py-3"><strong>Never use</strong></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The current best practice for SPAs</a> is the Backend-for-Frontend (BFF) pattern: your SPA communicates with a thin backend that holds the tokens server-side and proxies API calls. The SPA itself never touches OAuth tokens &mdash; it uses a standard httpOnly session cookie to communicate with its BFF.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Architecture recommendation:</strong> For legal SaaS handling privileged documents, always use the BFF pattern. The cost is one lightweight backend service. The benefit is that tokens &mdash; which grant access to privileged legal content &mdash; never exist in browser-accessible storage.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Scope Minimisation</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Request only the permissions your application actually needs. <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-3.3" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The principle of least privilege applied to OAuth scopes</a>:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Bad Practice</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Good Practice</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>scope=openid profile email read write admin</code></td><td class="px-4 py-3"><code>scope=openid email</code> (for authentication)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Request all scopes at login</td><td class="px-4 py-3">Request additional scopes incrementally when needed</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Single token for all operations</td><td class="px-4 py-3">Different tokens for different sensitivity levels</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS integrating with external systems: court filing systems should request read-only access to case status, not write access to filings. Client IdPs should request only <code>openid</code>, <code>email</code>, and necessary profile claims. Document storage should scope to specific folders/labels, not entire mailbox or drive.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developers.google.com/identity/protocols/oauth2/scopes" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google&rsquo;s OAuth scope documentation</a> illustrates granular scoping &mdash; each API has narrow, specific scopes rather than blanket access.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal SaaS Integrations</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Court Systems and E-Filing</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Many jurisdictions are deploying electronic filing systems that support OAuth/OIDC for third-party access:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Integration</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Authentication Pattern</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Considerations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Court e-filing APIs</td><td class="px-4 py-3">OAuth 2.0 client credentials or authorization code</td><td class="px-4 py-3">Strict scope limits; audit requirements</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Bar association portals</td><td class="px-4 py-3">OIDC SSO (lawyer authenticates via bar IdP)</td><td class="px-4 py-3">Verify bar membership status claims</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Client identity providers</td><td class="px-4 py-3">OIDC federation (firm&rsquo;s Azure AD/Okta)</td><td class="px-4 py-3">Multi-tenant IdP routing</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Legal research databases</td><td class="px-4 py-3">API key or OAuth client credentials</td><td class="px-4 py-3">Rate limiting; usage tracking</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.elitigation.sg/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Singapore&rsquo;s eLitigation system</a> provides API access for authorised legal technology providers. Integration requires strict adherence to the Judiciary&rsquo;s authentication specifications and scope limitations.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Multi-Tenant IdP Routing</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When your legal SaaS serves multiple law firms, each with their own identity provider, you need tenant-aware IdP routing:</p>
+
+    <ol style="margin-bottom:1rem;padding-left:1.5rem;" class="list-decimal text-base leading-relaxed text-ink-light space-y-1">
+        <li>User enters email at login (<code>partner@bakermckenzie.com</code>)</li>
+        <li>Your system looks up the domain &rarr; tenant mapping</li>
+        <li>Redirects to the correct IdP (Baker McKenzie&rsquo;s Azure AD instance)</li>
+        <li>Receives the OIDC response and validates against that IdP&rsquo;s configuration</li>
+        <li>Maps the identity to your internal user record</li>
+    </ol>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://auth0.com/docs/manage-users/organizations" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0&rsquo;s &ldquo;Organizations&rdquo; feature</a> and <a href="https://developer.okta.com/docs/concepts/multi-tenancy/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Okta&rsquo;s multi-tenancy patterns</a> document this architecture. The critical security requirement: <strong>never allow IdP confusion</strong> &mdash; validate that the issuer claim in the id_token matches the expected IdP for that tenant.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security Checklist</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Control</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Requirement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Flow selection</td><td class="px-4 py-3">Authorization Code + PKCE for all user-facing flows</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">State parameter</td><td class="px-4 py-3">Cryptographic random value; verify on callback (CSRF protection)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Redirect URI validation</td><td class="px-4 py-3">Exact match only &mdash; no wildcards, no open redirectors</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Token storage</td><td class="px-4 py-3">BFF pattern for SPAs; server-side for web apps</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Scope</td><td class="px-4 py-3">Minimum required; request incrementally</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">OIDC validation</td><td class="px-4 py-3">Verify iss, aud, exp, nonce, and signature on every id_token</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Token lifetime</td><td class="px-4 py-3">Access: 5&ndash;15 min; Refresh: 7 days with rotation</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Client secrets</td><td class="px-4 py-3">Rotated quarterly; stored in secrets manager, never in code</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">PKCE</td><td class="px-4 py-3">SHA256 code challenge; 43+ character verifier</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Logout</td><td class="px-4 py-3">Implement both RP-Initiated Logout and Back-Channel Logout</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc9700" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OAuth 2.0 Security Best Current Practice (RFC 9700)</a> consolidates all known OAuth security considerations into one document &mdash; essential reading for implementers.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Common Mistakes</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">1. Open redirect on callback URL</strong> &mdash; If your redirect_uri accepts arbitrary paths, an attacker can steal authorization codes by redirecting to their server. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP documents this as &ldquo;Unvalidated Redirects&rdquo;</a>.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">2. Missing state parameter</strong> &mdash; The <code>state</code> parameter is a random value your app sends at the start of the OAuth flow and verifies when the response returns, proving the two are linked. Without it, CSRF attacks can force a victim to authenticate as the attacker (login CSRF) or link the attacker&rsquo;s account to the victim&rsquo;s session.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">3. Accepting tokens from any issuer</strong> &mdash; If you don&rsquo;t validate <code>iss</code>, an attacker running their own IdP can issue tokens that your application accepts.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">4. Using access tokens for authentication</strong> &mdash; Access tokens are for API authorization, not identity verification. This creates a &ldquo;confused deputy&rdquo; problem &mdash; your service trusts a token that an attacker obtained for a different purpose, effectively tricking the service into acting on a forged identity. Always use the id_token for authentication.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">5. Storing client_secret in frontend code</strong> &mdash; SPAs cannot hold secrets. Use PKCE instead of client_secret for public clients. <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OAuth 2.0 for Browser-Based Apps</a> is explicit on this point.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">OAuth 2.0 and OpenID Connect are not optional features for legal SaaS &mdash; they&rsquo;re the mechanism that eliminates platform-specific credentials, enables centralized access control, and integrates with the identity infrastructure law firms already operate. Use Authorization Code + PKCE for all user-facing flows. Use OIDC for authentication, never raw OAuth. Implement the BFF pattern for SPAs. Validate every claim. Minimise scopes. And route each tenant to their correct IdP with strict issuer validation.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The goal is simple: a lawyer authenticates once with their firm&rsquo;s identity provider, and your platform trusts that assertion &mdash; verified cryptographically, scoped minimally, and revocable centrally when they leave the firm.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Multi-Factor Authentication</strong> &mdash; adding a second factor so that a compromised password alone isn&rsquo;t game over.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 20 &mdash; OAuth 2.0 and OpenID Connect. Alice, we just spent two episodes on sessions and JWTs. Now we&rsquo;re talking about delegated authentication. Why should a legal SaaS platform care about OAuth?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because every law firm already has an identity provider &mdash; an IdP, the system that manages user accounts and logins. Active Directory, Azure AD, Google Workspace, Okta. When you ask lawyers to create a separate username and password for your platform, three things happen. They reuse a password from somewhere else. They forget it regularly and trigger recovery flows. And when they leave the firm, nobody remembers to deactivate their account on your platform. OAuth and OIDC solve all three problems by delegating authentication to the firm&rsquo;s existing identity infrastructure.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s get the terminology straight. OAuth versus OIDC &mdash; what&rsquo;s the difference?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> OAuth 2.0 is an authorization framework. It answers &ldquo;what is this application allowed to do on behalf of the user?&rdquo; It was designed for delegated access &mdash; letting a third-party app access your Google Drive files without giving it your Google password. OpenID Connect &mdash; OIDC &mdash; is an authentication layer built on top of OAuth 2.0. It answers &ldquo;who is this user?&rdquo; It adds an ID token &mdash; a JWT containing identity claims like name, email, and a stable user identifier.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So if I just use OAuth 2.0 for login, that&rsquo;s wrong?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It&rsquo;s a documented anti-pattern. OAuth alone gives you an access token &mdash; which proves the user authorized your app to access a resource. But it doesn&rsquo;t reliably tell you who the user is. The access token might have been issued to a different application. It might not contain identity claims. Using it for authentication leads to confused deputy problems &mdash; where an attacker tricks your service into misusing its authority on their behalf &mdash; and token injection attacks. Always use OIDC when you need to verify identity. The ID token is specifically designed for that purpose, with validation rules that prevent the attacks raw OAuth is vulnerable to.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Walk me through the recommended flow.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Authorization Code with PKCE &mdash; Proof Key for Code Exchange. OAuth 2.1, which is in draft but being widely adopted, makes PKCE mandatory for all authorization code grants. Here&rsquo;s how it works. Your application generates a random string called a code verifier &mdash; at least 43 characters. It computes a SHA-256 hash of that string &mdash; the code challenge. It sends the user to the authorization server with the code challenge included. The user authenticates. The authorization server redirects back with an authorization code. Your application sends the code plus the original code verifier to the token endpoint. The server hashes the verifier, confirms it matches the challenge, and only then issues tokens.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What does PKCE actually protect against?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Authorization code interception. Without PKCE, if an attacker intercepts the authorization code &mdash; through a compromised redirect URI, browser history, referrer headers, or a malicious app registered with the same custom URI scheme on mobile &mdash; they can exchange it for tokens. With PKCE, the code is useless without the code verifier, which never left your application&rsquo;s memory. Only the legitimate client that started the flow can complete it.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about the Implicit flow? I still see it in older documentation.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Dead. Deprecated. OAuth 2.1 formally removes it. The Implicit flow returned tokens directly in the URL fragment &mdash; which meant they appeared in browser history, were exposed to JavaScript on the page, and could leak through referrer headers. It existed because early browsers couldn&rsquo;t make cross-origin POST requests for token exchange. That limitation no longer exists. There is no scenario where Implicit flow is appropriate for new development. If your legal SaaS still uses it, migrate to Authorization Code plus PKCE immediately.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> How should tokens be stored in a single-page application &mdash; an SPA, where the entire app runs in the browser?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The best current practice is the Backend-for-Frontend pattern &mdash; BFF. Your SPA communicates with a thin backend service that holds all OAuth tokens server-side. The SPA itself uses a standard httpOnly session cookie to authenticate with its BFF. The BFF proxies API calls, attaching the access token from its server-side store. Tokens never exist in the browser &mdash; no localStorage, no sessionStorage, no JavaScript variables. If the page has an XSS vulnerability, the attacker cannot steal OAuth tokens because they aren&rsquo;t there.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That adds a backend component for what might otherwise be a pure SPA.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> It does. One lightweight service &mdash; often just a few hundred lines. The alternative is storing tokens in JavaScript memory &mdash; which works, but means every page refresh requires silent re-authentication. Or storing in localStorage &mdash; which means any XSS vulnerability gives the attacker your tokens. For legal SaaS handling privileged documents, the BFF cost is trivial compared to the risk of token exfiltration.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s talk about scope minimisation. What scopes should a legal SaaS platform request?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The minimum required for the current operation. For login &mdash; openid and email. That&rsquo;s it. You don&rsquo;t need profile access. You don&rsquo;t need offline access unless you genuinely need refresh tokens. You don&rsquo;t need calendar read or drive access just because the OAuth provider offers them. Request additional scopes incrementally &mdash; when the user takes an action that requires broader access, prompt for the additional scope at that moment. This is called progressive consent.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about service-to-service communication? No user involved.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Client Credentials flow. Your document processing service authenticates directly to the authorization server using its own client ID and secret &mdash; no user redirect, no browser interaction. It receives an access token scoped to exactly what that service needs &mdash; maybe documents:read and nothing else. Client secrets must be stored in a secrets manager, rotated quarterly, and never committed to version control. Obvious, but you&rsquo;d be amazed how many client secrets live in environment variables copied from a Slack message three years ago.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Legal SaaS has some unique integration requirements. Court systems, bar associations, client identity providers.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Multi-tenant IdP routing is the key challenge. Your platform serves dozens of law firms. Each has their own Azure AD or Okta instance. When a user hits your login page, you need to determine which IdP to redirect them to. The standard pattern &mdash; type your email address, the system extracts the domain, looks up the tenant-to-IdP mapping, redirects to the correct authorization endpoint. On the return trip, you validate the ID token&rsquo;s issuer claim matches the expected IdP for that tenant. This prevents IdP confusion &mdash; an attacker running their own IdP cannot issue tokens that your platform accepts for a different tenant.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about integrating with court e-filing systems?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Jurisdictions are increasingly offering API access to e-filing systems for authorised legal tech providers. Singapore&rsquo;s eLitigation, various US state courts. These typically use OAuth 2.0 with strict scope limitations &mdash; read case status but not file documents, for example. The security requirement is narrow scoping and comprehensive audit logging. Every access token obtained for court system interaction should be logged with the user who triggered it, the scopes granted, and the operations performed. Courts are understandably cautious about API access to their systems.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What are the most common OAuth implementation mistakes you see?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Five. One &mdash; open redirectors on the callback URL. If your redirect URI accepts arbitrary paths or has a wildcard, attackers can redirect the authorization code to their server. Use exact-match redirect URI validation only. Two &mdash; missing state parameter. The state parameter is a random value your app sends at the start of the OAuth flow and checks when it comes back, to prove the response matches the request. Without it, CSRF attacks can force a user to authenticate as the attacker. Three &mdash; accepting tokens from any issuer. Always validate the iss claim against your expected IdP. Four &mdash; storing client secrets in frontend code. SPAs are public clients &mdash; they cannot hold secrets. Use PKCE. Five &mdash; using access tokens for authentication instead of ID tokens. Access tokens are for API authorization. ID tokens are for identity verification. Conflating them opens you to token injection and confused deputy attacks &mdash; where your service acts on a forged identity because it trusted the wrong token type.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Multi-Factor Authentication. Adding a second factor so that a compromised password alone isn&rsquo;t game over.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://datatracker.ietf.org/doc/html/rfc6749" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 6749: The OAuth 2.0 Authorization Framework</a></li>
+        <li id="fn-2"><a href="https://openid.net/specs/openid-connect-core-1_0.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OpenID Foundation, "OpenID Connect Core 1.0"</a></li>
+        <li id="fn-3"><a href="https://oauth.net/articles/authentication/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OAuth.net, "OAuth 2.0 for Authentication." Anti-pattern documentation</a></li>
+        <li id="fn-4"><a href="https://datatracker.ietf.org/doc/html/rfc7636" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 7636: Proof Key for Code Exchange (PKCE)</a></li>
+        <li id="fn-5"><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, OAuth 2.1 Draft. PKCE mandatory; Implicit removed</a></li>
+        <li id="fn-6"><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, "OAuth 2.0 for Browser-Based Applications." BFF pattern and SPA guidance</a></li>
+        <li id="fn-7"><a href="https://developers.google.com/identity/protocols/oauth2/scopes" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google, "OAuth 2.0 Scopes." Granular scope examples</a></li>
+        <li id="fn-8"><a href="https://www.elitigation.sg/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Supreme Court of Singapore, eLitigation. Electronic filing system</a></li>
+        <li id="fn-9"><a href="https://auth0.com/docs/manage-users/organizations" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0, "Organizations." Multi-tenant IdP routing</a></li>
+        <li id="fn-10"><a href="https://developer.okta.com/docs/concepts/multi-tenancy/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Okta Developer, "Multi-Tenancy Concepts"</a></li>
+        <li id="fn-11"><a href="https://datatracker.ietf.org/doc/html/rfc9700" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 9700: OAuth 2.0 Security Best Current Practice</a></li>
+        <li id="fn-12"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Unvalidated Redirects and Forwards Cheat Sheet"</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-19-session-management.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 19 &mdash; Session Management</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <span class="group inline-flex items-center text-ink-muted">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 21 &mdash; Coming Soon</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

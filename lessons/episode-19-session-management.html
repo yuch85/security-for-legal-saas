@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 19 &mdash; Session Management &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 19 &middot; Module 5 &middot; Authentication &amp; Identity</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Session Management</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; &mdash;:&mdash;&mdash; &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-19-session-management.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>&mdash;:&mdash;&mdash;</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-19-session-management.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Sessions are the invisible security layer that holds authentication state, tracks activity, and enforces timeout policies. Alice and Dan cover session ID generation with cryptographic randomness, cookie security attributes (HttpOnly, Secure, SameSite), session lifecycle from creation through renewal to invalidation, session fixation attacks and defences, idle and absolute timeout policies, concurrent session management, hijacking defences, server-side storage with Redis, and legal SaaS-specific requirements including shared workstation awareness and matter-level session context.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 19: Session Management</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Invisible Security Layer</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every interaction a user has with your legal SaaS platform happens within a session. The session is the container that holds authentication state, tracks activity, and enforces timeout policies. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP&rsquo;s Session Management Cheat Sheet</a> identifies it as one of the most critical security components &mdash; because a compromised session is a compromised user, no credentials required.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon&rsquo;s 2024 DBIR reports that stolen session tokens are increasingly replacing stolen passwords</a> as the primary credential type in breaches &mdash; because session tokens bypass MFA entirely. An attacker with a valid session cookie is already authenticated.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS handling privileged attorney-client communications, session management is not a checkbox feature &mdash; it&rsquo;s the mechanism that determines who has access to what, for how long, and under what conditions that access can be revoked.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Session ID Generation &mdash; Cryptographic Randomness</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The session identifier is a bearer token. Anyone who possesses it has the user&rsquo;s access. Generation requirements are non-negotiable:</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Requirement</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Specification</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Rationale</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Entropy</td><td class="px-4 py-3">Minimum 128 bits (16 bytes)</td><td class="px-4 py-3"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP requires &ge;128 bits</a> to resist brute-force</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Randomness source</td><td class="px-4 py-3">CSPRNG only</td><td class="px-4 py-3"><code>crypto.randomBytes()</code> (Node), <code>os.urandom()</code> (Python), <code>SecureRandom</code> (Java)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Format</td><td class="px-4 py-3">Opaque, no embedded data</td><td class="px-4 py-3">Session IDs must reveal nothing about the user or server state</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Uniqueness</td><td class="px-4 py-3">Globally unique across all active sessions</td><td class="px-4 py-3">Collision = session hijacking</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Never use:</strong> sequential integers (<code>session_id=1, 2, 3...</code> &mdash; trivially enumerable), timestamps or user IDs encoded in the session token, <code>Math.random()</code> or any non-cryptographic PRNG, or UUIDs from non-cryptographic generators (UUID v1 is time-based and predictable).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc4086" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 4086 (Randomness Requirements for Security)</a> defines the entropy requirements. In practice: use your framework&rsquo;s built-in session management &mdash; Express.js <code>express-session</code>, Django sessions, Rails <code>ActionDispatch::Session</code> &mdash; they all use CSPRNGs by default.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Session Storage &mdash; Cookie Security Attributes</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Sessions should be transported via cookies with strict security attributes. <a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Cookie specification (RFC 6265bis)</a> defines the attributes; <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP maps them to security requirements</a>.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Attribute</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Value</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>HttpOnly</code></td><td class="px-4 py-3"><code>true</code></td><td class="px-4 py-3">Prevents JavaScript access &mdash; mitigates XSS session theft</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>Secure</code></td><td class="px-4 py-3"><code>true</code></td><td class="px-4 py-3">Cookie only sent over HTTPS &mdash; prevents network interception</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>SameSite</code></td><td class="px-4 py-3"><code>Strict</code> or <code>Lax</code></td><td class="px-4 py-3">Prevents CSRF by limiting cross-origin cookie transmission</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>Path</code></td><td class="px-4 py-3"><code>/</code> (or narrowest applicable)</td><td class="px-4 py-3">Limits which URL paths receive the cookie</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>Domain</code></td><td class="px-4 py-3">Explicit, narrow</td><td class="px-4 py-3">Never set to a parent domain that includes other services</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>Max-Age</code> / <code>Expires</code></td><td class="px-4 py-3">Match session timeout policy</td><td class="px-4 py-3">Browser discards cookie on expiry</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red-600 bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Critical:</strong> <code>SameSite=None</code> (required for cross-site cookies) also requires <code>Secure=true</code>. If you need cross-origin session cookies (e.g., embedding your legal SaaS in a client&rsquo;s iframe), you must use <code>SameSite=None; Secure</code> &mdash; but understand this re-opens CSRF vectors. Prefer same-origin architectures for legal SaaS. <a href="https://web.dev/articles/samesite-cookies-explained" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google&rsquo;s SameSite documentation</a> explains the interaction.</p>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Why Not localStorage?</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Storage</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">XSS Resistant</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">CSRF Resistant</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Sent Automatically</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">httpOnly Cookie</td><td class="px-4 py-3">Yes (JS can&rsquo;t read)</td><td class="px-4 py-3">Needs SameSite</td><td class="px-4 py-3">Yes (by browser)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">localStorage</td><td class="px-4 py-3">No (any JS can read)</td><td class="px-4 py-3">Yes (not sent auto)</td><td class="px-4 py-3">No (must attach manually)</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">sessionStorage</td><td class="px-4 py-3">No (any JS can read)</td><td class="px-4 py-3">Yes (not sent auto)</td><td class="px-4 py-3">No (must attach manually)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS: httpOnly cookies. Always. <a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP explicitly recommends against localStorage for session tokens</a>.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Session Lifecycle</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Creation</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">On successful authentication: generate a new session ID (128+ bits, CSPRNG), store the session record server-side (user ID, creation time, IP, user agent), set the cookie with all security attributes, and log the authentication event.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Renewal (Re-keying)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-community/attacks/Session_fixation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Session fixation attacks</a> exploit pre-authentication session IDs. The defence: <strong>regenerate the session ID on every privilege change.</strong></p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Event</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Successful login</td><td class="px-4 py-3">New session ID (mandatory)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Privilege escalation (e.g., entering admin panel)</td><td class="px-4 py-3">New session ID</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Password change</td><td class="px-4 py-3">New session ID + invalidate all other sessions</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Sensitive operation (e.g., document export)</td><td class="px-4 py-3">Consider re-authentication</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The old session ID must be immediately invalidated. <a href="https://cwe.mitre.org/data/definitions/384.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CWE-384 (Session Fixation)</a> documents the vulnerability class.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Invalidation (Logout)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A secure logout must: delete the server-side session record, clear the session cookie (set empty value + <code>Max-Age=0</code>), invalidate any associated refresh tokens, and log the event.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Common mistake:</strong> Only clearing the cookie client-side without deleting the server record. The session ID remains valid &mdash; an attacker who captured it earlier can still use it.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Timeout Policies</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Timeout Type</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Recommended Value</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Idle timeout</td><td class="px-4 py-3">15&ndash;30 minutes</td><td class="px-4 py-3">Invalidate if no activity (legal SaaS: lean toward 15 min)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Absolute timeout</td><td class="px-4 py-3">8&ndash;12 hours</td><td class="px-4 py-3">Maximum session duration regardless of activity</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Renewal interval</td><td class="px-4 py-3">Every 15 minutes</td><td class="px-4 py-3">Rotate session ID periodically even during active use</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-63B</a> requires re-authentication after 30 minutes of inactivity for AAL2 (Authenticator Assurance Level 2 &mdash; the level appropriate for legal SaaS handling privileged content). For AAL3, the idle timeout drops to 15 minutes.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Concurrent Session Policies</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Policy</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Use Case</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Implementation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Unlimited concurrent</td><td class="px-4 py-3">Low-risk apps, consumer products</td><td class="px-4 py-3">Default &mdash; no special handling</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Notify on new session</td><td class="px-4 py-3">Medium risk &mdash; alert but don&rsquo;t block</td><td class="px-4 py-3">Push notification/email on new login</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Limit to N sessions</td><td class="px-4 py-3">Shared accounts, compliance</td><td class="px-4 py-3">Track active sessions; oldest killed when N+1 created</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Single session only</td><td class="px-4 py-3">High security, billing/licensing</td><td class="px-4 py-3">New login invalidates all previous sessions</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, <strong>notify + optional terminate</strong> is typically appropriate. A partner logging in from their office desktop should be alerted if someone simultaneously logs in from an unfamiliar location &mdash; but not automatically kicked out of their existing session, which might be mid-document review.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://myaccount.google.com/security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google&rsquo;s security model</a> shows the gold standard: users can view all active sessions (device, location, last activity) and selectively terminate any of them.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Session Fixation</h2>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-yellow-500 bg-yellow-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Attack Scenario:</strong></p>
+        <p class="text-base leading-relaxed text-ink-light">1. Attacker visits your login page and receives a session cookie: <code>session_id=abc123</code></p>
+        <p class="text-base leading-relaxed text-ink-light">2. Attacker tricks the victim into using this session ID (via a crafted URL, injected cookie, or XSS)</p>
+        <p class="text-base leading-relaxed text-ink-light">3. Victim authenticates &mdash; the server promotes <code>session_id=abc123</code> to an authenticated session</p>
+        <p class="text-base leading-relaxed text-ink-light">4. Attacker uses <code>session_id=abc123</code> &mdash; now authenticated as the victim</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Defence:</strong> Regenerate the session ID immediately after successful authentication. The pre-auth session ID (<code>abc123</code>) is destroyed; a new ID is issued. The attacker&rsquo;s copy of <code>abc123</code> is now invalid.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/03-Testing_for_Session_Fixation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Testing Guide v4.2</a> provides detailed testing procedures.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Session Hijacking Defences</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Session hijacking occurs when an attacker obtains a valid session ID through network interception (mitigated by <code>Secure</code> flag + HSTS), XSS (mitigated by <code>HttpOnly</code> flag), malware/browser extension access, or physical access to an unlocked device.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Defence-in-Depth</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Layer</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Control</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Transport</td><td class="px-4 py-3">HTTPS everywhere + HSTS preload</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Cookie attributes</td><td class="px-4 py-3">HttpOnly + Secure + SameSite=Strict</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Binding</td><td class="px-4 py-3">Validate client IP range on each request (warn, don&rsquo;t block &mdash; mobile users change IPs)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Fingerprinting</td><td class="px-4 py-3">User-agent consistency check</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Anomaly detection</td><td class="px-4 py-3">Alert on geographic impossibility (login from Singapore, then London 10 minutes later)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Re-authentication</td><td class="px-4 py-3">Require password/MFA for sensitive operations regardless of session state</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://attack.mitre.org/techniques/T1550/004/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The MITRE ATT&amp;CK framework</a> documents session hijacking techniques (T1550.004: Use Alternate Authentication Material: Web Session Cookie). Understanding attacker methodology informs defensive architecture.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Server-Side Session Storage</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Store</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Pros</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Cons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">In-memory (e.g., Node process)</td><td class="px-4 py-3">Fast, simple</td><td class="px-4 py-3">Lost on restart, no horizontal scaling</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Redis</td><td class="px-4 py-3">Fast, TTL native, pub/sub for invalidation</td><td class="px-4 py-3">Additional infrastructure</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">PostgreSQL/MySQL</td><td class="px-4 py-3">Durable, queryable, existing infra</td><td class="px-4 py-3">Slower than Redis for high-frequency reads</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Encrypted cookie (client-side)</td><td class="px-4 py-3">No server state</td><td class="px-4 py-3">Size limits, can&rsquo;t revoke, sensitive data exposure risk</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS at scale: <strong>Redis with PostgreSQL fallback</strong>. Redis handles the hot path (session lookup on every request). PostgreSQL provides durability and queryability (audit trails, session history, compliance reporting). <a href="https://redis.io/docs/latest/develop/use/patterns/session-management/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redis documentation on session management</a> covers TTL-based expiry and key patterns.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal SaaS-Specific Requirements</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">1. Matter-level session context</strong> &mdash; When a lawyer switches between matters, consider whether the session should carry permissions for all matters simultaneously or require explicit context switching (principle of least privilege).</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">2. Shared workstation awareness</strong> &mdash; Court computers, law library terminals. Absolute timeout of 30 minutes maximum. Prompt for re-authentication on return from idle.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">3. Regulatory compliance</strong> &mdash; <a href="https://www.mas.gov.sg/regulation/guidelines/technology-risk-management-guidelines" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Singapore&rsquo;s Technology Risk Management Guidelines (MAS TRM)</a> require session timeout policies, concurrent session controls, and session activity logging for regulated financial services &mdash; and legal SaaS handling financial litigation data may fall within scope.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">4. Privileged operation gating</strong> &mdash; Downloading case files, exporting client data, changing security settings &mdash; require step-up authentication (re-enter password or MFA) regardless of session age.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Implementation Guidance</h2>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Recommended configuration:</strong> ID length: 32 bytes (256 bits) via <code>crypto.randomBytes</code>. Store: Redis with 30-minute TTL. Cookie: <code>httpOnly=true</code>, <code>secure=true</code>, <code>sameSite='strict'</code>. Regenerate on: login, privilege change, every 15 min. Absolute max: 8 hours. Concurrent limit: 5 sessions per user (notify on 3+). <a href="https://github.com/expressjs/session" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The express-session documentation</a> covers configuration options; use <code>connect-redis</code> as the store adapter.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Session management is where authentication theory meets runtime reality. Generate session IDs with cryptographic randomness. Store them in httpOnly, Secure, SameSite cookies. Regenerate on every privilege change. Enforce idle and absolute timeouts. Support concurrent session visibility and selective termination. And gate sensitive operations behind step-up authentication regardless of session state.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, the session is the trust boundary between &ldquo;authenticated user&rdquo; and &ldquo;access to privileged communications.&rdquo; Every weakness in session management is a direct path to privilege breach.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">OAuth 2.0 and OpenID Connect</strong> &mdash; delegated authentication, letting users log in with their firm&rsquo;s identity provider instead of maintaining separate credentials.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 19 &mdash; Session Management. Last episode we talked about JWTs and concluded that server-side sessions are often the better choice for user-facing legal SaaS. Today we cover how to implement them properly.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> And &ldquo;properly&rdquo; matters because a session token is a bearer credential. Anyone who possesses it has the user&rsquo;s access. No password required. No MFA challenge. If an attacker gets your session cookie, they are you &mdash; as far as the server is concerned.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s increasingly how breaches happen, isn&rsquo;t it?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Verizon&rsquo;s latest DBIR &mdash; their Data Breach Investigations Report, as we mentioned in Episode 16 &mdash; shows stolen session tokens replacing stolen passwords as the primary credential type in many attack chains. The reason is simple &mdash; session tokens bypass MFA &mdash; multi-factor authentication, as we covered in earlier episodes. You can have the strongest multi-factor authentication in the world, but once the user has authenticated and received a session cookie, that cookie is the key. Steal it, and you skip the entire authentication ceremony.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s start with generation. How should session IDs be created?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three non-negotiable requirements. First &mdash; cryptographic randomness. Use your platform&rsquo;s CSPRNG &mdash; Cryptographically Secure Pseudo-Random Number Generator, the source of unpredictable random values. That&rsquo;s crypto.randomBytes in Node, os.urandom in Python, SecureRandom in Java. Never Math.random, never timestamp-based, never sequential. Second &mdash; sufficient entropy. OWASP &mdash; the Open Web Application Security Project, as we mentioned in Episode 17 &mdash; requires at least 128 bits &mdash; that&rsquo;s 16 bytes of random data. I&rsquo;d recommend 256 bits for legal SaaS. Third &mdash; opacity. The session ID must be a meaningless blob of randomness. No encoded user IDs, no timestamps, no tenant identifiers. It reveals nothing.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Why does opacity matter?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because if the session ID contains structured data &mdash; even encoded &mdash; an attacker can analyse the pattern. If IDs increment sequentially, they can guess other valid sessions. If they contain timestamps, they can narrow the search space. If they contain user IDs, they leak information about your user base. A truly random opaque string gives an attacker nothing to work with except brute force against a 128-bit or 256-bit space &mdash; which is computationally infeasible.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Once you have a session ID, how do you transport it?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Cookies, with every security attribute enabled. HttpOnly &mdash; which prevents JavaScript from accessing the cookie. This means even if you have an XSS vulnerability, the attacker&rsquo;s injected script cannot read the session token. Secure &mdash; the cookie is only sent over HTTPS, never plaintext HTTP. SameSite set to Strict &mdash; the cookie is not sent on cross-origin requests, which prevents CSRF attacks. And an appropriate expiry that matches your timeout policy.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> I&rsquo;ve seen people store tokens in localStorage instead. What&rsquo;s wrong with that?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> localStorage is accessible to any JavaScript running on the page. A single XSS vulnerability &mdash; one unescaped user input rendered in the DOM &mdash; and an attacker can exfiltrate every token in localStorage with one line of JavaScript. HttpOnly cookies are invisible to JavaScript entirely. The browser manages them. Even if your page is fully compromised with XSS, the attacker cannot read the session cookie. They&rsquo;d have to trick the browser into sending requests on their behalf &mdash; which SameSite prevents.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Now &mdash; session lifecycle. What happens after creation?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The critical event is session renewal &mdash; also called re-keying. Every time a user&rsquo;s privilege level changes, you must generate a new session ID and destroy the old one. The most important moment is authentication. Before login, the user might have a pre-authentication session &mdash; for shopping carts, preferences, whatever. After login, that session now carries authenticated privilege. If you don&rsquo;t regenerate the ID, you&rsquo;re vulnerable to session fixation.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Walk me through that attack.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Session fixation. Step one &mdash; the attacker visits your login page and receives a session cookie. Let&rsquo;s call it session ABC. Step two &mdash; the attacker tricks the victim into using this same session ID. Maybe through a crafted URL with the session parameter, or by injecting the cookie via XSS on a related domain. Step three &mdash; the victim authenticates. The server promotes session ABC from anonymous to authenticated. Step four &mdash; the attacker uses session ABC. They&rsquo;re now authenticated as the victim. The fix is trivial &mdash; regenerate the session ID on login. Session ABC dies. A new session XYZ is created. The attacker&rsquo;s copy of ABC is worthless.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about timeouts? What&rsquo;s appropriate for legal SaaS?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Two types of timeout. Idle timeout &mdash; if there&rsquo;s no activity for a specified period, the session expires. NIST &mdash; the U.S. National Institute of Standards and Technology, which we referenced in Episode 17 &mdash; their 800-63B publication requires 30 minutes for AAL2 &mdash; Authenticator Assurance Level 2, the assurance level appropriate to legal SaaS &mdash; I&rsquo;d lean toward 15 minutes for matters involving litigation strategy or privileged communications. Absolute timeout &mdash; the maximum session duration regardless of activity. Eight to twelve hours is typical. This prevents the scenario where a session stays alive indefinitely because the user leaves a tab open with periodic JavaScript activity.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And you mentioned renewal intervals earlier &mdash; rotating the session ID even during active use?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Every 15 minutes, generate a new session ID and invalidate the old one. The user doesn&rsquo;t notice &mdash; their cookie updates silently. But if an attacker captured the old session ID, it&rsquo;s now invalid. This limits the window of exploitation for any stolen session to at most 15 minutes, even if the attacker avoids triggering any other detection.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about concurrent sessions? Should a lawyer be able to log in from multiple devices?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> For legal SaaS, I recommend &ldquo;notify plus optional terminate.&rdquo; Allow multiple sessions &mdash; a lawyer might have their desktop at the office and their laptop at home. But notify them when a new session is created from an unrecognised device or location. Provide a dashboard showing all active sessions &mdash; device type, IP location, last activity time &mdash; and let them selectively terminate any session. Google does this well. If something looks suspicious, the user can kill it immediately.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about session hijacking defences beyond the cookie attributes?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Defence in depth. First &mdash; HTTPS everywhere with HSTS preloaded, so the cookie can never accidentally travel over plaintext. Second &mdash; validate client characteristics on each request. Not hard-block on IP change &mdash; mobile users move between networks. But flag geographic impossibilities. If a session was active in Singapore and suddenly appears in London ten minutes later, that&rsquo;s suspicious. Third &mdash; re-authentication for sensitive operations. Downloading case files, exporting client data, changing security settings &mdash; require the user to enter their password or complete MFA again, regardless of how fresh the session is.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s step-up authentication.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. The session proves you&rsquo;re still the person who logged in this morning. The step-up authentication proves you&rsquo;re still the person right now, at the moment you&rsquo;re doing something that could cause irreversible harm if the session is compromised.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Server-side storage &mdash; what&rsquo;s the recommended approach?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Redis for the hot path &mdash; session lookup happens on every single request, so it needs to be fast. Redis &mdash; the fast in-memory data store we mentioned in Episode 14 &mdash; gives you sub-millisecond reads and native TTL expiry &mdash; TTL being Time To Live, the countdown until a record automatically expires &mdash; sessions automatically disappear when they time out, no cleanup jobs needed. PostgreSQL as a durable fallback &mdash; for audit trails, session history, compliance reporting. You can query &ldquo;show me all sessions for this user in the last 30 days&rdquo; or &ldquo;which sessions were active when this document was accessed.&rdquo; For legal SaaS, that queryability is essential for incident response.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Any legal SaaS-specific considerations we haven&rsquo;t covered?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Shared workstations. Lawyers use court computers, library terminals, shared office stations. Absolute timeout of 30 minutes maximum for these environments &mdash; and ideally detect them via device fingerprinting or require users to self-identify as using a shared device. Also &mdash; matter-level session context. When a lawyer switches between matters, consider whether their session should carry permissions for all matters simultaneously or require explicit matter selection. Principle of least privilege says: only load permissions for the matter currently being accessed.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; OAuth 2.0 and OpenID Connect. Delegated authentication &mdash; letting users log in with their firm&rsquo;s identity provider instead of maintaining separate credentials.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Session Management Cheat Sheet." Comprehensive session security guidance</a></li>
+        <li id="fn-2"><a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, 2024 Data Breach Investigations Report. Session token theft trends</a></li>
+        <li id="fn-3"><a href="https://datatracker.ietf.org/doc/html/rfc4086" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 4086: Randomness Requirements for Security</a></li>
+        <li id="fn-4"><a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 6265bis: HTTP State Management Mechanism (Cookies)</a></li>
+        <li id="fn-5"><a href="https://web.dev/articles/samesite-cookies-explained" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">web.dev, "SameSite Cookies Explained." Google&rsquo;s implementation guide</a></li>
+        <li id="fn-6"><a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "HTML5 Security Cheat Sheet." localStorage risks</a></li>
+        <li id="fn-7"><a href="https://owasp.org/www-community/attacks/Session_fixation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Session Fixation." Attack description and defences</a></li>
+        <li id="fn-8"><a href="https://cwe.mitre.org/data/definitions/384.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MITRE, CWE-384: Session Fixation</a></li>
+        <li id="fn-9"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST, SP 800-63B: Digital Identity Guidelines &mdash; Authentication and Lifecycle Management</a></li>
+        <li id="fn-10"><a href="https://myaccount.google.com/security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google, "Security Settings &mdash; Your devices." Session management UI reference</a></li>
+        <li id="fn-11"><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/03-Testing_for_Session_Fixation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Testing for Session Fixation," WSTG v4.2</a></li>
+        <li id="fn-12"><a href="https://attack.mitre.org/techniques/T1550/004/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MITRE ATT&amp;CK, T1550.004: Use Alternate Authentication Material: Web Session Cookie</a></li>
+        <li id="fn-13"><a href="https://redis.io/docs/latest/develop/use/patterns/session-management/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redis, "Session Management Patterns." TTL-based session expiry</a></li>
+        <li id="fn-14"><a href="https://www.mas.gov.sg/regulation/guidelines/technology-risk-management-guidelines" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Monetary Authority of Singapore, "Technology Risk Management Guidelines," 2021. Session control requirements</a></li>
+        <li id="fn-15"><a href="https://github.com/expressjs/session" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">express-session, GitHub repository. Node.js session middleware</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-18-jwt-anatomy-and-pitfalls.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 18 &mdash; JWT Anatomy and Pitfalls</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-20-oauth-2-and-openid-connect.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 20 &mdash; OAuth 2.0 and OpenID Connect</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

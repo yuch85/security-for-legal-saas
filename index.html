@@ -33,7 +33,7 @@
 
     <p class="text-lg italic text-ink-light leading-relaxed">A podcast series covering every layer of security required to build, deploy, and operate a production legal technology SaaS product. From first principles of threat modelling through to SOC 2 audits and incident response runbooks &mdash; each episode is a self-contained deep dive, typically 7&ndash;9 minutes, that builds on the last. For educational purposes only &mdash; does not constitute legal or security advice. <a href="./about.html" class="text-red hover:text-red-soft transition-colors not-italic font-medium">About &rarr;</a></p>
 
-    <p class="mt-4 font-sans text-sm text-ink-muted">14 episodes published &middot; 62 planned &middot; 12 modules &middot; ~7.5 hours</p>
+    <p class="mt-4 font-sans text-sm text-ink-muted">20 episodes published &middot; 62 planned &middot; 12 modules &middot; ~11 hours</p>
 </div>
 
 <section class="py-10">
@@ -247,6 +247,93 @@
         </div>
         <div class="flex-shrink-0 pt-2">
             <span class="font-sans text-sm text-ink-muted whitespace-nowrap">8:06</span>
+        </div>
+    </div>
+</a>
+
+        <a href="./lessons/episode-15-service-to-service-authentication.html" class="block border-b border-rule hover:bg-white/50 transition-colors">
+    <div class="py-8 flex items-start justify-between gap-6">
+        <div class="min-w-0 flex-1">
+            <p class="font-sans text-xs tracking-widest uppercase text-red mb-2">Episode 15</p>
+            <h3 class="text-xl font-bold mb-2">Service-to-Service Authentication</h3>
+            <p class="text-sm text-ink-light">Mutual TLS, service mesh architecture, JWT service tokens, and network segmentation. Why internal services need to prove their identity to each other &mdash; and what happens when &ldquo;trust the network&rdquo; meets a breach.</p>
+        </div>
+        <div class="flex-shrink-0 pt-2">
+            <span class="font-sans text-sm text-ink-muted whitespace-nowrap">&mdash;</span>
+        </div>
+    </div>
+</a>
+
+    </div>
+</section>
+
+<section class="py-10">
+
+    <p class="font-sans text-xs tracking-widest uppercase text-red mb-6">Module 5 &mdash; Authentication &amp; Identity</p>
+
+    <div class="space-y-0">
+
+        <a href="./lessons/episode-16-email-security-for-saas.html" class="block border-b border-rule hover:bg-white/50 transition-colors">
+    <div class="py-8 flex items-start justify-between gap-6">
+        <div class="min-w-0 flex-1">
+            <p class="font-sans text-xs tracking-widest uppercase text-red mb-2">Episode 16</p>
+            <h3 class="text-xl font-bold mb-2">Email Security for SaaS</h3>
+            <p class="text-sm text-ink-light">SPF, DKIM, and DMARC &mdash; the email authentication triad. Magic link vulnerabilities, account recovery as the nuclear option, BIMI brand indicators, MTA-STS for forced TLS, and multi-tenant email isolation with per-firm subdomains.</p>
+        </div>
+        <div class="flex-shrink-0 pt-2">
+            <span class="font-sans text-sm text-ink-muted whitespace-nowrap">&mdash;</span>
+        </div>
+    </div>
+</a>
+
+        <a href="./lessons/episode-17-password-hashing-done-right.html" class="block border-b border-rule hover:bg-white/50 transition-colors">
+    <div class="py-8 flex items-start justify-between gap-6">
+        <div class="min-w-0 flex-1">
+            <p class="font-sans text-xs tracking-widest uppercase text-red mb-2">Episode 17</p>
+            <h3 class="text-xl font-bold mb-2">Password Hashing Done Right</h3>
+            <p class="text-sm text-ink-light">Why &ldquo;encrypted passwords&rdquo; is the wrong mental model. Argon2id versus bcrypt versus scrypt, salt generation, timing attacks, NIST SP 800-63B password policies, credential stuffing defence, and calibrating work factors for legal SaaS.</p>
+        </div>
+        <div class="flex-shrink-0 pt-2">
+            <span class="font-sans text-sm text-ink-muted whitespace-nowrap">&mdash;</span>
+        </div>
+    </div>
+</a>
+
+        <a href="./lessons/episode-18-jwt-anatomy-and-pitfalls.html" class="block border-b border-rule hover:bg-white/50 transition-colors">
+    <div class="py-8 flex items-start justify-between gap-6">
+        <div class="min-w-0 flex-1">
+            <p class="font-sans text-xs tracking-widest uppercase text-red mb-2">Episode 18</p>
+            <h3 class="text-xl font-bold mb-2">JWT Anatomy and Pitfalls</h3>
+            <p class="text-sm text-ink-light">Inside the three-part structure of JSON Web Tokens. Algorithm confusion attacks, the &ldquo;none&rdquo; algorithm vulnerability, token revocation strategies, refresh token rotation, and why JWTs work for API access but fail for session management.</p>
+        </div>
+        <div class="flex-shrink-0 pt-2">
+            <span class="font-sans text-sm text-ink-muted whitespace-nowrap">&mdash;</span>
+        </div>
+    </div>
+</a>
+
+        <a href="./lessons/episode-19-session-management.html" class="block border-b border-rule hover:bg-white/50 transition-colors">
+    <div class="py-8 flex items-start justify-between gap-6">
+        <div class="min-w-0 flex-1">
+            <p class="font-sans text-xs tracking-widest uppercase text-red mb-2">Episode 19</p>
+            <h3 class="text-xl font-bold mb-2">Session Management</h3>
+            <p class="text-sm text-ink-light">Server-side sessions versus client-side tokens. Session fixation, rotation on privilege changes, concurrent session limits, idle and absolute timeouts, and the legal-specific requirement for immediate termination when a lawyer leaves a firm.</p>
+        </div>
+        <div class="flex-shrink-0 pt-2">
+            <span class="font-sans text-sm text-ink-muted whitespace-nowrap">&mdash;</span>
+        </div>
+    </div>
+</a>
+
+        <a href="./lessons/episode-20-oauth-2-and-openid-connect.html" class="block border-b border-rule hover:bg-white/50 transition-colors">
+    <div class="py-8 flex items-start justify-between gap-6">
+        <div class="min-w-0 flex-1">
+            <p class="font-sans text-xs tracking-widest uppercase text-red mb-2">Episode 20</p>
+            <h3 class="text-xl font-bold mb-2">OAuth 2.0 and OpenID Connect</h3>
+            <p class="text-sm text-ink-light">The Authorization Code flow with PKCE, why Implicit flow is dead, scope design for legal SaaS, OpenID Connect identity layer, and the unique challenges of court system and legal database integrations that don&rsquo;t speak OAuth.</p>
+        </div>
+        <div class="flex-shrink-0 pt-2">
+            <span class="font-sans text-sm text-ink-muted whitespace-nowrap">&mdash;</span>
         </div>
     </div>
 </a>

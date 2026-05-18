@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 16 &mdash; Email Security for SaaS &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 16 &middot; Module 5 &middot; Authentication &amp; Identity</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">Email Security for SaaS</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; &mdash;:&mdash;&mdash; &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-16-email-security-for-saas.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>&mdash;:&mdash;&mdash;</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-16-email-security-for-saas.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">Email remains the primary attack vector for breaching organisations. Alice and Dan cover the SPF/DKIM/DMARC authentication triad, magic-link security risks and hardening, email-based account recovery attacks, BIMI brand indicators, MTA-STS transport security, and the architecture principle that email should notify but never transport sensitive data &mdash; especially privileged legal content.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 16: Email Security for SaaS</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Weakest Link in Your Security Chain</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Email remains the primary attack vector for breaching organisations. <a href="https://www.ic3.gov/AnnualReport/Reports/2023_IC3Report.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The FBI&rsquo;s IC3 reported $2.9 billion in losses from business email compromise (BEC) in 2023 alone</a>. For legal SaaS platforms that send privileged case updates, court deadline reminders, and magic-link authentication tokens via email, a compromised email channel is a direct path to privilege waiver.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key stat:</strong> <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">74% of all breaches involve a human element &mdash; phishing, pretexting, or credential theft via email</a>. Email is where social engineering meets technical exploitation.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The triad of SPF, DKIM, and DMARC forms the baseline defence for outbound email integrity. Without all three configured correctly, your platform&rsquo;s emails can be spoofed, your magic links intercepted, and your clients phished using your own domain.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SPF, DKIM, and DMARC &mdash; The Authentication Triad</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">SPF (Sender Policy Framework)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc7208" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SPF (RFC 7208)</a> publishes a DNS TXT record &mdash; DNS being the internet&rsquo;s address book that translates domain names into IP addresses &mdash; listing which IP addresses are authorised to send email on behalf of your domain. Receiving mail servers check the envelope sender against this list.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">SPF Component</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>v=spf1</code></td><td class="px-4 py-3">Version identifier</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>include:_spf.google.com</code></td><td class="px-4 py-3">Authorise Google Workspace IPs</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>include:sendgrid.net</code></td><td class="px-4 py-3">Authorise transactional email provider</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>-all</code></td><td class="px-4 py-3">Hard-fail everything else (reject, don&rsquo;t softfail)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Critical for legal SaaS:</strong> Use <code>-all</code> (hard fail), not <code>~all</code> (soft fail). Soft fail means spoofed emails from your domain still get delivered &mdash; just marked suspicious. <a href="https://support.google.com/a/answer/81126" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google&rsquo;s email sender guidelines (2024) require SPF alignment for bulk senders</a>.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">DKIM (DomainKeys Identified Mail)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc6376" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DKIM (RFC 6376)</a> cryptographically signs email headers and body. The sending server attaches a signature using a private key; receivers verify against the public key in your DNS. This proves the email was not modified in transit and genuinely originated from your infrastructure.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms sending transactional email through services like SendGrid, Postmark, or AWS SES, you must configure DKIM signing with your own domain key &mdash; not the provider&rsquo;s default. <a href="https://postmarkapp.com/guides/dkim" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Postmark&rsquo;s DKIM guide</a> details the DNS CNAME setup.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">DMARC (Domain-based Message Authentication, Reporting, and Conformance)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc7489" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DMARC (RFC 7489)</a> ties SPF and DKIM together with a policy declaration and reporting mechanism.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">DMARC Tag</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Recommended Value</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Meaning</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>p=reject</code></td><td class="px-4 py-3">Production policy</td><td class="px-4 py-3">Reject emails failing both SPF and DKIM</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>rua=mailto:dmarc@yourdomain.com</code></td><td class="px-4 py-3">Aggregate reports</td><td class="px-4 py-3">Receive daily XML reports of authentication results</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>ruf=mailto:forensics@yourdomain.com</code></td><td class="px-4 py-3">Forensic reports</td><td class="px-4 py-3">Receive per-failure reports (careful &mdash; may contain PII)</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>pct=100</code></td><td class="px-4 py-3">Full enforcement</td><td class="px-4 py-3">Apply policy to 100% of messages</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>aspf=s</code></td><td class="px-4 py-3">Strict SPF alignment</td><td class="px-4 py-3">Domain must exactly match (no subdomain)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red-600 bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Deployment warning:</strong> Go from <code>p=none</code> &rarr; <code>p=quarantine</code> &rarr; <code>p=reject</code> over 4&ndash;6 weeks while monitoring aggregate reports. Jumping straight to <code>p=reject</code> without monitoring will block legitimate email you forgot about &mdash; marketing tools, CRM integrations, legacy systems. <a href="https://dmarc.org/overview/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DMARC.org recommends this graduated approach</a>.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Magic-Link Authentication Risks</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Magic links &mdash; one-time URLs sent via email for passwordless login &mdash; are increasingly popular in legal SaaS. But they inherit every vulnerability of the email channel.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Attack Scenarios</h3>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Attack</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Mechanism</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Email account compromise</td><td class="px-4 py-3">Attacker with access to inbox clicks magic link</td><td class="px-4 py-3">Full account takeover</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Link interception (MitM)</td><td class="px-4 py-3">Corporate email proxies, logging gateways</td><td class="px-4 py-3">Token captured before user clicks</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Link forwarding</td><td class="px-4 py-3">User accidentally forwards email containing active link</td><td class="px-4 py-3">Unintended third-party access</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Prefetch/preview</td><td class="px-4 py-3">Email security scanners follow links automatically</td><td class="px-4 py-3">Token consumed before user can use it</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://auth0.com/docs/authenticate/passwordless/authentication-methods/email-magic-link" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0&rsquo;s security guidance on magic links</a> recommends: single-use tokens, short expiry (10 minutes maximum), binding to the originating session, and requiring the user to complete login on the same device/browser that initiated the request.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Hardening Magic Links</h3>
+
+    <ol style="margin-bottom:1.5rem;padding-left:1.5rem;" class="list-decimal space-y-2 text-base leading-relaxed text-ink-light">
+        <li><strong>Bind to session</strong> &mdash; The link only works in the browser session that requested it</li>
+        <li><strong>Device fingerprint</strong> &mdash; Require the same IP range or device characteristics</li>
+        <li><strong>Short TTL</strong> &mdash; 5&ndash;10 minutes maximum. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP recommends tokens expire within minutes, not hours</a></li>
+        <li><strong>Rate limit</strong> &mdash; Maximum 3 magic link requests per email per hour</li>
+        <li><strong>Notify on use</strong> &mdash; Send a separate notification when the link is consumed from a new device</li>
+    </ol>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Email-Based Account Recovery Attacks</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Account recovery via email is the reset button that bypasses every other security control. If an attacker controls the email address associated with an account, they control the account.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.microsoft.com/en-us/security/blog/2023/03/13/dev-0537-criminal-actor-targeting-organizations-for-data-exfiltration-and-destruction/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft&rsquo;s research on account takeover</a> showed that Lapsus$ specifically targeted help desk staff to trigger email-based password resets. For legal SaaS:</p>
+
+    <ul style="margin-bottom:1.5rem;padding-left:1.5rem;" class="list-disc space-y-2 text-base leading-relaxed text-ink-light">
+        <li><strong>Never rely solely on email for account recovery</strong> &mdash; Combine with identity verification (security questions, out-of-band confirmation, admin approval)</li>
+        <li><strong>Notify all registered channels</strong> &mdash; When a recovery is initiated, alert via SMS, push notification, and the old email simultaneously</li>
+        <li><strong>Cool-down period</strong> &mdash; After recovery, restrict sensitive operations (downloading documents, changing security settings) for 24 hours</li>
+        <li><strong>Recovery audit trail</strong> &mdash; Log every recovery attempt with IP, user agent, and geolocation</li>
+    </ul>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">BIMI &mdash; Brand Indicators for Message Identification</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://bimigroup.org/implementation-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BIMI (Brand Indicators for Message Identification)</a> displays your verified logo next to emails in supporting clients (Gmail, Apple Mail, Yahoo). It requires <code>p=quarantine</code> or <code>p=reject</code> DMARC policy and a Verified Mark Certificate (VMC) from DigiCert or Entrust.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, BIMI serves a security purpose beyond branding: it trains recipients to expect your logo. Phishing emails spoofing your domain will not display the logo, providing a visual signal that something is wrong. <a href="https://support.google.com/a/answer/10911320" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google&rsquo;s BIMI requirements</a> mandate DMARC enforcement as a prerequisite.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Secure Transactional Email Architecture</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Layer</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Control</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Sending infrastructure</td><td class="px-4 py-3">Dedicated IP pool</td><td class="px-4 py-3">Reputation isolation from marketing email</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Authentication</td><td class="px-4 py-3">SPF + DKIM + DMARC (<code>p=reject</code>)</td><td class="px-4 py-3">Prevent spoofing</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Transport</td><td class="px-4 py-3">TLS enforcement (MTA-STS)</td><td class="px-4 py-3">Prevent downgrade attacks</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Content</td><td class="px-4 py-3">No sensitive data in email body</td><td class="px-4 py-3">Email is not a secure channel</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Links</td><td class="px-4 py-3">Tokenised, session-bound, short-lived</td><td class="px-4 py-3">Prevent interception/replay</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Monitoring</td><td class="px-4 py-3">DMARC aggregate reports + alerting</td><td class="px-4 py-3">Detect spoofing attempts</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Fallback</td><td class="px-4 py-3">MTA-STS + DANE</td><td class="px-4 py-3">Prevent TLS stripping</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc8461" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MTA-STS (RFC 8461)</a> publishes a policy requiring TLS for email delivery to your domain &mdash; preventing downgrade attacks where an attacker strips encryption from the SMTP (Simple Mail Transfer Protocol) connection.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-green-600 bg-green-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Architecture principle:</strong> Email is a notification channel, never a data transport channel. Case updates should say &ldquo;You have a new update &mdash; log in to view it&rdquo; rather than including the actual privileged content. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP&rsquo;s transaction authorisation guidance</a> reinforces this: sensitive actions require authenticated confirmation, not email-borne tokens alone.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal SaaS-Specific Considerations</h2>
+
+    <ol style="margin-bottom:1.5rem;padding-left:1.5rem;" class="list-decimal space-y-3 text-base leading-relaxed text-ink-light">
+        <li><strong>Court notification emails</strong> &mdash; If your platform sends court deadline reminders, a spoofed &ldquo;deadline extended&rdquo; email could cause a lawyer to miss a filing deadline. DMARC <code>p=reject</code> prevents this.</li>
+        <li><strong>Client communication summaries</strong> &mdash; Never include privileged content in email notifications. A forwarded email or compromised inbox exposes privilege.</li>
+        <li><strong>Multi-tenant sender isolation</strong> &mdash; Each law firm tenant should ideally send from their own subdomain (<code>firmname.yourplatform.com</code>) with dedicated SPF/DKIM, isolating reputation and preventing cross-tenant spoofing.</li>
+        <li><strong>Regulatory email retention</strong> &mdash; <a href="https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Singapore&rsquo;s PDPA requires organisations to protect personal data in electronic communications</a>. Transactional emails containing client identifiers must be treated as personal data.</li>
+    </ol>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Email security for SaaS is not optional &mdash; it is foundational. The SPF/DKIM/DMARC triad prevents domain spoofing. Magic links must be session-bound and short-lived. Account recovery must not rely solely on email. And the architecture principle is simple: email notifies, it never transports sensitive data.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configure DMARC at <code>p=reject</code>. Deploy BIMI. Enforce MTA-STS. Treat every email your platform sends as a potential attack vector if spoofed &mdash; because your adversaries already do.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Password Hashing Done Right</strong> &mdash; why storing passwords &ldquo;encrypted&rdquo; is almost as bad as storing them in plaintext.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 16 &mdash; Email Security for SaaS. Alice, I feel like email is one of those things everybody uses but nobody thinks about securing properly.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because it&rsquo;s invisible infrastructure. Your legal SaaS platform sends hundreds of transactional emails daily &mdash; password resets, case update notifications, court deadline reminders, magic-link logins. And every single one of those is an attack vector if your email authentication isn&rsquo;t locked down.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Give me the scale of the problem.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The FBI reported 2.9 billion dollars in business email compromise losses in 2023 alone. And Verizon&rsquo;s DBIR &mdash; their annual Data Breach Investigations Report &mdash; consistently shows that 74% of all breaches involve a human element &mdash; predominantly phishing and pretexting via email. For legal tech, a spoofed court deadline email from your domain could cause a lawyer to miss a filing. That&rsquo;s malpractice territory.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So how do you prove your emails are actually from you?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three mechanisms that work together. SPF, DKIM, and DMARC. SPF &mdash; Sender Policy Framework &mdash; publishes a DNS record &mdash; DNS being the internet&rsquo;s address book that translates domain names to IP addresses &mdash; listing which IP addresses can send email on behalf of your domain. When Gmail receives an email claiming to be from notifications@yourlegalplatform.com, it checks your SPF record. If the sending IP isn&rsquo;t listed, the email fails authentication.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Simple enough. What about DKIM?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> DKIM &mdash; DomainKeys Identified Mail &mdash; adds a cryptographic signature to every outgoing email. Your sending server signs the headers and body with a private key. The receiving server retrieves your public key from DNS and verifies the signature. This proves two things: the email genuinely came from your infrastructure, and it wasn&rsquo;t modified in transit.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And DMARC ties them together?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> DMARC &mdash; Domain-based Message Authentication, Reporting, and Conformance &mdash; does three things. First, it tells receiving servers what to do when SPF and DKIM both fail &mdash; none, quarantine, or reject. Second, it requires domain alignment &mdash; the domain in the From header must match the domains used in SPF and DKIM checks. Third, it sends you aggregate reports showing who&rsquo;s attempting to send email as your domain.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What policy should a legal SaaS platform use?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> The goal is p=reject &mdash; meaning any email that fails both SPF and DKIM authentication gets rejected outright, never delivered. But you don&rsquo;t jump there on day one. Start with p=none to collect reports without affecting delivery. Monitor for two weeks. You&rsquo;ll discover forgotten systems &mdash; that old marketing tool, the CRM integration, the legacy notification server. Add them to your SPF record and configure DKIM. Move to p=quarantine for two weeks. Then p=reject. Google now requires SPF, DKIM, and DMARC for bulk senders as of 2024.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about magic links? Passwordless login seems elegant but I&rsquo;m guessing it has risks.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Magic links are a single-use URL sent to your email that logs you in when clicked. They&rsquo;re popular because they eliminate password management. But they inherit every vulnerability of the email channel. If an attacker has access to your inbox &mdash; even temporarily &mdash; they click the link and they&rsquo;re in. If your corporate email proxy prefetches URLs for security scanning, it might consume the token before you can use it. If you forward the email, you&rsquo;ve forwarded your login.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> How do you harden them?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Five controls. One &mdash; bind the magic link to the browser session that requested it. The link only works in the same browser. Two &mdash; short time-to-live. Five to ten minutes maximum, not hours. Three &mdash; single use, obviously, but also rate-limit requests &mdash; maximum three per email per hour. Four &mdash; device fingerprinting. If the link is clicked from a completely different IP range or device, require additional verification. Five &mdash; notify on consumption. When the link is used, especially from a new device, send a separate alert.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about account recovery? That&rsquo;s basically the master key to everything.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Account recovery via email is the nuclear option that bypasses every other security control you&rsquo;ve built. Multi-factor authentication &mdash; MFA, where you need a second proof of identity beyond just your password &mdash; strong passwords, session management &mdash; all meaningless if an attacker can trigger a password reset and intercept the email. Lapsus$ specifically targeted help desk staff to initiate email-based resets for their victims. For legal SaaS, never rely solely on email for recovery. Combine with out-of-band verification &mdash; a phone call, an admin approval workflow, identity questions. And after any recovery event, impose a cool-down period &mdash; no downloading documents or changing security settings for 24 hours.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> I want to talk about something I&rsquo;ve seen in Gmail recently &mdash; brand logos next to emails. That&rsquo;s BIMI?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> BIMI &mdash; Brand Indicators for Message Identification. It displays your verified logo next to your emails in supporting clients like Gmail, Apple Mail, and Yahoo. It requires DMARC at p=quarantine or p=reject, plus a Verified Mark Certificate from DigiCert or Entrust. The security value is subtle but real &mdash; it trains recipients to expect your logo. A phishing email spoofing your domain won&rsquo;t display it, creating a visual discrepancy that alert users will notice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That makes sense. What&rsquo;s the architectural principle here? What should email actually be used for in a legal SaaS platform?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Email is a notification channel. Never a data transport channel. Your case update email should say &ldquo;You have a new update on Matter 2024-1234 &mdash; log in to view it.&rdquo; Not &ldquo;Here&rsquo;s the full update: opposing counsel filed a motion to dismiss arguing...&rdquo; The moment you put privileged content in an email body, you&rsquo;ve lost control of it. It sits in inboxes, gets forwarded, gets backed up to systems you don&rsquo;t control, gets indexed by email search tools.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And transport security?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> MTA-STS &mdash; SMTP MTA Strict Transport Security. SMTP is Simple Mail Transfer Protocol &mdash; the standard way email servers send messages to each other. It publishes a policy requiring TLS for email delivery to your domain. Without it, an attacker performing a network-level attack can strip TLS from the SMTP connection and intercept emails in plaintext. MTA-STS prevents that downgrade attack. Combined with DANE &mdash; DNS-based Authentication of Named Entities &mdash; if your DNS supports DNSSEC &mdash; DNS Security Extensions, which cryptographically sign DNS responses &mdash; you get assurance that the receiving server&rsquo;s TLS certificate is legitimate.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> One last thing &mdash; multi-tenant considerations. If your platform serves multiple law firms, does each firm need its own email setup?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Ideally yes. Each tenant sends from their own subdomain &mdash; firmname.yourplatform.com &mdash; with dedicated SPF and DKIM records. This isolates sender reputation. If one tenant&rsquo;s users report emails as spam, it doesn&rsquo;t tank deliverability for all your other tenants. And it prevents a compromised tenant&rsquo;s subdomain from being used to phish users of another tenant on your platform.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Password Hashing Done Right. Why storing passwords &ldquo;encrypted&rdquo; is almost as bad as storing them in plaintext.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://www.ic3.gov/AnnualReport/Reports/2023_IC3Report.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">FBI Internet Crime Complaint Center (IC3), <em>2023 Internet Crime Report</em>. $2.9 billion in BEC losses</a></li>
+        <li id="fn-2"><a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Verizon, <em>2024 Data Breach Investigations Report</em>. 74% of breaches involve a human element</a></li>
+        <li id="fn-3"><a href="https://datatracker.ietf.org/doc/html/rfc7208" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 7208: Sender Policy Framework (SPF)</a></li>
+        <li id="fn-4"><a href="https://support.google.com/a/answer/81126" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google, &ldquo;Email Sender Guidelines,&rdquo; 2024. SPF/DKIM/DMARC requirements for bulk senders</a></li>
+        <li id="fn-5"><a href="https://datatracker.ietf.org/doc/html/rfc6376" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 6376: DomainKeys Identified Mail (DKIM) Signatures</a></li>
+        <li id="fn-6"><a href="https://postmarkapp.com/guides/dkim" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Postmark, &ldquo;DKIM: DomainKeys Identified Mail.&rdquo; Implementation guide</a></li>
+        <li id="fn-7"><a href="https://datatracker.ietf.org/doc/html/rfc7489" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 7489: Domain-based Message Authentication, Reporting, and Conformance (DMARC)</a></li>
+        <li id="fn-8"><a href="https://dmarc.org/overview/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DMARC.org, &ldquo;DMARC Overview.&rdquo; Graduated deployment recommendation</a></li>
+        <li id="fn-9"><a href="https://auth0.com/docs/authenticate/passwordless/authentication-methods/email-magic-link" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0, &ldquo;Email Magic Link Authentication.&rdquo; Security guidance for passwordless</a></li>
+        <li id="fn-10"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;Forgot Password Cheat Sheet.&rdquo; Token expiry recommendations</a></li>
+        <li id="fn-11"><a href="https://www.microsoft.com/en-us/security/blog/2023/03/13/dev-0537-criminal-actor-targeting-organizations-for-data-exfiltration-and-destruction/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Security Blog, &ldquo;DEV-0537 (Lapsus$) criminal actor,&rdquo; March 2023. Account takeover via help desk manipulation</a></li>
+        <li id="fn-12"><a href="https://bimigroup.org/implementation-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BIMI Group, &ldquo;Implementation Guide.&rdquo; Brand indicator display requirements</a></li>
+        <li id="fn-13"><a href="https://support.google.com/a/answer/10911320" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Google, &ldquo;BIMI in Gmail.&rdquo; Requirements and setup</a></li>
+        <li id="fn-14"><a href="https://datatracker.ietf.org/doc/html/rfc8461" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 8461: SMTP MTA Strict Transport Security (MTA-STS)</a></li>
+        <li id="fn-15"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, &ldquo;Transaction Authorization Cheat Sheet&rdquo;</a></li>
+        <li id="fn-16"><a href="https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Singapore Personal Data Protection Commission, &ldquo;Personal Data Protection Act 2012&rdquo;</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-15-service-to-service-authentication.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 15 &mdash; Service-to-Service Authentication</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-17-password-hashing-done-right.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 17 &mdash; Password Hashing Done Right</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>

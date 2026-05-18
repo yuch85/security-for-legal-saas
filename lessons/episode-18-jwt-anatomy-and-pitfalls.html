@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode 18 &mdash; JWT Anatomy and Pitfalls &mdash; Security for Legal SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{ink:'#1a1a1a','ink-light':'#4a4a4a','ink-muted':'#7a7a7a',red:'#991B1B','red-soft':'#B91C1C',rule:'#e5e5e5','rule-dark':'#1a1a1a',paper:'#FAFAF8'},fontFamily:{serif:['Lora','Georgia','serif'],sans:['Inter','sans-serif']}}}}</script>
+    <link rel="stylesheet" href="../assets/css/plyr.css">
+</head>
+<body class="bg-paper font-serif text-ink text-base antialiased">
+    <header class="border-b-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8">
+            <a href="../index.html" class="block text-center text-3xl font-bold tracking-tight hover:text-red transition-colors">Security for Legal SaaS</a>
+            <nav class="flex justify-center gap-8 mt-4 text-sm font-sans text-ink-muted">
+                <a href="../index.html" class="hover:text-red transition">Episodes</a>
+                <a href="../outline.html" class="hover:text-red transition">Outline</a>
+                <a href="../about.html" class="hover:text-red transition">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 min-h-[60vh]">
+
+<!-- Episode meta -->
+<div class="py-12 border-b border-rule">
+    <p class="font-sans text-sm tracking-widest uppercase text-red mb-6">Episode 18 &middot; Module 5 &middot; Authentication &amp; Identity</p>
+    <h1 class="text-4xl md:text-5xl font-bold leading-none mb-8">JWT Anatomy and Pitfalls</h1>
+    <p class="text-ink-muted font-sans text-base">18 May 2026 &middot; &mdash;:&mdash;&mdash; &middot; Security for Legal SaaS</p>
+</div>
+
+<!-- Audio player -->
+<div class="py-8 border-b border-rule">
+    <div class="flex items-center gap-6">
+        <button id="play-btn" class="w-14 h-14 border-2 border-ink rounded-full flex items-center justify-center hover:bg-ink hover:text-paper transition flex-shrink-0 group" onclick="document.getElementById('player').paused ? document.getElementById('player').play() : document.getElementById('player').pause()">
+            <svg id="icon-play" class="w-6 h-6 ml-0.5 text-ink group-hover:text-paper" fill="currentColor" viewBox="0 0 20 20"><polygon points="6,4 16,10 6,16"/></svg>
+            <svg id="icon-pause" class="w-6 h-6 text-ink group-hover:text-paper hidden" fill="currentColor" viewBox="0 0 20 20"><rect x="5" y="4" width="3.5" height="12"/><rect x="11.5" y="4" width="3.5" height="12"/></svg>
+        </button>
+        <div class="flex-1">
+            <audio id="player">
+                <source src="../audio/episode-18-jwt-anatomy-and-pitfalls.mp3" type="audio/mpeg">
+            </audio>
+            <div id="progress-bar" class="h-3 bg-rule relative cursor-pointer" style="margin-top:-6px;padding-top:6px;padding-bottom:6px;">
+                <div class="h-px bg-rule relative">
+                    <div id="progress-fill" class="absolute top-0 left-0 h-px w-0 bg-red"></div>
+                    <div id="progress-dot" class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-red"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm font-sans text-ink-muted mt-3">
+                <span id="current-time">0:00</span>
+                <span>&mdash;:&mdash;&mdash;</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+        <a href="../audio/episode-18-jwt-anatomy-and-pitfalls.mp3" download class="inline-flex items-center text-sm font-sans text-red hover:text-red-soft transition">
+            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Episode
+        </a>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="py-12 border-b border-rule">
+    <p class="text-lg leading-relaxed italic text-ink-light">JSON Web Tokens transformed web authentication &mdash; and introduced a new class of vulnerabilities. Alice and Dan dissect the three-part JWT structure (header, payload, signature), the infamous &ldquo;none&rdquo; algorithm attack, algorithm confusion (RS256 to HS256), token lifetime tradeoffs, the access-plus-refresh pattern, what JWTs fundamentally cannot do (immediate revocation), and when server-side sessions are the better choice for legal SaaS handling privileged documents.</p>
+</div>
+
+<!-- Article -->
+<article class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-10">Today&rsquo;s Lesson</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Security for Legal SaaS &mdash; Episode 18: JWT Anatomy and Pitfalls</strong></p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Token That Changed Web Authentication</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">JSON Web Tokens transformed how web applications handle authentication. Instead of server-side session storage, a JWT encodes identity claims into a self-contained, cryptographically signed token that the client carries. <a href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 7519 defines the standard</a> &mdash; and since its publication in 2015, JWTs have become the default authentication mechanism for SPAs (Single-Page Applications &mdash; web apps where the entire interface runs in the browser), mobile apps, and API services.</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-blue-600 bg-blue-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Key insight:</strong> JWTs shift trust from server state to cryptographic verification. This is powerful &mdash; and dangerous. Every vulnerability in JWT implementation is a vulnerability in your entire authentication layer. <a href="https://portswigger.net/web-security/jwt" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger&rsquo;s JWT security research</a> documents over a dozen exploitable attack patterns.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, where multi-tenant isolation and privilege boundaries are existential concerns, understanding exactly what JWTs guarantee &mdash; and what they cannot &mdash; is the difference between secure architecture and a breach waiting for a trigger.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">JWT Structure &mdash; Three Parts, Base64-Encoded</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A JWT consists of three Base64URL-encoded segments separated by dots: <code>header.payload.signature</code>.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Header</h3>
+
+    <pre style="margin-bottom:1rem;overflow-x:auto;" class="bg-ink text-paper text-sm font-mono px-5 py-4 rounded"><code>{
+  "alg": "RS256",
+  "typ": "JWT",
+  "kid": "2024-signing-key-01"
+}</code></pre>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The header declares the signing algorithm and optionally a key ID for key rotation. <a href="https://datatracker.ietf.org/doc/html/rfc7518" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 7518 (JSON Web Algorithms)</a> defines the allowed algorithms.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Payload (Claims)</h3>
+
+    <pre style="margin-bottom:1rem;overflow-x:auto;" class="bg-ink text-paper text-sm font-mono px-5 py-4 rounded"><code>{
+  "sub": "user_8f3a2b",
+  "iss": "https://auth.legalplatform.com",
+  "aud": "https://api.legalplatform.com",
+  "iat": 1716000000,
+  "exp": 1716003600,
+  "tenant_id": "firm_baker_mckenzie",
+  "role": "partner",
+  "scope": "documents:read documents:write matters:read"
+}</code></pre>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Claim</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Purpose</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Security Implication</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>sub</code></td><td class="px-4 py-3">Subject (user ID)</td><td class="px-4 py-3">Must be opaque &mdash; never use email addresses</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>iss</code></td><td class="px-4 py-3">Issuer</td><td class="px-4 py-3">Verify on every request &mdash; reject tokens from unexpected issuers</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>aud</code></td><td class="px-4 py-3">Audience</td><td class="px-4 py-3">The service this token is intended for &mdash; reject mismatched audiences</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>exp</code></td><td class="px-4 py-3">Expiration</td><td class="px-4 py-3">Enforce strictly &mdash; no grace periods beyond clock skew</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>iat</code></td><td class="px-4 py-3">Issued at</td><td class="px-4 py-3">Enables detection of tokens issued before a security event</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3"><code>tenant_id</code></td><td class="px-4 py-3">Custom: tenant isolation</td><td class="px-4 py-3">Enforce at API layer &mdash; never trust the token alone for tenant boundaries</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3"><code>scope</code></td><td class="px-4 py-3">Permissions</td><td class="px-4 py-3">Principle of least privilege &mdash; request minimum needed</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Signature</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The signature is computed over the header and payload: <code>HMAC-SHA256(base64url(header) + "." + base64url(payload), secret)</code> for symmetric algorithms, or an RSA/ECDSA signature for asymmetric ones.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The &ldquo;none&rdquo; Algorithm Attack</h2>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-red-600 bg-red-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Critical vulnerability:</strong> <a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0&rsquo;s 2015 disclosure</a> revealed that multiple JWT libraries accepted tokens with <code>"alg": "none"</code> &mdash; the &ldquo;unsecured JWS&rdquo; defined in RFC 7519. An attacker strips the signature entirely, sets the algorithm to &ldquo;none,&rdquo; modifies any claims they want (escalate role, change tenant_id), and the server accepts it.</p>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">How it works:</strong></p>
+
+    <ol style="margin-bottom:1rem;padding-left:1.5rem;" class="list-decimal text-base leading-relaxed text-ink-light space-y-1">
+        <li>Attacker intercepts a valid JWT</li>
+        <li>Decodes the header, changes <code>"alg": "RS256"</code> to <code>"alg": "none"</code></li>
+        <li>Modifies payload claims (elevate privileges, switch tenants)</li>
+        <li>Removes the signature segment</li>
+        <li>Sends: <code>eyJ...modified_header.eyJ...modified_payload.</code></li>
+    </ol>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Defence:</strong> <a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Never allow the token to specify its own algorithm</a>. Configure your verification library with a hardcoded expected algorithm. Reject any token whose header algorithm doesn&rsquo;t match. Most modern libraries do this by default, but legacy code and misconfiguration remain common.</p>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Algorithm Confusion (RS256 &rarr; HS256)</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A subtler variant: if a server uses RS256 (asymmetric &mdash; signs with private key, verifies with public key), an attacker can:</p>
+
+    <ol style="margin-bottom:1rem;padding-left:1.5rem;" class="list-decimal text-base leading-relaxed text-ink-light space-y-1">
+        <li>Obtain the public key (often exposed at <code>/.well-known/jwks.json</code> &mdash; JWKS being the JSON Web Key Set, a standard endpoint where servers publish their public signing keys)</li>
+        <li>Set the header algorithm to HS256 (symmetric)</li>
+        <li>Sign the modified token using the public key as the HMAC secret</li>
+        <li>If the server blindly trusts the algorithm header, it verifies using the public key as an HMAC secret &mdash; and the signature passes</li>
+    </ol>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Tim McLean&rsquo;s original research</a> demonstrated this across multiple JWT libraries. The fix: always specify the expected algorithm in your verification call.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Token Lifetime Tradeoffs</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Parameter</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Short-Lived (5&ndash;15 min)</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Long-Lived (hours/days)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Exposure window</td><td class="px-4 py-3">Minimal</td><td class="px-4 py-3">Dangerous</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">User friction</td><td class="px-4 py-3">Frequent re-auth (mitigated by refresh tokens)</td><td class="px-4 py-3">Seamless</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Revocation need</td><td class="px-4 py-3">Low &mdash; tokens expire naturally</td><td class="px-4 py-3">High &mdash; can&rsquo;t wait for expiry</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Storage risk</td><td class="px-4 py-3">Lower impact if stolen</td><td class="px-4 py-3">Catastrophic if stolen</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Access + Refresh Token Pattern</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc6749" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OAuth 2.0 (RFC 6749)</a> established the pattern:</p>
+
+    <ul style="margin-bottom:1rem;padding-left:1.5rem;" class="list-disc text-base leading-relaxed text-ink-light space-y-1">
+        <li><strong>Access token:</strong> Short-lived (5&ndash;15 minutes). Sent with every API request. Stateless verification.</li>
+        <li><strong>Refresh token:</strong> Longer-lived (days&ndash;weeks). Stored securely. Exchanged for new access tokens. Can be revoked server-side.</li>
+    </ul>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS: access token at 15 minutes (short enough that revocation is rarely needed), refresh token at 7 days (stored in httpOnly cookie, rotated on each use). <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP recommends refresh token rotation</a> &mdash; if a refresh token is used twice (indicating theft), invalidate all tokens for that user immediately.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What JWTs Cannot Do</h2>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Immediate Revocation</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">JWTs are verified without contacting the server. Once issued, they&rsquo;re valid until expiry. You cannot &ldquo;delete&rdquo; a JWT. This creates a fundamental problem: if a user&rsquo;s account is compromised, if they&rsquo;re deprovisioned, if their permissions change &mdash; the existing JWT remains valid until it naturally expires.</p>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Strategy</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Latency</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Short expiry (5 min)</td><td class="px-4 py-3">5 min max exposure</td><td class="px-4 py-3">Frequent refreshes</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Token blocklist (Redis/memory)</td><td class="px-4 py-3">Near-instant</td><td class="px-4 py-3">Requires server state &mdash; partially defeats the purpose</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Token versioning (per-user counter)</td><td class="px-4 py-3">On next verification</td><td class="px-4 py-3">Requires database lookup &mdash; partially defeats the purpose</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Event-driven invalidation</td><td class="px-4 py-3">Seconds (pub/sub)</td><td class="px-4 py-3">Infrastructure complexity</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;" class="text-xl font-bold">Server-Side State</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The promise of JWTs is statelessness. But real applications need revocation, audit logging, concurrent session limits, and permission changes to take effect immediately. <a href="https://news.ycombinator.com/item?id=11929267" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Thomas Ptacek&rsquo;s critique</a>: &ldquo;If you need server-side state anyway (and you do), you might as well use sessions.&rdquo;</p>
+
+    <div style="margin:1.5rem 0;" class="border-l-4 border-yellow-500 bg-yellow-50 px-5 py-4 rounded-r">
+        <p class="text-base leading-relaxed text-ink-light"><strong>Pragmatic guidance:</strong> Use JWTs for stateless service-to-service authentication where revocation is less critical. Use stateful sessions (server-side session ID in a cookie) for user-facing authentication where you need immediate revocation, concurrent session control, and activity tracking. Many production systems use both &mdash; JWT between microservices (small, independent services that each handle one function), sessions for the user-facing layer.</p>
+    </div>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">When to Use JWTs vs Stateful Sessions</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Criterion</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">JWT</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Stateful Session</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Immediate revocation needed</td><td class="px-4 py-3">No &mdash; use sessions</td><td class="px-4 py-3">Yes</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Distributed microservices</td><td class="px-4 py-3">Yes &mdash; no shared session store needed</td><td class="px-4 py-3">Requires distributed cache</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Concurrent session limits</td><td class="px-4 py-3">Difficult</td><td class="px-4 py-3">Native</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Audit trail of active sessions</td><td class="px-4 py-3">Difficult</td><td class="px-4 py-3">Native</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Scalability</td><td class="px-4 py-3">Excellent &mdash; no server state</td><td class="px-4 py-3">Requires session store scaling</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Offline/mobile</td><td class="px-4 py-3">Good &mdash; token is self-contained</td><td class="px-4 py-3">Requires connectivity</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Sensitive legal operations</td><td class="px-4 py-3">Consider sessions</td><td class="px-4 py-3">Preferred</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP&rsquo;s Session Management Cheat Sheet</a> recommends server-side sessions for applications requiring &ldquo;immediate invalidation capability&rdquo; &mdash; which describes every legal SaaS platform handling privileged documents.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">JWT Security Checklist for Legal SaaS</h2>
+
+    <div style="margin-bottom:1.5rem;" class="overflow-x-auto">
+        <table class="w-full text-base text-ink-light border border-rule">
+            <thead>
+                <tr class="bg-ink text-paper">
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Control</th>
+                    <th class="px-4 py-3 text-left font-sans text-sm font-semibold">Implementation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Algorithm hardcoding</td><td class="px-4 py-3">Verify with explicit <code>algorithms=["RS256"]</code> &mdash; never trust the header</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Signature verification</td><td class="px-4 py-3">Verify every token on every request &mdash; no exceptions</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Claims validation</td><td class="px-4 py-3">Check <code>iss</code>, <code>aud</code>, <code>exp</code>, <code>iat</code> on every verification</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Key management</td><td class="px-4 py-3">Rotate signing keys annually; support multiple <code>kid</code> values during rotation</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Token storage (browser)</td><td class="px-4 py-3">httpOnly, Secure, SameSite=Strict cookies &mdash; never localStorage</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Refresh token rotation</td><td class="px-4 py-3">New refresh token on each use; detect reuse as compromise</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Scope minimisation</td><td class="px-4 py-3">Issue tokens with minimum required permissions</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Tenant isolation</td><td class="px-4 py-3">Validate <code>tenant_id</code> claim against the resource being accessed &mdash; defence in depth</td></tr>
+                <tr class="border-t border-rule"><td class="px-4 py-3">Clock skew</td><td class="px-4 py-3">Maximum 30 seconds tolerance for <code>exp</code> verification</td></tr>
+                <tr class="border-t border-rule bg-paper"><td class="px-4 py-3">Token size</td><td class="px-4 py-3">Keep payloads minimal &mdash; JWTs travel with every request</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://jwt.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The jwt.io debugger</a> is invaluable for inspecting tokens during development &mdash; but note that pasting production tokens into third-party websites exposes their contents. Decode locally with <code>base64 -d</code> for production tokens.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Real-World JWT Vulnerabilities</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.wiz.io/blog/storm-0558-compromised-microsoft-key-was-more-potent-than-we-thought" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">In 2022, researchers discovered that Microsoft Azure AD tokens could be forged due to a validation bypass</a> &mdash; the Storm-0558 incident where a stolen signing key allowed forging tokens for any Azure AD user. <a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Auth0 &ldquo;algorithm confusion&rdquo; disclosure</a> affected libraries in Java, Node.js, PHP, and Python simultaneously.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, a forged JWT with an elevated <code>tenant_id</code> or <code>role</code> claim means an attacker can access another firm&rsquo;s privileged documents. The cryptographic signature is the only barrier &mdash; and it&rsquo;s only as strong as your algorithm choice, key management, and verification implementation.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://datatracker.ietf.org/doc/html/rfc9068" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 9068 (JWT Profile for OAuth 2.0 Access Tokens)</a> standardises the claims structure for access tokens, providing interoperability guidelines that reduce implementation errors.</p>
+
+    <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Conclusion</h2>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">JWTs are powerful but unforgiving. The &ldquo;none&rdquo; algorithm attack, algorithm confusion, and the fundamental inability to revoke issued tokens make JWT security a matter of precise implementation, not conceptual understanding. Hardcode your algorithms. Validate every claim. Keep access tokens short-lived. Use refresh token rotation. And ask the honest question: does your application actually need stateless tokens, or would server-side sessions &mdash; simpler, revocable, auditable &mdash; serve your security requirements better?</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS handling privileged communications across multi-tenant boundaries, the answer is often both: sessions for user-facing authentication, JWTs for internal service communication.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: <strong class="text-ink">Session Management</strong> &mdash; the server-side approach, done right: from ID generation through lifecycle to invalidation.</p>
+</article>
+
+<!-- Transcript -->
+<section class="py-10 border-b border-rule">
+    <button
+        class="font-sans text-base text-red hover:text-red-soft transition flex items-center gap-2 group"
+        onclick="document.getElementById('transcript-body').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-90');"
+    >
+        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
+    </button>
+    <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan. Episode 18 &mdash; JWT Anatomy and Pitfalls. Alice, JSON Web Tokens are everywhere. Every tutorial, every framework, every &ldquo;build an auth system in 10 minutes&rdquo; blog post uses them. What&rsquo;s the actual security story?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> JWTs solved a real problem &mdash; how do you authenticate requests across distributed services without every service needing to query a central session store? The answer is a self-contained token. You encode the user&rsquo;s identity and permissions into a JSON payload, sign it cryptographically, and the client carries it with every request. Any service can verify the signature locally without network calls.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Break down the structure for me.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Three parts separated by dots. The header &mdash; which declares the signing algorithm and optionally a key ID. The payload &mdash; which contains claims about the user: who they are, when the token expires, what they&rsquo;re authorised to do. And the signature &mdash; which proves the header and payload haven&rsquo;t been tampered with. All three parts are Base64URL-encoded &mdash; converted into a compact text format using letters, numbers, and a few symbols so they&rsquo;re URL-safe strings you can put in HTTP headers.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And the signature is what gives you the security guarantee.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> If it&rsquo;s verified correctly, yes. The server computes the expected signature for the header and payload using its secret key, then compares it to the signature in the token. If they match, the claims are trustworthy &mdash; nobody modified them after signing. If they don&rsquo;t match, the token is rejected. The entire security model rests on correct signature verification.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Which brings us to the infamous &ldquo;none&rdquo; algorithm attack.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> In 2015, Auth0 disclosed that multiple JWT libraries &mdash; in Java, Node.js, PHP, and Python &mdash; accepted tokens with the algorithm set to &ldquo;none.&rdquo; That&rsquo;s a special value defined in the RFC &mdash; the Request for Comments document that formally specifies the standard &mdash; meaning &ldquo;this token is unsigned.&rdquo; An attacker takes a valid token, decodes the header, changes the algorithm from RS256 &mdash; RSA with SHA-256 signing &mdash; to none, modifies any claims they want &mdash; elevate their role to admin, change their tenant ID to access another firm&rsquo;s data &mdash; removes the signature entirely, and submits it. If the server trusts the algorithm specified in the token header, it sees &ldquo;none,&rdquo; skips verification, and accepts the forged token.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That&rsquo;s catastrophic. How does it happen?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Because many libraries implemented verification like this: read the algorithm from the token header, then use that algorithm to verify. If the algorithm is &ldquo;none,&rdquo; verification trivially succeeds. The fix is simple &mdash; never let the token tell you how to verify it. Hardcode the expected algorithm in your verification call. If you expect RS256, pass algorithms equals RS256 explicitly. Reject anything else. Most modern libraries do this by default now, but legacy code and misconfigurations still exist.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> There&rsquo;s a more subtle variant too &mdash; algorithm confusion?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Yes. Say your server uses RS256 &mdash; asymmetric cryptography. It signs with a private key and verifies with a public key. The public key is often published at a well-known endpoint. An attacker obtains the public key, sets the algorithm header to HS256 &mdash; HMAC with SHA-256, which is symmetric cryptography &mdash; and signs the modified token using the public key as the HMAC secret. If the server reads the algorithm from the header and uses it, it performs HMAC verification with the public key &mdash; which is the same key the attacker used to sign. Verification passes. The forged token is accepted.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Same fix &mdash; hardcode the algorithm, never trust the header.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Exactly. The header is attacker-controlled input. Treat it accordingly.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Let&rsquo;s talk about token lifetime. Short-lived versus long-lived &mdash; what&rsquo;s the tradeoff?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Here&rsquo;s the fundamental problem with JWTs &mdash; once issued, they&rsquo;re valid until they expire. You cannot &ldquo;delete&rdquo; a JWT. You can&rsquo;t revoke it without maintaining server-side state, which defeats the stateless purpose. So token lifetime is really a question of how long you&rsquo;re willing to let a compromised token remain usable. A 15-minute access token means even if stolen, the window of exploitation is small. A 24-hour token means an attacker has a full day.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> But 15-minute tokens mean the user keeps getting logged out.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> That&rsquo;s where refresh tokens come in. The OAuth 2.0 pattern &mdash; OAuth being the standard protocol for delegating access, which we&rsquo;ll cover in depth in Episode 20 &mdash; uses two tokens. A short-lived access token &mdash; 5 to 15 minutes &mdash; sent with every API request. And a longer-lived refresh token &mdash; days or weeks &mdash; stored securely, used only to obtain new access tokens. The refresh token can be revoked server-side because it&rsquo;s checked against a database on each use. You get the UX of persistent sessions with the security of short-lived credentials.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> That makes sense. And refresh token rotation?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Critical. Every time a refresh token is used to obtain a new access token, you issue a new refresh token simultaneously and invalidate the old one. If an attacker steals a refresh token and the legitimate user also tries to use it, one of them will present an already-invalidated token. That&rsquo;s your detection signal &mdash; immediately invalidate all tokens for that user and force re-authentication. OWASP recommends this pattern explicitly.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Now here&rsquo;s the honest question &mdash; when should you not use JWTs?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> When you need immediate revocation. When you need concurrent session limits &mdash; &ldquo;only one active session per user.&rdquo; When you need a real-time audit trail of active sessions. When a user changes their password and you want all other sessions to die instantly. JWTs can&rsquo;t do any of these without adding server-side state. And if you&rsquo;re adding server-side state anyway, you might as well use server-side sessions. Thomas Ptacek made this point years ago and it&rsquo;s still valid.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> So for legal SaaS &mdash; where you might need to immediately revoke access when a lawyer leaves a firm, or when privilege boundaries change mid-matter...</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Stateful sessions are often the better choice for user-facing authentication. You get immediate revocation, activity tracking, concurrent session control, and a clear audit trail. The session ID is a random opaque token stored in an httpOnly cookie &mdash; it carries no claims, reveals nothing if intercepted, and can be invalidated in milliseconds by deleting the server-side record.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> But JWTs still have their place?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Absolutely. Service-to-service communication within your infrastructure &mdash; where you control both sides and revocation is less critical. Microservice architectures &mdash; where your application is split into many small, independent services instead of one big program &mdash; where a gateway validates the user&rsquo;s session and then issues a short-lived JWT for downstream services to consume without each needing session store access. That&rsquo;s the sweet spot. The pattern many production systems use is sessions for the user-facing edge, JWTs for internal service communication.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> What about storing JWTs in the browser?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Never in localStorage &mdash; that&rsquo;s a storage area built into the browser that any JavaScript code on the page can read and write. It&rsquo;s accessible to any JavaScript on the page &mdash; a single XSS vulnerability and the attacker exfiltrates the token. Store access tokens in memory &mdash; JavaScript variables that don&rsquo;t survive page refresh. Store refresh tokens in httpOnly, Secure, SameSite=Strict cookies &mdash; inaccessible to JavaScript, only sent by the browser automatically. This gives you protection against both XSS and CSRF.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Quick summary of the non-negotiables for anyone implementing JWTs today?</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Hardcode the expected algorithm &mdash; never trust the token header. Validate issuer, audience, and expiry on every request. Keep access tokens to 15 minutes maximum. Use refresh token rotation with reuse detection. Store tokens in httpOnly cookies, never localStorage. Rotate signing keys annually with overlapping key IDs. And ask yourself honestly whether you actually need JWTs or whether server-side sessions would serve your security requirements better with less implementation complexity.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> Next episode &mdash; Session Management. The server-side approach we just advocated for &mdash; how to do it right, from ID generation through lifecycle to invalidation.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Until then, I&rsquo;m Alice.</p>
+
+        <p class="text-lg leading-relaxed"><span class="font-semibold text-ink">Dan:</span> And I&rsquo;m Dan.</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Security for Legal SaaS is a series written with AI assistance. Alice and Dan are AI-generated voices &mdash; no professional advice here, just education.</p>
+
+    </article>
+</section>
+
+<!-- Sources -->
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li id="fn-1"><a href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 7519: JSON Web Token (JWT)</a></li>
+        <li id="fn-2"><a href="https://portswigger.net/web-security/jwt" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PortSwigger, "JWT Security." Comprehensive attack taxonomy</a></li>
+        <li id="fn-3"><a href="https://datatracker.ietf.org/doc/html/rfc7518" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 7518: JSON Web Algorithms (JWA)</a></li>
+        <li id="fn-4"><a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0, "Critical Vulnerabilities in JSON Web Token Libraries," 2015. Algorithm confusion and "none" algorithm attacks</a></li>
+        <li id="fn-5"><a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Tim McLean, "JWT Algorithm Confusion," 2015. RS256/HS256 attack</a></li>
+        <li id="fn-6"><a href="https://datatracker.ietf.org/doc/html/rfc6749" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 6749: The OAuth 2.0 Authorization Framework</a></li>
+        <li id="fn-7"><a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "JSON Web Token for Java Cheat Sheet." Refresh token rotation</a></li>
+        <li id="fn-8"><a href="https://news.ycombinator.com/item?id=11929267" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Thomas Ptacek, commentary on JWTs vs sessions (Hacker News)</a></li>
+        <li id="fn-9"><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP, "Session Management Cheat Sheet"</a></li>
+        <li id="fn-10"><a href="https://jwt.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Auth0, jwt.io &mdash; JWT debugger and library directory</a></li>
+        <li id="fn-11"><a href="https://www.wiz.io/blog/storm-0558-compromised-microsoft-key-was-more-potent-than-we-thought" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Wiz Research, "Storm-0558: Compromised Microsoft Key Was More Potent Than We Thought," 2023. Azure AD token forging</a></li>
+        <li id="fn-12"><a href="https://datatracker.ietf.org/doc/html/rfc9068" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IETF, RFC 9068: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens</a></li>
+    </ol>
+</section>
+
+<nav aria-label="Episode navigation" class="py-10">
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="episode-17-password-hashing-and-credential-storage.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div>
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
+                    <p class="text-lg font-semibold">Episode 17 &mdash; Password Hashing and Credential Storage</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-right">
+            <a href="episode-19-session-management.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
+                <div class="text-right">
+                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
+                    <p class="text-lg font-semibold">Episode 19 &mdash; Session Management</p>
+                </div>
+                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+    </main>
+
+    <footer class="border-t-2 border-rule-dark">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-center">
+            <p class="font-sans text-xs text-ink-muted">Security for Legal SaaS &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plyr.js"></script>
+
+<script>
+    const audio = document.getElementById('player');
+    const fill = document.getElementById('progress-fill');
+    const dot = document.getElementById('progress-dot');
+    const bar = document.getElementById('progress-bar');
+    const timeEl = document.getElementById('current-time');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+
+    audio.addEventListener('play', function() {
+        iconPlay.classList.add('hidden');
+        iconPause.classList.remove('hidden');
+    });
+    audio.addEventListener('pause', function() {
+        iconPause.classList.add('hidden');
+        iconPlay.classList.remove('hidden');
+    });
+
+    audio.addEventListener('timeupdate', function() {
+        if (dragging) return;
+        const pct = (audio.currentTime / audio.duration * 100) || 0;
+        fill.style.width = pct + '%';
+        dot.style.left = pct + '%';
+        const m = Math.floor(audio.currentTime / 60);
+        const s = Math.floor(audio.currentTime % 60);
+        timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    });
+
+    let dragging = false;
+    function seek(e) {
+        const rect = bar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        fill.style.width = (pct * 100) + '%';
+        dot.style.left = (pct * 100) + '%';
+        audio.currentTime = pct * audio.duration;
+    }
+    bar.addEventListener('mousedown', function(e) { dragging = true; seek(e); });
+    document.addEventListener('mousemove', function(e) { if (dragging) seek(e); });
+    document.addEventListener('mouseup', function() { dragging = false; });
+    bar.addEventListener('touchstart', function(e) { dragging = true; seek(e.touches[0]); }, {passive: true});
+    document.addEventListener('touchmove', function(e) { if (dragging) seek(e.touches[0]); });
+    document.addEventListener('touchend', function() { dragging = false; });
+</script>
+
+</body>
+</html>
