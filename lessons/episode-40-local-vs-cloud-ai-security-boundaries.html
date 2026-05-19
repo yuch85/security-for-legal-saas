@@ -84,7 +84,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Cloud AI: What You Gain and What You Give Up</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When you call a cloud LLM provider &mdash; OpenAI, Anthropic, Google, AWS Bedrock &mdash; your data traverses networks and is processed on infrastructure outside your control. Even with contractual protections (data processing agreements, zero-retention policies, SOC 2 attestations), several fundamental risks remain:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When you call a cloud LLM provider &mdash; OpenAI, Anthropic, Google, AWS Bedrock &mdash; your data traverses networks and is processed on infrastructure outside your control. Even with contractual protections (data processing agreements, zero-retention policies, SOC 2 attestations), several fundamental risks remain:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -124,7 +124,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Local AI: What You Gain and What You Give Up</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Running a model locally means your data never leaves your network. No prompts cross the internet. No third party processes your privileged communications. For compliance and privilege protection, this is the strongest possible posture.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Running a model locally means your data never leaves your network. No prompts cross the internet. No third party processes your privileged communications. For compliance and privilege protection, this is the strongest possible posture.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">But the threat surface shifts &mdash; it doesn&#39;t disappear:</p>
     <div class="overflow-x-auto my-6">
@@ -165,7 +165,7 @@
         </tbody>
     </table>
     </div>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Vitalik Buterin&#39;s local LLM setup (April 2026):</strong> Ethereum founder Vitalik Buterin published his personal local AI security setup, arguing that for sensitive personal data, &quot;running the model locally means the data never leaves your machine&quot; &mdash; but noting that local deployment requires ongoing vigilance around model integrity, network isolation, and access controls.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Vitalik Buterin&#39;s local LLM setup (April 2026):</strong> Ethereum founder Vitalik Buterin published his personal local AI security setup, arguing that for sensitive personal data, &quot;running the model locally means the data never leaves your machine&quot; &mdash; but noting that local deployment requires ongoing vigilance around model integrity, network isolation, and access controls.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Hybrid Architecture</h2>
 
@@ -222,7 +222,7 @@
         <li><strong class="text-ink">Acceptable risk:</strong> If the data were exposed, what is the worst-case consequence?</li>
     </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If the answer to question 1 is &quot;yes&quot; and the answer to question 2 is &quot;a local model can handle it,&quot; the choice is clear: run locally.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If the answer to question 1 is &quot;yes&quot; and the answer to question 2 is &quot;a local model can handle it,&quot; the choice is clear: run locally.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Securing Local Inference</h2>
 
@@ -230,7 +230,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Network Isolation</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The local model endpoint should not be accessible from the public internet. Deploy it in an isolated network segment &mdash; the same principle we covered in Episode 15 on network segmentation. Only your application servers should be able to reach the model API. Use mTLS (mutual TLS, from Episode 15) to authenticate clients connecting to the model endpoint.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The local model endpoint should not be accessible from the public internet. Deploy it in an isolated network segment &mdash; the same principle we covered in Episode 15 on network segmentation. Only your application servers should be able to reach the model API. Use mTLS (mutual TLS, from Episode 15) to authenticate clients connecting to the model endpoint.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Access Controls</h3>
 
@@ -238,7 +238,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Model File Integrity</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When you download a model from Hugging Face, Ollama, or any other source, you are trusting that the file has not been tampered with. Verify checksums. Use signed model files where available. Store models in a read-only filesystem. Monitor for unexpected changes to model files &mdash; a compromised model could exfiltrate data through its outputs or produce subtly incorrect legal analysis.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When you download a model from Hugging Face, Ollama, or any other source, you are trusting that the file has not been tampered with. Verify checksums. Use signed model files where available. Store models in a read-only filesystem. Monitor for unexpected changes to model files &mdash; a compromised model could exfiltrate data through its outputs or produce subtly incorrect legal analysis.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Inference Endpoint Security</h3>
 
@@ -252,7 +252,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Capability-Security Tradeoff</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The honest challenge with local AI: smaller models are less capable. A 7-billion-parameter model running on a single GPU will not match GPT-4 or Claude Opus on complex legal reasoning, nuanced contract analysis, or multi-jurisdictional research. The security benefit of local deployment must be weighed against the quality risk of using a less capable model for consequential legal work.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The honest challenge with local AI: smaller models are less capable. A 7-billion-parameter model running on a single GPU will not match GPT-4 or Claude Opus on complex legal reasoning, nuanced contract analysis, or multi-jurisdictional research. The security benefit of local deployment must be weighed against the quality risk of using a less capable model for consequential legal work.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -289,7 +289,7 @@
         </tbody>
     </table>
     </div>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Cost reality check:</strong> A cloud server with 8x NVIDIA H100 GPUs costs approximately $98 per hour. The same hardware on-premises costs about $0.87 per hour in electricity. The breakeven point is roughly 12 months of continuous use &mdash; after which on-premises is dramatically cheaper. For a firm running AI workloads continuously, the economics of self-hosting are compelling. For occasional use, cloud is more practical.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Cost reality check:</strong> A cloud server with 8x NVIDIA H100 GPUs costs approximately $98 per hour. The same hardware on-premises costs about $0.87 per hour in electricity. The breakeven point is roughly 12 months of continuous use &mdash; after which on-premises is dramatically cheaper.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup> For a firm running AI workloads continuously, the economics of self-hosting are compelling. For occasional use, cloud is more practical.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Regulatory Drivers</h2>
 
@@ -298,7 +298,7 @@
         <li><strong class="text-ink">GDPR Article 44-49:</strong> Cross-border data transfers require adequate protections. Local deployment eliminates transfer concerns entirely.</li>
         <li><strong class="text-ink">HIPAA (for health-adjacent legal work):</strong> Protected health information processed through an AI system must be covered by a Business Associate Agreement with the provider &mdash; or processed locally.</li>
         <li><strong class="text-ink">Data localisation laws:</strong> Jurisdictions including China, Russia, India, and increasingly the EU mandate that certain data categories remain within national borders.</li>
-        <li><strong class="text-ink">Legal professional privilege (UK/SG):</strong> Disclosure to a third-party processor may not inherently waive privilege, but it complicates privilege claims and adds litigation risk.</li>
+        <li><strong class="text-ink">Legal professional privilege (UK/SG):</strong> Disclosure to a third-party processor may not inherently waive privilege, but it complicates privilege claims and adds litigation risk.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></li>
     </ul>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For law firms handling international matters, the safest approach is often to keep the AI local and avoid the jurisdictional analysis entirely.</p>
@@ -321,16 +321,16 @@
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>Prediction Guard, <a href="https://predictionguard.com/blog/self-hosted-vs-cloud-llm-deployment-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Self-Hosted vs. Third-Party Deployment: A Technical Evaluation Guide for Regulated Enterprises</a>.</li>
-        <li>DataNorth AI, <a href="https://datanorth.ai/blog/local-llms-privacy-security-and-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM: Privacy, Security, and Control</a>.</li>
-        <li>Vitalik Buterin, <a href="https://vitalik.eth.limo/general/2026/04/02/secure_llms.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">My Self-Sovereign / Local / Private / Secure LLM Setup</a> (April 2026).</li>
-        <li>AIMultiple, <a href="https://aimultiple.com/cloud-llm" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud LLM vs Local LLMs: Examples & Benefits</a>.</li>
-        <li>Digital Applied, <a href="https://www.digitalapplied.com/blog/local-llm-deployment-privacy-guide-2025" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM Deployment: Privacy-First AI Complete Guide</a>.</li>
-        <li>EPAM SolutionsHub, <a href="https://solutionshub.epam.com/blog/post/llm-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Open LLM Security Risks and Best Practices</a>.</li>
-        <li>Unified AI Hub, <a href="https://www.unifiedaihub.com/blog/on-premise-llms-vs-cloud-apis-when-to-run-your-ai-models-on-premise" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">On-Prem LLMs vs Cloud APIs: When to Run Models Locally</a>.</li>
-        <li>GodOfPrompt, <a href="https://www.godofprompt.ai/blog/local-llm-setup-for-privacy-conscious-businesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM Setup for Privacy-Conscious Businesses</a>.</li>
-        <li>Spellbook, <a href="https://www.spellbook.legal/learn/most-private-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026</a>.</li>
-        <li>Matillion, <a href="https://www.matillion.com/blog/public-vs-private-llms-enterprise-ai-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Public vs Private LLMs: Secure AI for Enterprises</a>.</li>
+        <li id="fn-1">Prediction Guard, <a href="https://predictionguard.com/blog/self-hosted-vs-cloud-llm-deployment-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Self-Hosted vs. Third-Party Deployment: A Technical Evaluation Guide for Regulated Enterprises</a>.</li>
+        <li id="fn-2">DataNorth AI, <a href="https://datanorth.ai/blog/local-llms-privacy-security-and-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM: Privacy, Security, and Control</a>.</li>
+        <li id="fn-3">Vitalik Buterin, <a href="https://vitalik.eth.limo/general/2026/04/02/secure_llms.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">My Self-Sovereign / Local / Private / Secure LLM Setup</a> (April 2026).</li>
+        <li id="fn-4">AIMultiple, <a href="https://aimultiple.com/cloud-llm" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud LLM vs Local LLMs: Examples & Benefits</a>.</li>
+        <li id="fn-5">Digital Applied, <a href="https://www.digitalapplied.com/blog/local-llm-deployment-privacy-guide-2025" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM Deployment: Privacy-First AI Complete Guide</a>.</li>
+        <li id="fn-6">EPAM SolutionsHub, <a href="https://solutionshub.epam.com/blog/post/llm-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Open LLM Security Risks and Best Practices</a>.</li>
+        <li id="fn-7">Unified AI Hub, <a href="https://www.unifiedaihub.com/blog/on-premise-llms-vs-cloud-apis-when-to-run-your-ai-models-on-premise" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">On-Prem LLMs vs Cloud APIs: When to Run Models Locally</a>.</li>
+        <li id="fn-8">GodOfPrompt, <a href="https://www.godofprompt.ai/blog/local-llm-setup-for-privacy-conscious-businesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM Setup for Privacy-Conscious Businesses</a>.</li>
+        <li id="fn-9">Spellbook, <a href="https://www.spellbook.legal/learn/most-private-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026</a>.</li>
+        <li id="fn-10">Matillion, <a href="https://www.matillion.com/blog/public-vs-private-llms-enterprise-ai-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Public vs Private LLMs: Secure AI for Enterprises</a>.</li>
     </ol>
 </section>
 

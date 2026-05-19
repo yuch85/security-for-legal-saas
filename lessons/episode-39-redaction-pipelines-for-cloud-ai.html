@@ -84,7 +84,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why Redaction Matters for Legal AI</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When you send a prompt to OpenAI, Anthropic, Google, or any other cloud LLM provider, that data leaves your network and enters the provider&#39;s infrastructure. Even with zero-data-retention agreements, the data traverses networks you don&#39;t control, is processed on hardware you don&#39;t own, and is subject to the provider&#39;s security posture &mdash; not yours.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When you send a prompt to OpenAI, Anthropic, Google, or any other cloud LLM provider, that data leaves your network and enters the provider&#39;s infrastructure. Even with zero-data-retention agreements, the data traverses networks you don&#39;t control, is processed on hardware you don&#39;t own, and is subject to the provider&#39;s security posture &mdash; not yours.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal data, this creates specific risks:</p>
     <div class="overflow-x-auto my-6">
@@ -119,13 +119,13 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ABA Formal Opinion 512 specifically requires lawyers to understand &quot;how GAI uses data&quot; and to implement &quot;adequate safeguards to ensure that data processed by GAI is secure.&quot; Technical redaction is one of the most direct safeguards available.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ABA Formal Opinion 512 specifically requires lawyers to understand &quot;how GAI uses data&quot; and to implement &quot;adequate safeguards to ensure that data processed by GAI is secure.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup> Technical redaction is one of the most direct safeguards available.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Named Entity Recognition: The Core Technology</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Named Entity Recognition &mdash; NER &mdash; is a natural language processing technique that identifies and classifies specific entities in text: person names, organisation names, locations, dates, financial amounts, identification numbers, and other structured data. NER is the engine that powers automated redaction.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern NER systems use multiple approaches in combination:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern NER systems use multiple approaches in combination:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -163,18 +163,18 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A recent study on financial documents reported that a hybrid NER approach achieved 94.7% precision, 89.4% recall, and an F1 score of 91.1%. Legal documents present similar challenges &mdash; a mix of structured identifiers (case numbers, statute references) and unstructured entities (party names, judge names) that require both pattern matching and contextual understanding.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A recent study on financial documents reported that a hybrid NER approach achieved 94.7% precision, 89.4% recall, and an F1 score of 91.1%.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup> Legal documents present similar challenges &mdash; a mix of structured identifiers (case numbers, statute references) and unstructured entities (party names, judge names) that require both pattern matching and contextual understanding.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Microsoft Presidio: An Open-Source Reference</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://github.com/microsoft/presidio" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Presidio</a> is the most widely adopted open-source PII redaction framework. It combines NER models (spaCy by default), regular expressions, and checksum validation to detect over 30 entity types including names, addresses, Social Security numbers, financial account numbers, and email addresses.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://github.com/microsoft/presidio" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Presidio</a> is the most widely adopted open-source PII redaction framework. It combines NER models (spaCy by default), regular expressions, and checksum validation to detect over 30 entity types including names, addresses, Social Security numbers, financial account numbers, and email addresses.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Presidio&#39;s architecture has two components:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Analyzer</strong>: Detects PII entities in text, returning their type, location, and confidence score</li>
         <li><strong class="text-ink">Anonymizer</strong>: Replaces, masks, hashes, or encrypts detected entities based on configurable rules</li>
     </ul>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Important caveat:</strong> Presidio&#39;s documentation explicitly states: &quot;Because it is using automated detection mechanisms, there is no guarantee that Presidio will find all sensitive information.&quot; For legal applications, this means Presidio (or any automated tool) should be a first pass, not the only pass. Defence in depth applies to redaction too.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Important caveat:</strong> Presidio&#39;s documentation explicitly states: &quot;Because it is using automated detection mechanisms, there is no guarantee that Presidio will find all sensitive information.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup> For legal applications, this means Presidio (or any automated tool) should be a first pass, not the only pass. Defence in depth applies to redaction too.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Configurable Redaction Levels</h2>
 
@@ -216,7 +216,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Pseudonymisation deserves special attention. Some AI tasks produce better results when the input looks like real data rather than placeholder tags. Replacing &quot;[ORG_1]&quot; with a consistent fake name like &quot;Maple Corp&quot; throughout the document preserves the readability that helps the LLM understand context &mdash; while ensuring the actual client name never reaches the cloud.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Pseudonymisation deserves special attention. Some AI tasks produce better results when the input looks like real data rather than placeholder tags. Replacing &quot;[ORG_1]&quot; with a consistent fake name like &quot;Maple Corp&quot; throughout the document preserves the readability that helps the LLM understand context &mdash; while ensuring the actual client name never reaches the cloud.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Round-Trip Reconstruction: Redact, Send, Re-Hydrate</h2>
 
@@ -234,7 +234,7 @@
 </code></pre>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The redaction map is the sensitive artefact. It must be stored securely &mdash; encrypted at rest, access-controlled, and never sent to the cloud provider. If the map is compromised, every redacted prompt can be reconstructed.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The redaction map is the sensitive artefact. It must be stored securely &mdash; encrypted at rest, access-controlled, and never sent to the cloud provider. If the map is compromised, every redacted prompt can be reconstructed.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Handling Edge Cases</h3>
     <div class="overflow-x-auto my-6">
@@ -271,7 +271,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Contractual Protections vs. Technical Protections</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Enterprise agreements with AI providers often include zero-data-retention clauses, prohibitions on using customer data for model training, and SOC 2 / ISO 27001 compliance attestations. These are important but insufficient on their own.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Enterprise agreements with AI providers often include zero-data-retention clauses, prohibitions on using customer data for model training, and SOC 2 / ISO 27001 compliance attestations. These are important but insufficient on their own.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -308,7 +308,7 @@
         <li><strong class="text-ink">Bar numbers</strong> and attorney registration identifiers</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Tools like <a href="https://dev.to/aairom/the-next-generation-of-privacy-using-docling-gliners-advanced-ner-to-masterfully-detect-and-75p" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GLiNER</a> support zero-shot NER &mdash; you define entity types without retraining the model &mdash; making it practical to add legal-specific entity types without a machine learning team.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Tools like <a href="https://dev.to/aairom/the-next-generation-of-privacy-using-docling-gliners-advanced-ner-to-masterfully-detect-and-75p" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GLiNER</a> support zero-shot NER &mdash; you define entity types without retraining the model &mdash; making it practical to add legal-specific entity types without a machine learning team.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Architecture</h2>
 
@@ -333,17 +333,17 @@
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>Prediction Guard, <a href="https://predictionguard.com/blog/pii-detection-redaction-llm-pipelines-regulated-industries" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Complete Guide to PII Detection and Redaction Tools for AI Pipelines in Regulated Industries</a>.</li>
-        <li>ABA, <a href="https://www.americanbar.org/news/abanews/aba-news-archives/2024/07/aba-issues-first-ethics-guidance-ai-tools/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 512: Generative Artificial Intelligence Tools</a> (July 2024).</li>
-        <li>Elastic Observability Labs, <a href="https://www.elastic.co/observability-labs/blog/pii-ner-regex-assess-redact-part-1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Using NLP and Pattern Matching to Detect, Assess, and Redact PII in Logs</a>.</li>
-        <li>Nature Scientific Reports, <a href="https://www.nature.com/articles/s41598-025-04971-9" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Hybrid Rule-Based NLP and Machine Learning Approach for PII Detection and Anonymization in Financial Documents</a>.</li>
-        <li>Microsoft, <a href="https://github.com/microsoft/presidio" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Presidio: Data Protection and De-Identification SDK</a>.</li>
-        <li>Justee, <a href="https://justee.ai/pii-redaction/redact-pii-from-legal-documents-for-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redact PII from Legal Documents for AI</a>.</li>
-        <li>Protecto, <a href="https://www.protecto.ai/blog/best-ner-models-for-pii-identification/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Comparing Best NER Models for PII Identification</a>.</li>
-        <li>Spellbook, <a href="https://www.spellbook.legal/learn/most-private-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026</a>.</li>
-        <li>DEV Community, <a href="https://dev.to/aairom/the-next-generation-of-privacy-using-docling-gliners-advanced-ner-to-masterfully-detect-and-75p" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Next Generation of Privacy: Using Docling & GLiNER's Advanced NER</a>.</li>
-        <li>Tonic.ai, <a href="https://www.tonic.ai/guides/named-entity-recognition-data-compliance-automation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Named Entity Recognition for Data Compliance Automation</a>.</li>
-        <li>Microsoft Learn, <a href="https://learn.microsoft.com/en-us/legal/cognitive-services/language-service/transparency-note-named-entity-recognition" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Transparency Note — Named Entity Recognition Feature of Azure AI Language</a>.</li>
+        <li id="fn-1">Prediction Guard, <a href="https://predictionguard.com/blog/pii-detection-redaction-llm-pipelines-regulated-industries" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Complete Guide to PII Detection and Redaction Tools for AI Pipelines in Regulated Industries</a>.</li>
+        <li id="fn-2">ABA, <a href="https://www.americanbar.org/news/abanews/aba-news-archives/2024/07/aba-issues-first-ethics-guidance-ai-tools/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 512: Generative Artificial Intelligence Tools</a> (July 2024).</li>
+        <li id="fn-3">Elastic Observability Labs, <a href="https://www.elastic.co/observability-labs/blog/pii-ner-regex-assess-redact-part-1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Using NLP and Pattern Matching to Detect, Assess, and Redact PII in Logs</a>.</li>
+        <li id="fn-4">Nature Scientific Reports, <a href="https://www.nature.com/articles/s41598-025-04971-9" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Hybrid Rule-Based NLP and Machine Learning Approach for PII Detection and Anonymization in Financial Documents</a>.</li>
+        <li id="fn-5">Microsoft, <a href="https://github.com/microsoft/presidio" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Presidio: Data Protection and De-Identification SDK</a>.</li>
+        <li id="fn-6">Justee, <a href="https://justee.ai/pii-redaction/redact-pii-from-legal-documents-for-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redact PII from Legal Documents for AI</a>.</li>
+        <li id="fn-7">Protecto, <a href="https://www.protecto.ai/blog/best-ner-models-for-pii-identification/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Comparing Best NER Models for PII Identification</a>.</li>
+        <li id="fn-8">Spellbook, <a href="https://www.spellbook.legal/learn/most-private-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026</a>.</li>
+        <li id="fn-9">DEV Community, <a href="https://dev.to/aairom/the-next-generation-of-privacy-using-docling-gliners-advanced-ner-to-masterfully-detect-and-75p" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Next Generation of Privacy: Using Docling & GLiNER's Advanced NER</a>.</li>
+        <li id="fn-10">Tonic.ai, <a href="https://www.tonic.ai/guides/named-entity-recognition-data-compliance-automation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Named Entity Recognition for Data Compliance Automation</a>.</li>
+        <li id="fn-11">Microsoft Learn, <a href="https://learn.microsoft.com/en-us/legal/cognitive-services/language-service/transparency-note-named-entity-recognition" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Transparency Note — Named Entity Recognition Feature of Azure AI Language</a>.</li>
     </ol>
 </section>
 

@@ -80,7 +80,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Day one is too late. The security posture of your legal SaaS platform is largely determined by decisions made before the first feature is built: which framework, which authentication library, which hosting provider, how secrets are stored, whether logging exists. These choices compound. A good foundation makes every subsequent security decision easier. A poor one creates debt that grows faster than feature code &mdash; because every feature built on an insecure foundation inherits its weaknesses.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Secure by Design Framework</a> formalises this principle: security controls should be embedded at the design phase, not bolted on after deployment. The framework&#39;s checklist covers trust boundaries (the points where data crosses from one trust level to another, as we introduced in Episode 1), encryption requirements, authentication and authorisation design, and incident readiness &mdash; all before a single line of application code is written.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Secure by Design Framework</a> formalises this principle: security controls should be embedded at the design phase, not bolted on after deployment.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> The framework&#39;s checklist covers trust boundaries (the points where data crosses from one trust level to another, as we introduced in Episode 1), encryption requirements, authentication and authorisation design, and incident readiness &mdash; all before a single line of application code is written.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal tech team bootstrapping a new case management system, contract review tool, or e-filing platform, the question isn&#39;t &quot;when do we add security?&quot; It&#39;s &quot;which security decisions do we make right now so we don&#39;t have to rewrite everything in six months?&quot;</p>
 
@@ -159,11 +159,11 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">5. Structured Logging</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configure structured logging (logs in a consistent, machine-readable format like JSON) from the start. Log authentication events, authorisation decisions, data access patterns, and errors. Not for debugging &mdash; for security. When (not if) you need to investigate an incident, logs are the evidence. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Logging Cheat Sheet</a> provides detailed guidance on what to log and what not to log (never log passwords, tokens, or full credit card numbers).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configure structured logging (logs in a consistent, machine-readable format like JSON) from the start. Log authentication events, authorisation decisions, data access patterns, and errors. Not for debugging &mdash; for security. When (not if) you need to investigate an incident, logs are the evidence. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Logging Cheat Sheet</a> provides detailed guidance on what to log and what not to log (never log passwords, tokens, or full credit card numbers).<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">6. Dependency Scanning in CI</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Add dependency scanning to your CI/CD pipeline (the automated system that builds and deploys your code, as we covered in Episode 12) from the first pull request. Tools like `npm audit`, `pip audit`, Snyk, or Dependabot continuously check your dependencies for known vulnerabilities. <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Software Composition Analysis (SCA)</a> project provides open-source options.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Add dependency scanning to your CI/CD pipeline (the automated system that builds and deploys your code, as we covered in Episode 12) from the first pull request. Tools like `npm audit`, `pip audit`, Snyk, or Dependabot continuously check your dependencies for known vulnerabilities. <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Software Composition Analysis (SCA)</a> project provides open-source options.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Minimum Viable Security Posture</h2>
 
@@ -207,7 +207,7 @@
     </table>
     </div>
     <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
-        <p><strong>The legal standard:</strong> <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NYC Bar Formal Opinion 2024-3</a> clarified that lawyers' ethical obligations regarding cybersecurity extend to the technology platforms they choose. Selecting a platform that lacks basic security controls &mdash; or building one without them &mdash; is not a defensible "reasonable efforts" position under ABA Model Rule 1.6(c).</p>
+        <p><strong>The legal standard:</strong> <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NYC Bar Formal Opinion 2024-3</a> clarified that lawyers' ethical obligations regarding cybersecurity extend to the technology platforms they choose. Selecting a platform that lacks basic security controls &mdash; or building one without them &mdash; is not a defensible "reasonable efforts" position under ABA Model Rule 1.6(c).<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
     </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security Debt Compounds Faster Than Technical Debt</h2>
@@ -218,7 +218,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If you&#39;d started with an authentication library that supported SSO from day one, the integration would have been configuration, not architecture.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP SAMM</a> (Software Assurance Maturity Model) provides a structured framework for measuring and improving your security posture over time, with maturity levels that scale from &quot;getting started&quot; to &quot;optimised.&quot; Starting at Level 1 on day zero is realistic. Starting at Level 0 and trying to catch up later is where projects fail.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP SAMM</a> (Software Assurance Maturity Model) provides a structured framework for measuring and improving your security posture over time, with maturity levels that scale from &quot;getting started&quot; to &quot;optimised.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup> Starting at Level 1 on day zero is realistic. Starting at Level 0 and trying to catch up later is where projects fail.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Day-Zero Mindset</h2>
 
@@ -239,16 +239,16 @@
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>OWASP, <a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure by Design Framework</a>.</li>
-        <li>OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Logging Cheat Sheet</a>.</li>
-        <li>OWASP, <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependency-Check: Software Composition Analysis</a>.</li>
-        <li>NYC Bar Association, <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident</a>.</li>
-        <li>OWASP, <a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Assurance Maturity Model (SAMM)</a>.</li>
-        <li>OWASP, <a href="https://owasp.org/Top10/2025/0x03_2025-Establishing_a_Modern_Application_Security_Program/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Establishing a Modern Application Security Program — OWASP Top 10:2025</a>.</li>
-        <li>OWASP, <a href="https://devguide.owasp.org/en/02-foundations/02-secure-development/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Development and Integration — Developer Guide</a>.</li>
-        <li>OWASP, <a href="https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP in SDLC — Integration Standards</a>.</li>
-        <li>ABA, <a href="https://petronellatech.com/blog/cybersecurity-law-firms-compliance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity for Law Firms: ABA Compliance Guide</a>.</li>
-        <li>NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-218: Secure Software Development Framework</a>.</li>
+        <li id="fn-1">OWASP, <a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure by Design Framework</a>.</li>
+        <li id="fn-2">OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Logging Cheat Sheet</a>.</li>
+        <li id="fn-3">OWASP, <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependency-Check: Software Composition Analysis</a>.</li>
+        <li id="fn-4">NYC Bar Association, <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident</a>.</li>
+        <li id="fn-5">OWASP, <a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Assurance Maturity Model (SAMM)</a>.</li>
+        <li id="fn-6">OWASP, <a href="https://owasp.org/Top10/2025/0x03_2025-Establishing_a_Modern_Application_Security_Program/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Establishing a Modern Application Security Program — OWASP Top 10:2025</a>.</li>
+        <li id="fn-7">OWASP, <a href="https://devguide.owasp.org/en/02-foundations/02-secure-development/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Development and Integration — Developer Guide</a>.</li>
+        <li id="fn-8">OWASP, <a href="https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP in SDLC — Integration Standards</a>.</li>
+        <li id="fn-9">ABA, <a href="https://petronellatech.com/blog/cybersecurity-law-firms-compliance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity for Law Firms: ABA Compliance Guide</a>.</li>
+        <li id="fn-10">NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-218: Secure Software Development Framework</a>.</li>
     </ol>
 </section>
 
@@ -264,6 +264,12 @@
         <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Day Zero &mdash; Bootstrapping Security for a New Project</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 

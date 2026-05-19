@@ -112,9 +112,9 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When your case management system encrypts a client&#39;s document, it generates a fresh DEK, encrypts the document with that DEK, then encrypts the DEK itself with the master key. The encrypted DEK is stored alongside the encrypted document. The plaintext DEK is discarded immediately. To decrypt, the system asks the key management service (KMS) to unwrap the DEK using the master key, then uses the plaintext DEK to decrypt the document.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When your case management system encrypts a client&#39;s document, it generates a fresh DEK, encrypts the document with that DEK, then encrypts the DEK itself with the master key. The encrypted DEK is stored alongside the encrypted document. The plaintext DEK is discarded immediately. To decrypt, the system asks the key management service (KMS) to unwrap the DEK using the master key, then uses the plaintext DEK to decrypt the document.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means the master key never leaves the KMS boundary. Even if an attacker steals your entire database &mdash; encrypted documents and encrypted DEKs included &mdash; they cannot decrypt anything without access to the master key inside the KMS.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means the master key never leaves the KMS boundary. Even if an attacker steals your entire database &mdash; encrypted documents and encrypted DEKs included &mdash; they cannot decrypt anything without access to the master key inside the KMS.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Why this matters for legal SaaS:</strong> If your platform stores privileged attorney-client communications, opposing counsel&#39;s discovery documents, and merger negotiations in the same database, envelope encryption lets you use different DEKs per client matter. Compromising one matter&#39;s key does not expose another.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Key Management Services: The Hardware Behind the Trust</h2>
@@ -162,11 +162,11 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform, the choice typically depends on your cloud provider. If you run on AWS, KMS is the natural default. The critical requirement is that the KMS is a <strong class="text-ink">separate trust boundary</strong> from your application servers and database. Your application can request encryption and decryption operations, but it never possesses the master key.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform, the choice typically depends on your cloud provider. If you run on AWS, KMS is the natural default. The critical requirement is that the KMS is a <strong class="text-ink">separate trust boundary</strong> from your application servers and database. Your application can request encryption and decryption operations, but it never possesses the master key.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Key Rotation: Why and How</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Cryptographic keys should not last forever. <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-57</a> defines <strong class="text-ink">cryptoperiods</strong> &mdash; the maximum lifespan during which a key is authorised for use. The reasons for rotation include:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Cryptographic keys should not last forever. <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-57</a> defines <strong class="text-ink">cryptoperiods</strong> &mdash; the maximum lifespan during which a key is authorised for use. The reasons for rotation include:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Limiting exposure.</strong> If a key is compromised without detection, limiting its cryptoperiod limits how much data the attacker can decrypt.</li>
         <li><strong class="text-ink">Reducing ciphertext volume.</strong> The more data encrypted with a single key, the more material an attacker has for cryptanalysis.</li>
@@ -175,7 +175,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">How Rotation Works Without Downtime</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The elegant aspect of envelope encryption is that key rotation only rotates the <strong class="text-ink">master key</strong> &mdash; not every DEK in your system. When AWS KMS rotates a key, it generates new key material but retains all previous versions. New encryption operations use the new material. Decryption operations automatically select the correct version based on metadata in the ciphertext. No data needs to be re-encrypted.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The elegant aspect of envelope encryption is that key rotation only rotates the <strong class="text-ink">master key</strong> &mdash; not every DEK in your system. When AWS KMS rotates a key, it generates new key material but retains all previous versions. New encryption operations use the new material. Decryption operations automatically select the correct version based on metadata in the ciphertext. No data needs to be re-encrypted.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -202,7 +202,7 @@
         </tbody>
     </table>
     </div>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Legal SaaS scenario:</strong> A law firm client terminates their subscription. Your data retention policy requires you to destroy their data after 90 days. If each client matter used a separate DEK, you can <strong class="text-ink">crypto-shred</strong> &mdash; destroy the DEK, rendering the encrypted data permanently unrecoverable without touching the underlying storage. This is faster and more verifiable than attempting to delete every copy of the data across backups, replicas, and caches.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Legal SaaS scenario:</strong> A law firm client terminates their subscription. Your data retention policy requires you to destroy their data after 90 days. If each client matter used a separate DEK, you can <strong class="text-ink">crypto-shred</strong> &mdash; destroy the DEK, rendering the encrypted data permanently unrecoverable without touching the underlying storage. This is faster and more verifiable than attempting to delete every copy of the data across backups, replicas, and caches.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Key Access Policies: Use vs. Manage</h2>
 
@@ -212,7 +212,7 @@
         <li><strong class="text-ink">Key administrators</strong> can create, rotate, disable, and delete keys but may not use them for cryptographic operations.</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This separation of duties ensures that a compromised application server (which has key-use permissions) cannot delete or export master keys, and an administrator who can manage keys cannot decrypt production data. AWS KMS enforces this through <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM key policies</a>, and HashiCorp Vault uses ACL policies with similar granularity.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This separation of duties ensures that a compromised application server (which has key-use permissions) cannot delete or export master keys, and an administrator who can manage keys cannot decrypt production data. AWS KMS enforces this through <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM key policies</a>, and HashiCorp Vault uses ACL policies with similar granularity.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this maps directly to professional obligations. The lawyer-equivalent is the ethical wall: one team handles the key (the key administrator, like the conflicts department), another team uses it (the application, like the litigation team). Neither can do the other&#39;s job.</p>
 
@@ -222,10 +222,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mitigation strategies:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Multi-region key replication.</strong> AWS KMS supports <a href="https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">multi-region keys</a> that replicate cryptographic material across regions. If one region fails, the replica can decrypt.</li>
+        <li><strong class="text-ink">Multi-region key replication.</strong> AWS KMS supports <a href="https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">multi-region keys</a> that replicate cryptographic material across regions. If one region fails, the replica can decrypt.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></li>
         <li><strong class="text-ink">Key escrow.</strong> Store encrypted copies of key material in a separate, offline system (e.g., a physical HSM in a vault). This is the nuclear option &mdash; use only for catastrophic recovery.</li>
         <li><strong class="text-ink">Dual-control procedures.</strong> Require multiple administrators to authorise key deletion, preventing a single compromised or rogue admin from destroying keys.</li>
-        <li><strong class="text-ink">Deletion scheduling.</strong> AWS KMS enforces a minimum 7-day waiting period before key deletion takes effect, providing a window to cancel accidental deletions.</li>
+        <li><strong class="text-ink">Deletion scheduling.</strong> AWS KMS enforces a minimum 7-day waiting period before key deletion takes effect, providing a window to cancel accidental deletions.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Real-World Failures</h2>
@@ -240,7 +240,7 @@
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><a href="https://www.embroker.com/blog/law-firm-cyberattacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Orrick, Herrington & Sutcliffe (2023)</a></td>
                 <td class="py-3 px-4">Attackers accessed personal data of 600,000+ individuals; encryption controls insufficient to prevent exfiltration</td>
-                <td class="py-3 px-4">$8 million settlement</td>
+                <td class="py-3 px-4">$8 million settlement<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></td>
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Uber (2016)</td>
@@ -265,18 +265,18 @@
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS KMS Concepts — Envelope Encryption</a>.</li>
-        <li>AWS Prescriptive Guidance, <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/encryption-best-practices/kms.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Encryption Best Practices for AWS Key Management Service</a>.</li>
-        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-57 Part 1 Rev. 5: Recommendation for Key Management</a>.</li>
-        <li>NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-57pt1r5.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-57 Part 1 Rev. 5 — Cryptoperiods</a>, Section 5.3.</li>
-        <li>AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Rotate AWS KMS Keys</a>.</li>
-        <li>AWS Prescriptive Guidance, <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/aws-kms-best-practices/data-protection-key-rotation.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Key Rotation for AWS KMS and Scope of Impact</a>.</li>
-        <li>HashiCorp, <a href="https://developer.hashicorp.com/vault/tutorials/secrets-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vault Secrets Management Tutorials</a>.</li>
-        <li>AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Region Keys in AWS KMS</a>.</li>
-        <li>AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Deleting AWS KMS Keys</a>.</li>
-        <li>Embroker, <a href="https://www.embroker.com/blog/law-firm-cyberattacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Law Firm Cyberattacks: Stats and Trends for 2025</a>.</li>
-        <li>Thales, <a href="https://cpl.thalesgroup.com/resources/encryption/nist-800-57-key-management-requirements-analysis-white-paper" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST 800-57 Key Management Requirements Analysis</a>.</li>
-        <li>TerraZone, <a href="https://terrazone.io/nist-800-57/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-57: Complete Guide to Cryptographic Key Management</a>.</li>
+        <li id="fn-1">AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS KMS Concepts — Envelope Encryption</a>.</li>
+        <li id="fn-2">AWS Prescriptive Guidance, <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/encryption-best-practices/kms.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Encryption Best Practices for AWS Key Management Service</a>.</li>
+        <li id="fn-3">NIST, <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-57 Part 1 Rev. 5: Recommendation for Key Management</a>.</li>
+        <li id="fn-4">NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-57pt1r5.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-57 Part 1 Rev. 5 — Cryptoperiods</a>, Section 5.3.</li>
+        <li id="fn-5">AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Rotate AWS KMS Keys</a>.</li>
+        <li id="fn-6">AWS Prescriptive Guidance, <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/aws-kms-best-practices/data-protection-key-rotation.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Key Rotation for AWS KMS and Scope of Impact</a>.</li>
+        <li id="fn-7">HashiCorp, <a href="https://developer.hashicorp.com/vault/tutorials/secrets-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vault Secrets Management Tutorials</a>.</li>
+        <li id="fn-8">AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Region Keys in AWS KMS</a>.</li>
+        <li id="fn-9">AWS, <a href="https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Deleting AWS KMS Keys</a>.</li>
+        <li id="fn-10">Embroker, <a href="https://www.embroker.com/blog/law-firm-cyberattacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Law Firm Cyberattacks: Stats and Trends for 2025</a>.</li>
+        <li id="fn-11">Thales, <a href="https://cpl.thalesgroup.com/resources/encryption/nist-800-57-key-management-requirements-analysis-white-paper" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST 800-57 Key Management Requirements Analysis</a>.</li>
+        <li id="fn-12">TerraZone, <a href="https://terrazone.io/nist-800-57/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-57: Complete Guide to Cryptographic Key Management</a>.</li>
     </ol>
 </section>
 

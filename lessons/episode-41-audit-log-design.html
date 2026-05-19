@@ -84,7 +84,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Audit Logs vs. Application Logs vs. Debug Logs</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The first design decision is understanding that these are three different things with different purposes, retention requirements, and access controls.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The first design decision is understanding that these are three different things with different purposes, retention requirements, and access controls.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -120,12 +120,12 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mixing these together &mdash; writing audit events to the same log file as debug output &mdash; is a common and dangerous mistake. Debug logs get rotated, truncated, or deleted for disk space. Application logs get filtered for noise. Audit logs must be preserved intact, with controlled access, for the duration required by your regulatory obligations.</p>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">NIST SP 800-92</strong> (Guide to Computer Security Log Management) establishes the federal standard for log management: &quot;Organizations should establish policies and procedures for log management because they ensure a consistent approach throughout the organization as well as ensuring that laws and regulatory requirements are being met.&quot;</blockquote>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mixing these together &mdash; writing audit events to the same log file as debug output &mdash; is a common and dangerous mistake. Debug logs get rotated, truncated, or deleted for disk space. Application logs get filtered for noise. Audit logs must be preserved intact, with controlled access, for the duration required by your regulatory obligations.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">NIST SP 800-92</strong> (Guide to Computer Security Log Management) establishes the federal standard for log management: &quot;Organizations should establish policies and procedures for log management because they ensure a consistent approach throughout the organization as well as ensuring that laws and regulatory requirements are being met.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What to Log: The Six W&#39;s</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every audit log entry should answer six questions:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every audit log entry should answer six questions:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -178,7 +178,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Structured Logging: JSON, Not Plaintext</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Audit logs must be machine-parseable. Unstructured plaintext &mdash; `&quot;Sarah updated the document at 2:23 PM&quot;` &mdash; is usable by humans reading individual entries but useless for automated analysis, alerting, correlation, and legal discovery across millions of records.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Audit logs must be machine-parseable. Unstructured plaintext &mdash; `&quot;Sarah updated the document at 2:23 PM&quot;` &mdash; is usable by humans reading individual entries but useless for automated analysis, alerting, correlation, and legal discovery across millions of records.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Structured JSON logging with a consistent schema is the industry standard:</p>
     <div class="my-6 bg-ink rounded-lg overflow-hidden">
@@ -215,11 +215,11 @@
 </code></pre>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every field follows a consistent schema documented and versioned alongside your application. When the schema changes &mdash; new fields, renamed fields, changed types &mdash; the version number increments, and old entries remain readable under their original schema.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every field follows a consistent schema documented and versioned alongside your application. When the schema changes &mdash; new fields, renamed fields, changed types &mdash; the version number increments, and old entries remain readable under their original schema.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Log Integrity: Append-Only and Access-Controlled</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An audit log that can be edited is not an audit log &mdash; it is a story that can be rewritten. Integrity requires three properties:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An audit log that can be edited is not an audit log &mdash; it is a story that can be rewritten. Integrity requires three properties:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Append-Only Storage</h3>
 
@@ -277,7 +277,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The principle: the people who could benefit from modifying audit logs (developers, system administrators) should not have the ability to do so. Separation of duties applies to log access the same way it applies to financial controls.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The principle: the people who could benefit from modifying audit logs (developers, system administrators) should not have the ability to do so. Separation of duties applies to log access the same way it applies to financial controls.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Tamper Detection</h3>
 
@@ -285,7 +285,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Admissibility: What Makes a Log Trustworthy Evidence</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In litigation, regulatory investigations, and e-discovery, audit logs may need to serve as evidence. For a log to be admissible and persuasive, it should demonstrate:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In litigation, regulatory investigations, and e-discovery, audit logs may need to serve as evidence. For a log to be admissible and persuasive, it should demonstrate:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Contemporaneous recording</strong>: Entries were created at or near the time of the event, not reconstructed later</li>
         <li><strong class="text-ink">Systematic process</strong>: The logging system operates automatically and consistently, not at the discretion of individuals</li>
@@ -293,7 +293,7 @@
         <li><strong class="text-ink">Chain of custody</strong>: A documented trail of who had access to the logs and when</li>
         <li><strong class="text-ink">Completeness</strong>: Evidence that the logging system captures all relevant events, not a selective subset</li>
     </ol>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key insight:</strong> Courts assess the reliability of digital evidence based on the controls surrounding its creation and preservation. A log that can be shown to be append-only, hash-chained, and access-controlled is substantially more persuasive than one stored in a regular database table that any administrator could modify.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key insight:</strong> Courts assess the reliability of digital evidence based on the controls surrounding its creation and preservation. A log that can be shown to be append-only, hash-chained, and access-controlled is substantially more persuasive than one stored in a regular database table that any administrator could modify.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What to Log in Legal SaaS: A Checklist</h2>
     <div class="overflow-x-auto my-6">
@@ -375,7 +375,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, a default retention of 7 years &mdash; aligned with the longest common regulatory requirement &mdash; is a reasonable starting point, with the ability to extend retention for specific matters under legal hold.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, a default retention of 7 years &mdash; aligned with the longest common regulatory requirement &mdash; is a reasonable starting point, with the ability to extend retention for specific matters under legal hold.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-11" class="hover:text-red-soft">11</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Common Mistakes</h2>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
@@ -395,17 +395,17 @@
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>Sonar, <a href="https://www.sonarsource.com/resources/library/audit-logging/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Logging Best Practices, Components & Challenges</a>.</li>
-        <li>Fortra, <a href="https://www.fortra.com/blog/audit-log-best-practices-security-compliance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Log Best Practices for Security & Compliance</a>.</li>
-        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/92/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-92: Guide to Computer Security Log Management</a>.</li>
-        <li>UC Berkeley Information Security Office, <a href="https://security.berkeley.edu/security-audit-logging-guideline" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Audit Logging Guideline</a>.</li>
-        <li>Pangea, <a href="https://pangea.cloud/blog/audit-logs-what-why-and-how/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding Audit Logs: What It Is & How to Build One</a>.</li>
-        <li>Orca Security, <a href="https://orca.security/glossary/audit-logs/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Logs: Complete Guide to Cloud Security Monitoring</a>.</li>
-        <li>Mattermost, <a href="https://mattermost.com/blog/compliance-by-design-18-tips-to-implement-tamper-proof-audit-logs/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Compliance by Design: 18 Tips to Implement Tamper-Proof Audit Logs</a>.</li>
-        <li>Kiteworks, <a href="https://www.kiteworks.com/regulatory-compliance/audit-log/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Log: What Is an Audit Log, Audit Logs & Audit Logging</a>.</li>
-        <li>CX Today, <a href="https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build AI Audit Trails That Stand Up to Regulatory Scrutiny</a>.</li>
-        <li>Huntress, <a href="https://www.huntress.com/cybersecurity-101/topic/what-is-an-audit-log" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Logs Explained: Security & Compliance Simplified</a>.</li>
-        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/92/r1/ipd" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-92 Rev. 1 (Draft): Cybersecurity Log Management Planning Guide</a>.</li>
+        <li id="fn-1">Sonar, <a href="https://www.sonarsource.com/resources/library/audit-logging/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Logging Best Practices, Components & Challenges</a>.</li>
+        <li id="fn-2">Fortra, <a href="https://www.fortra.com/blog/audit-log-best-practices-security-compliance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Log Best Practices for Security & Compliance</a>.</li>
+        <li id="fn-3">NIST, <a href="https://csrc.nist.gov/pubs/sp/800/92/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-92: Guide to Computer Security Log Management</a>.</li>
+        <li id="fn-4">UC Berkeley Information Security Office, <a href="https://security.berkeley.edu/security-audit-logging-guideline" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Audit Logging Guideline</a>.</li>
+        <li id="fn-5">Pangea, <a href="https://pangea.cloud/blog/audit-logs-what-why-and-how/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding Audit Logs: What It Is & How to Build One</a>.</li>
+        <li id="fn-6">Orca Security, <a href="https://orca.security/glossary/audit-logs/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Logs: Complete Guide to Cloud Security Monitoring</a>.</li>
+        <li id="fn-7">Mattermost, <a href="https://mattermost.com/blog/compliance-by-design-18-tips-to-implement-tamper-proof-audit-logs/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Compliance by Design: 18 Tips to Implement Tamper-Proof Audit Logs</a>.</li>
+        <li id="fn-8">Kiteworks, <a href="https://www.kiteworks.com/regulatory-compliance/audit-log/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Log: What Is an Audit Log, Audit Logs & Audit Logging</a>.</li>
+        <li id="fn-9">CX Today, <a href="https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build AI Audit Trails That Stand Up to Regulatory Scrutiny</a>.</li>
+        <li id="fn-10">Huntress, <a href="https://www.huntress.com/cybersecurity-101/topic/what-is-an-audit-log" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Logs Explained: Security & Compliance Simplified</a>.</li>
+        <li id="fn-11">NIST, <a href="https://csrc.nist.gov/pubs/sp/800/92/r1/ipd" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-92 Rev. 1 (Draft): Cybersecurity Log Management Planning Guide</a>.</li>
     </ol>
 </section>
 

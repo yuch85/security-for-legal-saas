@@ -82,7 +82,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">That model is dead. Remote work, cloud services, and SaaS applications mean that the &quot;inside&quot; and &quot;outside&quot; distinction no longer exists. A partner working from a hotel in Singapore accesses the same case management system as an associate in the New York office. A legal SaaS platform runs on AWS, not in a server room. The data flows across the public internet. The perimeter is everywhere &mdash; which means it&#39;s nowhere.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Zero Trust</strong> is the security model built for this reality. It was first articulated by John Kindervag at Forrester Research in 2010, formalised by <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST in SP 800-207</a> (2020), and adopted as US federal policy under Executive Order 14028.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Zero Trust</strong> is the security model built for this reality. It was first articulated by John Kindervag at Forrester Research in 2010, formalised by <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST in SP 800-207</a> (2020), and adopted as US federal policy under Executive Order 14028.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Three Principles</h2>
 
@@ -118,7 +118,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">NIST SP 800-207: The Architecture</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207</a> defines three core components of a Zero Trust Architecture:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207</a> defines three core components of a Zero Trust Architecture:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -155,7 +155,7 @@
         <li>PA instructs the PEP to permit or block the request</li>
         <li>If permitted, the session is established with minimum required privileges</li>
     </ol>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key insight:</strong> This happens on every request, not just at login. A traditional system authenticates once and grants a session. Zero Trust re-evaluates continuously &mdash; the user&#39;s device compliance could change, their risk score could escalate, or an anomaly could be detected mid-session.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key insight:</strong> This happens on every request, not just at login. A traditional system authenticates once and grants a session. Zero Trust re-evaluates continuously &mdash; the user&#39;s device compliance could change, their risk score could escalate, or an anomaly could be detected mid-session.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Identity-Based Access</h2>
 
@@ -166,11 +166,11 @@
         <li><strong class="text-ink">Continuous verification</strong>: Re-evaluating both on every request, not just at session start</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means the JWT token or session (from Episode 18) should carry not just identity but context &mdash; device compliance status, network location, authentication strength &mdash; and the authorisation layer should evaluate all of it on every API call.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means the JWT token or session (from Episode 18) should carry not just identity but context &mdash; device compliance status, network location, authentication strength &mdash; and the authorisation layer should evaluate all of it on every API call.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Microsegmentation</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Microsegmentation</strong> divides your infrastructure into fine-grained zones, each with its own access controls. In a traditional network, once you&#39;re past the firewall, you can reach everything. With microsegmentation, each service, database, and API has its own boundary.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Microsegmentation</strong> divides your infrastructure into fine-grained zones, each with its own access controls. In a traditional network, once you&#39;re past the firewall, you can reach everything. With microsegmentation, each service, database, and API has its own boundary.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform:</p>
     <div class="overflow-x-auto my-6">
@@ -210,13 +210,13 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The CISA Zero Trust Maturity Model explicitly identifies microsegmentation as a foundational control: &quot;not a nice-to-have or an advanced-stage optimization&quot; but essential infrastructure.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The CISA Zero Trust Maturity Model explicitly identifies microsegmentation as a foundational control: &quot;not a nice-to-have or an advanced-stage optimization&quot; but essential infrastructure.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If an attacker compromises the document service, microsegmentation prevents them from pivoting to the billing database or the user authentication service. Each hop requires a separate authorised connection. This is the practical meaning of &quot;assume breach&quot; &mdash; you design each segment to survive even if adjacent segments are compromised.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The CISA Zero Trust Maturity Model</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Zero Trust Maturity Model</a> provides a roadmap with four maturity stages across five pillars:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Zero Trust Maturity Model</a> provides a roadmap with four maturity stages across five pillars:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -270,7 +270,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Zero Trust for a Small Team</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Zero Trust sounds like a massive infrastructure project. For a small legal SaaS team, here&#39;s a prioritised implementation path:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Zero Trust sounds like a massive infrastructure project. For a small legal SaaS team, here&#39;s a prioritised implementation path:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 1: Identity Foundation (Weeks 1-4)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
@@ -299,11 +299,11 @@
         <li>Anomaly detection &mdash; unusual access patterns trigger step-up authentication (Episode 19)</li>
         <li>Risk-adaptive policies that tighten access when risk indicators increase</li>
     </ul>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The 80/20 rule:</strong> Phases 1 and 2 deliver most of the security benefit. If you do nothing else, enforce MFA, implement SSO, and check authorisation on every API request. That alone moves you from a perimeter-based model to an identity-based one.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The 80/20 rule:</strong> Phases 1 and 2 deliver most of the security benefit. If you do nothing else, enforce MFA, implement SSO, and check authorisation on every API request. That alone moves you from a perimeter-based model to an identity-based one.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Google BeyondCorp: The Original Implementation</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Google&#39;s <a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondCorp</a> initiative, published in a series of papers from 2014 onwards, was the first large-scale production implementation of Zero Trust. Google eliminated the corporate VPN entirely &mdash; internal applications are accessed the same way from the office as from a coffee shop. Every request is authenticated, every device is verified, and access decisions are made per-request based on identity and device state.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Google&#39;s <a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondCorp</a> initiative, published in a series of papers from 2014 onwards, was the first large-scale production implementation of Zero Trust.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup> Google eliminated the corporate VPN entirely &mdash; internal applications are accessed the same way from the office as from a coffee shop. Every request is authenticated, every device is verified, and access decisions are made per-request based on identity and device state.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">BeyondCorp proved that Zero Trust is not just theoretical. It works at the scale of one of the world&#39;s largest technology companies. For legal SaaS platforms, the lesson is clear: if Google can eliminate implicit trust for 100,000+ employees, a 50-person SaaS company can certainly adopt the same principles.</p>
 
@@ -316,16 +316,16 @@
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207: Zero Trust Architecture</a> &mdash; the foundational zero trust standard.</li>
-        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/a/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207A: Zero Trust Architecture Model for Access Control in Cloud-Native Applications</a> &mdash; cloud-native ZTA guidance.</li>
-        <li>Palo Alto Networks, <a href="https://www.paloaltonetworks.com/cyberpedia/what-is-nist-sp-800-207" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; overview of the NIST ZTA framework.</li>
-        <li>CISA, <a href="https://www.cisa.gov/sites/default/files/2025-07/ZT-Microsegmentation-Guidance-Part-One_508c.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsegmentation in Zero Trust</a> &mdash; CISA guidance on microsegmentation as a foundational ZTA control.</li>
-        <li>CISA, <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zero Trust Maturity Model</a> &mdash; five-pillar maturity framework.</li>
-        <li>TerraZone, <a href="https://terrazone.io/nist-sp-800-207/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207: Complete Guide to Zero Trust Architecture (2025)</a> &mdash; practical implementation guide.</li>
-        <li>Google Cloud, <a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondCorp</a> &mdash; Google&#39;s zero trust implementation.</li>
-        <li>CyberArk, <a href="https://www.cyberark.com/what-is/nist-sp-800-207-cybersecurity-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; ZTA framework overview.</li>
-        <li>Zero Networks, <a href="https://zeronetworks.com/blog/cisa-guidance-confirms-microsegmentation-is-foundational-for-zero-trust" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Guidance Confirms: Microsegmentation Is Foundational for Zero Trust</a> &mdash; analysis of CISA microsegmentation guidance.</li>
-        <li>Seraphic Security, <a href="https://seraphicsecurity.com/learn/zero-trust/top-4-zero-trust-frameworks-in-2026-and-how-to-choose/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top 4 Zero Trust Frameworks in 2026</a> &mdash; framework comparison and selection guide.</li>
+        <li id="fn-1">NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207: Zero Trust Architecture</a> &mdash; the foundational zero trust standard.</li>
+        <li id="fn-2">NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/a/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207A: Zero Trust Architecture Model for Access Control in Cloud-Native Applications</a> &mdash; cloud-native ZTA guidance.</li>
+        <li id="fn-3">Palo Alto Networks, <a href="https://www.paloaltonetworks.com/cyberpedia/what-is-nist-sp-800-207" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; overview of the NIST ZTA framework.</li>
+        <li id="fn-4">CISA, <a href="https://www.cisa.gov/sites/default/files/2025-07/ZT-Microsegmentation-Guidance-Part-One_508c.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsegmentation in Zero Trust</a> &mdash; CISA guidance on microsegmentation as a foundational ZTA control.</li>
+        <li id="fn-5">CISA, <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zero Trust Maturity Model</a> &mdash; five-pillar maturity framework.</li>
+        <li id="fn-6">TerraZone, <a href="https://terrazone.io/nist-sp-800-207/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207: Complete Guide to Zero Trust Architecture (2025)</a> &mdash; practical implementation guide.</li>
+        <li id="fn-7">Google Cloud, <a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondCorp</a> &mdash; Google&#39;s zero trust implementation.</li>
+        <li id="fn-8">CyberArk, <a href="https://www.cyberark.com/what-is/nist-sp-800-207-cybersecurity-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; ZTA framework overview.</li>
+        <li id="fn-9">Zero Networks, <a href="https://zeronetworks.com/blog/cisa-guidance-confirms-microsegmentation-is-foundational-for-zero-trust" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Guidance Confirms: Microsegmentation Is Foundational for Zero Trust</a> &mdash; analysis of CISA microsegmentation guidance.</li>
+        <li id="fn-10">Seraphic Security, <a href="https://seraphicsecurity.com/learn/zero-trust/top-4-zero-trust-frameworks-in-2026-and-how-to-choose/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top 4 Zero Trust Frameworks in 2026</a> &mdash; framework comparison and selection guide.</li>
     </ol>
 </section>
 

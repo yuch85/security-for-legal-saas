@@ -80,11 +80,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Authentication answers &quot;who are you?&quot; Authorization answers &quot;what are you allowed to do?&quot; In Episode 22, we covered how SSO and SAML let firms manage who can log in. But once a user is authenticated, your application must decide what they can see, edit, delete, and administer. Get this wrong, and a junior paralegal can access partner-level billing data &mdash; or worse, a client can view another client&#39;s privileged litigation strategy.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Broken access control is the <a href="https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">#1 vulnerability in the OWASP Top 10</a>, found in 94% of applications tested. It&#39;s not exotic. It&#39;s the most common security failure in web applications, and legal SaaS &mdash; with its complex hierarchy of firms, departments, matters, and privilege levels &mdash; is particularly exposed.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Broken access control is the <a href="https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">#1 vulnerability in the OWASP Top 10</a>, found in 94% of applications tested.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> It&#39;s not exotic. It&#39;s the most common security failure in web applications, and legal SaaS &mdash; with its complex hierarchy of firms, departments, matters, and privilege levels &mdash; is particularly exposed.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Is RBAC?</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Role-Based Access Control (RBAC) is an access control model where permissions are assigned to <strong class="text-ink">roles</strong>, and users are assigned to roles. A user inherits all permissions associated with their assigned roles. The model was formalised by David Ferraiolo and Rick Kuhn in 1992 and adopted as <a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ANSI/INCITS 359-2004</a>, the American national standard for RBAC.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Role-Based Access Control (RBAC) is an access control model where permissions are assigned to <strong class="text-ink">roles</strong>, and users are assigned to roles. A user inherits all permissions associated with their assigned roles. The model was formalised by David Ferraiolo and Rick Kuhn in 1992 and adopted as <a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ANSI/INCITS 359-2004</a>, the American national standard for RBAC.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The core abstraction is simple:</p>
     <div class="my-6 bg-ink rounded-lg overflow-hidden">
@@ -138,11 +138,11 @@
         </tbody>
     </table>
     </div>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key principle:</strong> Roles should reflect job functions, not individual people. If you find yourself creating a role for one specific person, you&#39;re doing RBAC wrong &mdash; you&#39;re creating a permission assignment disguised as a role.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key principle:</strong> Roles should reflect job functions, not individual people. If you find yourself creating a role for one specific person, you&#39;re doing RBAC wrong &mdash; you&#39;re creating a permission assignment disguised as a role.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The NIST RBAC Model</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST's formal RBAC standard</a> defines four levels of increasing sophistication:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST's formal RBAC standard</a> defines four levels of increasing sophistication:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -210,11 +210,11 @@ users:manage      (admin role only)
 </code></pre>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions should be <strong class="text-ink">resource-type scoped</strong> (documents, matters, billing) with <strong class="text-ink">CRUD actions</strong> (create, read, update, delete), and the application enforces <strong class="text-ink">matter-level scoping</strong> to ensure users only access matters they&#39;re assigned to. The matter-scoping layer is where RBAC meets the specific needs of legal software &mdash; we&#39;ll explore this in depth in Episode 25 when we cover ethical walls.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions should be <strong class="text-ink">resource-type scoped</strong> (documents, matters, billing) with <strong class="text-ink">CRUD actions</strong> (create, read, update, delete), and the application enforces <strong class="text-ink">matter-level scoping</strong> to ensure users only access matters they&#39;re assigned to. The matter-scoping layer is where RBAC meets the specific needs of legal software &mdash; we&#39;ll explore this in depth in Episode 25 when we cover ethical walls.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">API Scopes: Consistent Enforcement</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions defined in roles must be enforced at the <strong class="text-ink">API layer</strong>, not just the UI. The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Authorization Cheat Sheet</a> makes this explicit: &quot;Authorization policies must be enforced at the backend (API) to guarantee security and consistency.&quot;</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions defined in roles must be enforced at the <strong class="text-ink">API layer</strong>, not just the UI. The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Authorization Cheat Sheet</a> makes this explicit: &quot;Authorization policies must be enforced at the backend (API) to guarantee security and consistency.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your UI hides the &quot;Delete&quot; button for paralegals but the API endpoint `/api/documents/:id` accepts DELETE requests from anyone with a valid session, you have a broken access control vulnerability. An attacker &mdash; or simply a curious user with browser developer tools &mdash; can call the API directly.</p>
 
@@ -225,7 +225,7 @@ users:manage      (admin role only)
         <li>Every API endpoint checks the token&#39;s scopes before executing &mdash; middleware that runs before any business logic</li>
         <li>The UI reads the same scopes to show or hide interface elements &mdash; but this is cosmetic, not security</li>
     </ol>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Callout: The &quot;hidden button&quot; fallacy.</strong> Removing a button from the UI is not access control. It&#39;s a UX decision. Access control happens at the API. Every. Single. Request.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Callout: The &quot;hidden button&quot; fallacy.</strong> Removing a button from the UI is not access control. It&#39;s a UX decision. Access control happens at the API. Every. Single. Request.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Common RBAC Mistakes</h2>
 
@@ -235,7 +235,7 @@ users:manage      (admin role only)
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Permission Creep</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A user gets temporarily promoted or assigned to a special project, receives elevated permissions, and nobody removes them afterwards. Over months, users accumulate permissions far beyond their current role. The fix: regular access reviews. Quarterly audits comparing actual role assignments against current job functions.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A user gets temporarily promoted or assigned to a special project, receives elevated permissions, and nobody removes them afterwards. Over months, users accumulate permissions far beyond their current role. The fix: regular access reviews. Quarterly audits comparing actual role assignments against current job functions.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. No Audit Trail</h3>
 
@@ -263,11 +263,11 @@ users:manage      (admin role only)
         <li>Returns 403 Forbidden if the user lacks the required permission</li>
     </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This centralised pattern ensures that every endpoint is protected by default. New endpoints that forget to specify required permissions should fail closed &mdash; deny access &mdash; rather than fail open.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This centralised pattern ensures that every endpoint is protected by default. New endpoints that forget to specify required permissions should fail closed &mdash; deny access &mdash; rather than fail open.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Regular Access Reviews</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">RBAC is not &quot;set and forget.&quot; The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Authorization Cheat Sheet</a> recommends periodic reviews:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">RBAC is not &quot;set and forget.&quot; The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Authorization Cheat Sheet</a> recommends periodic reviews:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Quarterly:</strong> Review all role assignments against current org charts</li>
         <li><strong class="text-ink">On role change:</strong> When an employee changes departments or seniority, update roles immediately</li>
@@ -286,16 +286,16 @@ users:manage      (admin role only)
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>OWASP, <a href="https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A01:2021 — Broken Access Control</a> &mdash; #1 in OWASP Top 10, found in 94% of tested applications.</li>
-        <li>NIST, <a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Role-Based Access Control Project</a> &mdash; the NIST RBAC model and ANSI/INCITS 359-2004 standard.</li>
-        <li>Oso, <a href="https://www.osohq.com/learn/rbac-role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build a Role-Based Access Control Layer</a> &mdash; practical RBAC design guidance.</li>
-        <li>NIST, <a href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=916402" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The NIST Model for Role-Based Access Control</a> &mdash; formal model paper by Sandhu, Ferraiolo, and Kuhn.</li>
-        <li>OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authorization Cheat Sheet</a> &mdash; backend enforcement, middleware patterns, common mistakes.</li>
-        <li>Omada, <a href="https://omadaidentity.com/resources/blog/nist-role-based-access-control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Role-Based Access Control</a> &mdash; RBAC implementation best practices and compliance.</li>
-        <li>SecureLayer7, <a href="https://blog.securelayer7.net/role-based-access-control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RBAC Explained: Benefits, Models, and Best Practices</a> &mdash; comprehensive RBAC guide.</li>
-        <li>Wikipedia, <a href="https://en.wikipedia.org/wiki/Role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Role-Based Access Control</a> &mdash; history and formal definitions.</li>
-        <li>OWASP, <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A01:2025 — Broken Access Control</a> &mdash; continues as #1 in OWASP Top 10 2025 release candidate.</li>
-        <li>CWE, <a href="https://cwe.mitre.org/data/definitions/1345.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CWE-1345: OWASP Top Ten 2021 Category A01</a> &mdash; related Common Weakness Enumerations.</li>
+        <li id="fn-1">OWASP, <a href="https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A01:2021 — Broken Access Control</a> &mdash; #1 in OWASP Top 10, found in 94% of tested applications.</li>
+        <li id="fn-2">NIST, <a href="https://csrc.nist.gov/projects/role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Role-Based Access Control Project</a> &mdash; the NIST RBAC model and ANSI/INCITS 359-2004 standard.</li>
+        <li id="fn-3">Oso, <a href="https://www.osohq.com/learn/rbac-role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build a Role-Based Access Control Layer</a> &mdash; practical RBAC design guidance.</li>
+        <li id="fn-4">NIST, <a href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=916402" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The NIST Model for Role-Based Access Control</a> &mdash; formal model paper by Sandhu, Ferraiolo, and Kuhn.</li>
+        <li id="fn-5">OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authorization Cheat Sheet</a> &mdash; backend enforcement, middleware patterns, common mistakes.</li>
+        <li id="fn-6">Omada, <a href="https://omadaidentity.com/resources/blog/nist-role-based-access-control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Role-Based Access Control</a> &mdash; RBAC implementation best practices and compliance.</li>
+        <li id="fn-7">SecureLayer7, <a href="https://blog.securelayer7.net/role-based-access-control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RBAC Explained: Benefits, Models, and Best Practices</a> &mdash; comprehensive RBAC guide.</li>
+        <li id="fn-8">Wikipedia, <a href="https://en.wikipedia.org/wiki/Role-based-access-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Role-Based Access Control</a> &mdash; history and formal definitions.</li>
+        <li id="fn-9">OWASP, <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A01:2025 — Broken Access Control</a> &mdash; continues as #1 in OWASP Top 10 2025 release candidate.</li>
+        <li id="fn-10">CWE, <a href="https://cwe.mitre.org/data/definitions/1345.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CWE-1345: OWASP Top Ten 2021 Category A01</a> &mdash; related Common Weakness Enumerations.</li>
     </ol>
 </section>
 
@@ -311,6 +311,12 @@ users:manage      (admin role only)
         <span class="border-b border-red/40 group-hover:border-red">Show Transcript</span>
     </button>
     <article id="transcript-body" class="hidden mt-8 space-y-4">
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">RBAC &mdash; Roles, Permissions and Scopes</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Hosts: Alice (lead) and Dan (co-host)</p>
+
+        <p class="text-lg leading-relaxed text-ink-muted italic mt-8">Target duration: ~8 minutes (~1400 words)</p>
 
         <p class="text-lg leading-relaxed"><span class="font-semibold text-red">Alice:</span> Welcome back to Security for Legal SaaS. I&#39;m Alice.</p>
 

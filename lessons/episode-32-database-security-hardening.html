@@ -111,14 +111,14 @@
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Database in private subnet with VPC peering / Private Link</td>
                 <td class="py-3 px-4"><strong class="text-ink">Strongest</strong></td>
-                <td class="py-3 px-4">No internet path exists; accessed only via private cloud network</td>
+                <td class="py-3 px-4">No internet path exists; accessed only via private cloud network<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></td>
             </tr>
         </tbody>
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">On AWS, this means placing your RDS instance in a VPC (Virtual Private Cloud &mdash; an isolated private network, as we covered in Episode 11) with no public accessibility. On GCP, Cloud SQL instances should use private IP only. Security groups (AWS) or firewall rules (GCP) should restrict inbound connections to only the IP addresses or security groups of your application servers &mdash; not `0.0.0.0/0`, which means &quot;anywhere.&quot;</p>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Legal SaaS reality check:</strong> Halcyon tracked over 200 ransomware incidents targeting law firms between 2025 and early 2026. The INC Ransom group specifically exploits known vulnerabilities in remote access tools to reach internal databases. Network isolation is not theoretical &mdash; it is the primary barrier against these attacks.</blockquote>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">On AWS, this means placing your RDS instance in a VPC (Virtual Private Cloud &mdash; an isolated private network, as we covered in Episode 11) with no public accessibility. On GCP, Cloud SQL instances should use private IP only. Security groups (AWS) or firewall rules (GCP) should restrict inbound connections to only the IP addresses or security groups of your application servers &mdash; not `0.0.0.0/0`, which means &quot;anywhere.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Legal SaaS reality check:</strong> Halcyon tracked over 200 ransomware incidents targeting law firms between 2025 and early 2026. The INC Ransom group specifically exploits known vulnerabilities in remote access tools to reach internal databases. Network isolation is not theoretical &mdash; it is the primary barrier against these attacks.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Connection Security: TLS Required, Always</h2>
 
@@ -126,7 +126,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configuration requirements:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Set `sslmode=verify-full` on the client.</strong> This ensures the client verifies the server&#39;s TLS certificate and checks that the hostname matches. Weaker modes like `sslmode=prefer` will silently fall back to unencrypted connections if TLS negotiation fails &mdash; which is exactly what a man-in-the-middle attacker causes.</li>
+        <li><strong class="text-ink">Set `sslmode=verify-full` on the client.</strong> This ensures the client verifies the server&#39;s TLS certificate and checks that the hostname matches. Weaker modes like `sslmode=prefer` will silently fall back to unencrypted connections if TLS negotiation fails &mdash; which is exactly what a man-in-the-middle attacker causes.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></li>
         <li><strong class="text-ink">Use certificates from your internal CA or cloud provider.</strong> AWS RDS provides managed certificates. For self-hosted PostgreSQL, generate certificates through your PKI (public key infrastructure, from Episode 15) or HashiCorp Vault&#39;s PKI secrets engine.</li>
         <li><strong class="text-ink">Reject unencrypted connections.</strong> In `pg_hba.conf`, use `hostssl` instead of `host` to require TLS for all connections.</li>
     </ol>
@@ -175,7 +175,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Create separate database roles for different application functions. Your read-only reporting service should not have write access to the case management tables. Your search indexer should not have access to billing data. If your application has a background job that sends email notifications, it needs access to the notification queue &mdash; not to client documents.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Create separate database roles for different application functions. Your read-only reporting service should not have write access to the case management tables. Your search indexer should not have access to billing data. If your application has a background job that sends email notifications, it needs access to the notification queue &mdash; not to client documents.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Row-Level Security Revisited</h3>
 
@@ -191,13 +191,13 @@ CREATE POLICY tenant_isolation ON documents
 </code></pre>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Even if application code fails to include a `WHERE tenant_id = ?` clause, the database rejects cross-tenant access.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Even if application code fails to include a `WHERE tenant_id = ?` clause, the database rejects cross-tenant access.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Audit Logging: Who Queried What, When</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Database-level audit logging records every operation &mdash; who connected, what they queried, and when. This is distinct from application-level logging (which records what the application did) and is critical because it captures direct database access that bypasses the application.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For PostgreSQL, the <a href="https://www.pgaudit.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">pgAudit extension</a> provides detailed session and object-level audit logging:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For PostgreSQL, the <a href="https://www.pgaudit.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">pgAudit extension</a> provides detailed session and object-level audit logging:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -225,7 +225,7 @@ CREATE POLICY tenant_isolation ON documents
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.cisecurity.org/benchmark/postgresql" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS PostgreSQL Benchmark</a> &mdash; a prescriptive collection of security controls from the Center for Internet Security &mdash; mandates enabling `log_connections` as a baseline requirement. It also recommends configuring `log_statement = &#39;ddl&#39;` at minimum to capture schema changes.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.cisecurity.org/benchmark/postgresql" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS PostgreSQL Benchmark</a> &mdash; a prescriptive collection of security controls from the Center for Internet Security &mdash; mandates enabling `log_connections` as a baseline requirement. It also recommends configuring `log_statement = &#39;ddl&#39;` at minimum to capture schema changes.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Storage and retention:</strong> Audit logs must be shipped to a separate system (a SIEM &mdash; Security Information and Event Management, as we introduced in Episode 7) where they cannot be tampered with by someone who compromises the database server. If the attacker can delete the logs, the audit trail is worthless.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Backup Encryption and Access Controls</h2>
@@ -234,10 +234,10 @@ CREATE POLICY tenant_isolation ON documents
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Requirements:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Encrypt backups at rest.</strong> AWS RDS supports automated encrypted backups using KMS keys (from Episode 29). For self-hosted databases, use `pg_basebackup` with output piped through encryption.</li>
+        <li><strong class="text-ink">Encrypt backups at rest.</strong> AWS RDS supports automated encrypted backups using KMS keys (from Episode 29). For self-hosted databases, use `pg_basebackup` with output piped through encryption.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></li>
         <li><strong class="text-ink">Restrict backup access.</strong> The IAM roles or accounts that can access backup storage should be separate from those that access the production database.</li>
         <li><strong class="text-ink">Test restore procedures.</strong> An encrypted backup you cannot restore is not a backup. Regularly test that you can decrypt and restore from backups &mdash; including with rotated keys.</li>
-        <li><strong class="text-ink">Apply the same network isolation to backup storage.</strong> S3 buckets (or equivalent) holding database backups should not be publicly accessible. Enable S3 Block Public Access and use VPC endpoints for access.</li>
+        <li><strong class="text-ink">Apply the same network isolation to backup storage.</strong> S3 buckets (or equivalent) holding database backups should not be publicly accessible. Enable S3 Block Public Access and use VPC endpoints for access.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Hardening Checklist</h2>
@@ -297,18 +297,18 @@ CREATE POLICY tenant_isolation ON documents
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>AWS, <a href="https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Amazon VPC — Private Subnets</a>.</li>
-        <li>AWS, <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.Security.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Best Practices for Amazon RDS</a>.</li>
-        <li>Halcyon, <a href="https://www.halcyon.ai/ransomware-alerts/inc-ransom-group-mounts-rapid-campaign-against-law-firms" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">INC Ransom Group Mounts Rapid Campaign Against Law Firms</a>.</li>
-        <li>PostgreSQL, <a href="https://www.postgresql.org/docs/current/libpq-ssl.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SSL Support — Client Verification</a>.</li>
-        <li>CIS, <a href="https://www.cisecurity.org/benchmark/postgresql" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS PostgreSQL Benchmarks</a>.</li>
-        <li>PostgreSQL, <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Row Security Policies</a>.</li>
-        <li>pgAudit, <a href="https://www.pgaudit.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PostgreSQL Audit Extension</a>.</li>
-        <li>SOCFortress, <a href="https://socfortress.medium.com/postgresql-hardening-guide-8b8554e22336" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PostgreSQL Hardening Guide Aligned with CIS Benchmark</a>.</li>
-        <li>Crunchy Data, <a href="https://www.crunchydata.com/blog/secure-postgresql-14-with-the-cis-benchmark" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure PostgreSQL 14 with the CIS Benchmark</a>.</li>
-        <li>Embroker, <a href="https://www.embroker.com/blog/law-firm-cyberattacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Law Firm Cyberattacks: Stats and Trends for 2025</a>.</li>
-        <li>HexaCluster, <a href="https://github.com/HexaCluster/pgdsat" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PGDSAT — PostgreSQL Database Security Assessment Tool</a>.</li>
-        <li>CodeOps Trek, <a href="https://codeopstrek.com/dockerize-secure-harden-postgresql-cis-benchmarks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Your PostgreSQL Database: Dockerized & Hardened with CIS Benchmarks</a>.</li>
+        <li id="fn-1">AWS, <a href="https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Amazon VPC — Private Subnets</a>.</li>
+        <li id="fn-2">AWS, <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.Security.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Best Practices for Amazon RDS</a>.</li>
+        <li id="fn-3">Halcyon, <a href="https://www.halcyon.ai/ransomware-alerts/inc-ransom-group-mounts-rapid-campaign-against-law-firms" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">INC Ransom Group Mounts Rapid Campaign Against Law Firms</a>.</li>
+        <li id="fn-4">PostgreSQL, <a href="https://www.postgresql.org/docs/current/libpq-ssl.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SSL Support — Client Verification</a>.</li>
+        <li id="fn-5">CIS, <a href="https://www.cisecurity.org/benchmark/postgresql" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS PostgreSQL Benchmarks</a>.</li>
+        <li id="fn-6">PostgreSQL, <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Row Security Policies</a>.</li>
+        <li id="fn-7">pgAudit, <a href="https://www.pgaudit.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PostgreSQL Audit Extension</a>.</li>
+        <li id="fn-8">SOCFortress, <a href="https://socfortress.medium.com/postgresql-hardening-guide-8b8554e22336" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PostgreSQL Hardening Guide Aligned with CIS Benchmark</a>.</li>
+        <li id="fn-9">Crunchy Data, <a href="https://www.crunchydata.com/blog/secure-postgresql-14-with-the-cis-benchmark" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure PostgreSQL 14 with the CIS Benchmark</a>.</li>
+        <li id="fn-10">Embroker, <a href="https://www.embroker.com/blog/law-firm-cyberattacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Law Firm Cyberattacks: Stats and Trends for 2025</a>.</li>
+        <li id="fn-11">HexaCluster, <a href="https://github.com/HexaCluster/pgdsat" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">PGDSAT — PostgreSQL Database Security Assessment Tool</a>.</li>
+        <li id="fn-12">CodeOps Trek, <a href="https://codeopstrek.com/dockerize-secure-harden-postgresql-cis-benchmarks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Your PostgreSQL Database: Dockerized & Hardened with CIS Benchmarks</a>.</li>
     </ol>
 </section>
 

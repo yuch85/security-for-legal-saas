@@ -84,13 +84,13 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Is Prompt Injection</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A large language model (LLM) follows instructions written in natural language. A prompt injection attack occurs when an attacker crafts input that causes the model to follow the attacker&#39;s instructions instead of the developer&#39;s. The model cannot reliably distinguish between legitimate instructions from the system prompt and adversarial instructions embedded in user-supplied content.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A large language model (LLM) follows instructions written in natural language. A prompt injection attack occurs when an attacker crafts input that causes the model to follow the attacker&#39;s instructions instead of the developer&#39;s. The model cannot reliably distinguish between legitimate instructions from the system prompt and adversarial instructions embedded in user-supplied content.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is fundamentally different from SQL injection, which we covered in Episode 8. SQL injection has a clean architectural fix: parameterised queries separate code from data at the protocol level. Prompt injection has no equivalent. The model processes instructions and data in the same channel &mdash; natural language &mdash; with no reliable mechanism to enforce a boundary between them.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is fundamentally different from SQL injection, which we covered in Episode 8. SQL injection has a clean architectural fix: parameterised queries separate code from data at the protocol level. Prompt injection has no equivalent. The model processes instructions and data in the same channel &mdash; natural language &mdash; with no reliable mechanism to enforce a boundary between them.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Direct vs. Indirect Prompt Injection</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM01:2025 specification</a> distinguishes two attack surfaces:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM01:2025 specification</a> distinguishes two attack surfaces:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Direct Prompt Injection</h3>
 
@@ -135,16 +135,16 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In each case, the attacker never touches your system directly. They poison the data your system processes, and the AI follows the embedded instructions because it cannot tell the difference between &quot;content to analyse&quot; and &quot;instructions to follow.&quot;</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In each case, the attacker never touches your system directly. They poison the data your system processes, and the AI follows the embedded instructions because it cannot tell the difference between &quot;content to analyse&quot; and &quot;instructions to follow.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The opposing counsel vector:</strong> This is unique to legal AI. In litigation, you routinely receive documents from adversaries who have an active incentive to undermine your analysis. A contract with embedded prompt injection instructions is not a hypothetical &mdash; it is a natural extension of existing adversarial document tactics (metadata manipulation, tracked-changes hiding). The attack surface is inherent in the practice of law.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why There Is No Parameterised Query for Prompt Injection</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 8, we showed that SQL injection is solved architecturally: parameterised queries send code and data through separate channels, making injection structurally impossible. Developers often ask: &quot;Why can&#39;t we do the same for prompts?&quot;</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The answer is that LLMs process everything as natural language tokens. There is no separate channel for instructions versus data. The model&#39;s instruction-following capability &mdash; the very thing that makes it useful &mdash; is the same mechanism that makes it vulnerable. Every attempt to mark certain text as &quot;data only&quot; relies on conventions (delimiters, XML tags, system prompt framing) that the model is not architecturally guaranteed to respect.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The answer is that LLMs process everything as natural language tokens. There is no separate channel for instructions versus data. The model&#39;s instruction-following capability &mdash; the very thing that makes it useful &mdash; is the same mechanism that makes it vulnerable. Every attempt to mark certain text as &quot;data only&quot; relies on conventions (delimiters, XML tags, system prompt framing) that the model is not architecturally guaranteed to respect.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Research has confirmed this limitation. A <a href="https://www.mdpi.com/2078-2489/17/1/54" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">comprehensive review published in the journal *Information*</a> found that &quot;no single defence mechanism provides complete protection against prompt injection&quot; and that defence in depth remains the only viable approach.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Research has confirmed this limitation. A <a href="https://www.mdpi.com/2078-2489/17/1/54" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">comprehensive review published in the journal *Information*</a> found that &quot;no single defence mechanism provides complete protection against prompt injection&quot; and that defence in depth remains the only viable approach.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Defence Layers</h2>
 
@@ -154,7 +154,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Scan user inputs and retrieved documents for known injection patterns: override language (&quot;ignore previous instructions&quot;), role reassignment (&quot;you are now&quot;), delimiter escape attempts, and encoded payloads (Base64, Unicode tricks).</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Limitations: pattern matching cannot catch novel or obfuscated injections. Attackers routinely evade filters using payload splitting (breaking instructions across multiple inputs), language switching, and encoding.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Limitations: pattern matching cannot catch novel or obfuscated injections. Attackers routinely evade filters using payload splitting (breaking instructions across multiple inputs), language switching, and encoding.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Output Filtering</h3>
 
@@ -164,7 +164,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The model should have the minimum capabilities necessary for its task. A contract review AI does not need the ability to send emails, modify database records, or access the internet. If the model&#39;s tool-use permissions are restricted, a successful injection has a smaller blast radius.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This maps directly to the principle of least privilege from Episode 8 &mdash; applied to AI capabilities instead of database accounts.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This maps directly to the principle of least privilege from Episode 8 &mdash; applied to AI capabilities instead of database accounts.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">4. Human-in-the-Loop</h3>
 
@@ -172,7 +172,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">5. Content Marking and Provenance</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Tag content by source: system instructions, user input, retrieved documents, third-party data. While the model may not respect these boundaries perfectly, they enable output filtering rules (&quot;if the response references system instructions, flag for review&quot;) and audit logging (&quot;which document triggered this output?&quot;).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Tag content by source: system instructions, user input, retrieved documents, third-party data. While the model may not respect these boundaries perfectly, they enable output filtering rules (&quot;if the response references system instructions, flag for review&quot;) and audit logging (&quot;which document triggered this output?&quot;).<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Legal-Specific Defence: Adversarial Document Preprocessing</h2>
 
@@ -180,7 +180,7 @@
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Strip hidden content.</strong> Remove white-on-white text, hidden metadata, invisible Unicode characters, and comment fields.</li>
         <li><strong class="text-ink">Convert to plain text.</strong> Render PDFs and Word documents to plain text before AI processing, discarding formatting that could hide instructions.</li>
-        <li><strong class="text-ink">Classify by trust tier.</strong> Firm-authored documents, client-provided documents, and opposing party documents should carry different trust labels &mdash; a concept we will develop further in Episode 34.</li>
+        <li><strong class="text-ink">Classify by trust tier.</strong> Firm-authored documents, client-provided documents, and opposing party documents should carry different trust labels &mdash; a concept we will develop further in Episode 34.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The State of the Art: Imperfect and Honest About It</h2>
@@ -198,16 +198,16 @@
 <section class="py-12 border-b border-rule">
     <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
     <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
-        <li>OWASP, <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM01:2025 Prompt Injection</a>.</li>
-        <li>OWASP Foundation, <a href="https://owasp.org/www-community/attacks/PromptInjection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prompt Injection Attacks</a>.</li>
-        <li>Checkpoint, <a href="https://www.checkpoint.com/cyber-hub/what-is-llm-security/prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications 2025: Prompt Injection</a>.</li>
-        <li>Trend Micro, <a href="https://www.trendmicro.com/en/what-is/ai/owasp-top-10.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Are the OWASP Top 10 Risks for LLMs?</a>.</li>
-        <li>Promptfoo, <a href="https://www.promptfoo.dev/docs/red-team/owasp-llm-top-10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM Top 10</a>.</li>
-        <li>Ferrara, E. (2025), <a href="https://www.mdpi.com/2078-2489/17/1/54" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prompt Injection Attacks in Large Language Models and AI Agent Systems: A Comprehensive Review</a>, *Information*, 17(1), 54.</li>
-        <li>BSG, <a href="https://bsg.tech/blog/owasp-llm-top-10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM Top 10 (2025): Vulnerabilities & Mitigations</a>.</li>
-        <li>Aembit, <a href="https://aembit.io/blog/owasp-top-10-llm-risks-explained/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications (2025)</a>.</li>
-        <li>Oligo Security, <a href="https://www.oligo.security/academy/owasp-top-10-llm-updated-2025-examples-and-mitigation-strategies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 LLM, Updated 2025: Examples & Mitigation Strategies</a>.</li>
-        <li>DeepTeam by Confident AI, <a href="https://www.trydeepteam.com/docs/frameworks-owasp-top-10-for-llms" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLMs 2025</a>.</li>
+        <li id="fn-1">OWASP, <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM01:2025 Prompt Injection</a>.</li>
+        <li id="fn-2">OWASP Foundation, <a href="https://owasp.org/www-community/attacks/PromptInjection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prompt Injection Attacks</a>.</li>
+        <li id="fn-3">Checkpoint, <a href="https://www.checkpoint.com/cyber-hub/what-is-llm-security/prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications 2025: Prompt Injection</a>.</li>
+        <li id="fn-4">Trend Micro, <a href="https://www.trendmicro.com/en/what-is/ai/owasp-top-10.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Are the OWASP Top 10 Risks for LLMs?</a>.</li>
+        <li id="fn-5">Promptfoo, <a href="https://www.promptfoo.dev/docs/red-team/owasp-llm-top-10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM Top 10</a>.</li>
+        <li id="fn-6">Ferrara, E. (2025), <a href="https://www.mdpi.com/2078-2489/17/1/54" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prompt Injection Attacks in Large Language Models and AI Agent Systems: A Comprehensive Review</a>, *Information*, 17(1), 54.</li>
+        <li id="fn-7">BSG, <a href="https://bsg.tech/blog/owasp-llm-top-10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM Top 10 (2025): Vulnerabilities & Mitigations</a>.</li>
+        <li id="fn-8">Aembit, <a href="https://aembit.io/blog/owasp-top-10-llm-risks-explained/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications (2025)</a>.</li>
+        <li id="fn-9">Oligo Security, <a href="https://www.oligo.security/academy/owasp-top-10-llm-updated-2025-examples-and-mitigation-strategies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 LLM, Updated 2025: Examples & Mitigation Strategies</a>.</li>
+        <li id="fn-10">DeepTeam by Confident AI, <a href="https://www.trydeepteam.com/docs/frameworks-owasp-top-10-for-llms" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLMs 2025</a>.</li>
     </ol>
 </section>
 
