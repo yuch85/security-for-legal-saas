@@ -107,15 +107,13 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Isolation Approaches Compared</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Approach</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Isolation Level</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Performance</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Cost</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Approach</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Isolation Level</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Performance</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Cost</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Single collection, metadata filtering</strong></td>
@@ -150,8 +148,7 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS handling privileged data, the minimum acceptable approach is <strong class="text-ink">namespace-per-tenant</strong> with server-enforced partitioning. The recommended approach is <strong class="text-ink">collection-per-tenant</strong>, where each tenant has physically separate storage. The metadata-filtering approach &mdash; storing all tenants in one collection and filtering at query time &mdash; is the most dangerous because a single missing filter parameter returns results across all tenants.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The pgvector exception:</strong> If you use <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">pgvector</a> &mdash; PostgreSQL&#39;s vector extension &mdash; you get RLS for free. Because pgvector stores vectors in regular PostgreSQL tables, the same Row-Level Security policies that protect your relational data also protect your embeddings. This is a significant security advantage over standalone vector databases.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The pgvector exception:</strong> If you use <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">pgvector</a> &mdash; PostgreSQL&#39;s vector extension &mdash; you get RLS for free. Because pgvector stores vectors in regular PostgreSQL tables, the same Row-Level Security policies that protect your relational data also protect your embeddings. This is a significant security advantage over standalone vector databases.</blockquote>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Common Misconfiguration: Frontend API Keys</h3>
 
@@ -165,10 +162,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The retrieval pipeline should enforce document-level permissions before returning results to the model:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">User queries the AI.</strong> The query is converted to an embedding.</li>
-        <li><strong class="text-ink">Vector similarity search returns candidate documents.</strong> These are the mathematically closest embeddings to the query.</li>
-        <li><strong class="text-ink">Permission filter.</strong> Before any candidate is included in the model&#39;s context, the system checks: does this user have access to this document? This requires mapping each embedding back to its source document and checking the document&#39;s access control list (ACL).</li>
-        <li><strong class="text-ink">Filtered results go to the model.</strong> Only documents the user is authorised to see are included in the generation context.</li>
+        <li>1. <strong class="text-ink">User queries the AI.</strong> The query is converted to an embedding.</li>
+        <li>2. <strong class="text-ink">Vector similarity search returns candidate documents.</strong> These are the mathematically closest embeddings to the query.</li>
+        <li>3. <strong class="text-ink">Permission filter.</strong> Before any candidate is included in the model&#39;s context, the system checks: does this user have access to this document? This requires mapping each embedding back to its source document and checking the document&#39;s access control list (ACL).</li>
+        <li>4. <strong class="text-ink">Filtered results go to the model.</strong> Only documents the user is authorised to see are included in the generation context.</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Without step 3, a junior associate asking a question could inadvertently retrieve &mdash; and the model could reveal &mdash; content from a partner-only matter, a different client&#39;s case, or a document under a restricted access protocol.</p>
@@ -184,12 +181,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The choice of embedding model affects privacy:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Consideration</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Implication</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Consideration</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Implication</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Cloud-hosted embedding APIs</strong> (OpenAI, Cohere, Google)</td>
@@ -217,11 +212,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A minimal secure embedding pipeline for multi-tenant legal SaaS:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Embed locally.</strong> Use self-hosted models for privileged content. Cloud APIs only for non-sensitive content with appropriate DPAs.</li>
-        <li><strong class="text-ink">Isolate per tenant.</strong> Separate vector collections or namespaces per tenant. Never store multiple tenants in a single flat collection with metadata filtering as the sole isolation mechanism.</li>
-        <li><strong class="text-ink">Enforce permissions at retrieval.</strong> Check document-level ACLs before returning any result to the model.</li>
-        <li><strong class="text-ink">Audit retrieval operations.</strong> Log every vector query: who queried, what was returned, which tenant&#39;s data was accessed. Ship logs to your SIEM (from Episode 7).</li>
-        <li><strong class="text-ink">Rotate embedding keys.</strong> If using API-based embedding services, rotate API keys regularly through your secrets manager (Episode 30).</li>
+        <li>1. <strong class="text-ink">Embed locally.</strong> Use self-hosted models for privileged content. Cloud APIs only for non-sensitive content with appropriate DPAs.</li>
+        <li>2. <strong class="text-ink">Isolate per tenant.</strong> Separate vector collections or namespaces per tenant. Never store multiple tenants in a single flat collection with metadata filtering as the sole isolation mechanism.</li>
+        <li>3. <strong class="text-ink">Enforce permissions at retrieval.</strong> Check document-level ACLs before returning any result to the model.</li>
+        <li>4. <strong class="text-ink">Audit retrieval operations.</strong> Log every vector query: who queried, what was returned, which tenant&#39;s data was accessed. Ship logs to your SIEM (from Episode 7).</li>
+        <li>5. <strong class="text-ink">Rotate embedding keys.</strong> If using API-based embedding services, rotate API keys regularly through your secrets manager (Episode 30).</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
@@ -230,27 +225,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM08:2025 Vector and Embedding Weaknesses</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: TianPan.co, <a href="https://tianpan.co/blog/2026-04-19-privacy-architecture-embeddings-vector-store" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Privacy Architecture of Embeddings: What Your Vector Store Knows About Your Users</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Rafter, <a href="https://rafter.so/blog/vector-db-embeddings-security-risk" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vector DBs & Embeddings: The Overlooked Security Risk</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Blockchain Council, <a href="https://www.blockchain-council.org/ai/securing-and-governing-vector-databases-privacy-prompt-injection-multi-tenant-access-control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Securing and Governing Vector Databases in 2026</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Indusface, <a href="https://www.indusface.com/learning/owasp-llm-vector-and-embedding-weaknesses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM08: Vector and Embedding Security Risks (2025)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: pgvector, <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Open-Source Vector Similarity Search for PostgreSQL</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Security Boulevard / FireTail, <a href="https://securityboulevard.com/2025/11/llm08-vector-embedding-weaknesses-firetail-blog/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM08: Vector & Embedding Weaknesses</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Securityium, <a href="https://www.securityium.com/a-guide-to-mitigating-llm082025-vector-and-embedding-weaknesses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Guide to Mitigating LLM08:2025 Vector and Embedding Weaknesses</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cobalt, <a href="https://www.cobalt.io/blog/vector-and-embedding-weaknesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vector and Embedding Weaknesses: Vulnerabilities and Mitigations</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Ackuity AI, <a href="https://ackuity.ai/blog/mitigating-vector-and-embedding-weaknesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mitigating Vector and Embedding Weaknesses</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: PointGuard AI, <a href="https://www.pointguardai.com/glossary/vector-embedding-weaknesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vector Embedding Weaknesses</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>OWASP, <a href="https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM08:2025 Vector and Embedding Weaknesses</a>.</li>
+        <li>TianPan.co, <a href="https://tianpan.co/blog/2026-04-19-privacy-architecture-embeddings-vector-store" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Privacy Architecture of Embeddings: What Your Vector Store Knows About Your Users</a>.</li>
+        <li>Rafter, <a href="https://rafter.so/blog/vector-db-embeddings-security-risk" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vector DBs & Embeddings: The Overlooked Security Risk</a>.</li>
+        <li>Blockchain Council, <a href="https://www.blockchain-council.org/ai/securing-and-governing-vector-databases-privacy-prompt-injection-multi-tenant-access-control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Securing and Governing Vector Databases in 2026</a>.</li>
+        <li>Indusface, <a href="https://www.indusface.com/learning/owasp-llm-vector-and-embedding-weaknesses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM08: Vector and Embedding Security Risks (2025)</a>.</li>
+        <li>pgvector, <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Open-Source Vector Similarity Search for PostgreSQL</a>.</li>
+        <li>Security Boulevard / FireTail, <a href="https://securityboulevard.com/2025/11/llm08-vector-embedding-weaknesses-firetail-blog/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM08: Vector & Embedding Weaknesses</a>.</li>
+        <li>Securityium, <a href="https://www.securityium.com/a-guide-to-mitigating-llm082025-vector-and-embedding-weaknesses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Guide to Mitigating LLM08:2025 Vector and Embedding Weaknesses</a>.</li>
+        <li>Cobalt, <a href="https://www.cobalt.io/blog/vector-and-embedding-weaknesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vector and Embedding Weaknesses: Vulnerabilities and Mitigations</a>.</li>
+        <li>Ackuity AI, <a href="https://ackuity.ai/blog/mitigating-vector-and-embedding-weaknesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Mitigating Vector and Embedding Weaknesses</a>.</li>
+        <li>PointGuard AI, <a href="https://www.pointguardai.com/glossary/vector-embedding-weaknesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vector Embedding Weaknesses</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -331,26 +321,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-34-rag-poisoning-and-document-trust-tiers.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 34 &mdash; RAG Poisoning and Document Trust Tiers</p>
-                </div>
-            </a>
+            <a href="episode-34-rag-poisoning-and-document-trust-tiers.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 34 &mdash; RAG Poisoning and Document Trust Tiers</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-36-model-inversion-and-membership-inference.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 36 &mdash; Model Inversion and Membership Inference</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-36-model-inversion-and-membership-inference.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 36 &mdash; Model Inversion and Membership Inference</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

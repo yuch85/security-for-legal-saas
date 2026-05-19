@@ -89,12 +89,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The four attribute categories:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Category</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples in Legal SaaS</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Category</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples in Legal SaaS</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Subject attributes</strong></td>
@@ -117,8 +115,7 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An ABAC policy combines these attributes into rules:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Allow</strong> if subject.department = &quot;M&amp;A&quot; AND resource.matter_type = &quot;M&amp;A&quot; AND action = &quot;read&quot; AND environment.time is within business_hours</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Allow</strong> if subject.department = &quot;M&amp;A&quot; AND resource.matter_type = &quot;M&amp;A&quot; AND action = &quot;read&quot; AND environment.time is within business_hours</blockquote>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is fundamentally more expressive than RBAC. A single ABAC policy can encode what would require dozens of purpose-built roles.</p>
 
@@ -132,8 +129,8 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a legal SaaS platform, this looks like:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>RBAC determines: &quot;Associates can access matter documents&quot;</li>
-        <li>ABAC refines: &quot;Associates in the litigation department can access litigation matter documents marked Confidential, during business hours, from managed devices&quot;</li>
+        <li>1. RBAC determines: &quot;Associates can access matter documents&quot;</li>
+        <li>2. ABAC refines: &quot;Associates in the litigation department can access litigation matter documents marked Confidential, during business hours, from managed devices&quot;</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The role gets the user through the first gate. The attributes decide exactly which resources they can touch and under what conditions.</p>
@@ -145,20 +142,15 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Open Policy Agent (OPA)</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.openpolicyagent.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Open Policy Agent</a> is the most widely adopted general-purpose policy engine, donated to the Cloud Native Computing Foundation (CNCF) and graduated in 2021. Policies are written in <strong class="text-ink">Rego</strong>, a declarative query language:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```rego</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">allow if {</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">input.user.role == &quot;associate&quot;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">input.user.department == input.resource.practice_group</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">input.action == &quot;read&quot;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">}</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+        <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">rego</div>
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">allow if {
+    input.user.role == &quot;associate&quot;
+    input.user.department == input.resource.practice_group
+    input.action == &quot;read&quot;
+}
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">OPA runs as a sidecar service alongside your application. When a user requests access to a resource, your application sends the relevant attributes to OPA, and OPA returns an allow/deny decision. The application never evaluates the policy itself &mdash; it delegates entirely to OPA.</p>
 
@@ -169,24 +161,17 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">AWS Cedar</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.cedarpolicy.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cedar</a> is AWS&#39;s purpose-built authorisation policy language and engine, open-sourced in 2023 and used in production by Amazon Verified Permissions. Cedar was explicitly designed for application-level authorisation &mdash; it&#39;s more specialised than OPA&#39;s general-purpose approach:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```cedar</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">permit(</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">principal in Role::&quot;associate&quot;,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">action == Action::&quot;readDocument&quot;,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">resource in MatterGroup::&quot;litigation&quot;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">) when {</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">principal.department == resource.practiceGroup</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">};</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+        <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">cedar</div>
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">permit(
+    principal in Role::&quot;associate&quot;,
+    action == Action::&quot;readDocument&quot;,
+    resource in MatterGroup::&quot;litigation&quot;
+) when {
+    principal.department == resource.practiceGroup
+};
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Strengths:</strong> Formal verification &mdash; Cedar&#39;s type system can mathematically prove that certain policy configurations are correct. Designed specifically for RBAC + ABAC hybrid models. Simpler syntax than Rego for authorisation-specific use cases.</p>
 
@@ -199,20 +184,17 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Strengths:</strong> Exceptional performance at scale. Natural fit for document sharing and collaboration models. Strong consistency guarantees.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tradeoffs:</strong> The relationship model is different from traditional RBAC/ABAC thinking &mdash; requires rethinking how you model access.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Comparison summary from AWS and Teleport security benchmarks:</strong> OPA is best for general-purpose policy across infrastructure and applications. Cedar excels at application-level authorisation with formal verification. Zanzibar/OpenFGA is optimal for relationship-heavy models like document sharing.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Comparison summary from AWS and Teleport security benchmarks:</strong> OPA is best for general-purpose policy across infrastructure and applications. Cedar excels at application-level authorisation with formal verification. Zanzibar/OpenFGA is optimal for relationship-heavy models like document sharing.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Performance: Policy Evaluation at Scale</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal SaaS platforms evaluate authorisation decisions on every API request &mdash; potentially thousands per second during peak usage. Policy engine performance is a real concern:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Consideration</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Guidance</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Consideration</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Guidance</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Caching</strong></td>
@@ -260,27 +242,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/162/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-162: Guide to Attribute Based Access Control (ABAC)</a> &mdash; the NIST ABAC standard.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CNCF, <a href="https://www.cncf.io/blog/2024/05/21/love-hate-and-policy-languages-an-introduction-to-decision-making-engines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Love, Hate, and Policy Languages: An Introduction to Decision-Making Engines</a> &mdash; comparison of policy approaches (May 2024).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Oso, <a href="https://www.osohq.com/learn/opa-vs-cedar-vs-zanzibar" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OPA vs Cedar vs Zanzibar: 2025 Policy Engine Guide</a> &mdash; comparative analysis of leading policy engines.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Permit.io, <a href="https://www.permit.io/blog/policy-engines" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Policy Engines: Open Policy Agent vs AWS Cedar vs Google Zanzibar</a> &mdash; architectural comparison.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Open Policy Agent, <a href="https://www.openpolicyagent.org/docs/latest/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OPA Documentation</a> &mdash; official OPA documentation and Rego language reference.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://www.cedarpolicy.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cedar Policy Language</a> &mdash; Cedar documentation and formal verification details.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Google Research, <a href="https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zanzibar: Google's Consistent, Global Authorization System</a> &mdash; original Zanzibar paper (2019).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OpenFGA, <a href="https://openfga.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OpenFGA Documentation</a> &mdash; open-source Zanzibar implementation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Teleport, <a href="https://goteleport.com/blog/benchmarking-policy-languages/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Benchmarking Authorization Policy Engines</a> &mdash; comparative security analysis of Rego, Cedar, and OpenFGA.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Auth0, <a href="https://auth0.com/blog/rebac-abac-openfga-cedar/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding ReBAC and ABAC Through OpenFGA and Cedar</a> &mdash; relationship-based vs. attribute-based models.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Nordic APIs, <a href="https://nordicapis.com/authzen-a-new-standard-for-fine-grained-authorization/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AuthZEN: A New Standard for Fine-Grained Authorization</a> &mdash; the emerging authorisation API standard.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/162/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-162: Guide to Attribute Based Access Control (ABAC)</a> &mdash; the NIST ABAC standard.</li>
+        <li>CNCF, <a href="https://www.cncf.io/blog/2024/05/21/love-hate-and-policy-languages-an-introduction-to-decision-making-engines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Love, Hate, and Policy Languages: An Introduction to Decision-Making Engines</a> &mdash; comparison of policy approaches (May 2024).</li>
+        <li>Oso, <a href="https://www.osohq.com/learn/opa-vs-cedar-vs-zanzibar" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OPA vs Cedar vs Zanzibar: 2025 Policy Engine Guide</a> &mdash; comparative analysis of leading policy engines.</li>
+        <li>Permit.io, <a href="https://www.permit.io/blog/policy-engines" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Policy Engines: Open Policy Agent vs AWS Cedar vs Google Zanzibar</a> &mdash; architectural comparison.</li>
+        <li>Open Policy Agent, <a href="https://www.openpolicyagent.org/docs/latest/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OPA Documentation</a> &mdash; official OPA documentation and Rego language reference.</li>
+        <li>AWS, <a href="https://www.cedarpolicy.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cedar Policy Language</a> &mdash; Cedar documentation and formal verification details.</li>
+        <li>Google Research, <a href="https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zanzibar: Google's Consistent, Global Authorization System</a> &mdash; original Zanzibar paper (2019).</li>
+        <li>OpenFGA, <a href="https://openfga.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OpenFGA Documentation</a> &mdash; open-source Zanzibar implementation.</li>
+        <li>Teleport, <a href="https://goteleport.com/blog/benchmarking-policy-languages/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Benchmarking Authorization Policy Engines</a> &mdash; comparative security analysis of Rego, Cedar, and OpenFGA.</li>
+        <li>Auth0, <a href="https://auth0.com/blog/rebac-abac-openfga-cedar/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding ReBAC and ABAC Through OpenFGA and Cedar</a> &mdash; relationship-based vs. attribute-based models.</li>
+        <li>Nordic APIs, <a href="https://nordicapis.com/authzen-a-new-standard-for-fine-grained-authorization/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AuthZEN: A New Standard for Fine-Grained Authorization</a> &mdash; the emerging authorisation API standard.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -365,26 +342,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-23-rbac-roles-permissions-and-scopes.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 23 &mdash; RBAC &mdash; Roles, Permissions and Scopes</p>
-                </div>
-            </a>
+            <a href="episode-23-rbac-roles-permissions-and-scopes.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 23 &mdash; RBAC &mdash; Roles, Permissions and Scopes</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-25-ethical-walls-and-matterscoped-access.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 25 &mdash; Ethical Walls and Matter-Scoped Access</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-25-ethical-walls-and-matterscoped-access.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 25 &mdash; Ethical Walls and Matter-Scoped Access</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

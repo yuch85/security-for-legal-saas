@@ -87,40 +87,27 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Security Testing Pyramid</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Borrow from the testing pyramid concept: lots of automated checks at the base, fewer manual reviews in the middle, rare comprehensive assessments at the top.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/\</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/  \        Annual penetration tests</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/    \       (1-2 per year)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/------\</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/        \     Manual code reviews for</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/          \    security-critical changes</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/------------\</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/              \  Automated testing in CI/CD:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/                \ SAST, DAST, SCA, secrets scanning</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">/------------------\</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">         /\
+        /  \        Annual penetration tests
+       /    \       (1-2 per year)
+      /------\
+     /        \     Manual code reviews for
+    /          \    security-critical changes
+   /------------\
+  /              \  Automated testing in CI/CD:
+ /                \ SAST, DAST, SCA, secrets scanning
+/------------------\
+</code></pre>
+    </div>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Layer</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Frequency</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scope</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Finds</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Layer</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Frequency</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scope</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Finds</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">SAST in CI</strong></td>
@@ -173,12 +160,9 @@
         <li><strong class="text-ink">Insecure cryptographic operations</strong> &mdash; weak algorithms, hardcoded keys, missing TLS verification</li>
         <li><strong class="text-ink">Taint tracking</strong> &mdash; following untrusted input from an API endpoint through to a sensitive operation like a database query or file write</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;For legal SaaS:&lt;/strong&gt; Configure SAST rules specifically for your risk profile. Add custom rules for: access control checks on every endpoint that serves client data (IDOR prevention &mdash; <a href="../ep06/article.md">Episode 6</a>), tenant isolation in multi-tenant queries (row-level security &mdash; <a href="../ep08/article.md">Episode 8</a>), and audit logging on every data access operation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>For legal SaaS:</strong> Configure SAST rules specifically for your risk profile. Add custom rules for: access control checks on every endpoint that serves client data (IDOR prevention &mdash; <a href="../ep06/article.md" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 6</a>), tenant isolation in multi-tenant queries (row-level security &mdash; <a href="../ep08/article.md" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>), and audit logging on every data access operation.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">DAST in Staging</h2>
 
@@ -221,12 +205,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Define the scope before engagement:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">In Scope</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typically Out of Scope</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">In Scope</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typically Out of Scope</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Application authentication and authorisation</td>
@@ -280,30 +262,25 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For every security bug found (whether by SAST, DAST, pen test, or bug bounty):</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Write an automated test that reproduces the vulnerability</li>
-        <li>Verify the test fails before the fix and passes after</li>
-        <li>Add the test to your CI suite permanently</li>
-        <li>The test runs on every pull request, forever</li>
+        <li>1. Write an automated test that reproduces the vulnerability</li>
+        <li>2. Verify the test fails before the fix and passes after</li>
+        <li>3. Add the test to your CI suite permanently</li>
+        <li>4. The test runs on every pull request, forever</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Over time, this builds a growing library of security-specific regression tests &mdash; a permanent immune system for your application.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Example for legal SaaS:&lt;/strong&gt; A pen test discovers that &lt;code&gt;/api/cases/:id/documents&lt;/code&gt; doesn&#39;t verify the requesting user belongs to the case&#39;s firm (an IDOR vulnerability). You fix it by adding a tenant check. The regression test: authenticate as User A from Firm A, request a document belonging to Firm B&#39;s case, assert 403 Forbidden. This test runs on every PR. If anyone refactors the access control code and accidentally removes the tenant check, the test catches it.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Example for legal SaaS:</strong> A pen test discovers that <code>/api/cases/:id/documents</code> doesn't verify the requesting user belongs to the case's firm (an IDOR vulnerability). You fix it by adding a tenant check. The regression test: authenticate as User A from Firm A, request a document belonging to Firm B's case, assert 403 Forbidden. This test runs on every PR. If anyone refactors the access control code and accidentally removes the tenant check, the test catches it.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Security Testing Minimum</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">When</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Catches</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">When</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Catches</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Pre-commit secret scanning</td>
@@ -348,29 +325,22 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: access reviews and least privilege audits &mdash; how to ensure that the contractor who left six months ago doesn&#39;t still have an active API key.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP in SDLC — Integration Standards</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cymulate, <a href="https://cymulate.com/cybersecurity-glossary/shift-left-security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Shift Left Security for DevOps & AppSec Teams</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: TechSpective, <a href="https://techspective.net/2026/03/16/is-sast-still-relevant-in-2026-rethinking-static-code-analysis/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Is SAST Still Relevant in 2026? Rethinking Static Code Analysis</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Checkmarx, <a href="https://checkmarx.com/learn/dast/what-is-dynamic-application-security-testing-dast-2026-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Is Dynamic Application Security Testing (DAST)? 2026 Guide</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SecureLayer7, <a href="https://blog.securelayer7.net/dast-tools/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top DAST Tools in 2026: Features, Pros & Cons</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Deepstrike, <a href="https://deepstrike.io/blog/sast-vs-dast-vs-iast-vs-rasp-2025" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAST vs DAST vs IAST vs RASP Explained (2025)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependency-Check: Software Composition Analysis</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OX Security, <a href="https://www.ox.security/blog/sast-and-dast-tools-still-essential-security-solutions-in-2025/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAST and DAST Tools: Still Essential Security Testing Tools in 2025</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cybersecurity Dive, <a href="https://www.cybersecuritydive.com/spons/the-future-of-dast-in-an-ai-first-world-why-runtime-security-testing-remai/811891/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Future of DAST in an AI-First World</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Netalith, <a href="https://netalith.com/blogs/quality-assurance/automated-devsecops-testing-2026" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Automated DevSecOps Testing Workflows: Integrating Security into CI/CD Pipelines</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Deepstrike, <a href="https://deepstrike.io/blog/software-testing-security-testing" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Testing & Security Testing 2025</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>OWASP, <a href="https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP in SDLC — Integration Standards</a>.</li>
+        <li>Cymulate, <a href="https://cymulate.com/cybersecurity-glossary/shift-left-security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Shift Left Security for DevOps & AppSec Teams</a>.</li>
+        <li>TechSpective, <a href="https://techspective.net/2026/03/16/is-sast-still-relevant-in-2026-rethinking-static-code-analysis/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Is SAST Still Relevant in 2026? Rethinking Static Code Analysis</a>.</li>
+        <li>Checkmarx, <a href="https://checkmarx.com/learn/dast/what-is-dynamic-application-security-testing-dast-2026-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Is Dynamic Application Security Testing (DAST)? 2026 Guide</a>.</li>
+        <li>SecureLayer7, <a href="https://blog.securelayer7.net/dast-tools/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top DAST Tools in 2026: Features, Pros & Cons</a>.</li>
+        <li>Deepstrike, <a href="https://deepstrike.io/blog/sast-vs-dast-vs-iast-vs-rasp-2025" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAST vs DAST vs IAST vs RASP Explained (2025)</a>.</li>
+        <li>OWASP, <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependency-Check: Software Composition Analysis</a>.</li>
+        <li>OX Security, <a href="https://www.ox.security/blog/sast-and-dast-tools-still-essential-security-solutions-in-2025/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAST and DAST Tools: Still Essential Security Testing Tools in 2025</a>.</li>
+        <li>Cybersecurity Dive, <a href="https://www.cybersecuritydive.com/spons/the-future-of-dast-in-an-ai-first-world-why-runtime-security-testing-remai/811891/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Future of DAST in an AI-First World</a>.</li>
+        <li>Netalith, <a href="https://netalith.com/blogs/quality-assurance/automated-devsecops-testing-2026" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Automated DevSecOps Testing Workflows: Integrating Security into CI/CD Pipelines</a>.</li>
+        <li>Deepstrike, <a href="https://deepstrike.io/blog/software-testing-security-testing" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Testing & Security Testing 2025</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -455,26 +425,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-55-disaster-recovery-and-business-continuity.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 55 &mdash; Disaster Recovery and Business Continuity</p>
-                </div>
-            </a>
+            <a href="episode-55-disaster-recovery-and-business-continuity.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 55 &mdash; Disaster Recovery and Business Continuity</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-57-access-reviews-and-least-privilege-audits.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 57 &mdash; Access Reviews and Least Privilege Audits</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-57-access-reviews-and-least-privilege-audits.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 57 &mdash; Access Reviews and Least Privilege Audits</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

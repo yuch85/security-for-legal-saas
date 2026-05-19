@@ -87,12 +87,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When you call a cloud LLM provider &mdash; OpenAI, Anthropic, Google, AWS Bedrock &mdash; your data traverses networks and is processed on infrastructure outside your control. Even with contractual protections (data processing agreements, zero-retention policies, SOC 2 attestations), several fundamental risks remain:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Cloud Risk</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Cloud Risk</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Data in transit</strong></td>
@@ -131,12 +129,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">But the threat surface shifts &mdash; it doesn&#39;t disappear:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Local Risk</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Local Risk</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">You own the patching</strong></td>
@@ -169,21 +165,18 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Vitalik Buterin&#39;s local LLM setup (April 2026):</strong> Ethereum founder Vitalik Buterin published his personal local AI security setup, arguing that for sensitive personal data, &quot;running the model locally means the data never leaves your machine&quot; &mdash; but noting that local deployment requires ongoing vigilance around model integrity, network isolation, and access controls.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Vitalik Buterin&#39;s local LLM setup (April 2026):</strong> Ethereum founder Vitalik Buterin published his personal local AI security setup, arguing that for sensitive personal data, &quot;running the model locally means the data never leaves your machine&quot; &mdash; but noting that local deployment requires ongoing vigilance around model integrity, network isolation, and access controls.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Hybrid Architecture</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The most practical approach for legal AI is hybrid: route sensitive data to local models and general tasks to cloud AI. This combines the privacy of local inference with the capability of cloud models.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Data Category</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Routing</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rationale</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Data Category</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Routing</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rationale</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Privileged communications</strong></td>
@@ -223,10 +216,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Ask four questions for each AI task:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Data sensitivity:</strong> Does the prompt contain privileged, confidential, or personally identifiable information?</li>
-        <li><strong class="text-ink">Model capability:</strong> Does the task require a frontier model (GPT-4, Claude Opus), or can a smaller local model handle it?</li>
-        <li><strong class="text-ink">Compliance mandate:</strong> Do applicable regulations (GDPR, HIPAA, data localisation laws) require data to stay within your jurisdiction?</li>
-        <li><strong class="text-ink">Acceptable risk:</strong> If the data were exposed, what is the worst-case consequence?</li>
+        <li>1. <strong class="text-ink">Data sensitivity:</strong> Does the prompt contain privileged, confidential, or personally identifiable information?</li>
+        <li>2. <strong class="text-ink">Model capability:</strong> Does the task require a frontier model (GPT-4, Claude Opus), or can a smaller local model handle it?</li>
+        <li>3. <strong class="text-ink">Compliance mandate:</strong> Do applicable regulations (GDPR, HIPAA, data localisation laws) require data to stay within your jurisdiction?</li>
+        <li>4. <strong class="text-ink">Acceptable risk:</strong> If the data were exposed, what is the worst-case consequence?</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If the answer to question 1 is &quot;yes&quot; and the answer to question 2 is &quot;a local model can handle it,&quot; the choice is clear: run locally.</p>
@@ -262,14 +255,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The honest challenge with local AI: smaller models are less capable. A 7-billion-parameter model running on a single GPU will not match GPT-4 or Claude Opus on complex legal reasoning, nuanced contract analysis, or multi-jurisdictional research. The security benefit of local deployment must be weighed against the quality risk of using a less capable model for consequential legal work.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Model Size</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical Hardware</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rough Capability</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Best For</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Model Size</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical Hardware</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rough Capability</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Best For</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">7B parameters</strong></td>
@@ -298,8 +289,7 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Cost reality check:</strong> A cloud server with 8x NVIDIA H100 GPUs costs approximately $98 per hour. The same hardware on-premises costs about $0.87 per hour in electricity. The breakeven point is roughly 12 months of continuous use &mdash; after which on-premises is dramatically cheaper. For a firm running AI workloads continuously, the economics of self-hosting are compelling. For occasional use, cloud is more practical.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Cost reality check:</strong> A cloud server with 8x NVIDIA H100 GPUs costs approximately $98 per hour. The same hardware on-premises costs about $0.87 per hour in electricity. The breakeven point is roughly 12 months of continuous use &mdash; after which on-premises is dramatically cheaper. For a firm running AI workloads continuously, the economics of self-hosting are compelling. For occasional use, cloud is more practical.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Regulatory Drivers</h2>
 
@@ -315,11 +305,11 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Recommendations</h2>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Default to cloud with redaction</strong> (EP39) for general-purpose tasks where client data can be effectively stripped</li>
-        <li><strong class="text-ink">Deploy a local model</strong> for privileged, high-sensitivity, or regulated data that should not leave your network under any circumstances</li>
-        <li><strong class="text-ink">Use the inference gateway</strong> (EP38) as the routing decision point &mdash; it examines each prompt, checks data classification, and routes to local or cloud accordingly</li>
-        <li><strong class="text-ink">Secure the local endpoint</strong> with network isolation, authentication, rate limiting, and model file integrity verification</li>
-        <li><strong class="text-ink">Monitor both paths</strong> &mdash; audit logs should capture every inference request regardless of whether it went to cloud or local, with the routing decision and its rationale logged</li>
+        <li>1. <strong class="text-ink">Default to cloud with redaction</strong> (EP39) for general-purpose tasks where client data can be effectively stripped</li>
+        <li>2. <strong class="text-ink">Deploy a local model</strong> for privileged, high-sensitivity, or regulated data that should not leave your network under any circumstances</li>
+        <li>3. <strong class="text-ink">Use the inference gateway</strong> (EP38) as the routing decision point &mdash; it examines each prompt, checks data classification, and routes to local or cloud accordingly</li>
+        <li>4. <strong class="text-ink">Secure the local endpoint</strong> with network isolation, authentication, rate limiting, and model file integrity verification</li>
+        <li>5. <strong class="text-ink">Monitor both paths</strong> &mdash; audit logs should capture every inference request regardless of whether it went to cloud or local, with the routing decision and its rationale logged</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
@@ -328,25 +318,21 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Prediction Guard, <a href="https://predictionguard.com/blog/self-hosted-vs-cloud-llm-deployment-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Self-Hosted vs. Third-Party Deployment: A Technical Evaluation Guide for Regulated Enterprises</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DataNorth AI, <a href="https://datanorth.ai/blog/local-llms-privacy-security-and-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM: Privacy, Security, and Control</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Vitalik Buterin, <a href="https://vitalik.eth.limo/general/2026/04/02/secure_llms.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">My Self-Sovereign / Local / Private / Secure LLM Setup</a> (April 2026).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AIMultiple, <a href="https://aimultiple.com/cloud-llm" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud LLM vs Local LLMs: Examples & Benefits</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Digital Applied, <a href="https://www.digitalapplied.com/blog/local-llm-deployment-privacy-guide-2025" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM Deployment: Privacy-First AI Complete Guide</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: EPAM SolutionsHub, <a href="https://solutionshub.epam.com/blog/post/llm-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Open LLM Security Risks and Best Practices</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Unified AI Hub, <a href="https://www.unifiedaihub.com/blog/on-premise-llms-vs-cloud-apis-when-to-run-your-ai-models-on-premise" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">On-Prem LLMs vs Cloud APIs: When to Run Models Locally</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GodOfPrompt, <a href="https://www.godofprompt.ai/blog/local-llm-setup-for-privacy-conscious-businesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM Setup for Privacy-Conscious Businesses</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Spellbook, <a href="https://www.spellbook.legal/learn/most-private-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Matillion, <a href="https://www.matillion.com/blog/public-vs-private-llms-enterprise-ai-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Public vs Private LLMs: Secure AI for Enterprises</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>Prediction Guard, <a href="https://predictionguard.com/blog/self-hosted-vs-cloud-llm-deployment-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Self-Hosted vs. Third-Party Deployment: A Technical Evaluation Guide for Regulated Enterprises</a>.</li>
+        <li>DataNorth AI, <a href="https://datanorth.ai/blog/local-llms-privacy-security-and-control" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM: Privacy, Security, and Control</a>.</li>
+        <li>Vitalik Buterin, <a href="https://vitalik.eth.limo/general/2026/04/02/secure_llms.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">My Self-Sovereign / Local / Private / Secure LLM Setup</a> (April 2026).</li>
+        <li>AIMultiple, <a href="https://aimultiple.com/cloud-llm" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud LLM vs Local LLMs: Examples & Benefits</a>.</li>
+        <li>Digital Applied, <a href="https://www.digitalapplied.com/blog/local-llm-deployment-privacy-guide-2025" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM Deployment: Privacy-First AI Complete Guide</a>.</li>
+        <li>EPAM SolutionsHub, <a href="https://solutionshub.epam.com/blog/post/llm-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Open LLM Security Risks and Best Practices</a>.</li>
+        <li>Unified AI Hub, <a href="https://www.unifiedaihub.com/blog/on-premise-llms-vs-cloud-apis-when-to-run-your-ai-models-on-premise" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">On-Prem LLMs vs Cloud APIs: When to Run Models Locally</a>.</li>
+        <li>GodOfPrompt, <a href="https://www.godofprompt.ai/blog/local-llm-setup-for-privacy-conscious-businesses" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Local LLM Setup for Privacy-Conscious Businesses</a>.</li>
+        <li>Spellbook, <a href="https://www.spellbook.legal/learn/most-private-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026</a>.</li>
+        <li>Matillion, <a href="https://www.matillion.com/blog/public-vs-private-llms-enterprise-ai-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Public vs Private LLMs: Secure AI for Enterprises</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -429,26 +415,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-39-redaction-pipelines-for-cloud-ai.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 39 &mdash; Redaction Pipelines for Cloud AI</p>
-                </div>
-            </a>
+            <a href="episode-39-redaction-pipelines-for-cloud-ai.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 39 &mdash; Redaction Pipelines for Cloud AI</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-41-audit-log-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 41 &mdash; Audit Log Design</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-41-audit-log-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 41 &mdash; Audit Log Design</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

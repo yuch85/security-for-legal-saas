@@ -87,13 +87,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Authentication factors fall into three categories:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Category</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Category</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Something you know</strong></td>
@@ -123,15 +121,13 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not all second factors provide equal security. The table below ranks common methods from weakest to strongest:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Method</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Factor Type</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Phishing Resistant?</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strengths</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Weaknesses</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Method</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Factor Type</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Phishing Resistant?</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strengths</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Weaknesses</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">SMS codes</strong></td>
@@ -178,8 +174,7 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key stat:</strong> NIST SP 800-63B explicitly deprecates SMS as a standalone second factor due to demonstrated vulnerabilities in the telephone network, including <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-out-of-band-authenticators" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIM swap fraud and SS7 protocol exploitation</a>.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key stat:</strong> NIST SP 800-63B explicitly deprecates SMS as a standalone second factor due to demonstrated vulnerabilities in the telephone network, including <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-out-of-band-authenticators" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIM swap fraud and SS7 protocol exploitation</a>.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">TOTP: The Current Workhorse</h2>
 
@@ -195,8 +190,7 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Push Notifications and MFA Fatigue</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Push-based MFA &mdash; where the user approves a login attempt by tapping &quot;Approve&quot; on their phone &mdash; improves usability over typing codes. But it introduced a new attack vector: <strong class="text-ink">MFA fatigue</strong>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: Uber, September 2022.</strong> An attacker purchased stolen credentials for an Uber contractor from a dark web marketplace. When MFA push notifications blocked the initial login, the attacker <a href="https://www.upguard.com/blog/what-caused-the-uber-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">sent over 40 push notifications in 30 minutes</a> to the contractor&#39;s phone, then contacted them via WhatsApp pretending to be Uber IT security, telling them to approve the notification to make it stop. The contractor complied. The attacker gained VPN access, found admin credentials in a PowerShell script, and escalated to full administrative control over Uber&#39;s cloud infrastructure.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Case study: Uber, September 2022.</strong> An attacker purchased stolen credentials for an Uber contractor from a dark web marketplace. When MFA push notifications blocked the initial login, the attacker <a href="https://www.upguard.com/blog/what-caused-the-uber-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">sent over 40 push notifications in 30 minutes</a> to the contractor&#39;s phone, then contacted them via WhatsApp pretending to be Uber IT security, telling them to approve the notification to make it stop. The contractor complied. The attacker gained VPN access, found admin credentials in a PowerShell script, and escalated to full administrative control over Uber&#39;s cloud infrastructure.</blockquote>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mitigations for MFA fatigue include <strong class="text-ink">number matching</strong> (the user must type a number displayed on the login screen into the push notification, proving they can see both screens), <strong class="text-ink">location context</strong> (showing the geographic origin of the login attempt), and <strong class="text-ink">rate limiting</strong> push requests. Microsoft, Okta, and Duo have all added number matching as a default or recommended setting since the Uber incident.</p>
 
@@ -207,8 +201,7 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Critically, WebAuthn binds the credential to the <strong class="text-ink">origin</strong> (the website&#39;s domain). The authenticator checks that the domain requesting authentication matches the domain where the credential was registered. A phishing site at `login-legalplatform.com` cannot trick the authenticator into signing a challenge for `legalplatform.com`. Phishing becomes cryptographically impossible &mdash; not just difficult, but mathematically excluded.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Passkeys</strong> are the consumer-friendly evolution of WebAuthn. They sync the private key across devices using platform-specific vaults (iCloud Keychain, Google Password Manager, 1Password). This solves the hardware key&#39;s biggest usability problem &mdash; loss of a single device no longer means lockout. The tradeoff is that the security now depends on the platform account&#39;s protection (which should itself be MFA-protected).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Regulatory momentum:</strong> The U.S. Cybersecurity and Infrastructure Security Agency (CISA) <a href="https://www.idmanagement.gov/playbooks/altauthn/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">explicitly recommends phishing-resistant MFA</a> based on FIDO2/WebAuthn for all organisations, with special urgency for high-value targets &mdash; a category that includes law firms holding litigation strategy and M&amp;A communications.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Regulatory momentum:</strong> The U.S. Cybersecurity and Infrastructure Security Agency (CISA) <a href="https://www.idmanagement.gov/playbooks/altauthn/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">explicitly recommends phishing-resistant MFA</a> based on FIDO2/WebAuthn for all organisations, with special urgency for high-value targets &mdash; a category that includes law firms holding litigation strategy and M&amp;A communications.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Recovery Flows: The Weakest Link</h2>
 
@@ -217,12 +210,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Common recovery mechanisms and their risks:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recovery Method</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recovery Method</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">SMS-based recovery code</td>
@@ -253,14 +244,12 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Breaches That MFA Would Have Prevented</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Incident</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Year</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Root Cause</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">MFA Impact</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Incident</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Year</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Root Cause</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">MFA Impact</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Colonial Pipeline</a></td>
@@ -296,10 +285,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS vendors, the calculus is straightforward:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Enforce MFA for all users</strong>, not just admins. Provide TOTP as the baseline, passkeys as the recommended option.</li>
-        <li><strong class="text-ink">Offer phishing-resistant MFA</strong> (WebAuthn/passkeys) for firms handling high-sensitivity matters &mdash; litigation strategy, M&amp;A, government investigations.</li>
-        <li><strong class="text-ink">Design recovery flows carefully.</strong> Never allow SMS-only recovery to bypass a hardware key enrolment. Require a second registered factor or an identity-verified admin override.</li>
-        <li><strong class="text-ink">Log all MFA events</strong> &mdash; enrolment, successful verification, failed attempts, recovery &mdash; with immutable audit trails.</li>
+        <li>1. <strong class="text-ink">Enforce MFA for all users</strong>, not just admins. Provide TOTP as the baseline, passkeys as the recommended option.</li>
+        <li>2. <strong class="text-ink">Offer phishing-resistant MFA</strong> (WebAuthn/passkeys) for firms handling high-sensitivity matters &mdash; litigation strategy, M&amp;A, government investigations.</li>
+        <li>3. <strong class="text-ink">Design recovery flows carefully.</strong> Never allow SMS-only recovery to bypass a hardware key enrolment. Require a second registered factor or an identity-verified admin override.</li>
+        <li>4. <strong class="text-ink">Log all MFA events</strong> &mdash; enrolment, successful verification, failed attempts, recovery &mdash; with immutable audit trails.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
@@ -308,37 +297,27 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multifactor Authentication Cheat Sheet</a> (citing Microsoft analysis: MFA blocks 99.9% of automated account compromises).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authentication Cheat Sheet — Multi-Factor Authentication</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63B: Digital Identity Guidelines — Authentication and Lifecycle Management</a>, Sections 4.2 (AAL2) and 4.3 (AAL3).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-out-of-band-authenticators" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63B Section 5.1.3.3</a> &mdash; restricted status for SMS-based authenticators.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IETF, <a href="https://datatracker.ietf.org/doc/html/rfc6238" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 6238: TOTP: Time-Based One-Time Password Algorithm</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Evilginx / real-time phishing proxy &mdash; documented in OWASP Testing Guide, <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/11-Testing_Multi-Factor_Authentication" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Testing Multi-Factor Authentication</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: UpGuard, <a href="https://www.upguard.com/blog/what-caused-the-uber-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Caused the Uber Data Breach in 2022?</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Microsoft, <a href="https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-number-match" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Number matching in multifactor authentication</a>; Duo and Okta adopted similar defaults post-2022.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: W3C, <a href="https://www.w3.org/TR/webauthn-3/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Web Authentication: An API for accessing Public Key Credentials</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Token2, <a href="https://www.token2.com/site/page/why-fido2-is-more-secure-than-totp-understanding-phishing-protection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Why FIDO2 Is More Secure Than TOTP</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: FIDO Alliance, <a href="https://fidoalliance.org/specifications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Passkeys — FIDO Alliance Specifications</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CISA / IDManagement.gov, <a href="https://www.idmanagement.gov/playbooks/altauthn/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Phishing-Resistant Authenticator Playbook</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multifactor Authentication Cheat Sheet — Factor Update Security</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wikipedia, <a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Colonial Pipeline Ransomware Attack</a> &mdash; VPN account with no MFA enabled.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: BleepingComputer, <a href="https://www.bleepingcomputer.com/news/security/mgm-resorts-shuts-down-it-systems-after-cyberattack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MGM Resorts Shuts Down IT Systems After Cyberattack</a> (September 2023).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/law_practice/resources/tech-report/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2023 Legal Technology Survey Report</a> &mdash; MFA adoption rates across firm sizes.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multifactor Authentication Cheat Sheet</a> (citing Microsoft analysis: MFA blocks 99.9% of automated account compromises).</li>
+        <li>OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authentication Cheat Sheet — Multi-Factor Authentication</a>.</li>
+        <li>NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63B: Digital Identity Guidelines — Authentication and Lifecycle Management</a>, Sections 4.2 (AAL2) and 4.3 (AAL3).</li>
+        <li>NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-out-of-band-authenticators" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63B Section 5.1.3.3</a> &mdash; restricted status for SMS-based authenticators.</li>
+        <li>IETF, <a href="https://datatracker.ietf.org/doc/html/rfc6238" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 6238: TOTP: Time-Based One-Time Password Algorithm</a>.</li>
+        <li>Evilginx / real-time phishing proxy &mdash; documented in OWASP Testing Guide, <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/11-Testing_Multi-Factor_Authentication" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Testing Multi-Factor Authentication</a>.</li>
+        <li>UpGuard, <a href="https://www.upguard.com/blog/what-caused-the-uber-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Caused the Uber Data Breach in 2022?</a>.</li>
+        <li>Microsoft, <a href="https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-number-match" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Number matching in multifactor authentication</a>; Duo and Okta adopted similar defaults post-2022.</li>
+        <li>W3C, <a href="https://www.w3.org/TR/webauthn-3/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Web Authentication: An API for accessing Public Key Credentials</a>.</li>
+        <li>Token2, <a href="https://www.token2.com/site/page/why-fido2-is-more-secure-than-totp-understanding-phishing-protection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Why FIDO2 Is More Secure Than TOTP</a>.</li>
+        <li>FIDO Alliance, <a href="https://fidoalliance.org/specifications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Passkeys — FIDO Alliance Specifications</a>.</li>
+        <li>CISA / IDManagement.gov, <a href="https://www.idmanagement.gov/playbooks/altauthn/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Phishing-Resistant Authenticator Playbook</a>.</li>
+        <li>OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multifactor Authentication Cheat Sheet — Factor Update Security</a>.</li>
+        <li>Wikipedia, <a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Colonial Pipeline Ransomware Attack</a> &mdash; VPN account with no MFA enabled.</li>
+        <li>BleepingComputer, <a href="https://www.bleepingcomputer.com/news/security/mgm-resorts-shuts-down-it-systems-after-cyberattack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">MGM Resorts Shuts Down IT Systems After Cyberattack</a> (September 2023).</li>
+        <li>ABA, <a href="https://www.americanbar.org/groups/law_practice/resources/tech-report/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2023 Legal Technology Survey Report</a> &mdash; MFA adoption rates across firm sizes.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -419,26 +398,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-20-oauth-20-and-openid-connect.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 20 &mdash; OAuth 2.0 and OpenID Connect</p>
-                </div>
-            </a>
+            <a href="episode-20-oauth-20-and-openid-connect.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 20 &mdash; OAuth 2.0 and OpenID Connect</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-22-sso-saml-and-enterprise-identity.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 22 &mdash; SSO, SAML and Enterprise Identity</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-22-sso-saml-and-enterprise-identity.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 22 &mdash; SSO, SAML and Enterprise Identity</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

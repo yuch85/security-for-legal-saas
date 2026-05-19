@@ -91,14 +91,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">RPO (Recovery Point Objective):</strong> The maximum acceptable amount of data loss, measured in time. If your RPO is one hour, you must have backups or replication no more than one hour old. Any data created in the gap between the last backup and the disaster is lost.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Platform Type</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical RTO</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical RPO</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Justification</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Platform Type</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical RTO</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical RPO</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Justification</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Case management SaaS</strong></td>
@@ -127,12 +125,9 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The legal-specific risk:&lt;/strong&gt; A general-purpose SaaS platform might tolerate 24-hour RTO because users can wait. Legal SaaS cannot. A lawyer who can&#39;t access case files before a hearing, can&#39;t retrieve a contract before a signing deadline, or can&#39;t file a document before a court deadline faces professional liability &mdash; potentially malpractice claims. Your DR plan must account for the legal urgency of your users&#39; work, not just the technical difficulty of restoring service.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>The legal-specific risk:</strong> A general-purpose SaaS platform might tolerate 24-hour RTO because users can wait. Legal SaaS cannot. A lawyer who can't access case files before a hearing, can't retrieve a contract before a signing deadline, or can't file a document before a court deadline faces professional liability &mdash; potentially malpractice claims. Your DR plan must account for the legal urgency of your users' work, not just the technical difficulty of restoring service.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Backup Strategies</h2>
 
@@ -141,14 +136,12 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Backup Types</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strategy</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RPO Achievable</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Restore Speed</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strategy</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RPO Achievable</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Restore Speed</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Full backups</strong></td>
@@ -196,12 +189,9 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS handling privileged communications, add encryption at rest for all backup copies. <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/backup-recovery/best-practices.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS</a>, <a href="https://learn.microsoft.com/en-us/azure/reliability/concept-business-continuity-high-availability-disaster-recovery" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Azure</a>, and GCP all provide managed backup services with built-in encryption and cross-region replication.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Backup Nobody Tests</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;An untested backup is not a backup.&lt;/strong&gt; Regularly test that you can actually restore from your backups to a functioning system. At least quarterly, perform a full restore test: take a backup, restore it to a clean environment, verify the application works and the data is intact. The number of organisations that discover their backups are corrupted or incomplete during an actual disaster is sobering. Testing is the only proof.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>An untested backup is not a backup.</strong> Regularly test that you can actually restore from your backups to a functioning system. At least quarterly, perform a full restore test: take a backup, restore it to a clean environment, verify the application works and the data is intact. The number of organisations that discover their backups are corrupted or incomplete during an actual disaster is sobering. Testing is the only proof.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Multi-Region Failover</h2>
 
@@ -230,14 +220,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS Well-Architected Framework's Reliability Pillar</a> defines four DR strategies mapped to RTO/RPO ranges:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strategy</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RTO</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RPO</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Cost</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strategy</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RTO</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">RPO</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Cost</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Backup &amp; Restore</strong></td>
@@ -309,12 +297,10 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The DR Minimum for Legal SaaS</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Defined RTO and RPO for each service tier</td>
@@ -356,27 +342,21 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: security testing in your development process &mdash; how to find vulnerabilities before attackers do, from code commit to production.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Konfirmity, <a href="https://www.konfirmity.com/blog/gdpr-incident-response-plan" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Incident Response Plan: A Practical Guide — Article 32 DR Requirements</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Microsoft, <a href="https://learn.microsoft.com/en-us/azure/reliability/concept-business-continuity-high-availability-disaster-recovery" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Business Continuity, High Availability, and Disaster Recovery</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Buxton Consulting, <a href="https://buxtonconsulting.com/general/building-and-testing-disaster-recovery-plans-for-saas-applications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building and Testing Disaster Recovery Plans for SaaS Applications</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Well-Architected Framework: Plan for Disaster Recovery</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cloud4C, <a href="https://www.cloud4c.com/blogs/business-resilience-in-2026-guide-to-rapid-disaster-recovery-and-business-continuity-planning" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Business Resilience in 2026: A Cross-Sector Guide to Rapid Disaster Recovery</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ATOZDEBUG, <a href="https://atozdebug.com/disaster-recovery-for-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery for SaaS — A Complete 2025 Strategy Guide</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GainHQ, <a href="https://gainhq.com/blog/disaster-recovery-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery SaaS Guide For Business Continuity In 2026</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Opsio Cloud, <a href="https://opsiocloud.com/knowledge-base/disaster-recovery-business-continuity/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery & Business Continuity in the Cloud</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Exodata, <a href="https://exodata.io/it-disaster-recovery-plan-template-2026/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IT Disaster Recovery Plan Template (2026)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: N2W Software, <a href="https://n2ws.com/blog/best-cloud-recovery-tools-for-business-continuity" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Best Cloud Recovery Tools for Business Continuity: Top 5 in 2026</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>Konfirmity, <a href="https://www.konfirmity.com/blog/gdpr-incident-response-plan" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Incident Response Plan: A Practical Guide — Article 32 DR Requirements</a>.</li>
+        <li>Microsoft, <a href="https://learn.microsoft.com/en-us/azure/reliability/concept-business-continuity-high-availability-disaster-recovery" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Business Continuity, High Availability, and Disaster Recovery</a>.</li>
+        <li>Buxton Consulting, <a href="https://buxtonconsulting.com/general/building-and-testing-disaster-recovery-plans-for-saas-applications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building and Testing Disaster Recovery Plans for SaaS Applications</a>.</li>
+        <li>AWS, <a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Well-Architected Framework: Plan for Disaster Recovery</a>.</li>
+        <li>Cloud4C, <a href="https://www.cloud4c.com/blogs/business-resilience-in-2026-guide-to-rapid-disaster-recovery-and-business-continuity-planning" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Business Resilience in 2026: A Cross-Sector Guide to Rapid Disaster Recovery</a>.</li>
+        <li>ATOZDEBUG, <a href="https://atozdebug.com/disaster-recovery-for-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery for SaaS — A Complete 2025 Strategy Guide</a>.</li>
+        <li>GainHQ, <a href="https://gainhq.com/blog/disaster-recovery-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery SaaS Guide For Business Continuity In 2026</a>.</li>
+        <li>Opsio Cloud, <a href="https://opsiocloud.com/knowledge-base/disaster-recovery-business-continuity/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Disaster Recovery & Business Continuity in the Cloud</a>.</li>
+        <li>Exodata, <a href="https://exodata.io/it-disaster-recovery-plan-template-2026/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IT Disaster Recovery Plan Template (2026)</a>.</li>
+        <li>N2W Software, <a href="https://n2ws.com/blog/best-cloud-recovery-tools-for-business-continuity" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Best Cloud Recovery Tools for Business Continuity: Top 5 in 2026</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -457,26 +437,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-54-incident-response-playbooks.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 54 &mdash; Incident Response Playbooks</p>
-                </div>
-            </a>
+            <a href="episode-54-incident-response-playbooks.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 54 &mdash; Incident Response Playbooks</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-56-security-testing-in-your-development-process.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 56 &mdash; Security Testing in Your Development Process</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-56-security-testing-in-your-development-process.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 56 &mdash; Security Testing in Your Development Process</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

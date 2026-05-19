@@ -89,13 +89,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The technique was first demonstrated by Fredrikson et al. in 2015, who showed that a facial recognition model could be queried to reconstruct recognisable images of individuals in the training set. For legal AI, the data at risk is not faces but privileged communications, litigation strategy memos, and client financial records.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Attack Type</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Reveals</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal Risk</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Attack Type</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Reveals</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal Risk</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Model inversion</strong></td>
@@ -115,8 +113,7 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal precedent alert:</strong> In <em>United States v. Bradley Heppner</em> (S.D.N.Y., February 2026), the court held that written exchanges with a publicly available AI platform are not protected by attorney-client privilege, partly because the AI provider&#39;s terms permitted data retention and use for model training. If a model trained on privileged data can be queried to reveal that data, the privilege argument becomes even harder to sustain.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Legal precedent alert:</strong> In <em>United States v. Bradley Heppner</em> (S.D.N.Y., February 2026), the court held that written exchanges with a publicly available AI platform are not protected by attorney-client privilege, partly because the AI provider&#39;s terms permitted data retention and use for model training. If a model trained on privileged data can be queried to reveal that data, the privilege argument becomes even harder to sustain.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Membership Inference: Proving a Document Was in the Training Set</h2>
 
@@ -136,13 +133,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The honest answer: it depends on the model architecture, the attacker&#39;s access level, and the defences in place.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Factor</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Lower Risk</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Higher Risk</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Factor</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Lower Risk</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Higher Risk</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Model access</strong></td>
@@ -169,8 +164,7 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal AI systems sit in the higher-risk column on several factors. They are typically fine-tuned on small, specialised corpora of legal documents &mdash; exactly the scenario where memorisation is most likely. Research published in 2024 demonstrated that membership inference attacks against fine-tuned language models achieve significantly higher accuracy when the fine-tuning dataset is small and domain-specific.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">OWASP LLM Top 10 (2025):</strong> The <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications</a> lists training data poisoning (LLM04) and sensitive information disclosure (LLM06) as top risks. Model inversion and membership inference are attack techniques that exploit LLM06 &mdash; extracting sensitive information that the model inadvertently memorised during training.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">OWASP LLM Top 10 (2025):</strong> The <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications</a> lists training data poisoning (LLM04) and sensitive information disclosure (LLM06) as top risks. Model inversion and membership inference are attack techniques that exploit LLM06 &mdash; extracting sensitive information that the model inadvertently memorised during training.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Defences: Reducing What the Model Reveals</h2>
 
@@ -199,13 +193,11 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">A Decision Framework for Legal AI Builders</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Question</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">If Yes</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">If No</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Question</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">If Yes</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">If No</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Does the model process privileged client data?</td>
@@ -241,29 +233,23 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: WitnessAI, <a href="https://witness.ai/blog/model-inversion-attacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Inversion Attacks: How They Work, Risks, and Defenses</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Zhou et al., <a href="https://arxiv.org/html/2411.10023v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Inversion Attacks: A Survey of Approaches and Countermeasures</a> (arXiv, November 2024).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: K&amp;L Gates, <a href="https://www.klgates.com/Litigation-Minute-Generative-AI-Data-Attorney-Client-Privilege-and-the-Work-Product-Doctrine-2-23-2026" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Generative AI Data, Attorney-Client Privilege, and the Work-Product Doctrine</a> (February 2026).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Shokri et al., <a href="https://www.cs.cornell.edu/~shmat/shmat_oak17.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Membership Inference Attacks Against Machine Learning Models</a> (IEEE S&amp;P, 2017).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Colwell, <a href="https://briandcolwell.com/the-2024-2025-mia-landscape-reveals-relentless-evolution-in-membership-inference-attack-sophistication/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 2024-2025 MIA Landscape Reveals Relentless Evolution in Membership Inference Attack Sophistication</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top 10 for LLM Applications 2025</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-226.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-226: Guidelines for Evaluating Differential Privacy Guarantees</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: PMC, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6191664/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Algorithms That Remember: Model Inversion Attacks and Data Protection Law</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Hogan Lovells, <a href="https://www.hoganlovells.com/en/publications/model-inversion-and-membership-inference-understanding-new-ai-security-risks-and-mitigating-vulnerabilities" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Inversion and Membership Inference: Understanding New AI Security Risks</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/ai/nist.ai.100-1.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Risk Management Framework (AI RMF 1.0)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Hogan Lovells / JD Supra, <a href="https://www.jdsupra.com/legalnews/model-inversion-and-membership-7825767/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Inversion and Membership Inference</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Springer Nature, <a href="https://link.springer.com/article/10.1007/s10462-025-11350-3" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Defending Against Attacks in Deep Learning with Differential Privacy</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>WitnessAI, <a href="https://witness.ai/blog/model-inversion-attacks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Inversion Attacks: How They Work, Risks, and Defenses</a>.</li>
+        <li>Zhou et al., <a href="https://arxiv.org/html/2411.10023v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Inversion Attacks: A Survey of Approaches and Countermeasures</a> (arXiv, November 2024).</li>
+        <li>K&amp;L Gates, <a href="https://www.klgates.com/Litigation-Minute-Generative-AI-Data-Attorney-Client-Privilege-and-the-Work-Product-Doctrine-2-23-2026" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Generative AI Data, Attorney-Client Privilege, and the Work-Product Doctrine</a> (February 2026).</li>
+        <li>Shokri et al., <a href="https://www.cs.cornell.edu/~shmat/shmat_oak17.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Membership Inference Attacks Against Machine Learning Models</a> (IEEE S&amp;P, 2017).</li>
+        <li>Colwell, <a href="https://briandcolwell.com/the-2024-2025-mia-landscape-reveals-relentless-evolution-in-membership-inference-attack-sophistication/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 2024-2025 MIA Landscape Reveals Relentless Evolution in Membership Inference Attack Sophistication</a>.</li>
+        <li>OWASP, <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top 10 for LLM Applications 2025</a>.</li>
+        <li>NIST, <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-226.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-226: Guidelines for Evaluating Differential Privacy Guarantees</a>.</li>
+        <li>PMC, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6191664/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Algorithms That Remember: Model Inversion Attacks and Data Protection Law</a>.</li>
+        <li>Hogan Lovells, <a href="https://www.hoganlovells.com/en/publications/model-inversion-and-membership-inference-understanding-new-ai-security-risks-and-mitigating-vulnerabilities" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Inversion and Membership Inference: Understanding New AI Security Risks</a>.</li>
+        <li>NIST, <a href="https://nvlpubs.nist.gov/nistpubs/ai/nist.ai.100-1.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Risk Management Framework (AI RMF 1.0)</a>.</li>
+        <li>Hogan Lovells / JD Supra, <a href="https://www.jdsupra.com/legalnews/model-inversion-and-membership-7825767/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Inversion and Membership Inference</a>.</li>
+        <li>Springer Nature, <a href="https://link.springer.com/article/10.1007/s10462-025-11350-3" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Defending Against Attacks in Deep Learning with Differential Privacy</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -340,26 +326,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-35-embedding-security-and-vector-database-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 35 &mdash; Embedding Security and Vector Database Isolation</p>
-                </div>
-            </a>
+            <a href="episode-35-embedding-security-and-vector-database-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 35 &mdash; Embedding Security and Vector Database Isolation</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-37-governed-writes-and-humanintheloop.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 37 &mdash; Governed Writes and Human-in-the-Loop</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-37-governed-writes-and-humanintheloop.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 37 &mdash; Governed Writes and Human-in-the-Loop</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

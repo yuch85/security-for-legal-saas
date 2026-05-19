@@ -89,13 +89,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal data, this creates specific risks:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal Consequence</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal Consequence</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Privilege waiver</strong></td>
@@ -130,14 +128,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern NER systems use multiple approaches in combination:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Approach</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strengths</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Weaknesses</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Approach</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strengths</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Weaknesses</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Rule-based (regex)</strong></td>
@@ -178,22 +174,19 @@
         <li><strong class="text-ink">Analyzer</strong>: Detects PII entities in text, returning their type, location, and confidence score</li>
         <li><strong class="text-ink">Anonymizer</strong>: Replaces, masks, hashes, or encrypts detected entities based on configurable rules</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Important caveat:</strong> Presidio&#39;s documentation explicitly states: &quot;Because it is using automated detection mechanisms, there is no guarantee that Presidio will find all sensitive information.&quot; For legal applications, this means Presidio (or any automated tool) should be a first pass, not the only pass. Defence in depth applies to redaction too.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Important caveat:</strong> Presidio&#39;s documentation explicitly states: &quot;Because it is using automated detection mechanisms, there is no guarantee that Presidio will find all sensitive information.&quot; For legal applications, this means Presidio (or any automated tool) should be a first pass, not the only pass. Defence in depth applies to redaction too.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Configurable Redaction Levels</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not all prompts require the same level of redaction. A pipeline should support multiple levels depending on the data sensitivity and the task:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Level</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What&#39;s Redacted</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Use Case</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Level</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What&#39;s Redacted</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Use Case</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Full redaction</strong></td>
@@ -230,32 +223,27 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Redaction is only half the pipeline. When the AI returns its response, you need to map the redacted entities back to their real values &mdash; a process called re-hydration or reconstruction.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Pipeline</h3>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
-    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Original document enters pipeline</li>
-        <li>NER identifies entities → stored in a REDACTION MAP (entity → placeholder)</li>
-        <li>Document redacted using the map</li>
-        <li>Redacted document sent to cloud LLM</li>
-        <li>LLM response received (contains placeholders)</li>
-        <li>Redaction map applied in reverse → real entities restored</li>
-        <li>Reconstructed response delivered to the user</li>
-    </ol>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">1. Original document enters pipeline
+2. NER identifies entities → stored in a REDACTION MAP (entity → placeholder)
+3. Document redacted using the map
+4. Redacted document sent to cloud LLM
+5. LLM response received (contains placeholders)
+6. Redaction map applied in reverse → real entities restored
+7. Reconstructed response delivered to the user
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The redaction map is the sensitive artefact. It must be stored securely &mdash; encrypted at rest, access-controlled, and never sent to the cloud provider. If the map is compromised, every redacted prompt can be reconstructed.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Handling Edge Cases</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Edge Case</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Problem</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Solution</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Edge Case</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Problem</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Solution</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Entity in AI response not in original</strong></td>
@@ -286,13 +274,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Enterprise agreements with AI providers often include zero-data-retention clauses, prohibitions on using customer data for model training, and SOC 2 / ISO 27001 compliance attestations. These are important but insufficient on their own.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Protection Type</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Covers</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Doesn&#39;t Cover</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Protection Type</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Covers</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Doesn&#39;t Cover</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Contractual (DPA, BAA)</strong></td>
@@ -328,12 +314,12 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform using cloud AI:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Inference gateway</strong> (Episode 38) intercepts every outbound prompt</li>
-        <li><strong class="text-ink">NER pipeline</strong> scans the prompt, generates a redaction map, and redacts the text</li>
-        <li><strong class="text-ink">Redacted prompt</strong> is forwarded to the cloud LLM provider</li>
-        <li><strong class="text-ink">Response</strong> is received and re-hydrated using the redaction map</li>
-        <li><strong class="text-ink">Redaction map</strong> is stored encrypted, access-controlled, and retained per your data retention policy</li>
-        <li><strong class="text-ink">Audit log</strong> records what was redacted, when, and which provider received the redacted version</li>
+        <li>1. <strong class="text-ink">Inference gateway</strong> (Episode 38) intercepts every outbound prompt</li>
+        <li>2. <strong class="text-ink">NER pipeline</strong> scans the prompt, generates a redaction map, and redacts the text</li>
+        <li>3. <strong class="text-ink">Redacted prompt</strong> is forwarded to the cloud LLM provider</li>
+        <li>4. <strong class="text-ink">Response</strong> is received and re-hydrated using the redaction map</li>
+        <li>5. <strong class="text-ink">Redaction map</strong> is stored encrypted, access-controlled, and retained per your data retention policy</li>
+        <li>6. <strong class="text-ink">Audit log</strong> records what was redacted, when, and which provider received the redacted version</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This pipeline adds latency &mdash; typically 100-500ms for NER processing depending on document length and model complexity. For most legal workflows (contract review, research, drafting), this latency is imperceptible.</p>
@@ -344,27 +330,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Prediction Guard, <a href="https://predictionguard.com/blog/pii-detection-redaction-llm-pipelines-regulated-industries" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Complete Guide to PII Detection and Redaction Tools for AI Pipelines in Regulated Industries</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/news/abanews/aba-news-archives/2024/07/aba-issues-first-ethics-guidance-ai-tools/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 512: Generative Artificial Intelligence Tools</a> (July 2024).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Elastic Observability Labs, <a href="https://www.elastic.co/observability-labs/blog/pii-ner-regex-assess-redact-part-1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Using NLP and Pattern Matching to Detect, Assess, and Redact PII in Logs</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Nature Scientific Reports, <a href="https://www.nature.com/articles/s41598-025-04971-9" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Hybrid Rule-Based NLP and Machine Learning Approach for PII Detection and Anonymization in Financial Documents</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Microsoft, <a href="https://github.com/microsoft/presidio" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Presidio: Data Protection and De-Identification SDK</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Justee, <a href="https://justee.ai/pii-redaction/redact-pii-from-legal-documents-for-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redact PII from Legal Documents for AI</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Protecto, <a href="https://www.protecto.ai/blog/best-ner-models-for-pii-identification/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Comparing Best NER Models for PII Identification</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Spellbook, <a href="https://www.spellbook.legal/learn/most-private-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DEV Community, <a href="https://dev.to/aairom/the-next-generation-of-privacy-using-docling-gliners-advanced-ner-to-masterfully-detect-and-75p" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Next Generation of Privacy: Using Docling & GLiNER's Advanced NER</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Tonic.ai, <a href="https://www.tonic.ai/guides/named-entity-recognition-data-compliance-automation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Named Entity Recognition for Data Compliance Automation</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Microsoft Learn, <a href="https://learn.microsoft.com/en-us/legal/cognitive-services/language-service/transparency-note-named-entity-recognition" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Transparency Note — Named Entity Recognition Feature of Azure AI Language</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>Prediction Guard, <a href="https://predictionguard.com/blog/pii-detection-redaction-llm-pipelines-regulated-industries" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Complete Guide to PII Detection and Redaction Tools for AI Pipelines in Regulated Industries</a>.</li>
+        <li>ABA, <a href="https://www.americanbar.org/news/abanews/aba-news-archives/2024/07/aba-issues-first-ethics-guidance-ai-tools/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 512: Generative Artificial Intelligence Tools</a> (July 2024).</li>
+        <li>Elastic Observability Labs, <a href="https://www.elastic.co/observability-labs/blog/pii-ner-regex-assess-redact-part-1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Using NLP and Pattern Matching to Detect, Assess, and Redact PII in Logs</a>.</li>
+        <li>Nature Scientific Reports, <a href="https://www.nature.com/articles/s41598-025-04971-9" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Hybrid Rule-Based NLP and Machine Learning Approach for PII Detection and Anonymization in Financial Documents</a>.</li>
+        <li>Microsoft, <a href="https://github.com/microsoft/presidio" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Presidio: Data Protection and De-Identification SDK</a>.</li>
+        <li>Justee, <a href="https://justee.ai/pii-redaction/redact-pii-from-legal-documents-for-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Redact PII from Legal Documents for AI</a>.</li>
+        <li>Protecto, <a href="https://www.protecto.ai/blog/best-ner-models-for-pii-identification/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Comparing Best NER Models for PII Identification</a>.</li>
+        <li>Spellbook, <a href="https://www.spellbook.legal/learn/most-private-ai" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Most Private AI for Lawyers: Why Zero Data Retention Wins in 2026</a>.</li>
+        <li>DEV Community, <a href="https://dev.to/aairom/the-next-generation-of-privacy-using-docling-gliners-advanced-ner-to-masterfully-detect-and-75p" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Next Generation of Privacy: Using Docling & GLiNER's Advanced NER</a>.</li>
+        <li>Tonic.ai, <a href="https://www.tonic.ai/guides/named-entity-recognition-data-compliance-automation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Named Entity Recognition for Data Compliance Automation</a>.</li>
+        <li>Microsoft Learn, <a href="https://learn.microsoft.com/en-us/legal/cognitive-services/language-service/transparency-note-named-entity-recognition" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Transparency Note — Named Entity Recognition Feature of Azure AI Language</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -445,26 +426,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-38-llm-api-key-isolation-and-inference-gateways.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 38 &mdash; LLM API Key Isolation and Inference Gateways</p>
-                </div>
-            </a>
+            <a href="episode-38-llm-api-key-isolation-and-inference-gateways.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 38 &mdash; LLM API Key Isolation and Inference Gateways</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-40-local-vs-cloud-ai-security-boundaries.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 40 &mdash; Local vs. Cloud AI &mdash; Security Boundaries</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-40-local-vs-cloud-ai-security-boundaries.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 40 &mdash; Local vs. Cloud AI &mdash; Security Boundaries</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

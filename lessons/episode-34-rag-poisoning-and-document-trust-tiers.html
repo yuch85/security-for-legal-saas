@@ -89,13 +89,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A standard RAG pipeline has three stages:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Stage</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What Happens</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Trust Assumption</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Stage</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What Happens</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Trust Assumption</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Indexing</strong></td>
@@ -146,14 +144,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The architectural defence against RAG poisoning is a <strong class="text-ink">trust-tiered retrieval system</strong> that classifies every document by provenance and enforces different policies per tier:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Trust Tier</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Source</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Policy</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Trust Tier</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Source</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Policy</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Examples</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Tier 1: Firm-Authored</strong></td>
@@ -187,9 +183,9 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The trust tier must be enforced <strong class="text-ink">at retrieval time</strong>, not just at display time. When the model asks for relevant documents, the retrieval layer should:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Filter by the maximum trust tier appropriate for the query context.</li>
-        <li>Never mix Tier 4 content with Tier 1 context in the same retrieval result set.</li>
-        <li>Include provenance metadata in the context provided to the model: &quot;Source: firm precedent library, authored by [partner name], dated [date]&quot; vs. &quot;Source: external web content, unverified.&quot;</li>
+        <li>1. Filter by the maximum trust tier appropriate for the query context.</li>
+        <li>2. Never mix Tier 4 content with Tier 1 context in the same retrieval result set.</li>
+        <li>3. Include provenance metadata in the context provided to the model: &quot;Source: firm precedent library, authored by [partner name], dated [date]&quot; vs. &quot;Source: external web content, unverified.&quot;</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This ensures the model has information about the reliability of its sources &mdash; even if it cannot perfectly act on that information, the provenance is available for human review.</p>
@@ -204,18 +200,17 @@
     </ul>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This provenance chain serves three purposes: it enables human review (&quot;the AI cited this document &mdash; is that the right source?&quot;), it supports audit requirements (&quot;show me the basis for this AI-generated summary&quot;), and it enables forensic investigation when something goes wrong (&quot;which document caused the model to produce an incorrect output?&quot;).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The RAGShield approach:</strong> Recent research has proposed provenance-verified defence systems specifically for government RAG systems. <a href="https://arxiv.org/html/2604.00387v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAGShield</a> implements cryptographic attestation of document provenance, ensuring that every retrieved document can be traced back to its original source with tamper evidence.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The RAGShield approach:</strong> Recent research has proposed provenance-verified defence systems specifically for government RAG systems. <a href="https://arxiv.org/html/2604.00387v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAGShield</a> implements cryptographic attestation of document provenance, ensuring that every retrieved document can be traced back to its original source with tamper evidence.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Architecture: Trust-Aware RAG</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A minimal trust-aware RAG architecture for legal SaaS:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Ingest pipeline with classification.</strong> Every document is assigned a trust tier at ingestion based on its source. Client uploads go through validation (authenticated upload, verified client identity). External sources go through integrity checks (hash verification, source authentication).</li>
-        <li><strong class="text-ink">Separate vector collections per tier.</strong> Tier 1 and Tier 4 documents live in different vector database collections (or namespaces). This prevents similarity search from accidentally returning poisoned content alongside authoritative precedent.</li>
-        <li><strong class="text-ink">Query-time tier enforcement.</strong> The retrieval API accepts a maximum trust tier parameter. Queries about firm precedent search only Tier 1. Queries about opposing party documents search Tier 2-4 with provenance labels.</li>
-        <li><strong class="text-ink">Output provenance injection.</strong> Every AI response includes citations with trust tier labels visible to the reviewing lawyer.</li>
-        <li><strong class="text-ink">Anomaly detection on retrieval patterns.</strong> Monitor for sudden changes in which documents are being retrieved, new documents appearing with suspicious metadata, or retrieval patterns that diverge from historical norms.</li>
+        <li>1. <strong class="text-ink">Ingest pipeline with classification.</strong> Every document is assigned a trust tier at ingestion based on its source. Client uploads go through validation (authenticated upload, verified client identity). External sources go through integrity checks (hash verification, source authentication).</li>
+        <li>2. <strong class="text-ink">Separate vector collections per tier.</strong> Tier 1 and Tier 4 documents live in different vector database collections (or namespaces). This prevents similarity search from accidentally returning poisoned content alongside authoritative precedent.</li>
+        <li>3. <strong class="text-ink">Query-time tier enforcement.</strong> The retrieval API accepts a maximum trust tier parameter. Queries about firm precedent search only Tier 1. Queries about opposing party documents search Tier 2-4 with provenance labels.</li>
+        <li>4. <strong class="text-ink">Output provenance injection.</strong> Every AI response includes citations with trust tier labels visible to the reviewing lawyer.</li>
+        <li>5. <strong class="text-ink">Anomaly detection on retrieval patterns.</strong> Monitor for sudden changes in which documents are being retrieved, new documents appearing with suspicious metadata, or retrieval patterns that diverge from historical norms.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
@@ -224,25 +219,21 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Christian Schneider, <a href="https://christian-schneider.net/blog/rag-security-forgotten-attack-surface/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAG Security: The Forgotten Attack Surface</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: arXiv, <a href="https://arxiv.org/html/2603.21654v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Towards Secure Retrieval-Augmented Generation: A Comprehensive Review of Threats, Defenses and Benchmarks</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: arXiv, <a href="https://arxiv.org/html/2510.25025v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Retrieval-Augmented Generation against Poisoning Attacks</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: arXiv, <a href="https://arxiv.org/html/2604.08304v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Securing Retrieval-Augmented Generation: A Taxonomy of Attacks, Defenses, and Future Directions</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: arXiv, <a href="https://arxiv.org/pdf/2509.20324" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAG Security and Privacy: Formalizing the Threat Model and Attack Surface</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: USENIX, <a href="https://www.usenix.org/system/files/usenixsecurity25-shafran.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Machine Against the RAG: Jamming Retrieval</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: arXiv, <a href="https://arxiv.org/pdf/2505.18543" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Benchmarking Poisoning Attacks against Retrieval-Augmented Generation</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM08:2025 Vector and Embedding Weaknesses</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: arXiv, <a href="https://arxiv.org/html/2604.00387v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAGShield: Provenance-Verified Defense-in-Depth Against Knowledge Base Poisoning</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: arXiv, <a href="https://arxiv.org/pdf/2507.08862" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAG Safety: Exploring Knowledge Poisoning Attacks</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>Christian Schneider, <a href="https://christian-schneider.net/blog/rag-security-forgotten-attack-surface/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAG Security: The Forgotten Attack Surface</a>.</li>
+        <li>arXiv, <a href="https://arxiv.org/html/2603.21654v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Towards Secure Retrieval-Augmented Generation: A Comprehensive Review of Threats, Defenses and Benchmarks</a>.</li>
+        <li>arXiv, <a href="https://arxiv.org/html/2510.25025v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Retrieval-Augmented Generation against Poisoning Attacks</a>.</li>
+        <li>arXiv, <a href="https://arxiv.org/html/2604.08304v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Securing Retrieval-Augmented Generation: A Taxonomy of Attacks, Defenses, and Future Directions</a>.</li>
+        <li>arXiv, <a href="https://arxiv.org/pdf/2509.20324" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAG Security and Privacy: Formalizing the Threat Model and Attack Surface</a>.</li>
+        <li>USENIX, <a href="https://www.usenix.org/system/files/usenixsecurity25-shafran.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Machine Against the RAG: Jamming Retrieval</a>.</li>
+        <li>arXiv, <a href="https://arxiv.org/pdf/2505.18543" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Benchmarking Poisoning Attacks against Retrieval-Augmented Generation</a>.</li>
+        <li>OWASP, <a href="https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM08:2025 Vector and Embedding Weaknesses</a>.</li>
+        <li>arXiv, <a href="https://arxiv.org/html/2604.00387v1" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAGShield: Provenance-Verified Defense-in-Depth Against Knowledge Base Poisoning</a>.</li>
+        <li>arXiv, <a href="https://arxiv.org/pdf/2507.08862" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RAG Safety: Exploring Knowledge Poisoning Attacks</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -319,26 +310,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-33-prompt-injection-attacks.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 33 &mdash; Prompt Injection Attacks</p>
-                </div>
-            </a>
+            <a href="episode-33-prompt-injection-attacks.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 33 &mdash; Prompt Injection Attacks</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-35-embedding-security-and-vector-database-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 35 &mdash; Embedding Security and Vector Database Isolation</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-35-embedding-security-and-vector-database-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 35 &mdash; Embedding Security and Vector Database Isolation</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

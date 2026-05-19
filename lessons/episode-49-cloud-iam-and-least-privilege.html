@@ -89,14 +89,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">All three major cloud providers &mdash; AWS, Google Cloud (GCP), and Microsoft Azure &mdash; use the same conceptual model, with different terminology:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Concept</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">AWS</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">GCP</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Azure</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Concept</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">AWS</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">GCP</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Azure</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Identity</strong></td>
@@ -133,23 +131,18 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Service Accounts and Workload Identity &mdash; Machines Need Identities Too</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a legal SaaS platform, most API calls are made not by humans but by services: the document parser calling the storage API, the AI engine calling the model endpoint, the billing service writing to the database. Each of these services needs an identity to authenticate, and that identity must be tightly scoped.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Common anti-pattern:&lt;/strong&gt; A single &quot;app&quot; service account shared by all microservices, with permissions to access every resource in the project. If any one service is compromised, the attacker inherits the combined permissions of every service. This is the blast radius problem &mdash; the scope of damage from a single breach.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Common anti-pattern:</strong> A single "app" service account shared by all microservices, with permissions to access every resource in the project. If any one service is compromised, the attacker inherits the combined permissions of every service. This is the blast radius problem &mdash; the scope of damage from a single breach.</p>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The correct approach is one service account per service, each with the minimum permissions required:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Service</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Needs</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Should NOT Have</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Service</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Needs</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Should NOT Have</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Document Parser</td>
@@ -210,13 +203,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each cloud provider offers tools to identify unused and excessive permissions:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Provider</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Tool</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Shows</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Provider</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Tool</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Shows</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">AWS</strong></td>
@@ -238,12 +229,9 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.gocodeo.com/post/implementing-least-privilege-in-cloud-and-devops-workflows" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The GoCodeo guide to implementing least privilege</a> [10] recommends a practical workflow: deploy with minimal permissions, let the application run for 30-90 days, then use IAM analyzers to identify permissions that were never used. Remove them. This &quot;right-sizing&quot; approach avoids the upfront difficulty of predicting exact permission needs.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Practical approach:&lt;/strong&gt; Start with the broadest role that lets the service function (to avoid blocking development), then right-size after 30-90 days using IAM analyzers. This is pragmatic least privilege &mdash; you&#39;ll never get permissions perfect on the first try, but you should never leave them un-reviewed.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Practical approach:</strong> Start with the broadest role that lets the service function (to avoid blocking development), then right-size after 30-90 days using IAM analyzers. This is pragmatic least privilege &mdash; you'll never get permissions perfect on the first try, but you should never leave them un-reviewed.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Privilege Escalation Inside Cloud Environments</h2>
 
@@ -265,39 +253,34 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Automated remediation approaches</a> [1] can automatically revoke unused permissions, tighten overly broad IAM policies, or trigger JIT access workflows. The pattern:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Operator requests elevated access through a ticketing system</li>
-        <li>Approval workflow (peer review, manager approval, or automated policy check)</li>
-        <li>Temporary role granted &mdash; typically 1-4 hours</li>
-        <li>All actions during the elevated session are logged</li>
-        <li>Role automatically revokes at expiration</li>
+        <li>1. Operator requests elevated access through a ticketing system</li>
+        <li>2. Approval workflow (peer review, manager approval, or automated policy check)</li>
+        <li>3. Temporary role granted &mdash; typically 1-4 hours</li>
+        <li>4. All actions during the elevated session are logged</li>
+        <li>5. Role automatically revokes at expiration</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This eliminates standing privileges &mdash; permissions that are always active, waiting to be exploited. For legal SaaS platforms handling privileged communications, JIT access is both a security control and an audit trail for regulator inquiries: who had admin access, when, for how long, and what did they do?</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Cloud IAM is the gatekeeper for your entire infrastructure. Over-permissioned service accounts are the most common and most dangerous misconfiguration in cloud environments. Use one service account per service, scope permissions tightly, prefer temporary credentials over long-lived keys, use IAM analyzers to detect permission creep, and implement JIT access for human operators. If a single compromised container can access every resource in your cloud project, your IAM configuration is your biggest vulnerability &mdash; not your application code.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Key takeaway:</strong> Cloud IAM is the gatekeeper for your entire infrastructure. Over-permissioned service accounts are the most common and most dangerous misconfiguration in cloud environments. Use one service account per service, scope permissions tightly, prefer temporary credentials over long-lived keys, use IAM analyzers to detect permission creep, and implement JIT access for human operators. If a single compromised container can access every resource in your cloud project, your IAM configuration is your biggest vulnerability &mdash; not your application code.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we shift from infrastructure to the people who build on it &mdash; developer workstation security. Your production servers are hardened. Your developer&#39;s laptop has Slack, Chrome, and an SSH key to every environment.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><a href="https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Rolling Out/Enforcing Least Privilege in AWS/GCP/Azure — P0 Security</a></li>
-        <li><a href="https://docs.cloud.google.com/iam/docs/best-practices-service-accounts" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Best Practices for Using Service Accounts Securely — Google Cloud</a></li>
-        <li><a href="https://cyscale.com/blog/iam-best-practices-from-aws-azure-gcp/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Best Practices for AWS, Google Cloud, and Azure — Cyscale</a></li>
-        <li><a href="https://cloud.google.com/iam/docs/workload-identity-federation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Workload Identity Federation — Google Cloud</a></li>
-        <li><a href="https://inventivehq.com/blog/principle-of-least-privilege" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Principle of Least Privilege: A Complete Guide for Cloud Security — Inventive HQ</a></li>
-        <li><a href="https://securityboulevard.com/2025/10/dont-let-your-cloud-security-catch-a-bad-case-of-permission-creep/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Don't Let Your Cloud Security Catch a Bad Case of Permission Creep — Security Boulevard</a></li>
-        <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Access Analyzer — AWS Documentation</a></li>
-        <li><a href="https://cloud.google.com/iam/docs/recommender-overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Recommender — Google Cloud</a></li>
-        <li><a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/recommendations-reference-identity-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Identity and Access Security Recommendations — Microsoft Defender for Cloud</a></li>
-        <li><a href="https://www.gocodeo.com/post/implementing-least-privilege-in-cloud-and-devops-workflows" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Implementing Least Privilege in Cloud and DevOps Workflows — GoCodeo</a></li>
-        <li><a href="https://ambacia.eu/careers-post/cloud-security-in-aws-azure-and-gcp-what-they-wont-tell-you-about-the-shared-responsibility-model/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud Security: The Shared Responsibility Model — Ambacia</a></li>
-        <li><a href="https://learn.microsoft.com/en-us/security/benchmark/azure/mcsb-privileged-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Cloud Security Benchmark — Privileged Access</a></li>
+        <li>1. <a href="https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Rolling Out/Enforcing Least Privilege in AWS/GCP/Azure — P0 Security</a></li>
+        <li>2. <a href="https://docs.cloud.google.com/iam/docs/best-practices-service-accounts" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Best Practices for Using Service Accounts Securely — Google Cloud</a></li>
+        <li>3. <a href="https://cyscale.com/blog/iam-best-practices-from-aws-azure-gcp/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Best Practices for AWS, Google Cloud, and Azure — Cyscale</a></li>
+        <li>4. <a href="https://cloud.google.com/iam/docs/workload-identity-federation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Workload Identity Federation — Google Cloud</a></li>
+        <li>5. <a href="https://inventivehq.com/blog/principle-of-least-privilege" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Principle of Least Privilege: A Complete Guide for Cloud Security — Inventive HQ</a></li>
+        <li>6. <a href="https://securityboulevard.com/2025/10/dont-let-your-cloud-security-catch-a-bad-case-of-permission-creep/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Don't Let Your Cloud Security Catch a Bad Case of Permission Creep — Security Boulevard</a></li>
+        <li>7. <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Access Analyzer — AWS Documentation</a></li>
+        <li>8. <a href="https://cloud.google.com/iam/docs/recommender-overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Recommender — Google Cloud</a></li>
+        <li>9. <a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/recommendations-reference-identity-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Identity and Access Security Recommendations — Microsoft Defender for Cloud</a></li>
+        <li>10. <a href="https://www.gocodeo.com/post/implementing-least-privilege-in-cloud-and-devops-workflows" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Implementing Least Privilege in Cloud and DevOps Workflows — GoCodeo</a></li>
+        <li>11. <a href="https://ambacia.eu/careers-post/cloud-security-in-aws-azure-and-gcp-what-they-wont-tell-you-about-the-shared-responsibility-model/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud Security: The Shared Responsibility Model — Ambacia</a></li>
+        <li>12. <a href="https://learn.microsoft.com/en-us/security/benchmark/azure/mcsb-privileged-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Cloud Security Benchmark — Privileged Access</a></li>
     </ol>
 
 </article>
@@ -383,26 +366,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-48-environment-configuration-and-secure-defaults.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 48 &mdash; Environment Configuration and Secure Defaults</p>
-                </div>
-            </a>
+            <a href="episode-48-environment-configuration-and-secure-defaults.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 48 &mdash; Environment Configuration and Secure Defaults</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-50-developer-workstation-security.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 50 &mdash; Developer Workstation Security</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-50-developer-workstation-security.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 50 &mdash; Developer Workstation Security</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

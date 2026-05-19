@@ -89,13 +89,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Zero Trust rests on three principles:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Principle</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Means</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Example</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Principle</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Means</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Example</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Never trust, always verify</strong></td>
@@ -123,13 +121,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207</a> defines three core components of a Zero Trust Architecture:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Implementation</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Implementation</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Policy Engine (PE)</strong></td>
@@ -152,15 +148,14 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The flow for every access request:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>User/device sends a request to the PEP</li>
-        <li>PEP forwards identity and context to the PE</li>
-        <li>PE evaluates policies using attributes (identity, device, location, time, risk score)</li>
-        <li>PE returns allow/deny to the PA</li>
-        <li>PA instructs the PEP to permit or block the request</li>
-        <li>If permitted, the session is established with minimum required privileges</li>
+        <li>1. User/device sends a request to the PEP</li>
+        <li>2. PEP forwards identity and context to the PE</li>
+        <li>3. PE evaluates policies using attributes (identity, device, location, time, risk score)</li>
+        <li>4. PE returns allow/deny to the PA</li>
+        <li>5. PA instructs the PEP to permit or block the request</li>
+        <li>6. If permitted, the session is established with minimum required privileges</li>
     </ol>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key insight:</strong> This happens on every request, not just at login. A traditional system authenticates once and grants a session. Zero Trust re-evaluates continuously &mdash; the user&#39;s device compliance could change, their risk score could escalate, or an anomaly could be detected mid-session.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key insight:</strong> This happens on every request, not just at login. A traditional system authenticates once and grants a session. Zero Trust re-evaluates continuously &mdash; the user&#39;s device compliance could change, their risk score could escalate, or an anomaly could be detected mid-session.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Identity-Based Access</h2>
 
@@ -180,13 +175,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Segment</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Contains</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Access Rules</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Segment</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Contains</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Access Rules</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Document service</strong></td>
@@ -226,15 +219,13 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Zero Trust Maturity Model</a> provides a roadmap with four maturity stages across five pillars:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Pillar</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Traditional</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Initial</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Advanced</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Optimal</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Pillar</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Traditional</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Initial</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Advanced</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Optimal</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Identity</strong></td>
@@ -308,8 +299,7 @@
         <li>Anomaly detection &mdash; unusual access patterns trigger step-up authentication (Episode 19)</li>
         <li>Risk-adaptive policies that tighten access when risk indicators increase</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The 80/20 rule:</strong> Phases 1 and 2 deliver most of the security benefit. If you do nothing else, enforce MFA, implement SSO, and check authorisation on every API request. That alone moves you from a perimeter-based model to an identity-based one.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The 80/20 rule:</strong> Phases 1 and 2 deliver most of the security benefit. If you do nothing else, enforce MFA, implement SSO, and check authorisation on every API request. That alone moves you from a perimeter-based model to an identity-based one.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Google BeyondCorp: The Original Implementation</h2>
 
@@ -323,25 +313,21 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207: Zero Trust Architecture</a> &mdash; the foundational zero trust standard.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/a/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207A: Zero Trust Architecture Model for Access Control in Cloud-Native Applications</a> &mdash; cloud-native ZTA guidance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Palo Alto Networks, <a href="https://www.paloaltonetworks.com/cyberpedia/what-is-nist-sp-800-207" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; overview of the NIST ZTA framework.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CISA, <a href="https://www.cisa.gov/sites/default/files/2025-07/ZT-Microsegmentation-Guidance-Part-One_508c.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsegmentation in Zero Trust</a> &mdash; CISA guidance on microsegmentation as a foundational ZTA control.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CISA, <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zero Trust Maturity Model</a> &mdash; five-pillar maturity framework.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: TerraZone, <a href="https://terrazone.io/nist-sp-800-207/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207: Complete Guide to Zero Trust Architecture (2025)</a> &mdash; practical implementation guide.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Google Cloud, <a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondCorp</a> &mdash; Google&#39;s zero trust implementation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CyberArk, <a href="https://www.cyberark.com/what-is/nist-sp-800-207-cybersecurity-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; ZTA framework overview.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Zero Networks, <a href="https://zeronetworks.com/blog/cisa-guidance-confirms-microsegmentation-is-foundational-for-zero-trust" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Guidance Confirms: Microsegmentation Is Foundational for Zero Trust</a> &mdash; analysis of CISA microsegmentation guidance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Seraphic Security, <a href="https://seraphicsecurity.com/learn/zero-trust/top-4-zero-trust-frameworks-in-2026-and-how-to-choose/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top 4 Zero Trust Frameworks in 2026</a> &mdash; framework comparison and selection guide.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207: Zero Trust Architecture</a> &mdash; the foundational zero trust standard.</li>
+        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/207/a/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-207A: Zero Trust Architecture Model for Access Control in Cloud-Native Applications</a> &mdash; cloud-native ZTA guidance.</li>
+        <li>Palo Alto Networks, <a href="https://www.paloaltonetworks.com/cyberpedia/what-is-nist-sp-800-207" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; overview of the NIST ZTA framework.</li>
+        <li>CISA, <a href="https://www.cisa.gov/sites/default/files/2025-07/ZT-Microsegmentation-Guidance-Part-One_508c.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsegmentation in Zero Trust</a> &mdash; CISA guidance on microsegmentation as a foundational ZTA control.</li>
+        <li>CISA, <a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Zero Trust Maturity Model</a> &mdash; five-pillar maturity framework.</li>
+        <li>TerraZone, <a href="https://terrazone.io/nist-sp-800-207/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-207: Complete Guide to Zero Trust Architecture (2025)</a> &mdash; practical implementation guide.</li>
+        <li>Google Cloud, <a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">BeyondCorp</a> &mdash; Google&#39;s zero trust implementation.</li>
+        <li>CyberArk, <a href="https://www.cyberark.com/what-is/nist-sp-800-207-cybersecurity-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is NIST SP 800-207?</a> &mdash; ZTA framework overview.</li>
+        <li>Zero Networks, <a href="https://zeronetworks.com/blog/cisa-guidance-confirms-microsegmentation-is-foundational-for-zero-trust" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CISA Guidance Confirms: Microsegmentation Is Foundational for Zero Trust</a> &mdash; analysis of CISA microsegmentation guidance.</li>
+        <li>Seraphic Security, <a href="https://seraphicsecurity.com/learn/zero-trust/top-4-zero-trust-frameworks-in-2026-and-how-to-choose/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Top 4 Zero Trust Frameworks in 2026</a> &mdash; framework comparison and selection guide.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -422,26 +408,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-25-ethical-walls-and-matterscoped-access.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 25 &mdash; Ethical Walls and Matter-Scoped Access</p>
-                </div>
-            </a>
+            <a href="episode-25-ethical-walls-and-matterscoped-access.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 25 &mdash; Ethical Walls and Matter-Scoped Access</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-27-multitenant-data-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 27 &mdash; Multi-Tenant Data Isolation</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-27-multitenant-data-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 27 &mdash; Multi-Tenant Data Isolation</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

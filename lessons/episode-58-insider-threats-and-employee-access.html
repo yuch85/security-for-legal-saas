@@ -81,23 +81,18 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">External attackers must find a vulnerability, exploit it, and establish persistence. An insider skips all three steps. They have a valid account, they know where the data lives, and they pass every perimeter control by design. The <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 Verizon Data Breach Investigations Report (DBIR)</a> found that insider-driven incidents accounted for approximately 20% of all breaches, with privilege misuse as the leading action type in internal threat scenarios.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms, insider risk is amplified. Your system stores client communications, litigation strategy, settlement positions, and privileged legal advice. An insider with database access does not need to break encryption or bypass firewalls &mdash; they can simply query the records they are authorised to read and exfiltrate them through channels that look like normal work.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key concept:&lt;/strong&gt; An &lt;em&gt;insider threat&lt;/em&gt; is any risk posed by individuals who have legitimate access to an organisation&#39;s systems &mdash; employees, contractors, vendors, or partners &mdash; whether acting with malicious intent, through negligence, or under external coercion. Not all insider threats are deliberate; accidental data exposure through carelessness is equally damaging.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Key concept:</strong> An <em>insider threat</em> is any risk posed by individuals who have legitimate access to an organisation's systems &mdash; employees, contractors, vendors, or partners &mdash; whether acting with malicious intent, through negligence, or under external coercion. Not all insider threats are deliberate; accidental data exposure through carelessness is equally damaging.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Three Categories of Insider Risk</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Type</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Motivation</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Type</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Motivation</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Malicious insider</strong></td>
@@ -133,12 +128,9 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Least Privilege from Day One</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered the principle of least privilege in Episode 8 and access reviews in Episode 57. For insider threat mitigation, least privilege is the first line of defence. New employees and contractors should start with zero permissions beyond what their specific role requires. A support agent handling billing queries does not need access to case documents. A front-end developer does not need production database credentials.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fffbeb; border-left: 4px solid #f59e0b; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Legal SaaS example:&lt;/strong&gt; A contract review platform should enforce matter-level access controls &mdash; a lawyer working on Case A cannot browse documents from Case B unless explicitly granted access. This mirrors how physical law firms restrict access to client files by matter, not by seniority.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-amber-500 bg-amber-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Legal SaaS example:</strong> A contract review platform should enforce matter-level access controls &mdash; a lawyer working on Case A cannot browse documents from Case B unless explicitly granted access. This mirrors how physical law firms restrict access to client files by matter, not by seniority.</p>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Onboarding Security</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
@@ -194,27 +186,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Verizon, <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 Data Breach Investigations Report (DBIR)</a> &mdash; insider threat statistics and privilege misuse analysis.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wikipedia, <a href="https://en.wikipedia.org/wiki/Panama_Papers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Panama Papers</a> &mdash; 11.5 million documents leaked from Mossack Fonseca.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Twingate, <a href="https://www.twingate.com/blog/tips/mossack-fonseca-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Happened in the Mossack Fonseca Data Breach?</a> &mdash; technical vulnerabilities and breach analysis.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: U.S. Securities and Exchange Commission, <a href="https://www.sec.gov/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SEC Enforcement Actions — Insider Trading</a> &mdash; Tyler Loudon case.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bloomberg, <a href="https://www.bloomberg.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Bank Employee Data Sales Investigation</a> &mdash; staff at US financial institutions selling client data via Telegram (December 2024).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Carnegie Mellon SEI, <a href="https://www.sei.cmu.edu/our-work/insider-threat/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CERT Insider Threat Center</a> &mdash; behavioural indicator research and precursor analysis.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Threat Intelligence, <a href="https://www.threatintelligence.com/blog/law-firm-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Inside the Breach: Real-Life Tales of Law Firm Hacks</a> &mdash; departing employee data exfiltration cases.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GRCI Law, <a href="https://www.grcilaw.com/blog/5-real-life-examples-of-data-breaches-caused-by-insider-threats" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">5 Real-Life Examples of Data Breaches Caused by Insider Threats</a> &mdash; cross-industry insider threat case studies.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ProcessBolt, <a href="https://processbolt.com/insights/blog/why-law-firm-data-breaches-are-skyrocketing-in-2024/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Why Law Firm Data Breaches Are Skyrocketing in 2024</a> &mdash; 30% increase in ransomware attacks on law firms.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bloomberg Law, <a href="https://news.bloomberglaw.com/business-and-practice/wake-up-call-2024-on-pace-to-set-law-firm-data-breach-record" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 on Pace to Set Law Firm Data Breach Record</a> &mdash; law firm breach statistics.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Recorded Future, <a href="https://www.recordedfuture.com/blog/the-hidden-cascade" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Hidden Cascade: Why Law Firm Breaches Destroy More than Data</a> &mdash; downstream impacts of legal data breaches.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>Verizon, <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 Data Breach Investigations Report (DBIR)</a> &mdash; insider threat statistics and privilege misuse analysis.</li>
+        <li>Wikipedia, <a href="https://en.wikipedia.org/wiki/Panama_Papers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Panama Papers</a> &mdash; 11.5 million documents leaked from Mossack Fonseca.</li>
+        <li>Twingate, <a href="https://www.twingate.com/blog/tips/mossack-fonseca-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Happened in the Mossack Fonseca Data Breach?</a> &mdash; technical vulnerabilities and breach analysis.</li>
+        <li>U.S. Securities and Exchange Commission, <a href="https://www.sec.gov/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SEC Enforcement Actions — Insider Trading</a> &mdash; Tyler Loudon case.</li>
+        <li>Bloomberg, <a href="https://www.bloomberg.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Bank Employee Data Sales Investigation</a> &mdash; staff at US financial institutions selling client data via Telegram (December 2024).</li>
+        <li>Carnegie Mellon SEI, <a href="https://www.sei.cmu.edu/our-work/insider-threat/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CERT Insider Threat Center</a> &mdash; behavioural indicator research and precursor analysis.</li>
+        <li>Threat Intelligence, <a href="https://www.threatintelligence.com/blog/law-firm-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Inside the Breach: Real-Life Tales of Law Firm Hacks</a> &mdash; departing employee data exfiltration cases.</li>
+        <li>GRCI Law, <a href="https://www.grcilaw.com/blog/5-real-life-examples-of-data-breaches-caused-by-insider-threats" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">5 Real-Life Examples of Data Breaches Caused by Insider Threats</a> &mdash; cross-industry insider threat case studies.</li>
+        <li>ProcessBolt, <a href="https://processbolt.com/insights/blog/why-law-firm-data-breaches-are-skyrocketing-in-2024/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Why Law Firm Data Breaches Are Skyrocketing in 2024</a> &mdash; 30% increase in ransomware attacks on law firms.</li>
+        <li>Bloomberg Law, <a href="https://news.bloomberglaw.com/business-and-practice/wake-up-call-2024-on-pace-to-set-law-firm-data-breach-record" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2024 on Pace to Set Law Firm Data Breach Record</a> &mdash; law firm breach statistics.</li>
+        <li>Recorded Future, <a href="https://www.recordedfuture.com/blog/the-hidden-cascade" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Hidden Cascade: Why Law Firm Breaches Destroy More than Data</a> &mdash; downstream impacts of legal data breaches.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -295,26 +282,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-57-access-reviews-and-least-privilege-audits.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 57 &mdash; Access Reviews and Least Privilege Audits</p>
-                </div>
-            </a>
+            <a href="episode-57-access-reviews-and-least-privilege-audits.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 57 &mdash; Access Reviews and Least Privilege Audits</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-59-gdpr-pdpa-and-data-protection-compliance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 59 &mdash; GDPR, PDPA and Data Protection Compliance</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-59-gdpr-pdpa-and-data-protection-compliance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 59 &mdash; GDPR, PDPA and Data Protection Compliance</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

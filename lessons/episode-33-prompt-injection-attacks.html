@@ -105,13 +105,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">This is the critical threat for legal SaaS.</strong> Consider these scenarios:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scenario</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Attack Vector</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Impact</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scenario</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Attack Vector</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Impact</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Contract review AI</strong></td>
@@ -138,8 +136,7 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In each case, the attacker never touches your system directly. They poison the data your system processes, and the AI follows the embedded instructions because it cannot tell the difference between &quot;content to analyse&quot; and &quot;instructions to follow.&quot;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The opposing counsel vector:</strong> This is unique to legal AI. In litigation, you routinely receive documents from adversaries who have an active incentive to undermine your analysis. A contract with embedded prompt injection instructions is not a hypothetical &mdash; it is a natural extension of existing adversarial document tactics (metadata manipulation, tracked-changes hiding). The attack surface is inherent in the practice of law.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The opposing counsel vector:</strong> This is unique to legal AI. In litigation, you routinely receive documents from adversaries who have an active incentive to undermine your analysis. A contract with embedded prompt injection instructions is not a hypothetical &mdash; it is a natural extension of existing adversarial document tactics (metadata manipulation, tracked-changes hiding). The attack surface is inherent in the practice of law.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why There Is No Parameterised Query for Prompt Injection</h2>
 
@@ -181,9 +178,9 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS specifically, documents from opposing parties should be treated as untrusted input &mdash; the same category as user input in a web application. Before passing them to an AI model:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Strip hidden content.</strong> Remove white-on-white text, hidden metadata, invisible Unicode characters, and comment fields.</li>
-        <li><strong class="text-ink">Convert to plain text.</strong> Render PDFs and Word documents to plain text before AI processing, discarding formatting that could hide instructions.</li>
-        <li><strong class="text-ink">Classify by trust tier.</strong> Firm-authored documents, client-provided documents, and opposing party documents should carry different trust labels &mdash; a concept we will develop further in Episode 34.</li>
+        <li>1. <strong class="text-ink">Strip hidden content.</strong> Remove white-on-white text, hidden metadata, invisible Unicode characters, and comment fields.</li>
+        <li>2. <strong class="text-ink">Convert to plain text.</strong> Render PDFs and Word documents to plain text before AI processing, discarding formatting that could hide instructions.</li>
+        <li>3. <strong class="text-ink">Classify by trust tier.</strong> Firm-authored documents, client-provided documents, and opposing party documents should carry different trust labels &mdash; a concept we will develop further in Episode 34.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The State of the Art: Imperfect and Honest About It</h2>
@@ -198,25 +195,21 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM01:2025 Prompt Injection</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP Foundation, <a href="https://owasp.org/www-community/attacks/PromptInjection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prompt Injection Attacks</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Checkpoint, <a href="https://www.checkpoint.com/cyber-hub/what-is-llm-security/prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications 2025: Prompt Injection</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Trend Micro, <a href="https://www.trendmicro.com/en/what-is/ai/owasp-top-10.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Are the OWASP Top 10 Risks for LLMs?</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Promptfoo, <a href="https://www.promptfoo.dev/docs/red-team/owasp-llm-top-10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM Top 10</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Ferrara, E. (2025), <a href="https://www.mdpi.com/2078-2489/17/1/54" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prompt Injection Attacks in Large Language Models and AI Agent Systems: A Comprehensive Review</a>, <em>Information</em>, 17(1), 54.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: BSG, <a href="https://bsg.tech/blog/owasp-llm-top-10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM Top 10 (2025): Vulnerabilities & Mitigations</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Aembit, <a href="https://aembit.io/blog/owasp-top-10-llm-risks-explained/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications (2025)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Oligo Security, <a href="https://www.oligo.security/academy/owasp-top-10-llm-updated-2025-examples-and-mitigation-strategies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 LLM, Updated 2025: Examples & Mitigation Strategies</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DeepTeam by Confident AI, <a href="https://www.trydeepteam.com/docs/frameworks-owasp-top-10-for-llms" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLMs 2025</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>OWASP, <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM01:2025 Prompt Injection</a>.</li>
+        <li>OWASP Foundation, <a href="https://owasp.org/www-community/attacks/PromptInjection" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prompt Injection Attacks</a>.</li>
+        <li>Checkpoint, <a href="https://www.checkpoint.com/cyber-hub/what-is-llm-security/prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications 2025: Prompt Injection</a>.</li>
+        <li>Trend Micro, <a href="https://www.trendmicro.com/en/what-is/ai/owasp-top-10.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Are the OWASP Top 10 Risks for LLMs?</a>.</li>
+        <li>Promptfoo, <a href="https://www.promptfoo.dev/docs/red-team/owasp-llm-top-10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM Top 10</a>.</li>
+        <li>Ferrara, E. (2025), <a href="https://www.mdpi.com/2078-2489/17/1/54" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Prompt Injection Attacks in Large Language Models and AI Agent Systems: A Comprehensive Review</a>, *Information*, 17(1), 54.</li>
+        <li>BSG, <a href="https://bsg.tech/blog/owasp-llm-top-10/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP LLM Top 10 (2025): Vulnerabilities & Mitigations</a>.</li>
+        <li>Aembit, <a href="https://aembit.io/blog/owasp-top-10-llm-risks-explained/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications (2025)</a>.</li>
+        <li>Oligo Security, <a href="https://www.oligo.security/academy/owasp-top-10-llm-updated-2025-examples-and-mitigation-strategies" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 LLM, Updated 2025: Examples & Mitigation Strategies</a>.</li>
+        <li>DeepTeam by Confident AI, <a href="https://www.trydeepteam.com/docs/frameworks-owasp-top-10-for-llms" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLMs 2025</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -293,26 +286,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-32-database-security-hardening.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 32 &mdash; Database Security Hardening</p>
-                </div>
-            </a>
+            <a href="episode-32-database-security-hardening.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 32 &mdash; Database Security Hardening</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-34-rag-poisoning-and-document-trust-tiers.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 34 &mdash; RAG Poisoning and Document Trust Tiers</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-34-rag-poisoning-and-document-trust-tiers.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 34 &mdash; RAG Poisoning and Document Trust Tiers</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

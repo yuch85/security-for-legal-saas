@@ -91,14 +91,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Before diving into implementation, two fundamental encryption approaches &mdash; both referenced throughout this series:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Type</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Speed</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Use Case</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Type</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Speed</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Use Case</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Symmetric</strong></td>
@@ -127,12 +125,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The simplest form of encryption at rest is <strong class="text-ink">Transparent Data Encryption</strong> &mdash; encryption handled by the database engine itself, invisible to the application. PostgreSQL, MySQL, SQL Server, and all major cloud databases support TDE:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Database</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">TDE Support</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Database</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">TDE Support</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">AWS RDS / Aurora</strong></td>
@@ -161,16 +157,12 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Application-Layer Encryption</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For stronger protection, sensitive fields can be encrypted at the <strong class="text-ink">application layer</strong> before they reach the database. The database stores ciphertext &mdash; encrypted data that is meaningless without the encryption key:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Client communication stored as:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AES-256-GCM(key, &quot;Privileged strategy discussion: recommend settling for...&quot;)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">→ stored in database as: &quot;xK7mQ2p9bR4...&quot; (ciphertext)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">Client communication stored as:
+  AES-256-GCM(key, &quot;Privileged strategy discussion: recommend settling for...&quot;)
+  → stored in database as: &quot;xK7mQ2p9bR4...&quot; (ciphertext)
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With application-layer encryption, even a database administrator with full access sees only ciphertext. The decryption key never exists in the database &mdash; it&#39;s held in a separate key management system.</p>
 
@@ -181,48 +173,37 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The fundamental question with encryption at rest is: where do you keep the key? If the encryption key is stored next to the encrypted data &mdash; in the same database, on the same server &mdash; then stealing the server gives the attacker both the lock and the key. This is security theatre.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Envelope encryption</strong> solves this by creating a key hierarchy:</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">Master Key (KEK &mdash; Key Encryption Key)
+  └── stored in a Hardware Security Module (HSM) or KMS
+  └── never leaves the HSM / KMS
+  └── encrypts/decrypts Data Encryption Keys
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Master Key (KEK &mdash; Key Encryption Key)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── stored in a Hardware Security Module (HSM) or KMS</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── never leaves the HSM / KMS</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── encrypts/decrypts Data Encryption Keys</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Data Encryption Key (DEK)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── unique per record, per table, or per tenant</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── encrypts the actual data</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">└── stored alongside the data &mdash; but encrypted with the Master Key</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+Data Encryption Key (DEK)
+  └── unique per record, per table, or per tenant
+  └── encrypts the actual data
+  └── stored alongside the data &mdash; but encrypted with the Master Key
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The flow:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>To encrypt data: generate a new DEK → encrypt the data with the DEK → encrypt the DEK with the Master Key → store the encrypted DEK alongside the encrypted data</li>
-        <li>To decrypt data: retrieve the encrypted DEK → send it to the KMS to decrypt using the Master Key → use the decrypted DEK to decrypt the data → discard the DEK from memory</li>
+        <li>1. To encrypt data: generate a new DEK → encrypt the data with the DEK → encrypt the DEK with the Master Key → store the encrypted DEK alongside the encrypted data</li>
+        <li>2. To decrypt data: retrieve the encrypted DEK → send it to the KMS to decrypt using the Master Key → use the decrypted DEK to decrypt the data → discard the DEK from memory</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The Master Key never leaves the hardware security module. The DEK is only in memory briefly during encryption/decryption operations. Even if an attacker steals the entire database &mdash; encrypted data and encrypted DEKs &mdash; they cannot decrypt anything without access to the KMS.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">AWS KMS</strong>, <strong class="text-ink">Google Cloud KMS</strong>, and <strong class="text-ink">Azure Key Vault</strong> all implement this pattern. They manage the master keys in FIPS 140-2 Level 3 certified HSMs and provide APIs for envelope encryption operations. For legal SaaS on any major cloud provider, there is no reason to build your own key management &mdash; use the provider&#39;s KMS.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">AWS KMS</strong>, <strong class="text-ink">Google Cloud KMS</strong>, and <strong class="text-ink">Azure Key Vault</strong> all implement this pattern. They manage the master keys in FIPS 140-2 Level 3 certified HSMs and provide APIs for envelope encryption operations. For legal SaaS on any major cloud provider, there is no reason to build your own key management &mdash; use the provider&#39;s KMS.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Encryption in Transit</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered TLS in depth in Episode 13. The key points for this discussion:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Requirement</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Standard</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Requirement</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Standard</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Minimum TLS version</strong></td>
@@ -251,20 +232,17 @@
         <li><strong class="text-ink">Service to service:</strong> mTLS between microservices, as covered in Episode 15</li>
         <li><strong class="text-ink">Server to external APIs:</strong> TLS for all outbound connections (e-filing systems, court APIs, document services)</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Callout: Don&#39;t forget internal traffic.</strong> Many teams encrypt browser-to-server traffic but leave internal service-to-service communication unencrypted. In a zero-trust architecture (Episode 26), all traffic is encrypted &mdash; there is no &quot;trusted internal network.&quot;</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Callout: Don&#39;t forget internal traffic.</strong> Many teams encrypt browser-to-server traffic but leave internal service-to-service communication unencrypted. In a zero-trust architecture (Episode 26), all traffic is encrypted &mdash; there is no &quot;trusted internal network.&quot;</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Requirements</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Multiple regulatory frameworks mandate encryption for legal technology:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Regulation</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Encryption Requirement</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Regulation</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Encryption Requirement</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">ABA Model Rule 1.6(c)</strong></td>
@@ -301,12 +279,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A common concern is that encryption adds latency. In practice:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Operation</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Performance Impact</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Operation</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Performance Impact</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">TLS handshake</strong></td>
@@ -329,8 +305,7 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Modern CPUs include dedicated hardware instructions for AES encryption (Intel AES-NI, ARM AES extensions). On a server with AES-NI, TDE is essentially free &mdash; the CPU can encrypt and decrypt at memory speed. The only non-trivial cost is the KMS API call for envelope encryption, which can be mitigated by caching decrypted DEKs in memory with a short TTL.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">When encryption costs:</strong> The main performance concern is not CPU but searchability. Application-layer encryption of database fields eliminates the ability to query, sort, or index those fields at the database level. For legal SaaS, this means careful architectural decisions about which fields to encrypt at the application layer (client names, communication content, strategy notes) versus which to protect only at the TDE level (timestamps, matter IDs, status flags).</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">When encryption costs:</strong> The main performance concern is not CPU but searchability. Application-layer encryption of database fields eliminates the ability to query, sort, or index those fields at the database level. For legal SaaS, this means careful architectural decisions about which fields to encrypt at the application layer (client names, communication content, strategy notes) versus which to protect only at the TDE level (timestamps, matter IDs, status flags).</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
@@ -338,29 +313,23 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Censinet, <a href="https://censinet.com/perspectives/encryption-at-rest-vs-encryption-in-transit-differences" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Encryption at Rest vs. Encryption in Transit: Differences</a> &mdash; comprehensive comparison.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Kiteworks, <a href="https://www.kiteworks.com/secure-file-sharing/beyond-aes-256-encryption-multi-layer-protection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Beyond AES-256 Encryption: Multi-Layer Protection</a> &mdash; symmetric and asymmetric encryption in practice.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/publications/detail/fips/197/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Advanced Encryption Standard (AES)</a> &mdash; FIPS 197, the AES specification.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Microsoft, <a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-atrest" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Azure Data Encryption at Rest</a> &mdash; TDE implementation on Azure.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Google Cloud, <a href="https://docs.google.com/docs/security/encryption/default-encryption" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Default Encryption at Rest</a> &mdash; Google&#39;s encryption-by-default architecture.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Netwrix, <a href="https://netwrix.com/en/resources/blog/secure-data-at-rest-in-use-in-motion/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Securing Data at Rest, in Use, and in Motion</a> &mdash; comprehensive data protection guide.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://docs.aws.amazon.com/kms/latest/cryptographic-details/kms-crypto-details.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS KMS Cryptographic Details</a> &mdash; envelope encryption and key hierarchy architecture.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://docs.aws.amazon.com/kms/latest/cryptographic-details/key-hierarchy.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS KMS Key Hierarchy</a> &mdash; master keys, data keys, and HSM-backed storage.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/publications/detail/sp/800-52/rev-2/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-52 Rev. 2: Guidelines for TLS Implementations</a> &mdash; TLS version and cipher suite requirements.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: FDG Web, <a href="https://www.fdgweb.com/what-are-the-nist-encryption-standards-for-phi-on-websites-and-web-applications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Encryption Standards for PHI</a> &mdash; NIST standards mapped to regulatory requirements.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: FileCloud, <a href="https://www.filecloud.com/blog/data-at-rest-vs-transit/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data at Rest vs. in Transit: Encryption & Security Guide</a> &mdash; performance considerations and implementation guidance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/publications/detail/sp/800-111/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-111: Guide to Storage Encryption Technologies for End User Devices</a> &mdash; encryption at rest standard.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>Censinet, <a href="https://censinet.com/perspectives/encryption-at-rest-vs-encryption-in-transit-differences" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Encryption at Rest vs. Encryption in Transit: Differences</a> &mdash; comprehensive comparison.</li>
+        <li>Kiteworks, <a href="https://www.kiteworks.com/secure-file-sharing/beyond-aes-256-encryption-multi-layer-protection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Beyond AES-256 Encryption: Multi-Layer Protection</a> &mdash; symmetric and asymmetric encryption in practice.</li>
+        <li>NIST, <a href="https://csrc.nist.gov/publications/detail/fips/197/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Advanced Encryption Standard (AES)</a> &mdash; FIPS 197, the AES specification.</li>
+        <li>Microsoft, <a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-atrest" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Azure Data Encryption at Rest</a> &mdash; TDE implementation on Azure.</li>
+        <li>Google Cloud, <a href="https://docs.google.com/docs/security/encryption/default-encryption" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Default Encryption at Rest</a> &mdash; Google&#39;s encryption-by-default architecture.</li>
+        <li>Netwrix, <a href="https://netwrix.com/en/resources/blog/secure-data-at-rest-in-use-in-motion/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Securing Data at Rest, in Use, and in Motion</a> &mdash; comprehensive data protection guide.</li>
+        <li>AWS, <a href="https://docs.aws.amazon.com/kms/latest/cryptographic-details/kms-crypto-details.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS KMS Cryptographic Details</a> &mdash; envelope encryption and key hierarchy architecture.</li>
+        <li>AWS, <a href="https://docs.aws.amazon.com/kms/latest/cryptographic-details/key-hierarchy.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS KMS Key Hierarchy</a> &mdash; master keys, data keys, and HSM-backed storage.</li>
+        <li>NIST, <a href="https://csrc.nist.gov/publications/detail/sp/800-52/rev-2/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-52 Rev. 2: Guidelines for TLS Implementations</a> &mdash; TLS version and cipher suite requirements.</li>
+        <li>FDG Web, <a href="https://www.fdgweb.com/what-are-the-nist-encryption-standards-for-phi-on-websites-and-web-applications/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Encryption Standards for PHI</a> &mdash; NIST standards mapped to regulatory requirements.</li>
+        <li>FileCloud, <a href="https://www.filecloud.com/blog/data-at-rest-vs-transit/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data at Rest vs. in Transit: Encryption & Security Guide</a> &mdash; performance considerations and implementation guidance.</li>
+        <li>NIST, <a href="https://csrc.nist.gov/publications/detail/sp/800-111/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-111: Guide to Storage Encryption Technologies for End User Devices</a> &mdash; encryption at rest standard.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -455,26 +424,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-27-multitenant-data-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 27 &mdash; Multi-Tenant Data Isolation</p>
-                </div>
-            </a>
+            <a href="episode-27-multitenant-data-isolation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 27 &mdash; Multi-Tenant Data Isolation</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-29-key-management-and-rotation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 29 &mdash; Key Management and Rotation</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-29-key-management-and-rotation.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 29 &mdash; Key Management and Rotation</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

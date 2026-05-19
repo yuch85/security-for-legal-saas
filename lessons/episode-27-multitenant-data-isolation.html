@@ -91,12 +91,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">All tenants share the same database tables. Every row contains a `tenant_id` column, and access is controlled at the row level.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Detail</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Detail</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">How it works</strong></td>
@@ -119,16 +117,14 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">PostgreSQL RLS</strong> &mdash; which we introduced in Episode 8 &mdash; is the critical safety net here. RLS policies run at the database engine level, below the application code:</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+        <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">sql</div>
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```sql</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">ALTER TABLE documents ENABLE ROW LEVEL SECURITY;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">CREATE POLICY tenant_isolation ON documents</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">USING (tenant_id = current_setting(&#39;app.current_tenant&#39;)::uuid);</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+CREATE POLICY tenant_isolation ON documents
+  USING (tenant_id = current_setting(&#39;app.current_tenant&#39;)::uuid);
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With this policy active, even a query that omits the `WHERE tenant_id = ...` clause will only return rows belonging to the current tenant. The database enforces isolation regardless of application bugs &mdash; a defence-in-depth pattern from Episode 4.</p>
 
@@ -137,12 +133,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each tenant gets their own database schema within a shared database instance. Tables, indexes, and views are duplicated per schema.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Detail</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Detail</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">How it works</strong></td>
@@ -171,12 +165,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each tenant gets their own dedicated database instance &mdash; completely separate infrastructure.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Detail</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Detail</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">How it works</strong></td>
@@ -197,21 +189,18 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">For legal SaaS:</strong> Many enterprise law firm clients will contractually require database-per-tenant isolation. Their security teams (and their insurers) want certainty that a vulnerability in the shared application code cannot expose their data to another firm. When a client&#39;s RFP says &quot;dedicated database instance,&quot; they mean the silo model.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">For legal SaaS:</strong> Many enterprise law firm clients will contractually require database-per-tenant isolation. Their security teams (and their insurers) want certainty that a vulnerability in the shared application code cannot expose their data to another firm. When a client&#39;s RFP says &quot;dedicated database instance,&quot; they mean the silo model.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Defence in Depth for Multi-Tenancy</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">No single isolation mechanism is sufficient. Defence in depth means layering multiple independent controls:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Layer</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Catches</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Layer</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Catches</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Application code</strong></td>
@@ -243,32 +232,24 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The testing layer is often overlooked. Your CI pipeline should include tests that explicitly attempt cross-tenant data access and verify it fails:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```python</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"># CI test: ensure Tenant A cannot see Tenant B&#39;s data</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">def test_cross_tenant_isolation():</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"># Set context to Tenant A</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">set_tenant_context(tenant_a_id)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"># Create a document as Tenant A</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">doc = create_document(content=&quot;Tenant A privileged communication&quot;)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"># Switch context to Tenant B</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">set_tenant_context(tenant_b_id)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"># Verify Tenant B cannot access Tenant A&#39;s document</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">assert get_document(doc.id) raises NotFoundError</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">assert search_documents(&quot;privileged communication&quot;) returns []</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+        <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">python</div>
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono"># CI test: ensure Tenant A cannot see Tenant B&#39;s data
+def test_cross_tenant_isolation():
+    # Set context to Tenant A
+    set_tenant_context(tenant_a_id)
+    
+    # Create a document as Tenant A
+    doc = create_document(content=&quot;Tenant A privileged communication&quot;)
+    
+    # Switch context to Tenant B
+    set_tenant_context(tenant_b_id)
+    
+    # Verify Tenant B cannot access Tenant A&#39;s document
+    assert get_document(doc.id) raises NotFoundError
+    assert search_documents(&quot;privileged communication&quot;) returns []
+</code></pre>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Tenant Context Propagation</h2>
 
@@ -276,15 +257,14 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The tenant context must flow through:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Authentication</strong> &mdash; the JWT token or session contains the user&#39;s `tenant_id`</li>
-        <li><strong class="text-ink">API middleware</strong> &mdash; extracts `tenant_id` from the token and sets it in the request context</li>
-        <li><strong class="text-ink">Service layer</strong> &mdash; passes `tenant_id` to every database query and external service call</li>
-        <li><strong class="text-ink">Database connection</strong> &mdash; sets `app.current_tenant` for RLS enforcement</li>
-        <li><strong class="text-ink">Background jobs</strong> &mdash; async tasks (email notifications, report generation) must carry the `tenant_id` from the originating request</li>
-        <li><strong class="text-ink">Logging</strong> &mdash; every log entry includes `tenant_id` for debugging and audit</li>
+        <li>1. <strong class="text-ink">Authentication</strong> &mdash; the JWT token or session contains the user&#39;s `tenant_id`</li>
+        <li>2. <strong class="text-ink">API middleware</strong> &mdash; extracts `tenant_id` from the token and sets it in the request context</li>
+        <li>3. <strong class="text-ink">Service layer</strong> &mdash; passes `tenant_id` to every database query and external service call</li>
+        <li>4. <strong class="text-ink">Database connection</strong> &mdash; sets `app.current_tenant` for RLS enforcement</li>
+        <li>5. <strong class="text-ink">Background jobs</strong> &mdash; async tasks (email notifications, report generation) must carry the `tenant_id` from the originating request</li>
+        <li>6. <strong class="text-ink">Logging</strong> &mdash; every log entry includes `tenant_id` for debugging and audit</li>
     </ol>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">The background job trap:</strong> A scheduled report generation job runs outside a user request context. If it doesn&#39;t explicitly set the tenant context, it may default to no tenant filter &mdash; and the report includes data from all tenants. This is a real and documented failure mode. Every background job must explicitly set and verify its tenant context before accessing data.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The background job trap:</strong> A scheduled report generation job runs outside a user request context. If it doesn&#39;t explicitly set the tenant context, it may default to no tenant filter &mdash; and the report includes data from all tenants. This is a real and documented failure mode. Every background job must explicitly set and verify its tenant context before accessing data.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Snowflake Incident: A Cautionary Tale</h2>
 
@@ -292,8 +272,8 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The lesson for multi-tenant SaaS is twofold:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Tenant-level security policy enforcement matters.</strong> If your platform allows tenants to opt out of MFA, some will &mdash; and those are the accounts that get breached. Enforce baseline security requirements across all tenants.</li>
-        <li><strong class="text-ink">Credential hygiene is a multi-tenant concern.</strong> Even with perfect data isolation, a compromised tenant account gives the attacker access to that tenant&#39;s data. Combine isolation with strong authentication (Episode 21) and SSO (Episode 22).</li>
+        <li>1. <strong class="text-ink">Tenant-level security policy enforcement matters.</strong> If your platform allows tenants to opt out of MFA, some will &mdash; and those are the accounts that get breached. Enforce baseline security requirements across all tenants.</li>
+        <li>2. <strong class="text-ink">Credential hygiene is a multi-tenant concern.</strong> Even with perfect data isolation, a compromised tenant account gives the attacker access to that tenant&#39;s data. Combine isolation with strong authentication (Episode 21) and SSO (Episode 22).</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Ethical Walls vs. Multi-Tenancy: The Complete Picture</h2>
@@ -301,14 +281,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With Episode 25 fresh in memory, here&#39;s the complete access control picture for legal SaaS:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Concept</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scope</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Mechanism</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Failure Impact</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Concept</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scope</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Mechanism</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Failure Impact</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Multi-tenant isolation</strong></td>
@@ -346,27 +324,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://aws.amazon.com/blogs/database/multi-tenant-data-isolation-with-postgresql-row-level-security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Tenant Data Isolation with PostgreSQL Row Level Security</a> &mdash; RLS patterns for SaaS.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DZone, <a href="https://dzone.com/articles/multi-tenant-data-isolation-row-level-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Tenant Data Isolation and Row Level Security</a> &mdash; implementation patterns.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Redis, <a href="https://redis.io/blog/data-isolation-multi-tenant-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Isolation in Multi-Tenant SaaS: Architecture & Security Guide</a> &mdash; comprehensive isolation model comparison.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Citus Data, <a href="https://www.citusdata.com/blog/2023/09/06/citus-12-schema-based-sharding-for-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Citus 12: Schema-Based Sharding for SaaS</a> &mdash; horizontal scaling for schema-per-tenant.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Hunchbite, <a href="https://hunchbite.com/guides/multi-tenant-saas-architecture" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Tenant SaaS Architecture: Row-Level Security vs. Schema-Per-Tenant</a> &mdash; architectural comparison.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Aloa, <a href="https://aloa.co/blog/multi-tenant-saas" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build a Multi-Tenant SaaS Database</a> &mdash; comprehensive implementation guide.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Dev.to, <a href="https://dev.to/whoffagents/multi-tenant-saas-data-isolation-row-level-security-tenant-scoping-and-plan-enforcement-with-1gd4" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Tenant SaaS Data Isolation: Row-Level Security, Tenant Scoping, and Plan Enforcement with Prisma</a> &mdash; tenant context propagation patterns.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cloud Security Alliance, <a href="https://cloudsecurityalliance.org/blog/2025/05/07/unpacking-the-2024-snowflake-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Unpacking the 2024 Snowflake Data Breach</a> &mdash; breach analysis.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Push Security, <a href="https://pushsecurity.com/blog/snowflake-retro" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Snowflake: Looking Back on 2024's Landmark Security Event</a> &mdash; lessons learned.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OneUptime, <a href="https://oneuptime.com/blog/post/2026-02-16-how-to-design-a-multi-tenant-data-isolation-strategy-on-azure-sql-database-using-row-level-security/view" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Design a Multi-Tenant Data Isolation Strategy on Azure SQL Database</a> &mdash; Azure-specific guidance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wikipedia, <a href="https://en.wikipedia.org/wiki/Snowflake_data_breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Snowflake Data Breach</a> &mdash; timeline and impact.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>AWS, <a href="https://aws.amazon.com/blogs/database/multi-tenant-data-isolation-with-postgresql-row-level-security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Tenant Data Isolation with PostgreSQL Row Level Security</a> &mdash; RLS patterns for SaaS.</li>
+        <li>DZone, <a href="https://dzone.com/articles/multi-tenant-data-isolation-row-level-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Tenant Data Isolation and Row Level Security</a> &mdash; implementation patterns.</li>
+        <li>Redis, <a href="https://redis.io/blog/data-isolation-multi-tenant-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Isolation in Multi-Tenant SaaS: Architecture & Security Guide</a> &mdash; comprehensive isolation model comparison.</li>
+        <li>Citus Data, <a href="https://www.citusdata.com/blog/2023/09/06/citus-12-schema-based-sharding-for-saas/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Citus 12: Schema-Based Sharding for SaaS</a> &mdash; horizontal scaling for schema-per-tenant.</li>
+        <li>Hunchbite, <a href="https://hunchbite.com/guides/multi-tenant-saas-architecture" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Tenant SaaS Architecture: Row-Level Security vs. Schema-Per-Tenant</a> &mdash; architectural comparison.</li>
+        <li>Aloa, <a href="https://aloa.co/blog/multi-tenant-saas" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build a Multi-Tenant SaaS Database</a> &mdash; comprehensive implementation guide.</li>
+        <li>Dev.to, <a href="https://dev.to/whoffagents/multi-tenant-saas-data-isolation-row-level-security-tenant-scoping-and-plan-enforcement-with-1gd4" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Multi-Tenant SaaS Data Isolation: Row-Level Security, Tenant Scoping, and Plan Enforcement with Prisma</a> &mdash; tenant context propagation patterns.</li>
+        <li>Cloud Security Alliance, <a href="https://cloudsecurityalliance.org/blog/2025/05/07/unpacking-the-2024-snowflake-data-breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Unpacking the 2024 Snowflake Data Breach</a> &mdash; breach analysis.</li>
+        <li>Push Security, <a href="https://pushsecurity.com/blog/snowflake-retro" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Snowflake: Looking Back on 2024's Landmark Security Event</a> &mdash; lessons learned.</li>
+        <li>OneUptime, <a href="https://oneuptime.com/blog/post/2026-02-16-how-to-design-a-multi-tenant-data-isolation-strategy-on-azure-sql-database-using-row-level-security/view" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Design a Multi-Tenant Data Isolation Strategy on Azure SQL Database</a> &mdash; Azure-specific guidance.</li>
+        <li>Wikipedia, <a href="https://en.wikipedia.org/wiki/Snowflake_data_breach" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Snowflake Data Breach</a> &mdash; timeline and impact.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -451,26 +424,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-26-zero-trust-architecture.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 26 &mdash; Zero Trust Architecture</p>
-                </div>
-            </a>
+            <a href="episode-26-zero-trust-architecture.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 26 &mdash; Zero Trust Architecture</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-28-encryption-at-rest-vs-in-transit.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 28 &mdash; Encryption at Rest vs. in Transit</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-28-encryption-at-rest-vs-in-transit.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 28 &mdash; Encryption at Rest vs. in Transit</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

@@ -81,12 +81,9 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your legal SaaS platform runs in multiple environments. Development, where engineers build and test features. Staging, where the team validates before release. Production, where real law firms use the platform with real client data. The security controls in each environment should be identical. The only differences should be credentials (each environment has its own database passwords, API keys, and service accounts) and scale (production has more servers, more capacity).</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In practice, this is rarely the case. Teams disable authentication in development &quot;to make testing easier.&quot; They skip rate limiting in staging &quot;because it slows down integration tests.&quot; They disable audit logging in development &quot;because it fills up disk space.&quot; Each shortcut creates a gap between what gets tested and what runs in production. Bugs that only manifest with security controls enabled &mdash; race conditions in authentication, edge cases in rate limiting, performance impacts from audit logging &mdash; go undetected until they&#39;re in production with real client data.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Red flag:&lt;/strong&gt; &quot;We only enable auth in production&quot; is not a shortcut. It means your entire development and testing process runs without the security controls that production depends on. You are testing a different application than what your clients use.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Red flag:</strong> "We only enable auth in production" is not a shortcut. It means your entire development and testing process runs without the security controls that production depends on. You are testing a different application than what your clients use.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Configuration Management &mdash; Separating Config from Code</h2>
 
@@ -97,20 +94,15 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Environment Variables</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The simplest approach. Your application reads configuration from environment variables set by the deployment platform. <a href="https://12factor.net/config" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Twelve-Factor App</a> [1] recommends this as the primary method because environment variables are language-agnostic and can be set without modifying code or config files.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```bash</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">DATABASE_URL=postgres://user:pass@db.prod.internal:5432/legaldb</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">REDIS_URL=redis://cache.prod.internal:6379</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AUTH_ENABLED=true</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">RATE_LIMIT_ENABLED=true</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AUDIT_LOG_LEVEL=full</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+        <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">bash</div>
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">DATABASE_URL=postgres://user:pass@db.prod.internal:5432/legaldb
+REDIS_URL=redis://cache.prod.internal:6379
+AUTH_ENABLED=true
+RATE_LIMIT_ENABLED=true
+AUDIT_LOG_LEVEL=full
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The security concern: environment variables can be visible in process listings, debug outputs, and crash reports. <a href="https://github.com/twelve-factor/twelve-factor/issues/4" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Recent guidance</a> [2] acknowledges that for secrets, environment variables alone are insufficient &mdash; they should be combined with a secrets manager.</p>
 
@@ -129,13 +121,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A &quot;default&quot; is the behaviour your system exhibits when no explicit configuration is provided. Secure defaults mean that the out-of-the-box configuration prioritises safety over convenience.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Setting</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Insecure Default</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Secure Default</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Setting</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Insecure Default</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Secure Default</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Authentication</td>
@@ -184,12 +174,9 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://csf.tools/reference/nist-sp-800-53/r5/cm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-53 controls CM-6 and CM-7</a> [6] specifically address configuration management and least functionality, requiring that systems be configured to provide only essential capabilities and that security-relevant settings default to the most restrictive mode consistent with operational requirements.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, consider what happens when a new developer joins and spins up a local development environment. If the defaults are insecure, that developer&#39;s first experience is running the application without the security controls that production depends on. Every test they write, every feature they build, every integration they validate &mdash; all without authentication, rate limiting, or audit logging. When those features reach production, they encounter security controls for the first time. This is where &quot;it works on my machine&quot; becomes a security incident.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Design principle:&lt;/strong&gt; Make the secure path the easy path. If a developer has to do extra work to make the application &lt;em&gt;less&lt;/em&gt; secure, most won&#39;t bother. If they have to do extra work to make it &lt;em&gt;more&lt;/em&gt; secure, many won&#39;t.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Design principle:</strong> Make the secure path the easy path. If a developer has to do extra work to make the application <em>less</em> secure, most won't bother. If they have to do extra work to make it <em>more</em> secure, many won't.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Environment Parity &mdash; Security Controls in Every Environment</h2>
 
@@ -197,10 +184,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Practical implementation:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Authentication in development</strong> &mdash; use a local identity provider or test accounts, but keep the authentication middleware active. Developers should log in to the application, even locally.</li>
-        <li><strong class="text-ink">Rate limiting in staging</strong> &mdash; use higher thresholds if needed for integration testing, but keep the rate limiter active. Tests should work within rate limits, not around them.</li>
-        <li><strong class="text-ink">Audit logging everywhere</strong> &mdash; log to a local file in development, to a managed service in production. But log in both. If audit logging causes performance issues, that&#39;s a bug to fix, not a reason to disable it.</li>
-        <li><strong class="text-ink">TLS in development</strong> &mdash; use self-signed certificates or a local CA like <a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">mkcert</a> [7]. Developers should experience the same HTTPS behaviour as production, including mixed-content warnings and secure cookie behaviour.</li>
+        <li>1. <strong class="text-ink">Authentication in development</strong> &mdash; use a local identity provider or test accounts, but keep the authentication middleware active. Developers should log in to the application, even locally.</li>
+        <li>2. <strong class="text-ink">Rate limiting in staging</strong> &mdash; use higher thresholds if needed for integration testing, but keep the rate limiter active. Tests should work within rate limits, not around them.</li>
+        <li>3. <strong class="text-ink">Audit logging everywhere</strong> &mdash; log to a local file in development, to a managed service in production. But log in both. If audit logging causes performance issues, that&#39;s a bug to fix, not a reason to disable it.</li>
+        <li>4. <strong class="text-ink">TLS in development</strong> &mdash; use self-signed certificates or a local CA like <a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">mkcert</a> [7]. Developers should experience the same HTTPS behaviour as production, including mixed-content warnings and secure cookie behaviour.</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.getunleash.io/blog/feature-flag-security-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Feature flag platforms like Unleash and LaunchDarkly</a> [8] can manage environment-specific configurations while maintaining security parity. A feature flag can control whether a new payment flow is enabled, while security controls like authentication and rate limiting remain always-on and unflagged.</p>
@@ -225,41 +212,36 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When security controls behave differently across environments, three things go wrong:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Bugs hide.</strong> A race condition in your authentication middleware only manifests under load. You never see it in development because authentication is disabled. It appears in production during a demo to a major law firm.</li>
+        <li>1. <strong class="text-ink">Bugs hide.</strong> A race condition in your authentication middleware only manifests under load. You never see it in development because authentication is disabled. It appears in production during a demo to a major law firm.</li>
     </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Developers build around security.</strong> If authentication is disabled locally, developers write API integration tests that skip auth headers. Those tests pass in CI but fail &mdash; or worse, expose real vulnerabilities &mdash; when auth is enabled.</li>
+        <li>2. <strong class="text-ink">Developers build around security.</strong> If authentication is disabled locally, developers write API integration tests that skip auth headers. Those tests pass in CI but fail &mdash; or worse, expose real vulnerabilities &mdash; when auth is enabled.</li>
     </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Configuration drift accumulates.</strong> Each environment diverges. Staging gets a &quot;temporary&quot; exception to CORS rules. Development gets debug mode permanently enabled. Over time, the environments become so different that staging is no longer a reliable predictor of production behaviour.</li>
+        <li>3. <strong class="text-ink">Configuration drift accumulates.</strong> Each environment diverges. Staging gets a &quot;temporary&quot; exception to CORS rules. Development gets debug mode permanently enabled. Over time, the environments become so different that staging is no longer a reliable predictor of production behaviour.</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.cloudbees.com/blog/how-to-secure-your-feature-flag-based-application" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CloudBees' guide to securing feature-flag-based applications</a> [11] reinforces that &quot;compliance demands strict environment segregation&quot; &mdash; but segregation means different credentials and data, not different security controls.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Secure defaults and environment parity are not DevOps best practices. They are security requirements. The out-of-the-box configuration of your legal SaaS platform should be secure. Security controls should be active in every environment. The difference between staging and production should be credentials and scale &mdash; never whether authentication, rate limiting, or audit logging is enabled. If your development environment doesn&#39;t enforce security, your development process is testing a different application than what your clients use.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Key takeaway:</strong> Secure defaults and environment parity are not DevOps best practices. They are security requirements. The out-of-the-box configuration of your legal SaaS platform should be secure. Security controls should be active in every environment. The difference between staging and production should be credentials and scale &mdash; never whether authentication, rate limiting, or audit logging is enabled. If your development environment doesn't enforce security, your development process is testing a different application than what your clients use.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we wrap up Module 10 with cloud IAM and least privilege &mdash; the identity and access management controls that determine who (and what) can access your cloud resources, and why &quot;that service account has Owner permissions because someone needed it once&quot; is one of the most common and dangerous patterns in cloud security.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><a href="https://12factor.net/config" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Twelve-Factor App — Config</a></li>
-        <li><a href="https://github.com/twelve-factor/twelve-factor/issues/4" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Proposal to Modify Factor Config — Twelve-Factor GitHub</a></li>
-        <li><a href="https://kubernetes.io/docs/concepts/configuration/configmap/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ConfigMaps — Kubernetes Documentation</a></li>
-        <li><a href="https://kubernetes.io/docs/concepts/configuration/secret/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secrets — Kubernetes Documentation</a></li>
-        <li><a href="https://think-devops.com/posts/secure-12-factor-apps/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building Secure 12-Factor Apps — Think DevOps</a></li>
-        <li><a href="https://csf.tools/reference/nist-sp-800-53/r5/cm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-53 Rev. 5 — Configuration Management Controls</a></li>
-        <li><a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">mkcert — Local HTTPS Development</a></li>
-        <li><a href="https://www.getunleash.io/blog/feature-flag-security-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Feature Flag Security Best Practices — Unleash</a></li>
-        <li><a href="https://octopus.com/devops/feature-flags/feature-flag-best-practices/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 12 Commandments of Feature Flags — Octopus Deploy</a></li>
-        <li><a href="https://www.getunleash.io/blog/devops-regulatory-compliance-how-feature-flags-can-streamline-auditing-and-governance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DevOps Regulatory Compliance: Feature Flags for Auditing and Governance — Unleash</a></li>
-        <li><a href="https://www.cloudbees.com/blog/how-to-secure-your-feature-flag-based-application" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Secure Your Feature-Flag-Based Application — CloudBees</a></li>
-        <li><a href="https://configcat.com/blog/2024/02/06/feature-flagging-for-security-best-practices-and-use-cases/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Feature Flagging for Security: Best Practices — ConfigCat</a></li>
+        <li>1. <a href="https://12factor.net/config" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Twelve-Factor App — Config</a></li>
+        <li>2. <a href="https://github.com/twelve-factor/twelve-factor/issues/4" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Proposal to Modify Factor Config — Twelve-Factor GitHub</a></li>
+        <li>3. <a href="https://kubernetes.io/docs/concepts/configuration/configmap/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ConfigMaps — Kubernetes Documentation</a></li>
+        <li>4. <a href="https://kubernetes.io/docs/concepts/configuration/secret/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secrets — Kubernetes Documentation</a></li>
+        <li>5. <a href="https://think-devops.com/posts/secure-12-factor-apps/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building Secure 12-Factor Apps — Think DevOps</a></li>
+        <li>6. <a href="https://csf.tools/reference/nist-sp-800-53/r5/cm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-53 Rev. 5 — Configuration Management Controls</a></li>
+        <li>7. <a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">mkcert — Local HTTPS Development</a></li>
+        <li>8. <a href="https://www.getunleash.io/blog/feature-flag-security-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Feature Flag Security Best Practices — Unleash</a></li>
+        <li>9. <a href="https://octopus.com/devops/feature-flags/feature-flag-best-practices/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 12 Commandments of Feature Flags — Octopus Deploy</a></li>
+        <li>10. <a href="https://www.getunleash.io/blog/devops-regulatory-compliance-how-feature-flags-can-streamline-auditing-and-governance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DevOps Regulatory Compliance: Feature Flags for Auditing and Governance — Unleash</a></li>
+        <li>11. <a href="https://www.cloudbees.com/blog/how-to-secure-your-feature-flag-based-application" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Secure Your Feature-Flag-Based Application — CloudBees</a></li>
+        <li>12. <a href="https://configcat.com/blog/2024/02/06/feature-flagging-for-security-best-practices-and-use-cases/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Feature Flagging for Security: Best Practices — ConfigCat</a></li>
     </ol>
 
 </article>
@@ -345,26 +327,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-47-supply-chain-security-dependencies-sbom-and-build-provenance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 47 &mdash; Supply Chain Security &mdash; Dependencies, SBOM and Build Provenance</p>
-                </div>
-            </a>
+            <a href="episode-47-supply-chain-security-dependencies-sbom-and-build-provenance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 47 &mdash; Supply Chain Security &mdash; Dependencies, SBOM and Build Provenance</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-49-cloud-iam-and-least-privilege.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 49 &mdash; Cloud IAM and Least Privilege</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-49-cloud-iam-and-least-privilege.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 49 &mdash; Cloud IAM and Least Privilege</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

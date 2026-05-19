@@ -91,13 +91,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">GDPR distinguishes between data controllers (who determine the purposes and means of processing) and data processors (who process data on the controller&#39;s behalf). In legal SaaS:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Entity</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Responsibilities</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Entity</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Responsibilities</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Controller</strong></td>
@@ -119,25 +117,20 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://gdpr-info.eu/art-28-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 28 of GDPR</a> requires a written contract &mdash; the Data Processing Agreement (DPA) &mdash; between controller and processor, specifying the subject matter, duration, nature and purpose of processing, the type of personal data and categories of data subjects, and the obligations of the processor.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key concept:&lt;/strong&gt; A &lt;em&gt;Data Processing Agreement (DPA)&lt;/em&gt; is a legally binding contract between a data controller and a data processor that defines the scope, purpose, and security requirements for processing personal data. Under GDPR Article 28, having a DPA in place is a legal requirement &mdash; not a nice-to-have. Your law firm clients will ask for one. Have it ready before they do.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Key concept:</strong> A <em>Data Processing Agreement (DPA)</em> is a legally binding contract between a data controller and a data processor that defines the scope, purpose, and security requirements for processing personal data. Under GDPR Article 28, having a DPA in place is a legal requirement &mdash; not a nice-to-have. Your law firm clients will ask for one. Have it ready before they do.</p>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Data Subject Rights</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">GDPR grants individuals eight rights over their personal data. Your platform must support the technical implementation of each:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Right</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">GDPR Article</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What Your Platform Must Support</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Right</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">GDPR Article</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What Your Platform Must Support</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Access</strong></td>
@@ -184,12 +177,9 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Organisations must respond to data subject access requests (DSARs) within <a href="https://transcend.io/blog/dsar" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">one calendar month</a>, extendable by two months for complex requests provided the data subject is informed of the delay.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The legal privilege complication:&lt;/strong&gt; When a law firm&#39;s client exercises a right to erasure, the firm may have a legal obligation to retain documents for ongoing litigation or regulatory proceedings. Your platform needs to support granular retention policies that can override erasure requests where a valid legal basis exists &mdash; and document the justification. This is where data protection and legal professional privilege collide.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>The legal privilege complication:</strong> When a law firm's client exercises a right to erasure, the firm may have a legal obligation to retain documents for ongoing litigation or regulatory proceedings. Your platform needs to support granular retention policies that can override erasure requests where a valid legal basis exists &mdash; and document the justification. This is where data protection and legal professional privilege collide.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Cross-Border Data Transfers</h2>
 
@@ -197,32 +187,27 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The three main mechanisms:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Adequacy decisions</strong> &mdash; the European Commission has determined that certain countries provide adequate data protection. The UK, Japan, South Korea, Canada (for commercial organisations), and &mdash; since July 2023 &mdash; the United States (under the <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU-US Data Privacy Framework</a>) have adequacy status.</li>
+        <li>1. <strong class="text-ink">Adequacy decisions</strong> &mdash; the European Commission has determined that certain countries provide adequate data protection. The UK, Japan, South Korea, Canada (for commercial organisations), and &mdash; since July 2023 &mdash; the United States (under the <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU-US Data Privacy Framework</a>) have adequacy status.</li>
     </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Standard Contractual Clauses (SCCs)</strong> &mdash; <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/new-standard-contractual-clauses-questions-and-answers-overview_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">pre-approved contract terms</a> that bind the data importer to GDPR-equivalent protections. These must be supplemented by a Transfer Impact Assessment (TIA) evaluating whether the destination country&#39;s laws undermine the protections.</li>
+        <li>2. <strong class="text-ink">Standard Contractual Clauses (SCCs)</strong> &mdash; <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/new-standard-contractual-clauses-questions-and-answers-overview_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">pre-approved contract terms</a> that bind the data importer to GDPR-equivalent protections. These must be supplemented by a Transfer Impact Assessment (TIA) evaluating whether the destination country&#39;s laws undermine the protections.</li>
     </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Binding Corporate Rules (BCRs)</strong> &mdash; for intra-group transfers within multinational organisations.</li>
+        <li>3. <strong class="text-ink">Binding Corporate Rules (BCRs)</strong> &mdash; for intra-group transfers within multinational organisations.</li>
     </ol>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Enforcement reality:&lt;/strong&gt; In May 2023, Ireland&#39;s Data Protection Commission fined <a href="https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en">Meta €1.2 billion</a> &mdash; the largest GDPR fine ever &mdash; for transferring EU user data to the United States using Standard Contractual Clauses without adequate supplementary measures following the Schrems II judgment.&lt;sup&gt;[6]&lt;/sup&gt; The message to every SaaS vendor: SCCs alone are not a rubber stamp. You must assess the actual legal environment in the destination country.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Enforcement reality:</strong> In May 2023, Ireland's Data Protection Commission fined <a href="https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Meta €1.2 billion</a> &mdash; the largest GDPR fine ever &mdash; for transferring EU user data to the United States using Standard Contractual Clauses without adequate supplementary measures following the Schrems II judgment. The message to every SaaS vendor: SCCs alone are not a rubber stamp. You must assess the actual legal environment in the destination country.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Singapore&#39;s PDPA</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Personal Data Protection Act (PDPA)</a> is Singapore&#39;s primary data protection law, administered by the Personal Data Protection Commission (PDPC). For legal SaaS vendors operating in or serving clients in Singapore, the PDPA imposes distinct obligations:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">PDPA Obligation</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">PDPA Obligation</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Consent</strong></td>
@@ -277,10 +262,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your platform should implement:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Privilege-aware DSAR workflows</strong> &mdash; flagging potentially privileged content for legal review before disclosure</li>
-        <li><strong class="text-ink">Legal hold overrides</strong> &mdash; preventing erasure of data subject to active litigation holds</li>
-        <li><strong class="text-ink">Jurisdiction-specific retention policies</strong> &mdash; configurable per matter, per client, per regulatory requirement</li>
-        <li><strong class="text-ink">Audit trails</strong> &mdash; documenting every DSAR response, retention override, and cross-border transfer decision</li>
+        <li>1. <strong class="text-ink">Privilege-aware DSAR workflows</strong> &mdash; flagging potentially privileged content for legal review before disclosure</li>
+        <li>2. <strong class="text-ink">Legal hold overrides</strong> &mdash; preventing erasure of data subject to active litigation holds</li>
+        <li>3. <strong class="text-ink">Jurisdiction-specific retention policies</strong> &mdash; configurable per matter, per client, per regulatory requirement</li>
+        <li>4. <strong class="text-ink">Audit trails</strong> &mdash; documenting every DSAR response, retention override, and cross-border transfer decision</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
@@ -289,29 +274,23 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR-Info.eu, <a href="https://gdpr-info.eu/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">General Data Protection Regulation — Complete Text</a> &mdash; full regulation text with article-by-article commentary.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR-Info.eu, <a href="https://gdpr-info.eu/art-28-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 28 — Processor</a> &mdash; contractual requirements for data processing agreements.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Transcend, <a href="https://transcend.io/blog/dsar" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DSAR: What Is a Data Subject Access Request? (2026 Guide)</a> &mdash; DSAR implementation requirements and response timelines.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: European Commission, <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU-US Data Transfers</a> &mdash; adequacy decision under the EU-US Data Privacy Framework.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: European Commission, <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/new-standard-contractual-clauses-questions-and-answers-overview_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">New Standard Contractual Clauses — Questions and Answers</a> &mdash; SCC requirements and supplementary measures.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: EDPB, <a href="https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">€1.2 Billion Euro Fine for Facebook as a Result of EDPB Binding Decision</a> &mdash; Meta cross-border data transfer enforcement.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: PDPC, <a href="https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Overview of PDPA</a> &mdash; Singapore&#39;s Personal Data Protection Act.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Chambers and Partners, <a href="https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2025/singapore/trends-and-developments" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Protection & Privacy 2025 — Singapore</a> &mdash; 2024 PDPA advisory guidelines including AI.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ICLG, <a href="https://iclg.com/practice-areas/data-protection-laws-and-regulations/singapore" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Protection Laws and Regulations — Singapore 2025-2026</a> &mdash; PDPA obligations and enforcement trends.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ICO, <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-transfers-a-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Guide to International Transfers</a> &mdash; UK GDPR cross-border transfer guidance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IAPP, <a href="https://iapp.org/news/a/meta-fined-gdpr-record-1-2-billion-euros-in-data-transfer-case" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Meta Fined GDPR-Record €1.2 Billion in Data Transfer Case</a> &mdash; detailed enforcement analysis.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: EDPB, <a href="https://www.edpb.europa.eu/sme-data-protection-guide/respect-individuals-rights_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Respect Individuals' Rights</a> &mdash; data subject rights guidance for SMEs.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>GDPR-Info.eu, <a href="https://gdpr-info.eu/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">General Data Protection Regulation — Complete Text</a> &mdash; full regulation text with article-by-article commentary.</li>
+        <li>GDPR-Info.eu, <a href="https://gdpr-info.eu/art-28-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 28 — Processor</a> &mdash; contractual requirements for data processing agreements.</li>
+        <li>Transcend, <a href="https://transcend.io/blog/dsar" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">DSAR: What Is a Data Subject Access Request? (2026 Guide)</a> &mdash; DSAR implementation requirements and response timelines.</li>
+        <li>European Commission, <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU-US Data Transfers</a> &mdash; adequacy decision under the EU-US Data Privacy Framework.</li>
+        <li>European Commission, <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/new-standard-contractual-clauses-questions-and-answers-overview_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">New Standard Contractual Clauses — Questions and Answers</a> &mdash; SCC requirements and supplementary measures.</li>
+        <li>EDPB, <a href="https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">€1.2 Billion Euro Fine for Facebook as a Result of EDPB Binding Decision</a> &mdash; Meta cross-border data transfer enforcement.</li>
+        <li>PDPC, <a href="https://www.pdpc.gov.sg/overview-of-pdpa/the-legislation/personal-data-protection-act" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Overview of PDPA</a> &mdash; Singapore&#39;s Personal Data Protection Act.</li>
+        <li>Chambers and Partners, <a href="https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2025/singapore/trends-and-developments" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Protection & Privacy 2025 — Singapore</a> &mdash; 2024 PDPA advisory guidelines including AI.</li>
+        <li>ICLG, <a href="https://iclg.com/practice-areas/data-protection-laws-and-regulations/singapore" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Protection Laws and Regulations — Singapore 2025-2026</a> &mdash; PDPA obligations and enforcement trends.</li>
+        <li>ICO, <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-transfers-a-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">A Guide to International Transfers</a> &mdash; UK GDPR cross-border transfer guidance.</li>
+        <li>IAPP, <a href="https://iapp.org/news/a/meta-fined-gdpr-record-1-2-billion-euros-in-data-transfer-case" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Meta Fined GDPR-Record €1.2 Billion in Data Transfer Case</a> &mdash; detailed enforcement analysis.</li>
+        <li>EDPB, <a href="https://www.edpb.europa.eu/sme-data-protection-guide/respect-individuals-rights_en" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Respect Individuals' Rights</a> &mdash; data subject rights guidance for SMEs.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -388,26 +367,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-58-insider-threats-and-employee-access.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 58 &mdash; Insider Threats and Employee Access</p>
-                </div>
-            </a>
+            <a href="episode-58-insider-threats-and-employee-access.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 58 &mdash; Insider Threats and Employee Access</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-60-soc-2-penetration-testing-and-security-certification.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 60 &mdash; SOC 2, Penetration Testing and Security Certification</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-60-soc-2-penetration-testing-and-security-certification.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 60 &mdash; SOC 2, Penetration Testing and Security Certification</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

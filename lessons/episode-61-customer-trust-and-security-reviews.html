@@ -87,14 +87,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Enterprise law firms evaluate vendors through standardised security questionnaires. The most common frameworks include:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Framework</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Source</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical Length</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Common In</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Framework</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Source</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical Length</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Common In</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">SIG Lite</strong></td>
@@ -131,25 +129,22 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The questions map to the security domains we&#39;ve covered across this series: access control (Episodes 23&ndash;27), encryption (Episode 13), incident response (Episodes 52&ndash;56), vulnerability management (Episode 60), business continuity, and data protection (Episode 59).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key concept:&lt;/strong&gt; A &lt;em&gt;security questionnaire&lt;/em&gt; (also called a &lt;em&gt;vendor risk assessment questionnaire&lt;/em&gt; or &lt;em&gt;due diligence questionnaire / DDQ&lt;/em&gt;) is a structured document used by enterprise procurement teams to evaluate a vendor&#39;s security posture before approving a purchase. It is the single most common gate between you and an enterprise contract.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Key concept:</strong> A <em>security questionnaire</em> (also called a <em>vendor risk assessment questionnaire</em> or <em>due diligence questionnaire / DDQ</em>) is a structured document used by enterprise procurement teams to evaluate a vendor's security posture before approving a purchase. It is the single most common gate between you and an enterprise contract.</p>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The Answers That Actually Matter</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not all 300 questions carry equal weight. <a href="https://cynomi.com/learn/vendor-risk-assessment-questionnaire/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Procurement teams consistently prioritise</a> a core set of areas:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Do you have SOC 2 Type II?</strong> &mdash; A yes with a current report attached eliminates dozens of follow-up questions</li>
-        <li><strong class="text-ink">How do you handle data encryption?</strong> &mdash; At rest and in transit, with specific algorithms and key management practices</li>
-        <li><strong class="text-ink">What is your incident response process?</strong> &mdash; Including breach notification timelines (typically 24&ndash;72 hours contractually)</li>
-        <li><strong class="text-ink">Where is data stored?</strong> &mdash; Geographic location, cloud provider, data residency options</li>
-        <li><strong class="text-ink">Do you have a penetration test report?</strong> &mdash; Annual external pentest with remediation evidence</li>
-        <li><strong class="text-ink">How do you handle sub-processors?</strong> &mdash; List of third parties who access customer data</li>
-        <li><strong class="text-ink">What access controls are in place?</strong> &mdash; RBAC (role-based access control, as we covered in Episode 23), MFA enforcement, access reviews</li>
-        <li><strong class="text-ink">Do you have a DPA ready?</strong> &mdash; Data Processing Agreement per GDPR Article 28</li>
+        <li>1. <strong class="text-ink">Do you have SOC 2 Type II?</strong> &mdash; A yes with a current report attached eliminates dozens of follow-up questions</li>
+        <li>2. <strong class="text-ink">How do you handle data encryption?</strong> &mdash; At rest and in transit, with specific algorithms and key management practices</li>
+        <li>3. <strong class="text-ink">What is your incident response process?</strong> &mdash; Including breach notification timelines (typically 24&ndash;72 hours contractually)</li>
+        <li>4. <strong class="text-ink">Where is data stored?</strong> &mdash; Geographic location, cloud provider, data residency options</li>
+        <li>5. <strong class="text-ink">Do you have a penetration test report?</strong> &mdash; Annual external pentest with remediation evidence</li>
+        <li>6. <strong class="text-ink">How do you handle sub-processors?</strong> &mdash; List of third parties who access customer data</li>
+        <li>7. <strong class="text-ink">What access controls are in place?</strong> &mdash; RBAC (role-based access control, as we covered in Episode 23), MFA enforcement, access reviews</li>
+        <li>8. <strong class="text-ink">Do you have a DPA ready?</strong> &mdash; Data Processing Agreement per GDPR Article 28</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Building a Trust Centre</h2>
@@ -161,12 +156,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An effective trust centre includes:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">SOC 2 report summary</strong></td>
@@ -203,12 +196,9 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fffbeb; border-left: 4px solid #f59e0b; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Legal SaaS tip:&lt;/strong&gt; Include a section on legal professional privilege in your trust centre. Explain how your platform supports matter-level access controls, privilege classification, and litigation holds. Law firm procurement teams will look for this, and no generic SaaS trust centre template covers it. This is your differentiation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-amber-500 bg-amber-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Legal SaaS tip:</strong> Include a section on legal professional privilege in your trust centre. Explain how your platform supports matter-level access controls, privilege classification, and litigation holds. Law firm procurement teams will look for this, and no generic SaaS trust centre template covers it. This is your differentiation.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">DPA Negotiation: What Clients Actually Care About</h2>
 
@@ -257,27 +247,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Tribble AI, <a href="https://tribble.ai/blog/security-questionnaire-ddq-automation-hub/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Questionnaire & DDQ Automation Hub: The Complete 2026 Guide</a> &mdash; questionnaire volume and productivity impact statistics.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cynomi, <a href="https://cynomi.com/learn/vendor-risk-assessment-questionnaire/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vendor Risk Assessment Questionnaire: Key Questions That Matter</a> &mdash; prioritised assessment question categories.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SecureSlate, <a href="https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How Top SaaS Use Trust Centers to Close Deals 2x Faster</a> &mdash; trust centre ROI and deal velocity data.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR-Info.eu, <a href="https://gdpr-info.eu/art-33-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 33 — Notification of a Personal Data Breach to the Supervisory Authority</a> &mdash; breach notification requirements.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GDPR-Info.eu, <a href="https://gdpr-info.eu/art-28-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 28 — Processor</a> &mdash; sub-processor consent mechanisms.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Google Cloud, <a href="https://cloud.google.com/security/vendor-security-assessment" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vendor Security Risk Assessment</a> &mdash; enterprise vendor review framework.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Hyperproof, <a href="https://hyperproof.io/resource/security-questionnaire/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Questionnaire: What Is It and How to Respond</a> &mdash; questionnaire response automation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SteerLab, <a href="https://www.steerlab.ai/blog/security-questionnaire-questions-examples" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">20 Security Questionnaire Questions & Sample Answers</a> &mdash; common question patterns with guidance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: HyperComply, <a href="https://www.hypercomply.com/blog/security-questionnaire-buyers-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SaaS Buyer's Guide: Security Questionnaire Response Tool with Trust Center</a> &mdash; combined questionnaire and trust centre platforms.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Trava Security, <a href="https://travasecurity.com/saas-security-assessment-questionnaire/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SaaS Security Assessment Questionnaire</a> &mdash; SaaS-specific assessment framework.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Targhee Security, <a href="https://www.targheesec.com/resources/security-questionnaire-the-2026-guide-for-vendors-amp-buyers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Questionnaire: The 2026 Guide for Vendors & Buyers</a> &mdash; comprehensive vendor response strategy.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>Tribble AI, <a href="https://tribble.ai/blog/security-questionnaire-ddq-automation-hub/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Questionnaire & DDQ Automation Hub: The Complete 2026 Guide</a> &mdash; questionnaire volume and productivity impact statistics.</li>
+        <li>Cynomi, <a href="https://cynomi.com/learn/vendor-risk-assessment-questionnaire/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vendor Risk Assessment Questionnaire: Key Questions That Matter</a> &mdash; prioritised assessment question categories.</li>
+        <li>SecureSlate, <a href="https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How Top SaaS Use Trust Centers to Close Deals 2x Faster</a> &mdash; trust centre ROI and deal velocity data.</li>
+        <li>GDPR-Info.eu, <a href="https://gdpr-info.eu/art-33-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 33 — Notification of a Personal Data Breach to the Supervisory Authority</a> &mdash; breach notification requirements.</li>
+        <li>GDPR-Info.eu, <a href="https://gdpr-info.eu/art-28-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 28 — Processor</a> &mdash; sub-processor consent mechanisms.</li>
+        <li>Google Cloud, <a href="https://cloud.google.com/security/vendor-security-assessment" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Vendor Security Risk Assessment</a> &mdash; enterprise vendor review framework.</li>
+        <li>Hyperproof, <a href="https://hyperproof.io/resource/security-questionnaire/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Questionnaire: What Is It and How to Respond</a> &mdash; questionnaire response automation.</li>
+        <li>SteerLab, <a href="https://www.steerlab.ai/blog/security-questionnaire-questions-examples" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">20 Security Questionnaire Questions & Sample Answers</a> &mdash; common question patterns with guidance.</li>
+        <li>HyperComply, <a href="https://www.hypercomply.com/blog/security-questionnaire-buyers-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SaaS Buyer's Guide: Security Questionnaire Response Tool with Trust Center</a> &mdash; combined questionnaire and trust centre platforms.</li>
+        <li>Trava Security, <a href="https://travasecurity.com/saas-security-assessment-questionnaire/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SaaS Security Assessment Questionnaire</a> &mdash; SaaS-specific assessment framework.</li>
+        <li>Targhee Security, <a href="https://www.targheesec.com/resources/security-questionnaire-the-2026-guide-for-vendors-amp-buyers" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Questionnaire: The 2026 Guide for Vendors & Buyers</a> &mdash; comprehensive vendor response strategy.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -358,26 +343,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-60-soc-2-penetration-testing-and-security-certification.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 60 &mdash; SOC 2, Penetration Testing and Security Certification</p>
-                </div>
-            </a>
+            <a href="episode-60-soc-2-penetration-testing-and-security-certification.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 60 &mdash; SOC 2, Penetration Testing and Security Certification</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-62-security-roadmapping-from-here-to-production-series-finale.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 62 &mdash; Security Roadmapping &mdash; From Here to Production (Series Finale)</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-62-security-roadmapping-from-here-to-production-series-finale.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 62 &mdash; Security Roadmapping &mdash; From Here to Production (Series Finale)</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

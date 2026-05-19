@@ -89,14 +89,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not every security event is a crisis. Classification determines the speed and scope of the response.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Severity</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Criteria</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Response Time</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Severity</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Criteria</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Response Time</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Critical (P1)</strong></td>
@@ -151,12 +149,9 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Short-term containment:</strong> Immediate actions to prevent further damage. Block the attacker&#39;s IP. Terminate compromised sessions. Disable compromised accounts. Isolate affected servers from the network.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Long-term containment:</strong> More surgical actions while you prepare for eradication. Apply temporary patches. Redirect traffic away from compromised systems. Set up enhanced monitoring on affected systems.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Evidence preservation is critical for legal SaaS.&lt;/strong&gt; Do not wipe or rebuild a compromised system before capturing forensic images. If client privileged data was exposed, you may need those forensic records for regulatory notifications, insurance claims, or litigation. Containment must preserve evidence, not destroy it.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Evidence preservation is critical for legal SaaS.</strong> Do not wipe or rebuild a compromised system before capturing forensic images. If client privileged data was exposed, you may need those forensic records for regulatory notifications, insurance claims, or litigation. Containment must preserve evidence, not destroy it.</p>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Eradication</h3>
 
@@ -176,36 +171,36 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Trigger:</strong> Confirmed or suspected unauthorised access to client data.</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Contain:</strong> Isolate affected systems. Terminate all sessions for compromised accounts. Block attacker access.</li>
-        <li><strong class="text-ink">Assess scope:</strong> Which clients&#39; data was accessed? What type of data &mdash; case documents, communications, PII?</li>
-        <li><strong class="text-ink">Preserve evidence:</strong> Forensic image of affected systems before any cleanup.</li>
-        <li><strong class="text-ink">Legal assessment:</strong> Engage legal counsel (internal or external) to determine notification obligations.</li>
-        <li><strong class="text-ink">Notification chain:</strong> Client notification, regulatory notification, law enforcement (if applicable).</li>
-        <li><strong class="text-ink">Remediate:</strong> Patch the vulnerability, rotate credentials, enhance monitoring.</li>
-        <li><strong class="text-ink">Post-incident:</strong> Retrospective, playbook update, client follow-up.</li>
+        <li>1. <strong class="text-ink">Contain:</strong> Isolate affected systems. Terminate all sessions for compromised accounts. Block attacker access.</li>
+        <li>2. <strong class="text-ink">Assess scope:</strong> Which clients&#39; data was accessed? What type of data &mdash; case documents, communications, PII?</li>
+        <li>3. <strong class="text-ink">Preserve evidence:</strong> Forensic image of affected systems before any cleanup.</li>
+        <li>4. <strong class="text-ink">Legal assessment:</strong> Engage legal counsel (internal or external) to determine notification obligations.</li>
+        <li>5. <strong class="text-ink">Notification chain:</strong> Client notification, regulatory notification, law enforcement (if applicable).</li>
+        <li>6. <strong class="text-ink">Remediate:</strong> Patch the vulnerability, rotate credentials, enhance monitoring.</li>
+        <li>7. <strong class="text-ink">Post-incident:</strong> Retrospective, playbook update, client follow-up.</li>
     </ol>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Compromised Credentials Playbook</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Trigger:</strong> Credentials found on dark web, successful login from impossible geography, or credential stuffing with confirmed account access.</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Force password reset</strong> for all affected accounts immediately.</li>
-        <li><strong class="text-ink">Terminate all active sessions</strong> for those accounts.</li>
-        <li><strong class="text-ink">Review audit logs</strong> for actions taken while the account was compromised.</li>
-        <li><strong class="text-ink">Check for persistence:</strong> Did the attacker create new accounts, modify permissions, or install API keys?</li>
-        <li><strong class="text-ink">Notify affected users</strong> with specific guidance on what to do.</li>
-        <li><strong class="text-ink">Review MFA status</strong> &mdash; if compromised accounts lacked MFA, enforce it platform-wide.</li>
+        <li>1. <strong class="text-ink">Force password reset</strong> for all affected accounts immediately.</li>
+        <li>2. <strong class="text-ink">Terminate all active sessions</strong> for those accounts.</li>
+        <li>3. <strong class="text-ink">Review audit logs</strong> for actions taken while the account was compromised.</li>
+        <li>4. <strong class="text-ink">Check for persistence:</strong> Did the attacker create new accounts, modify permissions, or install API keys?</li>
+        <li>5. <strong class="text-ink">Notify affected users</strong> with specific guidance on what to do.</li>
+        <li>6. <strong class="text-ink">Review MFA status</strong> &mdash; if compromised accounts lacked MFA, enforce it platform-wide.</li>
     </ol>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Insider Threat Playbook</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Trigger:</strong> Unusual data access patterns from an authorised user &mdash; bulk downloads, access outside role scope, data transfers to personal devices.</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Do not alert the subject</strong> until legal and HR are consulted.</li>
-        <li><strong class="text-ink">Preserve logs</strong> and access records before any investigation conversation.</li>
-        <li><strong class="text-ink">Assess scope:</strong> What data was accessed? Was it transferred externally?</li>
-        <li><strong class="text-ink">Coordinate with legal</strong> for employment law implications and potential law enforcement referral.</li>
-        <li><strong class="text-ink">Revoke access</strong> once the investigation supports it.</li>
+        <li>1. <strong class="text-ink">Do not alert the subject</strong> until legal and HR are consulted.</li>
+        <li>2. <strong class="text-ink">Preserve logs</strong> and access records before any investigation conversation.</li>
+        <li>3. <strong class="text-ink">Assess scope:</strong> What data was accessed? Was it transferred externally?</li>
+        <li>4. <strong class="text-ink">Coordinate with legal</strong> for employment law implications and potential law enforcement referral.</li>
+        <li>5. <strong class="text-ink">Revoke access</strong> once the investigation supports it.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Communication Plans: Who to Notify, When, and What to Say</h2>
@@ -215,13 +210,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Breach notification is not optional. Timelines vary by jurisdiction:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Regulation</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Notification Window</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Who Must Be Notified</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Regulation</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Notification Window</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Who Must Be Notified</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">GDPR</strong> (EU)</td>
@@ -248,19 +241,16 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.konfirmity.com/blog/gdpr-incident-response-plan" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The GDPR imposes fines of up to EUR 20 million or 4% of global revenue</a> for serious breaches, and missing the 72-hour notification window increases penalties and erodes trust.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;For legal SaaS specifically:&lt;/strong&gt; <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/">NYC Bar Formal Opinion 2024-3</a> and <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/">ABA Formal Opinion 483</a> establish that lawyers must notify clients when a breach exposes material client confidential information that is &quot;likely to affect the position of the client or the outcome of the client&#39;s legal matter.&quot;&lt;sup&gt;[4][5]&lt;/sup&gt; A data breach doesn&#39;t automatically waive attorney-client privilege &mdash; but the firm must take affirmative steps to reaffirm privilege designations and prevent unauthorised use of leaked material.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>For legal SaaS specifically:</strong> <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NYC Bar Formal Opinion 2024-3</a> and <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 483</a> establish that lawyers must notify clients when a breach exposes material client confidential information that is "likely to affect the position of the client or the outcome of the client's legal matter."<sup>[4][5]</sup> A data breach doesn't automatically waive attorney-client privilege &mdash; but the firm must take affirmative steps to reaffirm privilege designations and prevent unauthorised use of leaked material.</p>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Communication Rules During an Incident</h3>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Designate a single spokesperson.</strong> Inconsistent public statements create legal liability.</li>
-        <li><strong class="text-ink">Say what you know, not what you speculate.</strong> &quot;We detected unauthorised access and are investigating&quot; &mdash; not &quot;we think a Russian hacker group got in.&quot;</li>
-        <li><strong class="text-ink">Don&#39;t promise what you haven&#39;t verified.</strong> &quot;No data was compromised&quot; is a statement you may have to retract. &quot;Our investigation is ongoing&quot; is safe.</li>
-        <li><strong class="text-ink">Document everything.</strong> Every communication, every decision, every timestamp. This is evidence for regulators and potentially for litigation.</li>
+        <li>1. <strong class="text-ink">Designate a single spokesperson.</strong> Inconsistent public statements create legal liability.</li>
+        <li>2. <strong class="text-ink">Say what you know, not what you speculate.</strong> &quot;We detected unauthorised access and are investigating&quot; &mdash; not &quot;we think a Russian hacker group got in.&quot;</li>
+        <li>3. <strong class="text-ink">Don&#39;t promise what you haven&#39;t verified.</strong> &quot;No data was compromised&quot; is a statement you may have to retract. &quot;Our investigation is ongoing&quot; is safe.</li>
+        <li>4. <strong class="text-ink">Document everything.</strong> Every communication, every decision, every timestamp. This is evidence for regulators and potentially for litigation.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Hold Preservation</h2>
@@ -289,29 +279,22 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: disaster recovery and business continuity &mdash; what happens when the incident isn&#39;t a breach but a complete system failure, and your clients need their case files.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-61 Revision 3: Incident Response Recommendations and Considerations for Cybersecurity Risk Management</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity Framework 2.0</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Konfirmity, <a href="https://www.konfirmity.com/blog/gdpr-incident-response-plan" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Incident Response Plan: A Practical Guide with Steps & Examples (2026)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NYC Bar Association, <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">When Should Law Firms Notify Clients About Data Breaches?</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: UnderDefense, <a href="https://underdefense.com/blog/data-breach-incident-response-plan/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Breach Incident Response Plan for 2026</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/tort_trial_insurance_practice/resources/tortsource/2024-spring/attorney-client-privilege-work-product-considerations-following-cyber-incidents/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Attorney-Client Privilege and Work Product Considerations Following Cyber Incidents</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Linford &amp; Company, <a href="https://linfordco.com/blog/nist-sp-800-61/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-61 Rev 3: New Incident Response Framework Guide</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Tandem, <a href="https://tandem.app/blog/updated-nist-incident-response-guidance-sp-800-61-rev-3" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Updated NIST Incident Response Guidance: SP 800-61 Rev. 3</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Inside Privacy, <a href="https://www.insideprivacy.com/cybersecurity-2/nist-publishes-updated-incident-response-recommendations-and-considerations/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Publishes Updated Incident Response Recommendations</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Epiq Global, <a href="https://www.epiqglobal.com/en-us/resource-center/articles/aba-opinion-how-to-respond-to-data-breaches" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Issues Opinion — How To Respond to Data Breaches</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-61 Revision 3: Incident Response Recommendations and Considerations for Cybersecurity Risk Management</a>.</li>
+        <li>NIST, <a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity Framework 2.0</a>.</li>
+        <li>Konfirmity, <a href="https://www.konfirmity.com/blog/gdpr-incident-response-plan" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GDPR Incident Response Plan: A Practical Guide with Steps & Examples (2026)</a>.</li>
+        <li>NYC Bar Association, <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident</a>.</li>
+        <li>ABA, <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">When Should Law Firms Notify Clients About Data Breaches?</a>.</li>
+        <li>UnderDefense, <a href="https://underdefense.com/blog/data-breach-incident-response-plan/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Data Breach Incident Response Plan for 2026</a>.</li>
+        <li>ABA, <a href="https://www.americanbar.org/groups/tort_trial_insurance_practice/resources/tortsource/2024-spring/attorney-client-privilege-work-product-considerations-following-cyber-incidents/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Attorney-Client Privilege and Work Product Considerations Following Cyber Incidents</a>.</li>
+        <li>Linford &amp; Company, <a href="https://linfordco.com/blog/nist-sp-800-61/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-61 Rev 3: New Incident Response Framework Guide</a>.</li>
+        <li>Tandem, <a href="https://tandem.app/blog/updated-nist-incident-response-guidance-sp-800-61-rev-3" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Updated NIST Incident Response Guidance: SP 800-61 Rev. 3</a>.</li>
+        <li>Inside Privacy, <a href="https://www.insideprivacy.com/cybersecurity-2/nist-publishes-updated-incident-response-recommendations-and-considerations/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Publishes Updated Incident Response Recommendations</a>.</li>
+        <li>Epiq Global, <a href="https://www.epiqglobal.com/en-us/resource-center/articles/aba-opinion-how-to-respond-to-data-breaches" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Issues Opinion — How To Respond to Data Breaches</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -400,26 +383,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-53-monitoring-and-alerting-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 53 &mdash; Monitoring and Alerting Design</p>
-                </div>
-            </a>
+            <a href="episode-53-monitoring-and-alerting-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 53 &mdash; Monitoring and Alerting Design</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-55-disaster-recovery-and-business-continuity.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 55 &mdash; Disaster Recovery and Business Continuity</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-55-disaster-recovery-and-business-continuity.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 55 &mdash; Disaster Recovery and Business Continuity</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

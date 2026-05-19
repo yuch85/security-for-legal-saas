@@ -87,13 +87,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security Assertion Markup Language (SAML) &mdash; an XML-based open standard first published in 2002 and revised as <a href="https://docs.oasis-open.org/security/saml/v2.0/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAML 2.0 in 2005</a> &mdash; remains the dominant SSO protocol in enterprise legal tech. It works through a three-party trust model:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Example</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Role</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Example</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Identity Provider (IdP)</strong></td>
@@ -125,13 +123,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For new implementations, the industry is increasingly moving toward <strong class="text-ink">OpenID Connect (OIDC)</strong> &mdash; the JSON-based identity layer built on OAuth 2.0 that we covered in Episode 20. OIDC is lighter, easier to implement, and better suited to modern web and mobile architectures. But SAML is not going away:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Dimension</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SAML 2.0</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">OpenID Connect</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Dimension</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SAML 2.0</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">OpenID Connect</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Data format</strong></td>
@@ -161,8 +157,7 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Practical reality:</strong> If you&#39;re building legal SaaS for enterprise clients, you&#39;ll need to support both. Many firms still run SAML-only IdPs, and some require SAML specifically in their procurement security questionnaires.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Practical reality:</strong> If you&#39;re building legal SaaS for enterprise clients, you&#39;ll need to support both. Many firms still run SAML-only IdPs, and some require SAML specifically in their procurement security questionnaires.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SAML Security Vulnerabilities</h2>
 
@@ -174,10 +169,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP SAML Security Cheat Sheet</a> identifies several critical mitigations:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Validate the XML schema before verifying the signature</strong> &mdash; reject malformed documents before processing</li>
-        <li><strong class="text-ink">Use secure key selectors</strong> that ignore `KeyInfo` elements from the XML message itself</li>
-        <li><strong class="text-ink">Apply absolute XPath expressions</strong> for signature scope verification</li>
-        <li><strong class="text-ink">Never accept `alg=none`</strong> for any cryptographic operation</li>
+        <li>1. <strong class="text-ink">Validate the XML schema before verifying the signature</strong> &mdash; reject malformed documents before processing</li>
+        <li>2. <strong class="text-ink">Use secure key selectors</strong> that ignore `KeyInfo` elements from the XML message itself</li>
+        <li>3. <strong class="text-ink">Apply absolute XPath expressions</strong> for signature scope verification</li>
+        <li>4. <strong class="text-ink">Never accept `alg=none`</strong> for any cryptographic operation</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SCIM: Automated User Lifecycle</h2>
@@ -190,17 +185,16 @@
         <li><strong class="text-ink">Updates:</strong> The lawyer moves from the litigation department to M&amp;A → SCIM updates their attributes (and your application can adjust access accordingly)</li>
         <li><strong class="text-ink">Deprovisioning:</strong> The lawyer leaves the firm → SCIM disables or deletes their account immediately</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Why this matters for legal SaaS:</strong> A firm with 500 lawyers might use 30 different SaaS platforms. Without SCIM, each departure requires manual deprovisioning across all 30 systems. Miss one, and a former employee retains access to privileged client communications. SCIM eliminates this class of risk entirely.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Why this matters for legal SaaS:</strong> A firm with 500 lawyers might use 30 different SaaS platforms. Without SCIM, each departure requires manual deprovisioning across all 30 systems. Miss one, and a former employee retains access to privileged client communications. SCIM eliminates this class of risk entirely.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Multi-Tenant SSO: One IdP Per Tenant</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a multi-tenant legal SaaS platform &mdash; where multiple firms share the same application infrastructure &mdash; each firm needs its own SSO configuration. This is called <strong class="text-ink">IdP-per-tenant routing</strong>, and it typically works by email domain:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>User enters their email address on your login page</li>
-        <li>Your application extracts the domain (e.g., `@bakermckenzie.com`)</li>
-        <li>A lookup table maps that domain to the firm&#39;s specific IdP configuration</li>
-        <li>The user is redirected to their firm&#39;s IdP for authentication</li>
+        <li>1. User enters their email address on your login page</li>
+        <li>2. Your application extracts the domain (e.g., `@bakermckenzie.com`)</li>
+        <li>3. A lookup table maps that domain to the firm&#39;s specific IdP configuration</li>
+        <li>4. The user is redirected to their firm&#39;s IdP for authentication</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means your application must maintain a separate SAML or OIDC configuration for each enterprise client &mdash; including their IdP metadata URL, certificates, and attribute mappings. A configuration error in one tenant&#39;s SSO setup must never affect another tenant&#39;s authentication. We&#39;ll cover the broader multi-tenancy isolation challenge in Episode 27.</p>
@@ -216,13 +210,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://pages.nist.gov/800-63-3/sp800-63c.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-63C</a> defines three Federation Assurance Levels (FALs) that govern how identity assertions are protected:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Level</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Requirement</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Relevance</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Level</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Requirement</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Legal SaaS Relevance</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">FAL1</strong></td>
@@ -251,29 +243,23 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OASIS, <a href="https://docs.oasis-open.org/security/saml/v2.0/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAML 2.0 Standard</a> &mdash; the XML-based identity federation standard.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63c.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63C: Federation and Assertions</a> &mdash; federal guidelines for identity federation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAML Security Cheat Sheet</a> &mdash; implementation guidance and common vulnerability mitigations.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GitHub Blog, <a href="https://github.blog/security/sign-in-as-anyone-bypassing-saml-sso-authentication-with-parser-differentials/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Sign in as Anyone: Bypassing SAML SSO Authentication with Parser Differentials</a> &mdash; CVE-2025-25291/25292 disclosure (March 2025).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ProjectDiscovery, <a href="https://projectdiscovery.io/blog/github-enterprise-saml-authentication-bypass" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GitHub Enterprise SAML Authentication Bypass (CVE-2024-6800)</a> &mdash; SAML signature wrapping in GHES.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IETF, <a href="https://datatracker.ietf.org/doc/html/rfc7644" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 7644: SCIM Protocol</a> &mdash; the standard for automated user provisioning.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SSOJet, <a href="https://ssojet.com/blog/scim-provisioning-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SCIM Provisioning Best Practices</a> &mdash; practical guidance for SCIM implementation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: sso.tax, <a href="https://sso.tax/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SSO Wall of Shame</a> &mdash; tracking vendors that charge premiums for SSO.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63c.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63C: Federation Assurance Levels</a> &mdash; FAL1, FAL2, FAL3 definitions.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: IDManagement.gov, <a href="https://www.idmanagement.gov/playbooks/sso/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Enterprise Single Sign-On Playbook</a> &mdash; federal SSO implementation guidance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: PortSwigger Research, <a href="https://portswigger.net/research/the-fragile-lock" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Fragile Lock: Novel Bypasses for SAML Authentication</a> &mdash; advanced SAML attack techniques.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Endor Labs, <a href="https://www.endorlabs.com/learn/cve-2025-47949-reveals-flaw-in-samlify-that-opens-door-to-saml-single-sign-on-bypass" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2025-47949: samlify SAML SSO Bypass</a> &mdash; signature wrapping in samlify library.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>OASIS, <a href="https://docs.oasis-open.org/security/saml/v2.0/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAML 2.0 Standard</a> &mdash; the XML-based identity federation standard.</li>
+        <li>NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63c.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63C: Federation and Assertions</a> &mdash; federal guidelines for identity federation.</li>
+        <li>OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SAML Security Cheat Sheet</a> &mdash; implementation guidance and common vulnerability mitigations.</li>
+        <li>GitHub Blog, <a href="https://github.blog/security/sign-in-as-anyone-bypassing-saml-sso-authentication-with-parser-differentials/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Sign in as Anyone: Bypassing SAML SSO Authentication with Parser Differentials</a> &mdash; CVE-2025-25291/25292 disclosure (March 2025).</li>
+        <li>ProjectDiscovery, <a href="https://projectdiscovery.io/blog/github-enterprise-saml-authentication-bypass" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GitHub Enterprise SAML Authentication Bypass (CVE-2024-6800)</a> &mdash; SAML signature wrapping in GHES.</li>
+        <li>IETF, <a href="https://datatracker.ietf.org/doc/html/rfc7644" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">RFC 7644: SCIM Protocol</a> &mdash; the standard for automated user provisioning.</li>
+        <li>SSOJet, <a href="https://ssojet.com/blog/scim-provisioning-best-practices" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SCIM Provisioning Best Practices</a> &mdash; practical guidance for SCIM implementation.</li>
+        <li>sso.tax, <a href="https://sso.tax/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SSO Wall of Shame</a> &mdash; tracking vendors that charge premiums for SSO.</li>
+        <li>NIST, <a href="https://pages.nist.gov/800-63-3/sp800-63c.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-63C: Federation Assurance Levels</a> &mdash; FAL1, FAL2, FAL3 definitions.</li>
+        <li>IDManagement.gov, <a href="https://www.idmanagement.gov/playbooks/sso/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Enterprise Single Sign-On Playbook</a> &mdash; federal SSO implementation guidance.</li>
+        <li>PortSwigger Research, <a href="https://portswigger.net/research/the-fragile-lock" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Fragile Lock: Novel Bypasses for SAML Authentication</a> &mdash; advanced SAML attack techniques.</li>
+        <li>Endor Labs, <a href="https://www.endorlabs.com/learn/cve-2025-47949-reveals-flaw-in-samlify-that-opens-door-to-saml-single-sign-on-bypass" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2025-47949: samlify SAML SSO Bypass</a> &mdash; signature wrapping in samlify library.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -354,26 +340,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-21-multifactor-authentication.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 21 &mdash; Multi-Factor Authentication</p>
-                </div>
-            </a>
+            <a href="episode-21-multifactor-authentication.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 21 &mdash; Multi-Factor Authentication</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-23-rbac-roles-permissions-and-scopes.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 23 &mdash; RBAC &mdash; Roles, Permissions and Scopes</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-23-rbac-roles-permissions-and-scopes.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 23 &mdash; RBAC &mdash; Roles, Permissions and Scopes</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

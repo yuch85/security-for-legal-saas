@@ -91,12 +91,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Before hardening workstations, audit what&#39;s actually there. The typical legal SaaS developer&#39;s laptop contains:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Asset</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk if Compromised</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Asset</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Risk if Compromised</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">SSH private keys</strong></td>
@@ -129,8 +127,7 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Legal-specific risk:</strong> Developers building e-discovery tools or contract review platforms may have test datasets containing real client documents on their local machines. A workstation compromise becomes a client data breach, triggering notification obligations under <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 483</a> and state breach notification laws.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Legal-specific risk:</strong> Developers building e-discovery tools or contract review platforms may have test datasets containing real client documents on their local machines. A workstation compromise becomes a client data breach, triggering notification obligations under <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ABA Formal Opinion 483</a> and state breach notification laws.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Credential Theft Vectors</h2>
 
@@ -155,12 +152,9 @@
     </ul>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A developer who installs a &quot;productivity&quot; extension with broad permissions has effectively granted a third party read access to every authenticated session in their browser &mdash; including your legal SaaS platform&#39;s admin interface.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Mitigation:&lt;/strong&gt; Maintain an approved extension allowlist. Block installation of unapproved extensions via browser management policies. Audit existing extensions quarterly. Use separate browser profiles &mdash; one for development (restricted extensions), one for general browsing.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Mitigation:</strong> Maintain an approved extension allowlist. Block installation of unapproved extensions via browser management policies. Audit existing extensions quarterly. Use separate browser profiles &mdash; one for development (restricted extensions), one for general browsing.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Hardening the Developer Workstation</h2>
 
@@ -194,12 +188,9 @@
         <li>Remotely wipe a lost or stolen device</li>
         <li>Block unapproved application installations</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Offboarding discipline:&lt;/strong&gt; When a developer leaves, revoking their Git access is not enough. Rotate every credential they had access to: SSH keys, cloud IAM roles, API tokens, database passwords, CI/CD secrets. If they had a personal device enrolled in MDM, trigger a remote wipe of corporate data. The developer may have had credentials cached locally for months.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Offboarding discipline:</strong> When a developer leaves, revoking their Git access is not enough. Rotate every credential they had access to: SSH keys, cloud IAM roles, API tokens, database passwords, CI/CD secrets. If they had a personal device enrolled in MDM, trigger a remote wipe of corporate data. The developer may have had credentials cached locally for months.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The AI Credential Leakage Problem</h2>
 
@@ -218,13 +209,11 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Minimum Viable Workstation Security Checklist</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Effort</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Impact</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Effort</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Impact</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Full disk encryption</td>
@@ -274,27 +263,21 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: we examine the security risks of AI-generated code &mdash; what happens when the developer writing your authentication middleware is a probabilistic model that might hallucinate a back door.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CSO Online, <a href="https://www.csoonline.com/article/4169635/developer-workstations-are-the-new-beachhead.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Developer workstations are the new beachhead</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: BleepingComputer, <a href="https://www.bleepingcomputer.com/news/security/hundreds-of-networks-reportedly-hacked-in-codecov-supply-chain-attack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hundreds of networks reportedly hacked in Codecov supply-chain attack</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cybersecurity Dive, <a href="https://www.cybersecuritydive.com/news/codecov-breach-solarwinds-software-supply-chain/598950/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Codecov hack — likened to SolarWinds — targets software supply chain</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">When Should Law Firms Notify Clients About Data Breaches?</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-218: Secure Software Development Framework</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CIS Benchmarks, <a href="https://learn.microsoft.com/en-us/compliance/regulatory/offering-cis-benchmark" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Overview and Compliance Mapping</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SentinelOne, <a href="https://www.sentinelone.com/cybersecurity-101/identity-security/remote-access-security-best-practices/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Remote Access Security Best Practices</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/ir/8587/ipd" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NISTIR 8587: Protecting Tokens and Assertions from Forgery, Theft, and Misuse</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Sonatype, <a href="https://www.sonatype.com/blog/what-you-need-to-know-about-the-codecov-incident-a-supply-chain-attack-gone-undetected-for-2-months" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What You Need to Know About the Codecov Incident</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Palo Alto Networks, <a href="https://www.paloaltonetworks.com/blog/cloud-security/trivy-supply-chain-attack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">When Security Scanners Become the Weapon: Breaking Down the Trivy Supply Chain Attack</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>CSO Online, <a href="https://www.csoonline.com/article/4169635/developer-workstations-are-the-new-beachhead.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Developer workstations are the new beachhead</a>.</li>
+        <li>BleepingComputer, <a href="https://www.bleepingcomputer.com/news/security/hundreds-of-networks-reportedly-hacked-in-codecov-supply-chain-attack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hundreds of networks reportedly hacked in Codecov supply-chain attack</a>.</li>
+        <li>Cybersecurity Dive, <a href="https://www.cybersecuritydive.com/news/codecov-breach-solarwinds-software-supply-chain/598950/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Codecov hack — likened to SolarWinds — targets software supply chain</a>.</li>
+        <li>ABA, <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2020-november/when-should-law-firms-notify-clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">When Should Law Firms Notify Clients About Data Breaches?</a>.</li>
+        <li>NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-218: Secure Software Development Framework</a>.</li>
+        <li>CIS Benchmarks, <a href="https://learn.microsoft.com/en-us/compliance/regulatory/offering-cis-benchmark" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Overview and Compliance Mapping</a>.</li>
+        <li>SentinelOne, <a href="https://www.sentinelone.com/cybersecurity-101/identity-security/remote-access-security-best-practices/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Remote Access Security Best Practices</a>.</li>
+        <li>NIST, <a href="https://csrc.nist.gov/pubs/ir/8587/ipd" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NISTIR 8587: Protecting Tokens and Assertions from Forgery, Theft, and Misuse</a>.</li>
+        <li>Sonatype, <a href="https://www.sonatype.com/blog/what-you-need-to-know-about-the-codecov-incident-a-supply-chain-attack-gone-undetected-for-2-months" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What You Need to Know About the Codecov Incident</a>.</li>
+        <li>Palo Alto Networks, <a href="https://www.paloaltonetworks.com/blog/cloud-security/trivy-supply-chain-attack/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">When Security Scanners Become the Weapon: Breaking Down the Trivy Supply Chain Attack</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -371,26 +354,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-49-cloud-iam-and-least-privilege.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 49 &mdash; Cloud IAM and Least Privilege</p>
-                </div>
-            </a>
+            <a href="episode-49-cloud-iam-and-least-privilege.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 49 &mdash; Cloud IAM and Least Privilege</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 51 &mdash; Trusting the AI Developer &mdash; Verifying Agent-Generated Code</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 51 &mdash; Trusting the AI Developer &mdash; Verifying Agent-Generated Code</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

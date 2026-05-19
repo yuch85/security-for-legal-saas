@@ -91,13 +91,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SOC 2 evaluates controls against five Trust Services Criteria (TSC):</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Criterion</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Required?</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Criterion</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Required?</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Security</strong> (CC series)</td>
@@ -133,13 +131,11 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Type I vs. Type II</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink"></th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2 Type I</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2 Type II</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink"></th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2 Type I</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2 Type II</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">What it proves</strong></td>
@@ -164,12 +160,9 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key distinction:&lt;/strong&gt; Type I says &quot;on the day the auditor looked, our controls were properly designed.&quot; Type II says &quot;for six months, someone watched us follow our own rules, and we actually did.&quot; Enterprise clients overwhelmingly prefer Type II because it demonstrates sustained discipline, not a one-day performance. <a href="https://www.metomic.io/resource-centre/soc-2-type-ii">According to Metomic</a>, 78% of enterprise clients now require SOC 2 Type II from their service providers.&lt;sup&gt;[3]&lt;/sup&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Key distinction:</strong> Type I says "on the day the auditor looked, our controls were properly designed." Type II says "for six months, someone watched us follow our own rules, and we actually did." Enterprise clients overwhelmingly prefer Type II because it demonstrates sustained discipline, not a one-day performance. <a href="https://www.metomic.io/resource-centre/soc-2-type-ii" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">According to Metomic</a>, 78% of enterprise clients now require SOC 2 Type II from their service providers.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Penetration Testing as Evidence</h2>
 
@@ -184,13 +177,11 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Pentest Scope and Frequency</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recommended Scope</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Frequency</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Component</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recommended Scope</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Frequency</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Web application</td>
@@ -220,11 +211,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A penetration test that finds nothing is either excellent news or evidence of an inadequate test. What auditors want to see:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Scoped engagement letter</strong> &mdash; defining what was tested and what was excluded</li>
-        <li><strong class="text-ink">Detailed findings report</strong> &mdash; each vulnerability classified by severity (Critical, High, Medium, Low, Informational)</li>
-        <li><strong class="text-ink">Remediation plan</strong> &mdash; documented timelines for fixing each finding</li>
-        <li><strong class="text-ink">Retest evidence</strong> &mdash; proof that Critical and High findings were fixed and verified</li>
-        <li><strong class="text-ink">Trend analysis</strong> &mdash; comparison with prior year&#39;s results showing improvement</li>
+        <li>1. <strong class="text-ink">Scoped engagement letter</strong> &mdash; defining what was tested and what was excluded</li>
+        <li>2. <strong class="text-ink">Detailed findings report</strong> &mdash; each vulnerability classified by severity (Critical, High, Medium, Low, Informational)</li>
+        <li>3. <strong class="text-ink">Remediation plan</strong> &mdash; documented timelines for fixing each finding</li>
+        <li>4. <strong class="text-ink">Retest evidence</strong> &mdash; proof that Critical and High findings were fixed and verified</li>
+        <li>5. <strong class="text-ink">Trend analysis</strong> &mdash; comparison with prior year&#39;s results showing improvement</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">ISO 27001: The International Standard</h2>
@@ -232,13 +223,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO/IEC 27001:2022</a> is the international standard for information security management systems (ISMS). Where SOC 2 evaluates specific controls, ISO 27001 evaluates whether you have a management system &mdash; a framework for continuously identifying, assessing, and treating information security risks.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">ISO 27001</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Aspect</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">SOC 2</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">ISO 27001</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Developed by</strong></td>
@@ -285,13 +274,11 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Choosing the Right Certification at the Right Time</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Stage</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recommended Certification</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rationale</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Stage</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Recommended Certification</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rationale</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Pre-revenue / MVP</strong></td>
@@ -321,12 +308,9 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fffbeb; border-left: 4px solid #f59e0b; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The enterprise sales inflection point:&lt;/strong&gt; There is a specific moment in every legal SaaS company&#39;s growth where the absence of SOC 2 Type II starts costing deals. It typically arrives when you land your first Am Law 200 firm or Magic Circle prospect. Their procurement team will not proceed without it. Plan your certification timeline 12&ndash;18 months ahead of when you expect to need it.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-amber-500 bg-amber-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>The enterprise sales inflection point:</strong> There is a specific moment in every legal SaaS company's growth where the absence of SOC 2 Type II starts costing deals. It typically arrives when you land your first Am Law 200 firm or Magic Circle prospect. Their procurement team will not proceed without it. Plan your certification timeline 12&ndash;18 months ahead of when you expect to need it.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
@@ -334,27 +318,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AICPA, <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 — SOC for Service Organizations</a> &mdash; Trust Services Criteria framework overview.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cloud Security Alliance, <a href="https://cloudsecurityalliance.org/blog/2023/10/05/the-5-soc-2-trust-services-criteria-explained" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 5 SOC 2 Trust Services Criteria Explained</a> &mdash; detailed breakdown of each criterion.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Metomic, <a href="https://www.metomic.io/resource-centre/soc-2-type-ii" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Type II: A Complete Guide & Checklist</a> &mdash; Type I vs. Type II comparison and enterprise requirements.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Blaze InfoSec, <a href="https://www.blazeinfosec.com/post/soc-2-penetration-testing-requirements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing Requirements Explained</a> &mdash; when and why pentesting is expected for SOC 2.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Q-Sec, <a href="https://q-sec.com/en/blog/soc-2-penetration-testing" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing: What Auditors Actually Expect</a> &mdash; auditor expectations and evidence requirements.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Pentest Testing, <a href="https://www.pentesttesting.com/iso-27001-penetration-testing-audit-evidence/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO 27001 Penetration Testing Audit Evidence Guide</a> &mdash; ISO 27001 pentest evidence requirements.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ISO, <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO/IEC 27001 — Information Security Management</a> &mdash; standard overview.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bright Defense, <a href="https://www.brightdefense.com/resources/soc-2-trust-services-criteria/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria: A Practical View</a> &mdash; selecting criteria for SaaS compliance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NCSC, <a href="https://www.ncsc.gov.uk/cyberessentials/overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cyber Essentials</a> &mdash; UK government certification scheme.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Cherry Bekaert, <a href="https://www.cbh.com/insights/articles/soc-2-trust-services-criteria-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria Guide</a> &mdash; practical audit preparation guide.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Netragard, <a href="https://netragard.com/blog/soc-2-penetration-testing-requirements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing Requirements for 2026</a> &mdash; updated pentest requirements and methodology.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>AICPA, <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 — SOC for Service Organizations</a> &mdash; Trust Services Criteria framework overview.</li>
+        <li>Cloud Security Alliance, <a href="https://cloudsecurityalliance.org/blog/2023/10/05/the-5-soc-2-trust-services-criteria-explained" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The 5 SOC 2 Trust Services Criteria Explained</a> &mdash; detailed breakdown of each criterion.</li>
+        <li>Metomic, <a href="https://www.metomic.io/resource-centre/soc-2-type-ii" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Type II: A Complete Guide & Checklist</a> &mdash; Type I vs. Type II comparison and enterprise requirements.</li>
+        <li>Blaze InfoSec, <a href="https://www.blazeinfosec.com/post/soc-2-penetration-testing-requirements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing Requirements Explained</a> &mdash; when and why pentesting is expected for SOC 2.</li>
+        <li>Q-Sec, <a href="https://q-sec.com/en/blog/soc-2-penetration-testing" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing: What Auditors Actually Expect</a> &mdash; auditor expectations and evidence requirements.</li>
+        <li>Pentest Testing, <a href="https://www.pentesttesting.com/iso-27001-penetration-testing-audit-evidence/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO 27001 Penetration Testing Audit Evidence Guide</a> &mdash; ISO 27001 pentest evidence requirements.</li>
+        <li>ISO, <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ISO/IEC 27001 — Information Security Management</a> &mdash; standard overview.</li>
+        <li>Bright Defense, <a href="https://www.brightdefense.com/resources/soc-2-trust-services-criteria/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria: A Practical View</a> &mdash; selecting criteria for SaaS compliance.</li>
+        <li>NCSC, <a href="https://www.ncsc.gov.uk/cyberessentials/overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cyber Essentials</a> &mdash; UK government certification scheme.</li>
+        <li>Cherry Bekaert, <a href="https://www.cbh.com/insights/articles/soc-2-trust-services-criteria-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria Guide</a> &mdash; practical audit preparation guide.</li>
+        <li>Netragard, <a href="https://netragard.com/blog/soc-2-penetration-testing-requirements/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Penetration Testing Requirements for 2026</a> &mdash; updated pentest requirements and methodology.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -445,26 +424,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-59-gdpr-pdpa-and-data-protection-compliance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 59 &mdash; GDPR, PDPA and Data Protection Compliance</p>
-                </div>
-            </a>
+            <a href="episode-59-gdpr-pdpa-and-data-protection-compliance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 59 &mdash; GDPR, PDPA and Data Protection Compliance</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-61-customer-trust-and-security-reviews.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 61 &mdash; Customer Trust and Security Reviews</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-61-customer-trust-and-security-reviews.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 61 &mdash; Customer Trust and Security Reviews</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

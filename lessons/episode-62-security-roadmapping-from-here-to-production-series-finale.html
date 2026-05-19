@@ -87,13 +87,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security investment follows a predictable maturity curve. Attempting to implement enterprise-grade controls before you have paying clients wastes resources. Ignoring security until your first enterprise prospect demands SOC 2 leaves you scrambling. The key is matching your security posture to your stage.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Stage</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Focus</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Actions</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Stage</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Focus</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Actions</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Pre-revenue / Building</strong></td>
@@ -123,12 +121,9 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The critical insight:&lt;/strong&gt; The items in the &quot;Pre-revenue&quot; row are nearly free to implement correctly from the start but extremely expensive to retrofit later. Parameterised queries cost nothing extra when you build the first database call. Adding them after a SQL injection audit finding means rewriting every query in your application. Security debt compounds faster than technical debt.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>The critical insight:</strong> The items in the "Pre-revenue" row are nearly free to implement correctly from the start but extremely expensive to retrofit later. Parameterised queries cost nothing extra when you build the first database call. Adding them after a SQL injection audit finding means rewriting every query in your application. Security debt compounds faster than technical debt.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Three Prioritisation Frameworks</h2>
 
@@ -136,11 +131,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Start with your threat model from Episode 1. Which threats have the highest likelihood and the highest impact? For most legal SaaS platforms, the ranking is:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Authentication compromise</strong> &mdash; credential stuffing, phished passwords, missing MFA → Highest impact because it grants full access to client data</li>
-        <li><strong class="text-ink">Injection vulnerabilities</strong> &mdash; SQL injection, XSS → Direct access to data or session hijack</li>
-        <li><strong class="text-ink">Broken access control</strong> &mdash; IDOR/BOLA, privilege escalation → Cross-tenant data exposure</li>
-        <li><strong class="text-ink">Data exposure in transit/at rest</strong> &mdash; missing encryption → Regulatory violation and breach notification</li>
-        <li><strong class="text-ink">Insider threats</strong> &mdash; privilege misuse, departing employee exfiltration → Hardest to detect, highest trust damage</li>
+        <li>1. <strong class="text-ink">Authentication compromise</strong> &mdash; credential stuffing, phished passwords, missing MFA → Highest impact because it grants full access to client data</li>
+        <li>2. <strong class="text-ink">Injection vulnerabilities</strong> &mdash; SQL injection, XSS → Direct access to data or session hijack</li>
+        <li>3. <strong class="text-ink">Broken access control</strong> &mdash; IDOR/BOLA, privilege escalation → Cross-tenant data exposure</li>
+        <li>4. <strong class="text-ink">Data exposure in transit/at rest</strong> &mdash; missing encryption → Regulatory violation and breach notification</li>
+        <li>5. <strong class="text-ink">Insider threats</strong> &mdash; privilege misuse, departing employee exfiltration → Hardest to detect, highest trust damage</li>
     </ol>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Compliance-Driven Prioritisation</h3>
@@ -165,13 +160,11 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Quarter 1: Foundation</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Complete threat model for all critical workflows</td>
@@ -205,13 +198,11 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Quarter 2: Validation</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Commission external penetration test</td>
@@ -240,13 +231,11 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Quarter 3: Maturity</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Achieve SOC 2 Type I</td>
@@ -275,13 +264,11 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Quarter 4: Scale</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Action</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Episode Reference</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Measurable Outcome</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">SOC 2 Type II report issued</td>
@@ -316,48 +303,33 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What to Do Monday Morning</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If you have listened to all sixty-two episodes and want to start immediately, here are the first five actions:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 1: Run a threat model.&lt;/strong&gt; Take your most critical workflow &mdash; user login, document upload, client data export &mdash; and walk through it using STRIDE (<a href="../ep01/article.md">Episode 1</a>). Identify the top three threats. This takes one afternoon and gives you a prioritised list to work from.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 2: Enforce MFA for all users.&lt;/strong&gt; Not optional, not &quot;available.&quot; Enforced. TOTP as baseline, passkeys as the upgrade path (<a href="../ep21/article.md">Episode 21</a>). This single control blocks 99.9% of automated account compromise attempts.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 3: Audit your dependencies.&lt;/strong&gt; Run &lt;code&gt;npm audit&lt;/code&gt; or &lt;code&gt;pip audit&lt;/code&gt;. Check your Docker base images for known vulnerabilities. Patch anything Critical or High severity. Schedule this as a weekly automated check.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 4: Write your incident response plan.&lt;/strong&gt; One page. Who is on the response team, how you communicate during an incident, when you notify clients, when you notify regulators (<a href="../ep52/article.md">Episode 52</a>). Test it with a tabletop scenario within 30 days.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Action 5: Prepare your DPA.&lt;/strong&gt; Have a Data Processing Agreement template reviewed by counsel and ready to send (<a href="../ep59/article.md">Episode 59</a>). The first enterprise client who asks for one should receive it within 24 hours, not 24 days.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Action 1: Run a threat model.</strong> Take your most critical workflow &mdash; user login, document upload, client data export &mdash; and walk through it using STRIDE (<a href="../ep01/article.md" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 1</a>). Identify the top three threats. This takes one afternoon and gives you a prioritised list to work from.</p>
+    </div>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Action 2: Enforce MFA for all users.</strong> Not optional, not "available." Enforced. TOTP as baseline, passkeys as the upgrade path (<a href="../ep21/article.md" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 21</a>). This single control blocks 99.9% of automated account compromise attempts.</p>
+    </div>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Action 3: Audit your dependencies.</strong> Run <code>npm audit</code> or <code>pip audit</code>. Check your Docker base images for known vulnerabilities. Patch anything Critical or High severity. Schedule this as a weekly automated check.</p>
+    </div>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Action 4: Write your incident response plan.</strong> One page. Who is on the response team, how you communicate during an incident, when you notify clients, when you notify regulators (<a href="../ep52/article.md" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 52</a>). Test it with a tabletop scenario within 30 days.</p>
+    </div>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Action 5: Prepare your DPA.</strong> Have a Data Processing Agreement template reviewed by counsel and ready to send (<a href="../ep59/article.md" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 59</a>). The first enterprise client who asks for one should receive it within 24 hours, not 24 days.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Maintaining Momentum</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Security is not a project with a finish line. It is a continuous practice. Three mechanisms keep it alive:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Security champions</strong> &mdash; designate one engineer per team as the security-aware voice in design reviews, code reviews, and architecture decisions. They are not a security team &mdash; they are security advocates embedded in product teams.</li>
+        <li>1. <strong class="text-ink">Security champions</strong> &mdash; designate one engineer per team as the security-aware voice in design reviews, code reviews, and architecture decisions. They are not a security team &mdash; they are security advocates embedded in product teams.</li>
     </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Regular reviews</strong> &mdash; quarterly security roadmap reviews that assess progress, reprioritise based on new threats or customer requirements, and adjust resource allocation.</li>
+        <li>2. <strong class="text-ink">Regular reviews</strong> &mdash; quarterly security roadmap reviews that assess progress, reprioritise based on new threats or customer requirements, and adjust resource allocation.</li>
     </ol>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Continuous improvement</strong> &mdash; every incident, every penetration test finding, every customer security question is an input to the next cycle. The organisations that get breached are not the ones with imperfect security &mdash; they are the ones that stopped improving.</li>
+        <li>3. <strong class="text-ink">Continuous improvement</strong> &mdash; every incident, every penetration test finding, every customer security question is an input to the next cycle. The organisations that get breached are not the ones with imperfect security &mdash; they are the ones that stopped improving.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Series Reflection</h2>
@@ -370,25 +342,21 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SecureSlate, <a href="https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How Top SaaS Use Trust Centers to Close Deals 2x Faster</a> &mdash; security posture as competitive advantage.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/law_practice/resources/tech-report/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2023 Legal Technology Survey Report</a> &mdash; lawyer technology adoption and security obligations.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-community/Threat_Modeling" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Threat Modeling</a> &mdash; STRIDE methodology and implementation guidance.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity Framework (CSF) 2.0</a> &mdash; risk-based prioritisation framework.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wiz, <a href="https://www.wiz.io/academy/cloud-security/cloud-security-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Cloud Security Maturity Model</a> &mdash; maturity-based security investment framework.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AICPA, <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria</a> &mdash; compliance-driven roadmap anchor.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: AWS, <a href="https://maturitymodel.security.aws.dev/en/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Maturity Model</a> &mdash; progressive security control implementation.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NCSC, <a href="https://www.ncsc.gov.uk/cyberessentials/overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cyber Essentials</a> &mdash; UK baseline security certification.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bright Defense, <a href="https://www.brightdefense.com/resources/soc-2-trust-services-criteria/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria: A Practical View</a> &mdash; SOC 2 readiness assessment.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SSOJet, <a href="https://ssojet.com/white-papers/enterprise-readiness-guide-b2b-saas-leadership/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Enterprise Readiness Guide — B2B SaaS Leadership Framework</a> &mdash; security maturity in enterprise SaaS context.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>SecureSlate, <a href="https://getsecureslate.com/blog/how-top-saas-use-trust-centers-to-close-deals-2-faster" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How Top SaaS Use Trust Centers to Close Deals 2x Faster</a> &mdash; security posture as competitive advantage.</li>
+        <li>ABA, <a href="https://www.americanbar.org/groups/law_practice/resources/tech-report/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">2023 Legal Technology Survey Report</a> &mdash; lawyer technology adoption and security obligations.</li>
+        <li>OWASP, <a href="https://owasp.org/www-community/Threat_Modeling" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Threat Modeling</a> &mdash; STRIDE methodology and implementation guidance.</li>
+        <li>NIST, <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity Framework (CSF) 2.0</a> &mdash; risk-based prioritisation framework.</li>
+        <li>Wiz, <a href="https://www.wiz.io/academy/cloud-security/cloud-security-maturity-model" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Cloud Security Maturity Model</a> &mdash; maturity-based security investment framework.</li>
+        <li>AICPA, <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria</a> &mdash; compliance-driven roadmap anchor.</li>
+        <li>AWS, <a href="https://maturitymodel.security.aws.dev/en/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Security Maturity Model</a> &mdash; progressive security control implementation.</li>
+        <li>NCSC, <a href="https://www.ncsc.gov.uk/cyberessentials/overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cyber Essentials</a> &mdash; UK baseline security certification.</li>
+        <li>Bright Defense, <a href="https://www.brightdefense.com/resources/soc-2-trust-services-criteria/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SOC 2 Trust Services Criteria: A Practical View</a> &mdash; SOC 2 readiness assessment.</li>
+        <li>SSOJet, <a href="https://ssojet.com/white-papers/enterprise-readiness-guide-b2b-saas-leadership/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Enterprise Readiness Guide — B2B SaaS Leadership Framework</a> &mdash; security maturity in enterprise SaaS context.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -491,23 +459,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-61-customer-trust-and-security-reviews.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 61 &mdash; Customer Trust and Security Reviews</p>
-                </div>
-            </a>
+            <a href="episode-61-customer-trust-and-security-reviews.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 61 &mdash; Customer Trust and Security Reviews</p></div></a>
         </div>
         <div class="text-right">
-            <span class="group inline-flex items-center text-ink-muted">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Series Finale</p>
-                    <p class="text-lg font-semibold">The End</p>
-                </div>
-            </span>
+            <span class="group inline-flex items-center text-ink-muted"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Series Finale</p><p class="text-lg font-semibold">The End</p></div></span>
         </div>
     </div>
 </nav>

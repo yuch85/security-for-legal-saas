@@ -89,13 +89,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your framework and library choices have security consequences that persist for the lifetime of the project.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Decision</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Secure Default</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Insecure Default</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Decision</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Secure Default</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Insecure Default</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Web framework</strong></td>
@@ -125,12 +123,9 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Framework defaults matter more than you think.&lt;/strong&gt; Django auto-escapes template variables (preventing XSS &mdash; cross-site scripting, as covered in <a href="../ep09/article.md">Episode 9</a>), enables CSRF middleware by default, and uses parameterised queries through its ORM. A developer has to actively opt out of these protections. Express.js, by contrast, provides none of these by default &mdash; each must be added manually. The framework&#39;s opinion on security becomes your application&#39;s baseline.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Framework defaults matter more than you think.</strong> Django auto-escapes template variables (preventing XSS &mdash; cross-site scripting, as covered in <a href="../ep09/article.md" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 9</a>), enables CSRF middleware by default, and uses parameterised queries through its ORM. A developer has to actively opt out of these protections. Express.js, by contrast, provides none of these by default &mdash; each must be added manually. The framework's opinion on security becomes your application's baseline.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The First-Commit Security Checklist</h2>
 
@@ -175,12 +170,10 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">What must exist before your first user accesses the system?</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Why It Can&#39;t Wait</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Why It Can&#39;t Wait</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">HTTPS / TLS</td>
@@ -213,12 +206,9 @@
         </tbody>
     </table>
     </div>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The legal standard:&lt;/strong&gt; <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/">NYC Bar Formal Opinion 2024-3</a> clarified that lawyers&#39; ethical obligations regarding cybersecurity extend to the technology platforms they choose. Selecting a platform that lacks basic security controls &mdash; or building one without them &mdash; is not a defensible &quot;reasonable efforts&quot; position under ABA Model Rule 1.6(c).&lt;sup&gt;[4]&lt;/sup&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>The legal standard:</strong> <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NYC Bar Formal Opinion 2024-3</a> clarified that lawyers' ethical obligations regarding cybersecurity extend to the technology platforms they choose. Selecting a platform that lacks basic security controls &mdash; or building one without them &mdash; is not a defensible "reasonable efforts" position under ABA Model Rule 1.6(c).</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security Debt Compounds Faster Than Technical Debt</h2>
 
@@ -234,39 +224,33 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Bootstrapping security doesn&#39;t mean building a fortress before writing features. It means making choices that don&#39;t foreclose security later:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Choose frameworks with secure defaults</strong> &mdash; so developers fall into the safe path</li>
-        <li><strong class="text-ink">Set up secret management before you have secrets</strong> &mdash; so there&#39;s no &quot;temporary&quot; plaintext</li>
-        <li><strong class="text-ink">Install pre-commit hooks before the first commit</strong> &mdash; so secrets never enter history</li>
-        <li><strong class="text-ink">Add dependency scanning before the first dependency</strong> &mdash; so nothing slips through unchecked</li>
-        <li><strong class="text-ink">Configure logging before the first user</strong> &mdash; so the evidence exists when you need it</li>
-        <li><strong class="text-ink">Pick an auth library that supports MFA and SSO</strong> &mdash; so you don&#39;t rewrite login in six months</li>
+        <li>1. <strong class="text-ink">Choose frameworks with secure defaults</strong> &mdash; so developers fall into the safe path</li>
+        <li>2. <strong class="text-ink">Set up secret management before you have secrets</strong> &mdash; so there&#39;s no &quot;temporary&quot; plaintext</li>
+        <li>3. <strong class="text-ink">Install pre-commit hooks before the first commit</strong> &mdash; so secrets never enter history</li>
+        <li>4. <strong class="text-ink">Add dependency scanning before the first dependency</strong> &mdash; so nothing slips through unchecked</li>
+        <li>5. <strong class="text-ink">Configure logging before the first user</strong> &mdash; so the evidence exists when you need it</li>
+        <li>6. <strong class="text-ink">Pick an auth library that supports MFA and SSO</strong> &mdash; so you don&#39;t rewrite login in six months</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The decisions you make before writing code determine how hard everything else will be. Make them well.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: we shift from building to watching &mdash; monitoring and alerting design for detecting attacks in progress.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure by Design Framework</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Logging Cheat Sheet</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependency-Check: Software Composition Analysis</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NYC Bar Association, <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Assurance Maturity Model (SAMM)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/Top10/2025/0x03_2025-Establishing_a_Modern_Application_Security_Program/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Establishing a Modern Application Security Program — OWASP Top 10:2025</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://devguide.owasp.org/en/02-foundations/02-secure-development/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Development and Integration — Developer Guide</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP in SDLC — Integration Standards</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://petronellatech.com/blog/cybersecurity-law-firms-compliance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity for Law Firms: ABA Compliance Guide</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-218: Secure Software Development Framework</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>OWASP, <a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure by Design Framework</a>.</li>
+        <li>OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Logging Cheat Sheet</a>.</li>
+        <li>OWASP, <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependency-Check: Software Composition Analysis</a>.</li>
+        <li>NYC Bar Association, <a href="https://www.nycbar.org/reports/formal-opinion-2024-3-ethical-obligations-relating-to-a-cybersecurity-incident/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Formal Opinion 2024-3: Ethical Obligations Relating to a Cybersecurity Incident</a>.</li>
+        <li>OWASP, <a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Assurance Maturity Model (SAMM)</a>.</li>
+        <li>OWASP, <a href="https://owasp.org/Top10/2025/0x03_2025-Establishing_a_Modern_Application_Security_Program/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Establishing a Modern Application Security Program — OWASP Top 10:2025</a>.</li>
+        <li>OWASP, <a href="https://devguide.owasp.org/en/02-foundations/02-secure-development/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secure Development and Integration — Developer Guide</a>.</li>
+        <li>OWASP, <a href="https://owasp.org/www-project-integration-standards/writeups/owasp_in_sdlc/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP in SDLC — Integration Standards</a>.</li>
+        <li>ABA, <a href="https://petronellatech.com/blog/cybersecurity-law-firms-compliance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity for Law Firms: ABA Compliance Guide</a>.</li>
+        <li>NIST, <a href="https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-218: Secure Software Development Framework</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -347,26 +331,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 51 &mdash; Trusting the AI Developer &mdash; Verifying Agent-Generated Code</p>
-                </div>
-            </a>
+            <a href="episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 51 &mdash; Trusting the AI Developer &mdash; Verifying Agent-Generated Code</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-53-monitoring-and-alerting-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 53 &mdash; Monitoring and Alerting Design</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-53-monitoring-and-alerting-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 53 &mdash; Monitoring and Alerting Design</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

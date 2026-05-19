@@ -87,13 +87,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;LLMjacking&quot; is a term coined by the Sysdig Threat Research Team to describe attackers stealing cloud credentials to hijack access to large language model services. It follows the pattern of cryptojacking (stealing compute for cryptocurrency mining) and proxyjacking (reselling stolen bandwidth), but the economics are different &mdash; and worse.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Attack</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What&#39;s Stolen</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical Cost to Victim</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Attack</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What&#39;s Stolen</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Typical Cost to Victim</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Cryptojacking</strong></td>
@@ -115,19 +113,17 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Sysdig documented a 376% increase in credential theft specifically targeting AI services between Q4 2025 and Q1 2026. The financial impact is staggering: one startup&#39;s monthly OpenAI bill went from $400 to $67,000 after their API key was exposed in a public GitHub repository for 11 days.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: LiteLLM Supply Chain Compromise (March 2026).</strong> LiteLLM &mdash; the most popular open-source LLM proxy in the Python ecosystem, with approximately 97 million monthly downloads &mdash; was compromised when attackers hijacked the maintainer&#39;s PyPI account. Version 1.82.8 included a malicious file that silently exfiltrated cloud credentials, SSH keys, and Kubernetes secrets. Because LiteLLM runs as a centralised API gateway, compromising it yielded not just cloud credentials but LLM API keys for OpenAI, Anthropic, Azure AI, and others simultaneously.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Case study: Microsoft v. Storm-2139 (January 2025).</strong> Microsoft filed a civil lawsuit against a criminal syndicate called Storm-2139 that had industrialised LLMjacking across Azure, OpenAI, AWS Bedrock, Anthropic, Google Vertex AI, and Mistral. The syndicate built a custom tool called de3u that allowed users to generate images using stolen Azure API keys, with features designed to circumvent content safety filters.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Case study: LiteLLM Supply Chain Compromise (March 2026).</strong> LiteLLM &mdash; the most popular open-source LLM proxy in the Python ecosystem, with approximately 97 million monthly downloads &mdash; was compromised when attackers hijacked the maintainer&#39;s PyPI account. Version 1.82.8 included a malicious file that silently exfiltrated cloud credentials, SSH keys, and Kubernetes secrets. Because LiteLLM runs as a centralised API gateway, compromising it yielded not just cloud credentials but LLM API keys for OpenAI, Anthropic, Azure AI, and others simultaneously.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Case study: Microsoft v. Storm-2139 (January 2025).</strong> Microsoft filed a civil lawsuit against a criminal syndicate called Storm-2139 that had industrialised LLMjacking across Azure, OpenAI, AWS Bedrock, Anthropic, Google Vertex AI, and Mistral. The syndicate built a custom tool called de3u that allowed users to generate images using stolen Azure API keys, with features designed to circumvent content safety filters.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why Law Firms Are Particularly Vulnerable</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal AI deployments face specific risks that make API key isolation critical:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">High-value prompts.</strong> Legal prompts contain privileged information, case strategy, client names, and confidential deal terms. A stolen key doesn&#39;t just cost money &mdash; it exposes every prompt and response flowing through it.</li>
-        <li><strong class="text-ink">Long-lived keys.</strong> Many firms set up API keys once and forget them. Unlike passwords, API keys rarely expire by default, and few organisations rotate them regularly.</li>
-        <li><strong class="text-ink">Shared across environments.</strong> Development, staging, and production environments often share a single API key &mdash; meaning a key leaked from a developer&#39;s laptop compromises the production system.</li>
-        <li><strong class="text-ink">Embedded in code.</strong> Despite decades of warnings, API keys still appear in source code, configuration files, and CI/CD pipelines. GitHub&#39;s secret scanning detects <a href="https://github.blog/security/secret-scanning/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">millions of leaked secrets annually</a>.</li>
+        <li>1. <strong class="text-ink">High-value prompts.</strong> Legal prompts contain privileged information, case strategy, client names, and confidential deal terms. A stolen key doesn&#39;t just cost money &mdash; it exposes every prompt and response flowing through it.</li>
+        <li>2. <strong class="text-ink">Long-lived keys.</strong> Many firms set up API keys once and forget them. Unlike passwords, API keys rarely expire by default, and few organisations rotate them regularly.</li>
+        <li>3. <strong class="text-ink">Shared across environments.</strong> Development, staging, and production environments often share a single API key &mdash; meaning a key leaked from a developer&#39;s laptop compromises the production system.</li>
+        <li>4. <strong class="text-ink">Embedded in code.</strong> Despite decades of warnings, API keys still appear in source code, configuration files, and CI/CD pipelines. GitHub&#39;s secret scanning detects <a href="https://github.blog/security/secret-scanning/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">millions of leaked secrets annually</a>.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Per-Environment Key Isolation</h2>
@@ -135,14 +131,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The first principle: every environment gets its own API key. Development, staging, and production must never share credentials.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Environment</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Scope</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Budget Limit</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Monitoring</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Environment</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Scope</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Budget Limit</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Monitoring</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Development</strong></td>
@@ -171,33 +165,24 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Inference Gateway Pattern</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An inference gateway is a proxy layer that sits between your application and the LLM provider. Every request flows through the gateway, which adds authentication, logging, rate limiting, and policy enforcement before forwarding the request to the provider.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your Application → Inference Gateway → LLM Provider (OpenAI, Anthropic, etc.)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">↓</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Logs, rate limits,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">budget controls,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">PII scanning,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">key rotation</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">Your Application → Inference Gateway → LLM Provider (OpenAI, Anthropic, etc.)
+                        ↓
+                  Logs, rate limits,
+                  budget controls,
+                  PII scanning,
+                  key rotation
+</code></pre>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">What the Gateway Enforces</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Without Gateway</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">With Gateway</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Without Gateway</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">With Gateway</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Authentication</strong></td>
@@ -244,18 +229,17 @@
         <li>Requests to models your application doesn&#39;t normally use</li>
         <li>Prompt patterns that don&#39;t match your application&#39;s template structure</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Overlap with secrets management (Episode 30):</strong> LLM API keys are high-rotation, high-value secrets. They belong in your secrets manager (HashiCorp Vault, AWS Secrets Manager, or equivalent), not in environment variables, configuration files, or &mdash; worst case &mdash; source code. The inference gateway retrieves keys from the secrets manager, and the keys are rotated on a schedule without any application changes.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Overlap with secrets management (Episode 30):</strong> LLM API keys are high-rotation, high-value secrets. They belong in your secrets manager (HashiCorp Vault, AWS Secrets Manager, or equivalent), not in environment variables, configuration files, or &mdash; worst case &mdash; source code. The inference gateway retrieves keys from the secrets manager, and the keys are rotated on a schedule without any application changes.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Key Rotation Without Downtime</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The gateway architecture makes key rotation simple. The process:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Generate a new API key from the provider</li>
-        <li>Add the new key to the gateway&#39;s configuration (both old and new keys are valid)</li>
-        <li>Verify the new key works by routing a percentage of traffic through it</li>
-        <li>Remove the old key from the gateway</li>
-        <li>Revoke the old key at the provider</li>
+        <li>1. Generate a new API key from the provider</li>
+        <li>2. Add the new key to the gateway&#39;s configuration (both old and new keys are valid)</li>
+        <li>3. Verify the new key works by routing a percentage of traffic through it</li>
+        <li>4. Remove the old key from the gateway</li>
+        <li>5. Revoke the old key at the provider</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">At no point does the application need to change. It authenticates to the gateway with its internal credentials, which remain stable. The provider key rotation is entirely transparent.</p>
@@ -263,13 +247,11 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Open-Source and Commercial Options</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Tool</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Type</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Feature</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Tool</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Type</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Key Feature</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">LiteLLM</strong></td>
@@ -308,27 +290,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Sysdig, <a href="https://www.sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: Stolen Cloud Credentials Used in New AI Attack</a> (May 2024).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Sysdig, <a href="https://www.sysdig.com/learn-cloud-native/what-is-llmjacking" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is LLMjacking?</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Prompt Guardrails, <a href="https://promptguardrails.com/blog/llmjacking-stolen-credentials-ai-budget-attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: The $100K-Per-Day Attack Draining Enterprise AI Budgets</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Trend Micro, <a href="https://www.trendmicro.com/en_us/research/26/c/inside-litellm-supply-chain-compromise.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Your AI Gateway Was a Backdoor: Inside the LiteLLM Supply Chain Compromise</a> (March 2026).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: CSO Online, <a href="https://www.csoonline.com/article/3835936/microsoft-files-lawsuit-against-llmjacking-gang-that-bypassed-ai-safeguards.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Files Lawsuit Against LLMjacking Gang That Bypassed AI Safeguards</a> (January 2025).</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GitHub Blog, <a href="https://github.blog/security/secret-scanning/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secret Scanning</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: API7.ai, <a href="https://api7.ai/blog/ai-gateway-security-compliance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How AI Gateways Enforce Security and Compliance for LLMs</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Noma Security, <a href="https://noma.security/blog/how-an-ai-agent-vulnerability-in-langsmith-could-lead-to-stolen-api-keys-and-hijacked-llm-responses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How an AI Agent Vulnerability in LangSmith Could Lead to Stolen API Keys</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: BeyondScale, <a href="https://beyondscale.tech/blog/llmjacking-defense-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: AI API Key Theft Defense Guide</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DreamFactory, <a href="https://blog.dreamfactory.com/the-litellm-supply-chain-attack-a-complete-technical-breakdown-of-what-happened-who-is-affected-and-what-comes-next" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The LiteLLM Supply Chain Attack: A Complete Technical Breakdown</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Aikido, <a href="https://www.aikido.dev/blog/gpt-proxy-backdoor-npm-pypi-chinese-llm-relay" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GPT-Proxy Backdoor in npm and PyPI Turns Servers into Chinese LLM Relays</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>Sysdig, <a href="https://www.sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: Stolen Cloud Credentials Used in New AI Attack</a> (May 2024).</li>
+        <li>Sysdig, <a href="https://www.sysdig.com/learn-cloud-native/what-is-llmjacking" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What is LLMjacking?</a>.</li>
+        <li>Prompt Guardrails, <a href="https://promptguardrails.com/blog/llmjacking-stolen-credentials-ai-budget-attack" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: The $100K-Per-Day Attack Draining Enterprise AI Budgets</a>.</li>
+        <li>Trend Micro, <a href="https://www.trendmicro.com/en_us/research/26/c/inside-litellm-supply-chain-compromise.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Your AI Gateway Was a Backdoor: Inside the LiteLLM Supply Chain Compromise</a> (March 2026).</li>
+        <li>CSO Online, <a href="https://www.csoonline.com/article/3835936/microsoft-files-lawsuit-against-llmjacking-gang-that-bypassed-ai-safeguards.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Files Lawsuit Against LLMjacking Gang That Bypassed AI Safeguards</a> (January 2025).</li>
+        <li>GitHub Blog, <a href="https://github.blog/security/secret-scanning/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Secret Scanning</a>.</li>
+        <li>API7.ai, <a href="https://api7.ai/blog/ai-gateway-security-compliance" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How AI Gateways Enforce Security and Compliance for LLMs</a>.</li>
+        <li>Noma Security, <a href="https://noma.security/blog/how-an-ai-agent-vulnerability-in-langsmith-could-lead-to-stolen-api-keys-and-hijacked-llm-responses/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How an AI Agent Vulnerability in LangSmith Could Lead to Stolen API Keys</a>.</li>
+        <li>BeyondScale, <a href="https://beyondscale.tech/blog/llmjacking-defense-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLMjacking: AI API Key Theft Defense Guide</a>.</li>
+        <li>DreamFactory, <a href="https://blog.dreamfactory.com/the-litellm-supply-chain-attack-a-complete-technical-breakdown-of-what-happened-who-is-affected-and-what-comes-next" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The LiteLLM Supply Chain Attack: A Complete Technical Breakdown</a>.</li>
+        <li>Aikido, <a href="https://www.aikido.dev/blog/gpt-proxy-backdoor-npm-pypi-chinese-llm-relay" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GPT-Proxy Backdoor in npm and PyPI Turns Servers into Chinese LLM Relays</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -405,26 +382,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-37-governed-writes-and-humanintheloop.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 37 &mdash; Governed Writes and Human-in-the-Loop</p>
-                </div>
-            </a>
+            <a href="episode-37-governed-writes-and-humanintheloop.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 37 &mdash; Governed Writes and Human-in-the-Loop</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-39-redaction-pipelines-for-cloud-ai.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 39 &mdash; Redaction Pipelines for Cloud AI</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-39-redaction-pipelines-for-cloud-ai.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 39 &mdash; Redaction Pipelines for Cloud AI</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

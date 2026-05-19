@@ -89,12 +89,10 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Authentication Anomalies</h3>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Signal</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Might Indicate</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Signal</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">What It Might Indicate</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Spike in failed login attempts from one IP</td>
@@ -137,12 +135,9 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The biggest threat to monitoring is not insufficient data &mdash; it&#39;s too much noise. <a href="https://www.databahn.ai/blog/siem-alert-fatigue-false-positive" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Forrester Research</a> reported that SOC (Security Operations Centre &mdash; the team responsible for monitoring and responding to security events) teams received an average of 11,000 alerts per day. An <a href="https://dl.acm.org/doi/10.1145/3723158" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">ACM Computing Surveys study</a> found that alert fatigue causes security teams to miss up to 30% of alerts &mdash; they go uninvestigated or are completely overlooked.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a small legal tech team without a dedicated SOC, the risk is even higher. If your monitoring system sends fifty alerts a day and forty-eight are false positives, your team will stop reading them. The two real alerts get buried.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;The Target breach lesson:&lt;/strong&gt; In the 2013 Target data breach, the security monitoring system (FireEye) detected the malware and generated alerts. The SOC team in Bangalore saw the alerts. Nobody acted on them. The breach exposed 40 million credit card numbers. The monitoring worked. The alerting process failed. Alert quality and response processes matter as much as detection capability.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>The Target breach lesson:</strong> In the 2013 Target data breach, the security monitoring system (FireEye) detected the malware and generated alerts. The SOC team in Bangalore saw the alerts. Nobody acted on them. The breach exposed 40 million credit card numbers. The monitoring worked. The alerting process failed. Alert quality and response processes matter as much as detection capability.</p>
+    </div>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Designing Alerts That Get Acted On</h3>
 
@@ -153,13 +148,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tiered severity.</strong> Not every alert needs the same response:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Severity</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Response</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Severity</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Response</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Critical</strong></td>
@@ -192,21 +185,18 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Log aggregation</strong> (tools like the ELK stack &mdash; Elasticsearch/Logstash/Kibana &mdash; or Grafana Loki) collects and centralises logs from your applications, databases, and infrastructure. You query them manually or write simple alert rules. For a small team with a single application, this is often sufficient.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">SIEM</strong> adds correlation, behavioural analytics, and automated response. It connects events across sources: &quot;this IP failed to log in five times, then succeeded, then accessed the admin panel, then started downloading documents&quot; &mdash; connecting dots that individual log sources can&#39;t. <a href="https://www.exabeam.com/explainers/siem/siem-alerts-understanding-security-information-and-event-alerts/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Exabeam</a> and <a href="https://graylog.org/post/siem-automation-to-improve-threat-detection-and-incident-response/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Graylog</a> describe how modern SIEMs integrate UEBA (User and Entity Behaviour Analytics &mdash; machine learning models that establish baselines of normal behaviour and flag anomalies) to reduce false positives.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;For small legal SaaS teams:&lt;/strong&gt; Start with structured logging (from <a href="../ep52/article.md">Episode 52</a>) feeding into a log aggregation platform. Write alert rules for the high-priority signals: failed login spikes, admin privilege escalation, bulk data access. Graduate to a SIEM when your user base, team size, or compliance requirements demand it. A well-configured log aggregation system with five good alert rules is better than a SIEM nobody has time to tune.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>For small legal SaaS teams:</strong> Start with structured logging (from <a href="../ep52/article.md" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 52</a>) feeding into a log aggregation platform. Write alert rules for the high-priority signals: failed login spikes, admin privilege escalation, bulk data access. Graduate to a SIEM when your user base, team size, or compliance requirements demand it. A well-configured log aggregation system with five good alert rules is better than a SIEM nobody has time to tune.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Security-Specific Dashboards</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Build dashboards that answer these questions at a glance:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Authentication health:</strong> Login success/failure ratio over time. Unusual geography. MFA adoption rate.</li>
-        <li><strong class="text-ink">Access patterns:</strong> Top data-accessing users. Cross-client data access (should be zero for non-admin users). Bulk operations.</li>
-        <li><strong class="text-ink">API health:</strong> Requests per second by endpoint. 4xx/5xx error rates. Rate limit triggers.</li>
-        <li><strong class="text-ink">Dependency health:</strong> Known vulnerabilities in current dependencies. Time since last scan.</li>
+        <li>1. <strong class="text-ink">Authentication health:</strong> Login success/failure ratio over time. Unusual geography. MFA adoption rate.</li>
+        <li>2. <strong class="text-ink">Access patterns:</strong> Top data-accessing users. Cross-client data access (should be zero for non-admin users). Bulk operations.</li>
+        <li>3. <strong class="text-ink">API health:</strong> Requests per second by endpoint. 4xx/5xx error rates. Rate limit triggers.</li>
+        <li>4. <strong class="text-ink">Dependency health:</strong> Known vulnerabilities in current dependencies. Time since last scan.</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These dashboards are not just operational tools &mdash; they&#39;re evidence. When a client or regulator asks &quot;how do you monitor for security incidents?&quot; you point to the dashboard and the alert history.</p>
@@ -226,12 +216,10 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Monitoring Minimum</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Control</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Centralised structured logging</td>
@@ -269,29 +257,22 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode: what happens when monitoring detects something real &mdash; incident response playbooks for when things go wrong.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity Framework 2.0</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Databahn, <a href="https://www.databahn.ai/blog/siem-alert-fatigue-false-positive" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Cybersecurity Alert Fatigue Epidemic</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ACM Computing Surveys, <a href="https://dl.acm.org/doi/10.1145/3723158" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Alert Fatigue in Security Operations Centres: Research Challenges and Opportunities</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Radiant Security, <a href="https://radiantsecurity.ai/learn/siem-security-information-and-event-management-explained-2026-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM: Security Information and Event Management Explained — 2026 Guide</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Exabeam, <a href="https://www.exabeam.com/explainers/siem/siem-alerts-understanding-security-information-and-event-alerts/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM Alerts: Understanding Security Information and Event Alerts</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Graylog, <a href="https://graylog.org/post/siem-automation-to-improve-threat-detection-and-incident-response/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM Automation to Improve Threat Detection and Incident Response</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: NIST, <a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-61 Revision 3: Incident Response Recommendations and Considerations</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Deepwatch, <a href="https://www.deepwatch.com/glossary/security-information-and-event-management-siem/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Modern Security Information and Event Management (SIEM) Strategies</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SearchInform, <a href="https://searchinform.com/articles/cybersecurity/measures/siem/management/siem-and-cybersecurity-frameworks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How SIEM Aligns with NIST, ISO, and Other Cybersecurity Frameworks</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ManageEngine, <a href="https://www.manageengine.com/log-management/siem/what-is-siem.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Is SIEM? Security Information & Event Management Guide (2026)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Saltycloud / Isora GRC, <a href="https://www.saltycloud.com/blog/nist-csf-functions-and-tiers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST CSF Functions and Tiers: Complete Guide</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>NIST, <a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cybersecurity Framework 2.0</a>.</li>
+        <li>Databahn, <a href="https://www.databahn.ai/blog/siem-alert-fatigue-false-positive" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Cybersecurity Alert Fatigue Epidemic</a>.</li>
+        <li>ACM Computing Surveys, <a href="https://dl.acm.org/doi/10.1145/3723158" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Alert Fatigue in Security Operations Centres: Research Challenges and Opportunities</a>.</li>
+        <li>Radiant Security, <a href="https://radiantsecurity.ai/learn/siem-security-information-and-event-management-explained-2026-guide/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM: Security Information and Event Management Explained — 2026 Guide</a>.</li>
+        <li>Exabeam, <a href="https://www.exabeam.com/explainers/siem/siem-alerts-understanding-security-information-and-event-alerts/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM Alerts: Understanding Security Information and Event Alerts</a>.</li>
+        <li>Graylog, <a href="https://graylog.org/post/siem-automation-to-improve-threat-detection-and-incident-response/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SIEM Automation to Improve Threat Detection and Incident Response</a>.</li>
+        <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SP 800-61 Revision 3: Incident Response Recommendations and Considerations</a>.</li>
+        <li>Deepwatch, <a href="https://www.deepwatch.com/glossary/security-information-and-event-management-siem/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Modern Security Information and Event Management (SIEM) Strategies</a>.</li>
+        <li>SearchInform, <a href="https://searchinform.com/articles/cybersecurity/measures/siem/management/siem-and-cybersecurity-frameworks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How SIEM Aligns with NIST, ISO, and Other Cybersecurity Frameworks</a>.</li>
+        <li>ManageEngine, <a href="https://www.manageengine.com/log-management/siem/what-is-siem.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Is SIEM? Security Information & Event Management Guide (2026)</a>.</li>
+        <li>Saltycloud / Isora GRC, <a href="https://www.saltycloud.com/blog/nist-csf-functions-and-tiers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST CSF Functions and Tiers: Complete Guide</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -372,26 +353,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-52-day-zero-bootstrapping-security-for-a-new-project.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 52 &mdash; Day Zero &mdash; Bootstrapping Security for a New Project</p>
-                </div>
-            </a>
+            <a href="episode-52-day-zero-bootstrapping-security-for-a-new-project.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 52 &mdash; Day Zero &mdash; Bootstrapping Security for a New Project</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-54-incident-response-playbooks.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 54 &mdash; Incident Response Playbooks</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-54-incident-response-playbooks.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 54 &mdash; Incident Response Playbooks</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

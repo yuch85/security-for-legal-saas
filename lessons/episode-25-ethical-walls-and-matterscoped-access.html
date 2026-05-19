@@ -93,21 +93,18 @@
         <li>Affirmation of compliance</li>
         <li>An agreement to respond to inquiries about the screen</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Key insight for software builders:</strong> The rules don&#39;t just require that the wall exists &mdash; they require proof that it works. Your platform must produce evidence: audit logs showing who accessed what, when the wall was erected, and that screened individuals never accessed restricted material.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key insight for software builders:</strong> The rules don&#39;t just require that the wall exists &mdash; they require proof that it works. Your platform must produce evidence: audit logs showing who accessed what, when the wall was erected, and that screened individuals never accessed restricted material.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Ethical Walls vs. Multi-Tenancy</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is a crucial distinction that will matter in Episode 27:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Concept</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scope</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Concept</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scope</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Ethical wall</strong></td>
@@ -130,25 +127,15 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The foundation of ethical walls in legal SaaS is <strong class="text-ink">matter-scoped access</strong> &mdash; ensuring that every data access decision includes not just &quot;what role does this user have?&quot; but &quot;is this user assigned to this matter?&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 23, we covered RBAC roles. In Episode 24, we covered ABAC attributes. Matter scoping combines both:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Access granted IF:</p>
-    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>User has the required ROLE permission (e.g., Associate can read documents)</li>
-    </ol>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AND</p>
-    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>User is ASSIGNED to this specific matter</li>
-    </ol>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AND</p>
-    <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>No ethical wall BLOCKS this user from this matter</li>
-    </ol>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">Access granted IF:
+  1. User has the required ROLE permission (e.g., Associate can read documents)
+  AND
+  2. User is ASSIGNED to this specific matter
+  AND
+  3. No ethical wall BLOCKS this user from this matter
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The matter assignment is the default access scope. The ethical wall is an additional restriction layer that can override normal access &mdash; even for users who would otherwise qualify.</p>
 
@@ -162,46 +149,36 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms, dynamic walls are the standard. A new matter for a client creates a conflict with any existing adverse representation. The system should:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Run a conflict check when the matter is created</li>
-        <li>Identify all lawyers with conflicting matter assignments</li>
-        <li>Automatically erect walls barring those lawyers from the new matter</li>
-        <li>Notify the affected parties (per Rule 1.10&#39;s notice requirement)</li>
-        <li>Log the wall creation with a timestamp and reason</li>
+        <li>1. Run a conflict check when the matter is created</li>
+        <li>2. Identify all lawyers with conflicting matter assignments</li>
+        <li>3. Automatically erect walls barring those lawyers from the new matter</li>
+        <li>4. Notify the affected parties (per Rule 1.10&#39;s notice requirement)</li>
+        <li>5. Log the wall creation with a timestamp and reason</li>
     </ol>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Database-Level Enforcement</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Ethical walls must be enforced at the <strong class="text-ink">database query level</strong>, not just the application layer. Every query that retrieves matter data must include a wall check:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```sql</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SELECT d.* FROM documents d</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">JOIN matter_assignments ma ON d.matter_id = ma.matter_id</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">WHERE ma.user_id = :current_user</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AND d.matter_id NOT IN (</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SELECT matter_id FROM ethical_walls</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">WHERE blocked_user_id = :current_user</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">AND active = true</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">)</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+        <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">sql</div>
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">SELECT d.* FROM documents d
+JOIN matter_assignments ma ON d.matter_id = ma.matter_id
+WHERE ma.user_id = :current_user
+  AND d.matter_id NOT IN (
+    SELECT matter_id FROM ethical_walls
+    WHERE blocked_user_id = :current_user
+    AND active = true
+  )
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If your wall enforcement only exists in the application layer and a developer writes a new database query that skips the check, the wall is breached. Defence in depth &mdash; a concept from Episode 4 &mdash; means implementing wall enforcement at multiple layers:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Layer</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Enforcement</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Layer</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Enforcement</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Database</strong></td>
@@ -229,25 +206,22 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The solution is <strong class="text-ink">pre-filtered search indexing</strong>:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>The search index (Elasticsearch, Solr, or similar) is tagged with matter IDs and wall metadata</li>
-        <li>At search time, the query includes a filter that excludes all matters where the current user has an active wall</li>
-        <li>Results from walled matters are never returned &mdash; not even snippets or metadata</li>
-        <li>The user has no indication that results were suppressed (to avoid revealing the existence of the conflict)</li>
+        <li>1. The search index (Elasticsearch, Solr, or similar) is tagged with matter IDs and wall metadata</li>
+        <li>2. At search time, the query includes a filter that excludes all matters where the current user has an active wall</li>
+        <li>3. Results from walled matters are never returned &mdash; not even snippets or metadata</li>
+        <li>4. The user has no indication that results were suppressed (to avoid revealing the existence of the conflict)</li>
     </ol>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Critical detail:</strong> Even revealing that a wall exists can be a confidentiality breach. If a lawyer searches for &quot;Acme Corp acquisition&quot; and sees a message saying &quot;2 results hidden due to an ethical wall,&quot; they now know the firm has an adverse matter involving Acme Corp. The correct behaviour is silent suppression &mdash; walled results simply don&#39;t appear.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Critical detail:</strong> Even revealing that a wall exists can be a confidentiality breach. If a lawyer searches for &quot;Acme Corp acquisition&quot; and sees a message saying &quot;2 results hidden due to an ethical wall,&quot; they now know the firm has an adverse matter involving Acme Corp. The correct behaviour is silent suppression &mdash; walled results simply don&#39;t appear.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Audit Requirements</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Proving wall integrity is as important as implementing it. Regulators, clients, and opposing counsel may demand evidence that the wall was effective. Your audit log must capture:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Event</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Required Data</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Event</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Required Data</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Wall creation</strong></td>
@@ -293,27 +267,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_10_imputation_of_conflicts_of_interest_general_rule/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Rule 1.10: Imputation of Conflicts of Interest</a> &mdash; screening requirements and notice obligations.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABA, <a href="https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_7_conflict_of_interest_current_clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Rule 1.7: Conflict of Interest — Current Clients</a> &mdash; concurrent conflict rules.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GreenPoint Legal, <a href="https://www.greenpointlegal.com/resources/building-ethical-walls-using-modern-technology" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building Ethical Walls Using Modern Technology</a> &mdash; technology implementation of ethical walls.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Tessaract, <a href="https://blog.tessaract.io/chinese-walls-what-are-they" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Chinese Walls: What Are They?</a> &mdash; practical overview of information barriers in legal practice.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authorization Cheat Sheet</a> &mdash; defence in depth for access control.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Wikipedia, <a href="https://en.wikipedia.org/wiki/Chinese_wall" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Chinese Wall</a> &mdash; history and application across industries.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: US Legal Forms, <a href="https://legal-resources.uslegalforms.com/e/ethical-wall" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Ethical Wall: Legal Definition and Importance</a> &mdash; audit and compliance requirements.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SRA, <a href="https://www.sra.org.uk/solicitors/standards-regulations/code-conduct-solicitors/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Code of Conduct for Solicitors</a> &mdash; paragraphs 6.2-6.5 on conflicts and information barriers.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Thomson Reuters Practical Law, <a href="https://uk.practicallaw.thomsonreuters.com/3-100-8763" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Chinese Walls: Maintaining Client Confidentiality</a> &mdash; UK legal framework for information barriers.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Downey Law Group, <a href="https://www.downeylawgroup.com/wp-content/uploads/sites/34/2018/12/Ethics-Screens-BNA-2011-Downey-Law-Group.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Elements of an Effective Ethics Screen</a> &mdash; screening procedure design.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: ABI, <a href="https://www.abi.org/feed-item/the-unsavory-origins-of-the-term-chinese-wall" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Unsavory Origins of the Term "Chinese Wall"</a> &mdash; terminology history and modern alternatives.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>ABA, <a href="https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_10_imputation_of_conflicts_of_interest_general_rule/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Rule 1.10: Imputation of Conflicts of Interest</a> &mdash; screening requirements and notice obligations.</li>
+        <li>ABA, <a href="https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_1_7_conflict_of_interest_current_clients/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Model Rule 1.7: Conflict of Interest — Current Clients</a> &mdash; concurrent conflict rules.</li>
+        <li>GreenPoint Legal, <a href="https://www.greenpointlegal.com/resources/building-ethical-walls-using-modern-technology" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building Ethical Walls Using Modern Technology</a> &mdash; technology implementation of ethical walls.</li>
+        <li>Tessaract, <a href="https://blog.tessaract.io/chinese-walls-what-are-they" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Chinese Walls: What Are They?</a> &mdash; practical overview of information barriers in legal practice.</li>
+        <li>OWASP, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Authorization Cheat Sheet</a> &mdash; defence in depth for access control.</li>
+        <li>Wikipedia, <a href="https://en.wikipedia.org/wiki/Chinese_wall" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Chinese Wall</a> &mdash; history and application across industries.</li>
+        <li>US Legal Forms, <a href="https://legal-resources.uslegalforms.com/e/ethical-wall" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Ethical Wall: Legal Definition and Importance</a> &mdash; audit and compliance requirements.</li>
+        <li>SRA, <a href="https://www.sra.org.uk/solicitors/standards-regulations/code-conduct-solicitors/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Code of Conduct for Solicitors</a> &mdash; paragraphs 6.2-6.5 on conflicts and information barriers.</li>
+        <li>Thomson Reuters Practical Law, <a href="https://uk.practicallaw.thomsonreuters.com/3-100-8763" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Chinese Walls: Maintaining Client Confidentiality</a> &mdash; UK legal framework for information barriers.</li>
+        <li>Downey Law Group, <a href="https://www.downeylawgroup.com/wp-content/uploads/sites/34/2018/12/Ethics-Screens-BNA-2011-Downey-Law-Group.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Elements of an Effective Ethics Screen</a> &mdash; screening procedure design.</li>
+        <li>ABI, <a href="https://www.abi.org/feed-item/the-unsavory-origins-of-the-term-chinese-wall" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Unsavory Origins of the Term "Chinese Wall"</a> &mdash; terminology history and modern alternatives.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -398,26 +367,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-24-abac-and-policy-engines.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 24 &mdash; ABAC and Policy Engines</p>
-                </div>
-            </a>
+            <a href="episode-24-abac-and-policy-engines.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 24 &mdash; ABAC and Policy Engines</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-26-zero-trust-architecture.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 26 &mdash; Zero Trust Architecture</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-26-zero-trust-architecture.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 26 &mdash; Zero Trust Architecture</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

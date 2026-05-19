@@ -86,8 +86,8 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A hash function &mdash; which we first covered in Episode 17 in the context of password storage &mdash; is a one-way mathematical transformation that takes an input of any size and produces a fixed-length output (the &quot;hash&quot; or &quot;digest&quot;). Two properties matter here:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Deterministic</strong>: The same input always produces the same hash</li>
-        <li><strong class="text-ink">Collision-resistant</strong>: It is computationally infeasible to find two different inputs that produce the same hash</li>
+        <li>1. <strong class="text-ink">Deterministic</strong>: The same input always produces the same hash</li>
+        <li>2. <strong class="text-ink">Collision-resistant</strong>: It is computationally infeasible to find two different inputs that produce the same hash</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SHA-256 (Secure Hash Algorithm, 256-bit) is the standard choice for audit log chains. It produces a 64-character hexadecimal string from any input. Change a single character in the input, and the output changes completely and unpredictably.</p>
@@ -97,14 +97,12 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The principle is straightforward: each log entry&#39;s hash includes the hash of the previous entry.</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Entry</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Data</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Previous Hash</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">This Entry&#39;s Hash</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Entry</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Data</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Previous Hash</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">This Entry&#39;s Hash</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Entry 0</td>
@@ -135,8 +133,7 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If someone modifies Entry 1 &mdash; changing &quot;sarah.chen&quot; to &quot;john.doe&quot; to cover tracks &mdash; the hash of Entry 1 changes. But Entry 2&#39;s hash was computed using Entry 1&#39;s original hash. Now Entry 2&#39;s stored hash doesn&#39;t match what you&#39;d get by recomputing it. The chain is broken. To hide the tampering, the attacker would need to recompute the hash of every subsequent entry &mdash; and if anyone has a copy of any later hash (a checkpoint, an external witness), the fraud is detectable.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">You&#39;ve seen this before.</strong> Git &mdash; the version control system &mdash; uses exactly the same mechanism. Every commit&#39;s hash includes the hash of the parent commit. If anyone modifies a historical commit, every subsequent commit hash changes, and the tampering is immediately visible. Certificate transparency logs use the same principle. So do blockchains &mdash; though our use case requires none of the decentralisation overhead.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">You&#39;ve seen this before.</strong> Git &mdash; the version control system &mdash; uses exactly the same mechanism. Every commit&#39;s hash includes the hash of the parent commit. If anyone modifies a historical commit, every subsequent commit hash changes, and the tampering is immediately visible. Certificate transparency logs use the same principle. So do blockchains &mdash; though our use case requires none of the decentralisation overhead.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Implementation: Blockchain-Lite Without the Blockchain</h2>
 
@@ -145,30 +142,20 @@
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">A Minimal Implementation</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each audit log entry includes:</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```json</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">{</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;sequence&quot;: 42,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;timestamp&quot;: &quot;2026-05-18T14:23:07.442Z&quot;,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;event_type&quot;: &quot;document.classify&quot;,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;actor&quot;: &quot;sarah.chen@firm.com&quot;,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;resource&quot;: &quot;doc-a3f2c1&quot;,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;outcome&quot;: &quot;success&quot;,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;previous_hash&quot;: &quot;b7c1e3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2&quot;,</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&quot;entry_hash&quot;: &quot;d4e8f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0&quot;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">}</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">```</p>
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+        <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">json</div>
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">{
+  &quot;sequence&quot;: 42,
+  &quot;timestamp&quot;: &quot;2026-05-18T14:23:07.442Z&quot;,
+  &quot;event_type&quot;: &quot;document.classify&quot;,
+  &quot;actor&quot;: &quot;sarah.chen@firm.com&quot;,
+  &quot;resource&quot;: &quot;doc-a3f2c1&quot;,
+  &quot;outcome&quot;: &quot;success&quot;,
+  &quot;previous_hash&quot;: &quot;b7c1e3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2&quot;,
+  &quot;entry_hash&quot;: &quot;d4e8f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0&quot;
+}
+</code></pre>
+    </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The `entry_hash` is computed as: `SHA-256(sequence + timestamp + event_type + actor + resource + outcome + previous_hash)`. Every field that matters for the audit record is included in the hash computation. Changing any field changes the hash.</p>
 
@@ -176,10 +163,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">To verify log integrity, you recompute the hash chain from the beginning (or from a trusted checkpoint):</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Start at the genesis entry (or the last verified checkpoint)</li>
-        <li>For each entry, compute `SHA-256` of its fields plus the previous entry&#39;s hash</li>
-        <li>Compare the computed hash to the stored `entry_hash`</li>
-        <li>If any computed hash doesn&#39;t match the stored hash, that entry or a prior entry has been tampered with</li>
+        <li>1. Start at the genesis entry (or the last verified checkpoint)</li>
+        <li>2. For each entry, compute `SHA-256` of its fields plus the previous entry&#39;s hash</li>
+        <li>3. Compare the computed hash to the stored `entry_hash`</li>
+        <li>4. If any computed hash doesn&#39;t match the stored hash, that entry or a prior entry has been tampered with</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This verification can run as a scheduled job &mdash; daily, hourly, or continuously &mdash; and should trigger an immediate alert if integrity breaks.</p>
@@ -187,13 +174,11 @@
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Tamper Evidence: What Can and Cannot Be Detected</h2>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scenario</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Detectable?</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Scenario</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Detectable?</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Entry modified</strong></td>
@@ -231,13 +216,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">To protect against a full chain rewrite, periodically publish a checkpoint &mdash; the latest hash &mdash; to a location the log administrator cannot control:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Witness Method</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strength</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Witness Method</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Description</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Strength</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Separate internal system</strong></td>
@@ -285,18 +268,17 @@
     </ul>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">QLDB is particularly well-suited for audit logs because it handles the hash chain implementation internally &mdash; you write events, and QLDB provides the integrity guarantees automatically.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&gt; <strong class="text-ink">Note:</strong> AWS <a href="https://aws.amazon.com/qldb/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">announced QLDB end-of-life for July 2025</a>, directing customers to Amazon Aurora PostgreSQL with ledger tables or Amazon DynamoDB with provenance tracking. The underlying principles &mdash; append-only storage with cryptographic verification &mdash; remain the same regardless of the specific service.</p>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Note:</strong> AWS <a href="https://aws.amazon.com/qldb/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">announced QLDB end-of-life for July 2025</a>, directing customers to Amazon Aurora PostgreSQL with ledger tables or Amazon DynamoDB with provenance tracking. The underlying principles &mdash; append-only storage with cryptographic verification &mdash; remain the same regardless of the specific service.</blockquote>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Custom Implementation with PostgreSQL</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For teams that prefer not to depend on a proprietary service:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Create an append-only audit table (INSERT-only permissions for the application, no UPDATE/DELETE)</li>
-        <li>Compute and store the hash chain in application code</li>
-        <li>Store the table in a separate database with restricted administrative access</li>
-        <li>Run a verification job that recomputes and checks the chain</li>
-        <li>Publish checkpoint hashes to external storage</li>
+        <li>1. Create an append-only audit table (INSERT-only permissions for the application, no UPDATE/DELETE)</li>
+        <li>2. Compute and store the hash chain in application code</li>
+        <li>3. Store the table in a separate database with restricted administrative access</li>
+        <li>4. Run a verification job that recomputes and checks the chain</li>
+        <li>5. Publish checkpoint hashes to external storage</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This approach gives you full control and avoids vendor lock-in, at the cost of implementing and maintaining the hash chain logic yourself.</p>
@@ -315,13 +297,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Not every log entry justifies the overhead of hash-chained immutability. Prioritise:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Event Category</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Immutability Priority</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rationale</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Event Category</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Immutability Priority</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Rationale</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Privilege access events</strong></td>
@@ -366,13 +346,13 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The complete audit logging architecture:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Structured JSON entries</strong> with the six W&#39;s (EP41)</li>
-        <li><strong class="text-ink">Append-only storage</strong> preventing modification or deletion (EP41)</li>
-        <li><strong class="text-ink">Hash chain</strong> linking each entry to all previous entries (this episode)</li>
-        <li><strong class="text-ink">External checkpoint witnesses</strong> protecting against full chain rewrites</li>
-        <li><strong class="text-ink">Automated verification</strong> running continuously or on schedule</li>
-        <li><strong class="text-ink">Access controls</strong> separating writers, readers, and administrators</li>
-        <li><strong class="text-ink">Retention policy</strong> aligned with regulatory requirements (7+ years)</li>
+        <li>1. <strong class="text-ink">Structured JSON entries</strong> with the six W&#39;s (EP41)</li>
+        <li>2. <strong class="text-ink">Append-only storage</strong> preventing modification or deletion (EP41)</li>
+        <li>3. <strong class="text-ink">Hash chain</strong> linking each entry to all previous entries (this episode)</li>
+        <li>4. <strong class="text-ink">External checkpoint witnesses</strong> protecting against full chain rewrites</li>
+        <li>5. <strong class="text-ink">Automated verification</strong> running continuously or on schedule</li>
+        <li>6. <strong class="text-ink">Access controls</strong> separating writers, readers, and administrators</li>
+        <li>7. <strong class="text-ink">Retention policy</strong> aligned with regulatory requirements (7+ years)</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This architecture produces an audit trail that is structured, searchable, tamper-evident, and legally admissible &mdash; the foundation that every security control in this series depends on.</p>
@@ -383,27 +363,22 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Sources &amp; Further Reading</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DEV Community, <a href="https://dev.to/veritaschain/building-a-tamper-evident-audit-log-with-sha-256-hash-chains-zero-dependencies-h0b" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building a Tamper-Evident Audit Log with SHA-256 Hash Chains (Zero Dependencies)</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DEV Community, <a href="https://dev.to/robertatkinson3570/the-architecture-behind-tamper-proof-audit-logs-56ek" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Architecture Behind Tamper-Proof Audit Logs</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: MDPI Electronics, <a href="https://www.mdpi.com/2079-9292/15/1/56" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AuditableLLM: A Hash-Chain-Backed, Compliance-Aware Auditable Framework for Large Language Models</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Devoteam, <a href="https://www.devoteam.com/expert-view/is-aws-qldb-built-on-blockchain-technology/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Is AWS QLDB Built on Blockchain Technology?</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: DZone, <a href="https://dzone.com/articles/immutable-data-integrity-with-qldb-and-blockchain" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Immutable Data Integrity Using QLDB and Blockchain</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Mattermost, <a href="https://mattermost.com/blog/compliance-by-design-18-tips-to-implement-tamper-proof-audit-logs/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Compliance by Design: 18 Tips to Implement Tamper-Proof Audit Logs</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Pangea, <a href="https://pangea.cloud/blog/audit-logs-what-why-and-how/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding Audit Logs: What It Is & How to Build One</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Medium (Mihir Popat), <a href="https://mihirpopat.medium.com/the-future-of-immutable-data-a-comprehensive-guide-to-aws-quantum-ledger-database-qldb-98d4704b171e" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Future of Immutable Data: A Comprehensive Guide to AWS QLDB</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: GeeksforGeeks, <a href="https://www.geeksforgeeks.org/devops/what-is-amazon-qldb-step-by-step-process-to-configure/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Is Amazon QLDB? Step-By-Step Process to Configure</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: Bits Lovers, <a href="https://www.bitslovers.com/the-benefits-of-using-amazon-qldb-for-your-business/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Benefits of Using Amazon QLDB for Your Business</a>.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">: SUDO Consultants, <a href="https://sudoconsultants.com/aws-quantum-ledger-database-qldb-quantum-resistant-distributed-ledger/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS Quantum Ledger Database: Quantum-Resistant Distributed Ledger</a>.</p>
+<section class="py-12 border-b border-rule">
+    <h2 class="font-sans text-sm tracking-widest uppercase text-ink-muted mb-8">Sources &amp; references</h2>
+    <ol class="list-decimal list-inside space-y-4 text-base text-ink-light leading-relaxed">
+        <li>DEV Community, <a href="https://dev.to/veritaschain/building-a-tamper-evident-audit-log-with-sha-256-hash-chains-zero-dependencies-h0b" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Building a Tamper-Evident Audit Log with SHA-256 Hash Chains (Zero Dependencies)</a>.</li>
+        <li>DEV Community, <a href="https://dev.to/robertatkinson3570/the-architecture-behind-tamper-proof-audit-logs-56ek" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Architecture Behind Tamper-Proof Audit Logs</a>.</li>
+        <li>MDPI Electronics, <a href="https://www.mdpi.com/2079-9292/15/1/56" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AuditableLLM: A Hash-Chain-Backed, Compliance-Aware Auditable Framework for Large Language Models</a>.</li>
+        <li>Devoteam, <a href="https://www.devoteam.com/expert-view/is-aws-qldb-built-on-blockchain-technology/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Is AWS QLDB Built on Blockchain Technology?</a>.</li>
+        <li>DZone, <a href="https://dzone.com/articles/immutable-data-integrity-with-qldb-and-blockchain" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Immutable Data Integrity Using QLDB and Blockchain</a>.</li>
+        <li>Mattermost, <a href="https://mattermost.com/blog/compliance-by-design-18-tips-to-implement-tamper-proof-audit-logs/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Compliance by Design: 18 Tips to Implement Tamper-Proof Audit Logs</a>.</li>
+        <li>Pangea, <a href="https://pangea.cloud/blog/audit-logs-what-why-and-how/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Understanding Audit Logs: What It Is & How to Build One</a>.</li>
+        <li>Medium (Mihir Popat), <a href="https://mihirpopat.medium.com/the-future-of-immutable-data-a-comprehensive-guide-to-aws-quantum-ledger-database-qldb-98d4704b171e" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Future of Immutable Data: A Comprehensive Guide to AWS QLDB</a>.</li>
+        <li>GeeksforGeeks, <a href="https://www.geeksforgeeks.org/devops/what-is-amazon-qldb-step-by-step-process-to-configure/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">What Is Amazon QLDB? Step-By-Step Process to Configure</a>.</li>
+        <li>Bits Lovers, <a href="https://www.bitslovers.com/the-benefits-of-using-amazon-qldb-for-your-business/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Benefits of Using Amazon QLDB for Your Business</a>.</li>
+        <li>SUDO Consultants, <a href="https://sudoconsultants.com/aws-quantum-ledger-database-qldb-quantum-resistant-distributed-ledger/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AWS Quantum Ledger Database: Quantum-Resistant Distributed Ledger</a>.</li>
+    </ol>
+</section>
 
 </article>
 
@@ -488,26 +463,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-41-audit-log-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 41 &mdash; Audit Log Design</p>
-                </div>
-            </a>
+            <a href="episode-41-audit-log-design.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 41 &mdash; Audit Log Design</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-43-provenance-chains-for-ai-outputs.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 43 &mdash; Provenance Chains for AI Outputs</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-43-provenance-chains-for-ai-outputs.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 43 &mdash; Provenance Chains for AI Outputs</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

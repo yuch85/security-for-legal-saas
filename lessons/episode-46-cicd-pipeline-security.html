@@ -91,25 +91,20 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.wiz.io/blog/github-actions-security-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The Wiz security research team documented</a> [2] how attackers have exploited GitHub Actions workflows to steal secrets, inject backdoors, and compromise downstream systems. In March 2025, attackers compromised the popular `tj-actions/changed-files` GitHub Action, affecting over 23,000 repositories. Every pipeline that used that Action executed attacker-controlled code with full access to the pipeline&#39;s secrets.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">GitGuardian's 2026 State of Secrets Sprawl report</a> [3] found nearly 29 million new secrets exposed on public GitHub in 2025 &mdash; a 34% year-over-year increase. CI/CD configuration files and build artifacts were among the primary exposure vectors.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fff3f3; border-left: 4px solid #dc2626; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Sobering statistic:&lt;/strong&gt; 59% of machines with compromised credentials in 2025 were CI/CD runners, not developer laptops. Pipelines &mdash; not people &mdash; are the primary breach surface.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Sobering statistic:</strong> 59% of machines with compromised credentials in 2025 were CI/CD runners, not developer laptops. Pipelines &mdash; not people &mdash; are the primary breach surface.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Poisoned Pipeline Execution (PPE)</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/CICD-SEC-04-Poisoned-Pipeline-Execution" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's CICD-SEC-4: Poisoned Pipeline Execution</a> [4] describes three variants of pipeline poisoning:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Variant</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Variant</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">How It Works</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Direct PPE (D-PPE)</strong></td>
@@ -144,12 +139,9 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Use your CI platform&#39;s native secret management.</strong> GitHub Actions has encrypted secrets. GitLab CI has CI/CD variables with masking. Both inject secrets as environment variables at runtime and redact them from logs. But be aware of the limits &mdash; secrets injected as environment variables are visible to any process running in that pipeline step.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Integrate with an external secrets manager.</strong> For production credentials, use <a href="https://www.hashicorp.com/products/vault" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">HashiCorp Vault</a> (introduced in <a href="/lessons/ep15/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a>) or your cloud provider&#39;s secrets manager (AWS Secrets Manager, GCP Secret Manager, Azure Key Vault). The pipeline authenticates to the secrets manager, retrieves only the credentials it needs for that specific deployment, and those credentials are short-lived &mdash; they expire after the deployment completes.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Defence in depth for secrets:&lt;/strong&gt; Even with external secrets managers, limit what each pipeline job can access. A job that runs unit tests should not have access to production database credentials. A job that builds documentation should not have access to cloud deployment keys. Scope secrets to specific jobs, not the entire pipeline.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Defence in depth for secrets:</strong> Even with external secrets managers, limit what each pipeline job can access. A job that runs unit tests should not have access to production database credentials. A job that builds documentation should not have access to cloud deployment keys. Scope secrets to specific jobs, not the entire pipeline.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Branch Protection and Code Review</h2>
 
@@ -181,13 +173,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The principle of least privilege (introduced in <a href="/lessons/ep08/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>) applies directly:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Pipeline Stage</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Needed Permissions</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Common Over-Privilege</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Pipeline Stage</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Needed Permissions</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Common Over-Privilege</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Build</td>
@@ -216,30 +206,25 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each stage should have its own service account with the minimum permissions required. A deploy account should be able to deploy &mdash; but never destroy infrastructure. A test account should be able to read test data &mdash; but never touch production.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://visualstudiomagazine.com/articles/2025/10/06/hardening-ci-cd-essential-strategies-to-mitigate-security-risks.aspx" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hardening CI/CD strategies from Visual Studio Magazine</a> [10] recommends treating pipeline permissions as a security-critical configuration that requires review &mdash; not a one-time setup that gets forgotten.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Your CI/CD pipeline is simultaneously your most powerful and most targeted system. Secure it with the same rigour you apply to production infrastructure: external secrets management, branch protection with mandatory reviews, signed artifacts, least-privilege service accounts, and continuous monitoring of pipeline execution. If your pipeline is compromised, your production is compromised &mdash; and your deployment process delivered the attack.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Key takeaway:</strong> Your CI/CD pipeline is simultaneously your most powerful and most targeted system. Secure it with the same rigour you apply to production infrastructure: external secrets management, branch protection with mandatory reviews, signed artifacts, least-privilege service accounts, and continuous monitoring of pipeline execution. If your pipeline is compromised, your production is compromised &mdash; and your deployment process delivered the attack.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we zoom out from the pipeline to the broader software supply chain. When you didn&#39;t write 95% of your application&#39;s code, supply chain security &mdash; SBOMs, dependency scanning, build provenance, and lessons from SolarWinds and xz-utils &mdash; becomes a survival skill.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 CI/CD Security Risks</a></li>
-        <li><a href="https://www.wiz.io/blog/github-actions-security-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hardening GitHub Actions: Lessons from Recent Attacks — Wiz</a></li>
-        <li><a href="https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CI/CD Secrets Management: Secure Your Pipelines — GitGuardian</a></li>
-        <li><a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/CICD-SEC-04-Poisoned-Pipeline-Execution" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CICD-SEC-4: Poisoned Pipeline Execution — OWASP</a></li>
-        <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/CI_CD_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CI/CD Security Cheat Sheet — OWASP</a></li>
-        <li><a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-a-branch-rule/about-branch-rules" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">About Branch Rules — GitHub Documentation</a></li>
-        <li><a href="https://docs.sigstore.dev/cosign/signing/signing_with_containers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Signing Containers with Cosign — Sigstore</a></li>
-        <li><a href="https://slsa.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA — Supply-chain Levels for Software Artifacts</a></li>
-        <li><a href="https://www.akeyless.io/blog/the-hidden-risks-of-secrets-management-in-ci-cd-pipelines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hidden Risks of Secrets Mismanagement in CI/CD — Akeyless</a></li>
-        <li><a href="https://visualstudiomagazine.com/articles/2025/10/06/hardening-ci-cd-essential-strategies-to-mitigate-security-risks.aspx" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hardening CI/CD: Essential Strategies — Visual Studio Magazine</a></li>
-        <li><a href="https://scribesecurity.com/blog/proactive-pipeline-security-applying-the-owasp-top-10-ci-cd-risks-with-scribe/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Proactive Pipeline Security: OWASP Top 10 CI/CD Risks — Scribe Security</a></li>
+        <li>1. <a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 CI/CD Security Risks</a></li>
+        <li>2. <a href="https://www.wiz.io/blog/github-actions-security-guide" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hardening GitHub Actions: Lessons from Recent Attacks — Wiz</a></li>
+        <li>3. <a href="https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CI/CD Secrets Management: Secure Your Pipelines — GitGuardian</a></li>
+        <li>4. <a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/CICD-SEC-04-Poisoned-Pipeline-Execution" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CICD-SEC-4: Poisoned Pipeline Execution — OWASP</a></li>
+        <li>5. <a href="https://cheatsheetseries.owasp.org/cheatsheets/CI_CD_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CI/CD Security Cheat Sheet — OWASP</a></li>
+        <li>6. <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-a-branch-rule/about-branch-rules" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">About Branch Rules — GitHub Documentation</a></li>
+        <li>7. <a href="https://docs.sigstore.dev/cosign/signing/signing_with_containers/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Signing Containers with Cosign — Sigstore</a></li>
+        <li>8. <a href="https://slsa.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA — Supply-chain Levels for Software Artifacts</a></li>
+        <li>9. <a href="https://www.akeyless.io/blog/the-hidden-risks-of-secrets-management-in-ci-cd-pipelines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hidden Risks of Secrets Mismanagement in CI/CD — Akeyless</a></li>
+        <li>10. <a href="https://visualstudiomagazine.com/articles/2025/10/06/hardening-ci-cd-essential-strategies-to-mitigate-security-risks.aspx" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Hardening CI/CD: Essential Strategies — Visual Studio Magazine</a></li>
+        <li>11. <a href="https://scribesecurity.com/blog/proactive-pipeline-security-applying-the-owasp-top-10-ci-cd-risks-with-scribe/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Proactive Pipeline Security: OWASP Top 10 CI/CD Risks — Scribe Security</a></li>
     </ol>
 
 </article>
@@ -327,26 +312,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-45-docker-security-and-container-hardening.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 45 &mdash; Docker Security and Container Hardening</p>
-                </div>
-            </a>
+            <a href="episode-45-docker-security-and-container-hardening.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 45 &mdash; Docker Security and Container Hardening</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-47-supply-chain-security-dependencies-sbom-and-build-provenance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 47 &mdash; Supply Chain Security &mdash; Dependencies, SBOM and Build Provenance</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-47-supply-chain-security-dependencies-sbom-and-build-provenance.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 47 &mdash; Supply Chain Security &mdash; Dependencies, SBOM and Build Provenance</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>

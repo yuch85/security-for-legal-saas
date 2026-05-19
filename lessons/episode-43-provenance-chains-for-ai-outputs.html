@@ -89,13 +89,11 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A provenance record for an AI-generated legal output should capture, at minimum:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
-        <thead>
-            <tr class="border-b-2 border-rule-dark">
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Field</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
-                <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
-            </tr>
-        </thead>
+        <thead><tr class="border-b-2 border-rule-dark">
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Field</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Purpose</th>
+            <th class="py-3 px-4 text-left font-sans font-semibold text-ink">Example</th>
+        </tr></thead>
         <tbody>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">`model_id`</td>
@@ -142,12 +140,9 @@
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is not optional metadata. It is the difference between &quot;our AI suggested this clause&quot; and &quot;our AI suggested this clause based on these three precedent documents, using this model version, at this temperature setting, triggered by this user, at this time.&quot;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Why hashing matters:&lt;/strong&gt; The &lt;code&gt;output_hash&lt;/code&gt; field is a cryptographic fingerprint &mdash; a fixed-length string computed from the content using a one-way mathematical function (we covered hashing in <a href="/lessons/ep17/">Episode 17</a>). If anyone modifies the output after generation, the hash won&#39;t match, proving the content was tampered with. Store the hash alongside the output, and you have tamper evidence built in.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-blue-600 bg-blue-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Why hashing matters:</strong> The <code>output_hash</code> field is a cryptographic fingerprint &mdash; a fixed-length string computed from the content using a one-way mathematical function (we covered hashing in <a href="/lessons/ep17/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 17</a>). If anyone modifies the output after generation, the hash won't match, proving the content was tampered with. Store the hash alongside the output, and you have tamper evidence built in.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Chain of Custody for AI-Generated Legal Content</h2>
 
@@ -155,11 +150,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Consider a contract review tool that flags a problematic indemnification clause and suggests alternative language. The provenance chain should record:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Input stage</strong> &mdash; which contract was uploaded, by whom, at what time</li>
-        <li><strong class="text-ink">Retrieval stage</strong> &mdash; which precedent clauses were retrieved from the knowledge base, with relevance scores</li>
-        <li><strong class="text-ink">Generation stage</strong> &mdash; which model version produced the suggestion, with what parameters</li>
-        <li><strong class="text-ink">Output stage</strong> &mdash; the exact text generated, hashed and timestamped</li>
-        <li><strong class="text-ink">Review stage</strong> &mdash; whether a human reviewed and approved, modified, or rejected the suggestion</li>
+        <li>1. <strong class="text-ink">Input stage</strong> &mdash; which contract was uploaded, by whom, at what time</li>
+        <li>2. <strong class="text-ink">Retrieval stage</strong> &mdash; which precedent clauses were retrieved from the knowledge base, with relevance scores</li>
+        <li>3. <strong class="text-ink">Generation stage</strong> &mdash; which model version produced the suggestion, with what parameters</li>
+        <li>4. <strong class="text-ink">Output stage</strong> &mdash; the exact text generated, hashed and timestamped</li>
+        <li>5. <strong class="text-ink">Review stage</strong> &mdash; whether a human reviewed and approved, modified, or rejected the suggestion</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each stage links to the previous one through identifiers. Break any link, and you cannot reconstruct the full picture.</p>
@@ -175,12 +170,9 @@
         <li><strong class="text-ink">Log configuration parameters.</strong> Temperature, top-p, max tokens, stop sequences &mdash; all of them affect output.</li>
         <li><strong class="text-ink">Snapshot retrieval state.</strong> If your system uses retrieval-augmented generation (RAG &mdash; where the AI pulls relevant documents from a knowledge base before generating a response, as we discussed in the context of SSRF risks in <a href="/lessons/ep11/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 11</a>), record which chunks were retrieved and their scores. The knowledge base changes over time; today&#39;s retrieval results may differ from last month&#39;s.</li>
     </ul>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #fef3c7; border-left: 4px solid #d97706; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Practical tip:&lt;/strong&gt; Even if exact reproducibility is impossible, provenance metadata lets you demonstrate that the &lt;em&gt;process&lt;/em&gt; was consistent and auditable. Courts and regulators care about whether you followed a reasonable, documented process &mdash; not whether you can reproduce byte-identical output.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-amber-600 bg-amber-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Practical tip:</strong> Even if exact reproducibility is impossible, provenance metadata lets you demonstrate that the <em>process</em> was consistent and auditable. Courts and regulators care about whether you followed a reasonable, documented process &mdash; not whether you can reproduce byte-identical output.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Storage Patterns for Provenance Data</h2>
 
@@ -206,37 +198,32 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI audit trail best practices</a> [8] recommend starting with these implementation steps:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Generate provenance at creation time.</strong> Retrofitting provenance onto existing outputs is nearly impossible. Build it into the generation pipeline from day one.</li>
-        <li><strong class="text-ink">Make provenance immutable.</strong> Use append-only storage (Episode 42&#39;s hash-chained logs are ideal here). Once a provenance record is written, it cannot be modified.</li>
-        <li><strong class="text-ink">Include provenance in your API responses.</strong> When your API returns AI-generated content, include a `provenance_id` that clients can use to retrieve the full chain.</li>
-        <li><strong class="text-ink">Expose provenance to end users.</strong> Lawyers using your tool should be able to click &quot;show sources&quot; and see exactly which documents informed a suggestion. This is not just good security &mdash; it is good product design.</li>
-        <li><strong class="text-ink">Test your reconstruction capability.</strong> Periodically verify that you can reconstruct the full provenance chain for historical outputs. If you discover gaps, fix the pipeline before a regulator discovers them for you.</li>
+        <li>1. <strong class="text-ink">Generate provenance at creation time.</strong> Retrofitting provenance onto existing outputs is nearly impossible. Build it into the generation pipeline from day one.</li>
+        <li>2. <strong class="text-ink">Make provenance immutable.</strong> Use append-only storage (Episode 42&#39;s hash-chained logs are ideal here). Once a provenance record is written, it cannot be modified.</li>
+        <li>3. <strong class="text-ink">Include provenance in your API responses.</strong> When your API returns AI-generated content, include a `provenance_id` that clients can use to retrieve the full chain.</li>
+        <li>4. <strong class="text-ink">Expose provenance to end users.</strong> Lawyers using your tool should be able to click &quot;show sources&quot; and see exactly which documents informed a suggestion. This is not just good security &mdash; it is good product design.</li>
+        <li>5. <strong class="text-ink">Test your reconstruction capability.</strong> Periodically verify that you can reconstruct the full provenance chain for historical outputs. If you discover gaps, fix the pipeline before a regulator discovers them for you.</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://lawrence-emenike.medium.com/audit-trails-and-explainability-for-compliance-building-the-transparency-layer-financial-services-d24961bad987" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI governance frameworks increasingly require traceable IDs, versioning evidence, input provenance references, and retention controls</a> [9] that support reconstruction and oversight. These are not future requirements &mdash; they are current expectations for any AI system handling sensitive data.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;div style=&quot;background: #f0fdf4; border-left: 4px solid #16a34a; padding: 16px; margin: 16px 0;&quot;&gt;</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;strong&gt;Key takeaway:&lt;/strong&gt; Provenance chains for AI outputs are not a nice-to-have feature. They are the mechanism by which you prove &mdash; to regulators, to courts, to clients &mdash; that your AI system operates transparently and accountably. If you cannot trace an AI output back to its inputs, model version, and generation parameters, you cannot defend it.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">&lt;/div&gt;</p>
+    <div class="border-l-4 border-green-600 bg-green-50 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
+        <p><strong>Key takeaway:</strong> Provenance chains for AI outputs are not a nice-to-have feature. They are the mechanism by which you prove &mdash; to regulators, to courts, to clients &mdash; that your AI system operates transparently and accountably. If you cannot trace an AI output back to its inputs, model version, and generation parameters, you cannot defend it.</p>
+    </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we&#39;ll look at correlation IDs and distributed tracing &mdash; the infrastructure that lets you follow a single user request as it travels through multiple services in your legal SaaS platform. If provenance chains tell you <em>what</em> your AI produced, correlation IDs tell you <em>how</em> the request moved through your system to get there.</p>
-
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Sources &amp; Further Reading</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI Risk Management Framework (AI RMF 1.0)</a></li>
-        <li><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI 600-1 — Generative AI Profile</a></li>
-        <li><a href="https://galileo.ai/blog/ai-agent-compliance-governance-audit-trails-risk-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Agent Compliance & Governance — Galileo</a></li>
-        <li><a href="https://underdefense.com/blog/ai-data-governance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Data Governance in 2026 — UnderDefense</a></li>
-        <li><a href="https://artificialintelligenceact.eu/article/13/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU AI Act, Article 13 — Transparency and Provision of Information to Deployers</a></li>
-        <li><a href="https://www.euaiact.com/key-issue/5" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU AI Act Key Issue 5 — Transparency Obligations</a></li>
-        <li><a href="https://www.ispartnersllc.com/blog/nist-ai-rmf-2025-updates-what-you-need-to-know-about-the-latest-framework-changes/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI RMF 2025 Updates — IS Partners</a></li>
-        <li><a href="https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build AI Audit Trails That Stand Up to Regulatory Scrutiny — CX Today</a></li>
-        <li><a href="https://lawrence-emenike.medium.com/audit-trails-and-explainability-for-compliance-building-the-transparency-layer-financial-services-d24961bad987" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Trails and Explainability for Compliance — Lawrence Emenike</a></li>
-        <li><a href="https://hacken.io/discover/llm-security-frameworks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM Security Frameworks: A CISO's Guide — Hacken</a></li>
+        <li>1. <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI Risk Management Framework (AI RMF 1.0)</a></li>
+        <li>2. <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI 600-1 — Generative AI Profile</a></li>
+        <li>3. <a href="https://galileo.ai/blog/ai-agent-compliance-governance-audit-trails-risk-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Agent Compliance & Governance — Galileo</a></li>
+        <li>4. <a href="https://underdefense.com/blog/ai-data-governance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Data Governance in 2026 — UnderDefense</a></li>
+        <li>5. <a href="https://artificialintelligenceact.eu/article/13/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU AI Act, Article 13 — Transparency and Provision of Information to Deployers</a></li>
+        <li>6. <a href="https://www.euaiact.com/key-issue/5" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU AI Act Key Issue 5 — Transparency Obligations</a></li>
+        <li>7. <a href="https://www.ispartnersllc.com/blog/nist-ai-rmf-2025-updates-what-you-need-to-know-about-the-latest-framework-changes/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI RMF 2025 Updates — IS Partners</a></li>
+        <li>8. <a href="https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build AI Audit Trails That Stand Up to Regulatory Scrutiny — CX Today</a></li>
+        <li>9. <a href="https://lawrence-emenike.medium.com/audit-trails-and-explainability-for-compliance-building-the-transparency-layer-financial-services-d24961bad987" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Trails and Explainability for Compliance — Lawrence Emenike</a></li>
+        <li>10. <a href="https://hacken.io/discover/llm-security-frameworks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM Security Frameworks: A CISO's Guide — Hacken</a></li>
     </ol>
 
 </article>
@@ -318,26 +305,10 @@
 <nav aria-label="Episode navigation" class="py-10">
     <div class="flex items-center justify-between">
         <div>
-            <a href="episode-42-hashchained-immutable-logs.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <div>
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p>
-                    <p class="text-lg font-semibold">Episode 42 &mdash; Hash-Chained Immutable Logs</p>
-                </div>
-            </a>
+            <a href="episode-42-hashchained-immutable-logs.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><svg class="w-5 h-5 mr-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg><div><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Previous</p><p class="text-lg font-semibold">Episode 42 &mdash; Hash-Chained Immutable Logs</p></div></a>
         </div>
         <div class="text-right">
-            <a href="episode-44-correlation-ids-and-distributed-tracing.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors">
-                <div class="text-right">
-                    <p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p>
-                    <p class="text-lg font-semibold">Episode 44 &mdash; Correlation IDs and Distributed Tracing</p>
-                </div>
-                <svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
+            <a href="episode-44-correlation-ids-and-distributed-tracing.html" class="group inline-flex items-center text-ink-light hover:text-red transition-colors"><div class="text-right"><p class="font-sans text-sm tracking-widest uppercase text-ink-muted">Next</p><p class="text-lg font-semibold">Episode 44 &mdash; Correlation IDs and Distributed Tracing</p></div><svg class="w-5 h-5 ml-3 text-ink-muted group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
         </div>
     </div>
 </nav>
