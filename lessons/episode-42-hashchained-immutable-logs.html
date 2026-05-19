@@ -86,8 +86,8 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A hash function &mdash; which we first covered in Episode 17 in the context of password storage &mdash; is a one-way mathematical transformation that takes an input of any size and produces a fixed-length output (the &quot;hash&quot; or &quot;digest&quot;). Two properties matter here:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Deterministic</strong>: The same input always produces the same hash</li>
-        <li>2. <strong class="text-ink">Collision-resistant</strong>: It is computationally infeasible to find two different inputs that produce the same hash</li>
+        <li><strong class="text-ink">Deterministic</strong>: The same input always produces the same hash</li>
+        <li><strong class="text-ink">Collision-resistant</strong>: It is computationally infeasible to find two different inputs that produce the same hash</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SHA-256 (Secure Hash Algorithm, 256-bit) is the standard choice for audit log chains. It produces a 64-character hexadecimal string from any input. Change a single character in the input, and the output changes completely and unpredictably.</p>
@@ -163,10 +163,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">To verify log integrity, you recompute the hash chain from the beginning (or from a trusted checkpoint):</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Start at the genesis entry (or the last verified checkpoint)</li>
-        <li>2. For each entry, compute `SHA-256` of its fields plus the previous entry&#39;s hash</li>
-        <li>3. Compare the computed hash to the stored `entry_hash`</li>
-        <li>4. If any computed hash doesn&#39;t match the stored hash, that entry or a prior entry has been tampered with</li>
+        <li>Start at the genesis entry (or the last verified checkpoint)</li>
+        <li>For each entry, compute `SHA-256` of its fields plus the previous entry&#39;s hash</li>
+        <li>Compare the computed hash to the stored `entry_hash`</li>
+        <li>If any computed hash doesn&#39;t match the stored hash, that entry or a prior entry has been tampered with</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This verification can run as a scheduled job &mdash; daily, hourly, or continuously &mdash; and should trigger an immediate alert if integrity breaks.</p>
@@ -274,11 +274,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For teams that prefer not to depend on a proprietary service:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Create an append-only audit table (INSERT-only permissions for the application, no UPDATE/DELETE)</li>
-        <li>2. Compute and store the hash chain in application code</li>
-        <li>3. Store the table in a separate database with restricted administrative access</li>
-        <li>4. Run a verification job that recomputes and checks the chain</li>
-        <li>5. Publish checkpoint hashes to external storage</li>
+        <li>Create an append-only audit table (INSERT-only permissions for the application, no UPDATE/DELETE)</li>
+        <li>Compute and store the hash chain in application code</li>
+        <li>Store the table in a separate database with restricted administrative access</li>
+        <li>Run a verification job that recomputes and checks the chain</li>
+        <li>Publish checkpoint hashes to external storage</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This approach gives you full control and avoids vendor lock-in, at the cost of implementing and maintaining the hash chain logic yourself.</p>
@@ -346,13 +346,13 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The complete audit logging architecture:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Structured JSON entries</strong> with the six W&#39;s (EP41)</li>
-        <li>2. <strong class="text-ink">Append-only storage</strong> preventing modification or deletion (EP41)</li>
-        <li>3. <strong class="text-ink">Hash chain</strong> linking each entry to all previous entries (this episode)</li>
-        <li>4. <strong class="text-ink">External checkpoint witnesses</strong> protecting against full chain rewrites</li>
-        <li>5. <strong class="text-ink">Automated verification</strong> running continuously or on schedule</li>
-        <li>6. <strong class="text-ink">Access controls</strong> separating writers, readers, and administrators</li>
-        <li>7. <strong class="text-ink">Retention policy</strong> aligned with regulatory requirements (7+ years)</li>
+        <li><strong class="text-ink">Structured JSON entries</strong> with the six W&#39;s (EP41)</li>
+        <li><strong class="text-ink">Append-only storage</strong> preventing modification or deletion (EP41)</li>
+        <li><strong class="text-ink">Hash chain</strong> linking each entry to all previous entries (this episode)</li>
+        <li><strong class="text-ink">External checkpoint witnesses</strong> protecting against full chain rewrites</li>
+        <li><strong class="text-ink">Automated verification</strong> running continuously or on schedule</li>
+        <li><strong class="text-ink">Access controls</strong> separating writers, readers, and administrators</li>
+        <li><strong class="text-ink">Retention policy</strong> aligned with regulatory requirements (7+ years)</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This architecture produces an audit trail that is structured, searchable, tamper-evident, and legally admissible &mdash; the foundation that every security control in this series depends on.</p>

@@ -126,9 +126,9 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configuration requirements:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Set `sslmode=verify-full` on the client.</strong> This ensures the client verifies the server&#39;s TLS certificate and checks that the hostname matches. Weaker modes like `sslmode=prefer` will silently fall back to unencrypted connections if TLS negotiation fails &mdash; which is exactly what a man-in-the-middle attacker causes.</li>
-        <li>2. <strong class="text-ink">Use certificates from your internal CA or cloud provider.</strong> AWS RDS provides managed certificates. For self-hosted PostgreSQL, generate certificates through your PKI (public key infrastructure, from Episode 15) or HashiCorp Vault&#39;s PKI secrets engine.</li>
-        <li>3. <strong class="text-ink">Reject unencrypted connections.</strong> In `pg_hba.conf`, use `hostssl` instead of `host` to require TLS for all connections.</li>
+        <li><strong class="text-ink">Set `sslmode=verify-full` on the client.</strong> This ensures the client verifies the server&#39;s TLS certificate and checks that the hostname matches. Weaker modes like `sslmode=prefer` will silently fall back to unencrypted connections if TLS negotiation fails &mdash; which is exactly what a man-in-the-middle attacker causes.</li>
+        <li><strong class="text-ink">Use certificates from your internal CA or cloud provider.</strong> AWS RDS provides managed certificates. For self-hosted PostgreSQL, generate certificates through your PKI (public key infrastructure, from Episode 15) or HashiCorp Vault&#39;s PKI secrets engine.</li>
+        <li><strong class="text-ink">Reject unencrypted connections.</strong> In `pg_hba.conf`, use `hostssl` instead of `host` to require TLS for all connections.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Connection Pooling Credentials</h2>
@@ -234,10 +234,10 @@ CREATE POLICY tenant_isolation ON documents
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Requirements:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Encrypt backups at rest.</strong> AWS RDS supports automated encrypted backups using KMS keys (from Episode 29). For self-hosted databases, use `pg_basebackup` with output piped through encryption.</li>
-        <li>2. <strong class="text-ink">Restrict backup access.</strong> The IAM roles or accounts that can access backup storage should be separate from those that access the production database.</li>
-        <li>3. <strong class="text-ink">Test restore procedures.</strong> An encrypted backup you cannot restore is not a backup. Regularly test that you can decrypt and restore from backups &mdash; including with rotated keys.</li>
-        <li>4. <strong class="text-ink">Apply the same network isolation to backup storage.</strong> S3 buckets (or equivalent) holding database backups should not be publicly accessible. Enable S3 Block Public Access and use VPC endpoints for access.</li>
+        <li><strong class="text-ink">Encrypt backups at rest.</strong> AWS RDS supports automated encrypted backups using KMS keys (from Episode 29). For self-hosted databases, use `pg_basebackup` with output piped through encryption.</li>
+        <li><strong class="text-ink">Restrict backup access.</strong> The IAM roles or accounts that can access backup storage should be separate from those that access the production database.</li>
+        <li><strong class="text-ink">Test restore procedures.</strong> An encrypted backup you cannot restore is not a backup. Regularly test that you can decrypt and restore from backups &mdash; including with rotated keys.</li>
+        <li><strong class="text-ink">Apply the same network isolation to backup storage.</strong> S3 buckets (or equivalent) holding database backups should not be publicly accessible. Enable S3 Block Public Access and use VPC endpoints for access.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Hardening Checklist</h2>

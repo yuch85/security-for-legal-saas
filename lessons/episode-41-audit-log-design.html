@@ -287,11 +287,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In litigation, regulatory investigations, and e-discovery, audit logs may need to serve as evidence. For a log to be admissible and persuasive, it should demonstrate:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Contemporaneous recording</strong>: Entries were created at or near the time of the event, not reconstructed later</li>
-        <li>2. <strong class="text-ink">Systematic process</strong>: The logging system operates automatically and consistently, not at the discretion of individuals</li>
-        <li>3. <strong class="text-ink">Integrity controls</strong>: Demonstrable protections against tampering (append-only, hash chains, access controls)</li>
-        <li>4. <strong class="text-ink">Chain of custody</strong>: A documented trail of who had access to the logs and when</li>
-        <li>5. <strong class="text-ink">Completeness</strong>: Evidence that the logging system captures all relevant events, not a selective subset</li>
+        <li><strong class="text-ink">Contemporaneous recording</strong>: Entries were created at or near the time of the event, not reconstructed later</li>
+        <li><strong class="text-ink">Systematic process</strong>: The logging system operates automatically and consistently, not at the discretion of individuals</li>
+        <li><strong class="text-ink">Integrity controls</strong>: Demonstrable protections against tampering (append-only, hash chains, access controls)</li>
+        <li><strong class="text-ink">Chain of custody</strong>: A documented trail of who had access to the logs and when</li>
+        <li><strong class="text-ink">Completeness</strong>: Evidence that the logging system captures all relevant events, not a selective subset</li>
     </ol>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key insight:</strong> Courts assess the reliability of digital evidence based on the controls surrounding its creation and preservation. A log that can be shown to be append-only, hash-chained, and access-controlled is substantially more persuasive than one stored in a regular database table that any administrator could modify.</blockquote>
 
@@ -379,11 +379,11 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Common Mistakes</h2>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Logging too little</strong>: Capturing only errors, not successful operations. You need both &mdash; an access denial is interesting, but knowing <em>who successfully accessed what</em> is equally important for investigations.</li>
-        <li>2. <strong class="text-ink">Logging too much</strong>: Including full document content in audit entries. Log the action and the resource identifier, not the resource itself. This keeps log volumes manageable and avoids creating a second copy of sensitive data in the log store.</li>
-        <li>3. <strong class="text-ink">Inconsistent schemas</strong>: Different services logging in different formats. Establish a firm-wide audit log schema and enforce it.</li>
-        <li>4. <strong class="text-ink">No log integrity</strong>: Storing audit logs in a regular database table that DBAs can modify. Use append-only storage.</li>
-        <li>5. <strong class="text-ink">Mixing log types</strong>: Combining debug, application, and audit logs in the same stream. Separate them.</li>
+        <li><strong class="text-ink">Logging too little</strong>: Capturing only errors, not successful operations. You need both &mdash; an access denial is interesting, but knowing <em>who successfully accessed what</em> is equally important for investigations.</li>
+        <li><strong class="text-ink">Logging too much</strong>: Including full document content in audit entries. Log the action and the resource identifier, not the resource itself. This keeps log volumes manageable and avoids creating a second copy of sensitive data in the log store.</li>
+        <li><strong class="text-ink">Inconsistent schemas</strong>: Different services logging in different formats. Establish a firm-wide audit log schema and enforce it.</li>
+        <li><strong class="text-ink">No log integrity</strong>: Storing audit logs in a regular database table that DBAs can modify. Use append-only storage.</li>
+        <li><strong class="text-ink">Mixing log types</strong>: Combining debug, application, and audit logs in the same stream. Separate them.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>

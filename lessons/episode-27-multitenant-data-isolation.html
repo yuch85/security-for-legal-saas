@@ -257,12 +257,12 @@ def test_cross_tenant_isolation():
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The tenant context must flow through:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Authentication</strong> &mdash; the JWT token or session contains the user&#39;s `tenant_id`</li>
-        <li>2. <strong class="text-ink">API middleware</strong> &mdash; extracts `tenant_id` from the token and sets it in the request context</li>
-        <li>3. <strong class="text-ink">Service layer</strong> &mdash; passes `tenant_id` to every database query and external service call</li>
-        <li>4. <strong class="text-ink">Database connection</strong> &mdash; sets `app.current_tenant` for RLS enforcement</li>
-        <li>5. <strong class="text-ink">Background jobs</strong> &mdash; async tasks (email notifications, report generation) must carry the `tenant_id` from the originating request</li>
-        <li>6. <strong class="text-ink">Logging</strong> &mdash; every log entry includes `tenant_id` for debugging and audit</li>
+        <li><strong class="text-ink">Authentication</strong> &mdash; the JWT token or session contains the user&#39;s `tenant_id`</li>
+        <li><strong class="text-ink">API middleware</strong> &mdash; extracts `tenant_id` from the token and sets it in the request context</li>
+        <li><strong class="text-ink">Service layer</strong> &mdash; passes `tenant_id` to every database query and external service call</li>
+        <li><strong class="text-ink">Database connection</strong> &mdash; sets `app.current_tenant` for RLS enforcement</li>
+        <li><strong class="text-ink">Background jobs</strong> &mdash; async tasks (email notifications, report generation) must carry the `tenant_id` from the originating request</li>
+        <li><strong class="text-ink">Logging</strong> &mdash; every log entry includes `tenant_id` for debugging and audit</li>
     </ol>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The background job trap:</strong> A scheduled report generation job runs outside a user request context. If it doesn&#39;t explicitly set the tenant context, it may default to no tenant filter &mdash; and the report includes data from all tenants. This is a real and documented failure mode. Every background job must explicitly set and verify its tenant context before accessing data.</blockquote>
 
@@ -272,8 +272,8 @@ def test_cross_tenant_isolation():
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The lesson for multi-tenant SaaS is twofold:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Tenant-level security policy enforcement matters.</strong> If your platform allows tenants to opt out of MFA, some will &mdash; and those are the accounts that get breached. Enforce baseline security requirements across all tenants.</li>
-        <li>2. <strong class="text-ink">Credential hygiene is a multi-tenant concern.</strong> Even with perfect data isolation, a compromised tenant account gives the attacker access to that tenant&#39;s data. Combine isolation with strong authentication (Episode 21) and SSO (Episode 22).</li>
+        <li><strong class="text-ink">Tenant-level security policy enforcement matters.</strong> If your platform allows tenants to opt out of MFA, some will &mdash; and those are the accounts that get breached. Enforce baseline security requirements across all tenants.</li>
+        <li><strong class="text-ink">Credential hygiene is a multi-tenant concern.</strong> Even with perfect data isolation, a compromised tenant account gives the attacker access to that tenant&#39;s data. Combine isolation with strong authentication (Episode 21) and SSO (Episode 22).</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Ethical Walls vs. Multi-Tenancy: The Complete Picture</h2>

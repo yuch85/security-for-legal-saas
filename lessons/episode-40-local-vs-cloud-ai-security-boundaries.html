@@ -216,10 +216,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Ask four questions for each AI task:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Data sensitivity:</strong> Does the prompt contain privileged, confidential, or personally identifiable information?</li>
-        <li>2. <strong class="text-ink">Model capability:</strong> Does the task require a frontier model (GPT-4, Claude Opus), or can a smaller local model handle it?</li>
-        <li>3. <strong class="text-ink">Compliance mandate:</strong> Do applicable regulations (GDPR, HIPAA, data localisation laws) require data to stay within your jurisdiction?</li>
-        <li>4. <strong class="text-ink">Acceptable risk:</strong> If the data were exposed, what is the worst-case consequence?</li>
+        <li><strong class="text-ink">Data sensitivity:</strong> Does the prompt contain privileged, confidential, or personally identifiable information?</li>
+        <li><strong class="text-ink">Model capability:</strong> Does the task require a frontier model (GPT-4, Claude Opus), or can a smaller local model handle it?</li>
+        <li><strong class="text-ink">Compliance mandate:</strong> Do applicable regulations (GDPR, HIPAA, data localisation laws) require data to stay within your jurisdiction?</li>
+        <li><strong class="text-ink">Acceptable risk:</strong> If the data were exposed, what is the worst-case consequence?</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">If the answer to question 1 is &quot;yes&quot; and the answer to question 2 is &quot;a local model can handle it,&quot; the choice is clear: run locally.</p>
@@ -305,11 +305,11 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Practical Recommendations</h2>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Default to cloud with redaction</strong> (EP39) for general-purpose tasks where client data can be effectively stripped</li>
-        <li>2. <strong class="text-ink">Deploy a local model</strong> for privileged, high-sensitivity, or regulated data that should not leave your network under any circumstances</li>
-        <li>3. <strong class="text-ink">Use the inference gateway</strong> (EP38) as the routing decision point &mdash; it examines each prompt, checks data classification, and routes to local or cloud accordingly</li>
-        <li>4. <strong class="text-ink">Secure the local endpoint</strong> with network isolation, authentication, rate limiting, and model file integrity verification</li>
-        <li>5. <strong class="text-ink">Monitor both paths</strong> &mdash; audit logs should capture every inference request regardless of whether it went to cloud or local, with the routing decision and its rationale logged</li>
+        <li><strong class="text-ink">Default to cloud with redaction</strong> (EP39) for general-purpose tasks where client data can be effectively stripped</li>
+        <li><strong class="text-ink">Deploy a local model</strong> for privileged, high-sensitivity, or regulated data that should not leave your network under any circumstances</li>
+        <li><strong class="text-ink">Use the inference gateway</strong> (EP38) as the routing decision point &mdash; it examines each prompt, checks data classification, and routes to local or cloud accordingly</li>
+        <li><strong class="text-ink">Secure the local endpoint</strong> with network isolation, authentication, rate limiting, and model file integrity verification</li>
+        <li><strong class="text-ink">Monitor both paths</strong> &mdash; audit logs should capture every inference request regardless of whether it went to cloud or local, with the routing decision and its rationale logged</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>

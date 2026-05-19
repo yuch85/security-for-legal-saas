@@ -149,11 +149,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS platforms, dynamic walls are the standard. A new matter for a client creates a conflict with any existing adverse representation. The system should:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Run a conflict check when the matter is created</li>
-        <li>2. Identify all lawyers with conflicting matter assignments</li>
-        <li>3. Automatically erect walls barring those lawyers from the new matter</li>
-        <li>4. Notify the affected parties (per Rule 1.10&#39;s notice requirement)</li>
-        <li>5. Log the wall creation with a timestamp and reason</li>
+        <li>Run a conflict check when the matter is created</li>
+        <li>Identify all lawyers with conflicting matter assignments</li>
+        <li>Automatically erect walls barring those lawyers from the new matter</li>
+        <li>Notify the affected parties (per Rule 1.10&#39;s notice requirement)</li>
+        <li>Log the wall creation with a timestamp and reason</li>
     </ol>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Database-Level Enforcement</h3>
@@ -206,10 +206,10 @@ WHERE ma.user_id = :current_user
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The solution is <strong class="text-ink">pre-filtered search indexing</strong>:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. The search index (Elasticsearch, Solr, or similar) is tagged with matter IDs and wall metadata</li>
-        <li>2. At search time, the query includes a filter that excludes all matters where the current user has an active wall</li>
-        <li>3. Results from walled matters are never returned &mdash; not even snippets or metadata</li>
-        <li>4. The user has no indication that results were suppressed (to avoid revealing the existence of the conflict)</li>
+        <li>The search index (Elasticsearch, Solr, or similar) is tagged with matter IDs and wall metadata</li>
+        <li>At search time, the query includes a filter that excludes all matters where the current user has an active wall</li>
+        <li>Results from walled matters are never returned &mdash; not even snippets or metadata</li>
+        <li>The user has no indication that results were suppressed (to avoid revealing the existence of the conflict)</li>
     </ol>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Critical detail:</strong> Even revealing that a wall exists can be a confidentiality breach. If a lawyer searches for &quot;Acme Corp acquisition&quot; and sees a message saying &quot;2 results hidden due to an ethical wall,&quot; they now know the firm has an adverse matter involving Acme Corp. The correct behaviour is silent suppression &mdash; walled results simply don&#39;t appear.</blockquote>
 

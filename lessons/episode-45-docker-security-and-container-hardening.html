@@ -226,10 +226,10 @@ USER appuser
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A practical scanning policy for legal SaaS:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Block critical and high CVEs</strong> &mdash; no image with a known critical vulnerability reaches production</li>
-        <li>2. <strong class="text-ink">Set fix deadlines for medium CVEs</strong> &mdash; 30 days to patch or document an exception</li>
-        <li>3. <strong class="text-ink">Rebuild base images weekly</strong> &mdash; pick up security patches automatically</li>
-        <li>4. <strong class="text-ink">Scan running containers</strong> &mdash; detect vulnerabilities discovered after deployment</li>
+        <li><strong class="text-ink">Block critical and high CVEs</strong> &mdash; no image with a known critical vulnerability reaches production</li>
+        <li><strong class="text-ink">Set fix deadlines for medium CVEs</strong> &mdash; 30 days to patch or document an exception</li>
+        <li><strong class="text-ink">Rebuild base images weekly</strong> &mdash; pick up security patches automatically</li>
+        <li><strong class="text-ink">Scan running containers</strong> &mdash; detect vulnerabilities discovered after deployment</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.aquasec.com/cloud-native-academy/docker-container/docker-cis-benchmark/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Aqua Security's CIS Docker Benchmark guide</a> [7] notes that many organizations scan images during build but forget to rescan running containers &mdash; leaving a window where newly discovered vulnerabilities go undetected.</p>
@@ -253,17 +253,17 @@ USER appuser
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we turn to the pipeline that builds and deploys those containers &mdash; CI/CD pipeline security. Your CI/CD system has production credentials and runs arbitrary code. It is the most powerful system you own. We&#39;ll talk about how to treat it that way.</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <a href="https://csrc.nist.gov/pubs/sp/800-190/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-190 — Application Container Security Guide</a></li>
-        <li>2. <a href="https://www.cisecurity.org/benchmark/docker" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS Docker Benchmark — Center for Internet Security</a></li>
-        <li>3. <a href="https://www.onlinehashcrack.com/guides/best-practices/docker-security-2025-hardening-containers.php" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker Security 2025: Hardening Containers — OnlineHashCrack</a></li>
-        <li>4. <a href="https://docs.docker.com/engine/security/seccomp/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker Seccomp Security Profiles — Docker Documentation</a></li>
-        <li>5. <a href="https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CI/CD Secrets Management — GitGuardian</a></li>
-        <li>6. <a href="https://docs.docker.com/dhi/core-concepts/cis/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS Benchmark — Docker Documentation</a></li>
-        <li>7. <a href="https://www.aquasec.com/cloud-native-academy/docker-container/docker-cis-benchmark/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker CIS Benchmark: Best Practices — Aqua Security</a></li>
-        <li>8. <a href="https://github.com/docker/docker-bench-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker Bench for Security — GitHub</a></li>
-        <li>9. <a href="https://www.virtua.cloud/learn/en/tutorials/docker-security-hardening-rootless-seccomp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker Security Hardening: Rootless, Seccomp, AppArmor — Virtua Cloud</a></li>
-        <li>10. <a href="https://wazuh.com/blog/scanning-docker-infrastructure-against-cis-benchmark/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Scanning Docker Infrastructure Against CIS Benchmark — Wazuh</a></li>
-        <li>11. <a href="https://medium.com/@vagees/cis-benchmarks-for-docker-security-c12a802f298b" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS Benchmarks for Docker Security — Sathiya Shunmugasundaram</a></li>
+        <li><a href="https://csrc.nist.gov/pubs/sp/800-190/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-190 — Application Container Security Guide</a></li>
+        <li><a href="https://www.cisecurity.org/benchmark/docker" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS Docker Benchmark — Center for Internet Security</a></li>
+        <li><a href="https://www.onlinehashcrack.com/guides/best-practices/docker-security-2025-hardening-containers.php" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker Security 2025: Hardening Containers — OnlineHashCrack</a></li>
+        <li><a href="https://docs.docker.com/engine/security/seccomp/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker Seccomp Security Profiles — Docker Documentation</a></li>
+        <li><a href="https://blog.gitguardian.com/handle-secrets-in-ci-cd-pipelines/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CI/CD Secrets Management — GitGuardian</a></li>
+        <li><a href="https://docs.docker.com/dhi/core-concepts/cis/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS Benchmark — Docker Documentation</a></li>
+        <li><a href="https://www.aquasec.com/cloud-native-academy/docker-container/docker-cis-benchmark/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker CIS Benchmark: Best Practices — Aqua Security</a></li>
+        <li><a href="https://github.com/docker/docker-bench-security" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker Bench for Security — GitHub</a></li>
+        <li><a href="https://www.virtua.cloud/learn/en/tutorials/docker-security-hardening-rootless-seccomp" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Docker Security Hardening: Rootless, Seccomp, AppArmor — Virtua Cloud</a></li>
+        <li><a href="https://wazuh.com/blog/scanning-docker-infrastructure-against-cis-benchmark/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Scanning Docker Infrastructure Against CIS Benchmark — Wazuh</a></li>
+        <li><a href="https://medium.com/@vagees/cis-benchmarks-for-docker-security-c12a802f298b" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS Benchmarks for Docker Security — Sathiya Shunmugasundaram</a></li>
     </ol>
 
 </article>

@@ -220,10 +220,10 @@ users:manage      (admin role only)
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">The pattern:</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Define permissions as API scopes: `documents:read`, `documents:write`, `matters:admin`</li>
-        <li>2. When a user authenticates (via SSO from Episode 22), their session or JWT token (from Episode 18) includes the scopes their role grants</li>
-        <li>3. Every API endpoint checks the token&#39;s scopes before executing &mdash; middleware that runs before any business logic</li>
-        <li>4. The UI reads the same scopes to show or hide interface elements &mdash; but this is cosmetic, not security</li>
+        <li>Define permissions as API scopes: `documents:read`, `documents:write`, `matters:admin`</li>
+        <li>When a user authenticates (via SSO from Episode 22), their session or JWT token (from Episode 18) includes the scopes their role grants</li>
+        <li>Every API endpoint checks the token&#39;s scopes before executing &mdash; middleware that runs before any business logic</li>
+        <li>The UI reads the same scopes to show or hide interface elements &mdash; but this is cosmetic, not security</li>
     </ol>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Callout: The &quot;hidden button&quot; fallacy.</strong> Removing a button from the UI is not access control. It&#39;s a UX decision. Access control happens at the API. Every. Single. Request.</blockquote>
 
@@ -257,10 +257,10 @@ users:manage      (admin role only)
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The authorization middleware:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Extracts the user&#39;s roles from their session or JWT</li>
-        <li>2. Resolves those roles to a set of permissions/scopes</li>
-        <li>3. Compares against the permissions required by the specific endpoint</li>
-        <li>4. Returns 403 Forbidden if the user lacks the required permission</li>
+        <li>Extracts the user&#39;s roles from their session or JWT</li>
+        <li>Resolves those roles to a set of permissions/scopes</li>
+        <li>Compares against the permissions required by the specific endpoint</li>
+        <li>Returns 403 Forbidden if the user lacks the required permission</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This centralised pattern ensures that every endpoint is protected by default. New endpoints that forget to specify required permissions should fail closed &mdash; deny access &mdash; rather than fail open.</p>

@@ -148,12 +148,12 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The flow for every access request:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. User/device sends a request to the PEP</li>
-        <li>2. PEP forwards identity and context to the PE</li>
-        <li>3. PE evaluates policies using attributes (identity, device, location, time, risk score)</li>
-        <li>4. PE returns allow/deny to the PA</li>
-        <li>5. PA instructs the PEP to permit or block the request</li>
-        <li>6. If permitted, the session is established with minimum required privileges</li>
+        <li>User/device sends a request to the PEP</li>
+        <li>PEP forwards identity and context to the PE</li>
+        <li>PE evaluates policies using attributes (identity, device, location, time, risk score)</li>
+        <li>PE returns allow/deny to the PA</li>
+        <li>PA instructs the PEP to permit or block the request</li>
+        <li>If permitted, the session is established with minimum required privileges</li>
     </ol>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Key insight:</strong> This happens on every request, not just at login. A traditional system authenticates once and grants a session. Zero Trust re-evaluates continuously &mdash; the user&#39;s device compliance could change, their risk score could escalate, or an anomaly could be detected mid-session.</blockquote>
 

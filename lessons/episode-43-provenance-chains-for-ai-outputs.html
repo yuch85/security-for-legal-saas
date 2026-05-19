@@ -150,11 +150,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Consider a contract review tool that flags a problematic indemnification clause and suggests alternative language. The provenance chain should record:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Input stage</strong> &mdash; which contract was uploaded, by whom, at what time</li>
-        <li>2. <strong class="text-ink">Retrieval stage</strong> &mdash; which precedent clauses were retrieved from the knowledge base, with relevance scores</li>
-        <li>3. <strong class="text-ink">Generation stage</strong> &mdash; which model version produced the suggestion, with what parameters</li>
-        <li>4. <strong class="text-ink">Output stage</strong> &mdash; the exact text generated, hashed and timestamped</li>
-        <li>5. <strong class="text-ink">Review stage</strong> &mdash; whether a human reviewed and approved, modified, or rejected the suggestion</li>
+        <li><strong class="text-ink">Input stage</strong> &mdash; which contract was uploaded, by whom, at what time</li>
+        <li><strong class="text-ink">Retrieval stage</strong> &mdash; which precedent clauses were retrieved from the knowledge base, with relevance scores</li>
+        <li><strong class="text-ink">Generation stage</strong> &mdash; which model version produced the suggestion, with what parameters</li>
+        <li><strong class="text-ink">Output stage</strong> &mdash; the exact text generated, hashed and timestamped</li>
+        <li><strong class="text-ink">Review stage</strong> &mdash; whether a human reviewed and approved, modified, or rejected the suggestion</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Each stage links to the previous one through identifiers. Break any link, and you cannot reconstruct the full picture.</p>
@@ -198,11 +198,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI audit trail best practices</a> [8] recommend starting with these implementation steps:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Generate provenance at creation time.</strong> Retrofitting provenance onto existing outputs is nearly impossible. Build it into the generation pipeline from day one.</li>
-        <li>2. <strong class="text-ink">Make provenance immutable.</strong> Use append-only storage (Episode 42&#39;s hash-chained logs are ideal here). Once a provenance record is written, it cannot be modified.</li>
-        <li>3. <strong class="text-ink">Include provenance in your API responses.</strong> When your API returns AI-generated content, include a `provenance_id` that clients can use to retrieve the full chain.</li>
-        <li>4. <strong class="text-ink">Expose provenance to end users.</strong> Lawyers using your tool should be able to click &quot;show sources&quot; and see exactly which documents informed a suggestion. This is not just good security &mdash; it is good product design.</li>
-        <li>5. <strong class="text-ink">Test your reconstruction capability.</strong> Periodically verify that you can reconstruct the full provenance chain for historical outputs. If you discover gaps, fix the pipeline before a regulator discovers them for you.</li>
+        <li><strong class="text-ink">Generate provenance at creation time.</strong> Retrofitting provenance onto existing outputs is nearly impossible. Build it into the generation pipeline from day one.</li>
+        <li><strong class="text-ink">Make provenance immutable.</strong> Use append-only storage (Episode 42&#39;s hash-chained logs are ideal here). Once a provenance record is written, it cannot be modified.</li>
+        <li><strong class="text-ink">Include provenance in your API responses.</strong> When your API returns AI-generated content, include a `provenance_id` that clients can use to retrieve the full chain.</li>
+        <li><strong class="text-ink">Expose provenance to end users.</strong> Lawyers using your tool should be able to click &quot;show sources&quot; and see exactly which documents informed a suggestion. This is not just good security &mdash; it is good product design.</li>
+        <li><strong class="text-ink">Test your reconstruction capability.</strong> Periodically verify that you can reconstruct the full provenance chain for historical outputs. If you discover gaps, fix the pipeline before a regulator discovers them for you.</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://lawrence-emenike.medium.com/audit-trails-and-explainability-for-compliance-building-the-transparency-layer-financial-services-d24961bad987" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI governance frameworks increasingly require traceable IDs, versioning evidence, input provenance references, and retention controls</a> [9] that support reconstruction and oversight. These are not future requirements &mdash; they are current expectations for any AI system handling sensitive data.</p>
@@ -214,16 +214,16 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we&#39;ll look at correlation IDs and distributed tracing &mdash; the infrastructure that lets you follow a single user request as it travels through multiple services in your legal SaaS platform. If provenance chains tell you <em>what</em> your AI produced, correlation IDs tell you <em>how</em> the request moved through your system to get there.</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI Risk Management Framework (AI RMF 1.0)</a></li>
-        <li>2. <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI 600-1 — Generative AI Profile</a></li>
-        <li>3. <a href="https://galileo.ai/blog/ai-agent-compliance-governance-audit-trails-risk-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Agent Compliance & Governance — Galileo</a></li>
-        <li>4. <a href="https://underdefense.com/blog/ai-data-governance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Data Governance in 2026 — UnderDefense</a></li>
-        <li>5. <a href="https://artificialintelligenceact.eu/article/13/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU AI Act, Article 13 — Transparency and Provision of Information to Deployers</a></li>
-        <li>6. <a href="https://www.euaiact.com/key-issue/5" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU AI Act Key Issue 5 — Transparency Obligations</a></li>
-        <li>7. <a href="https://www.ispartnersllc.com/blog/nist-ai-rmf-2025-updates-what-you-need-to-know-about-the-latest-framework-changes/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI RMF 2025 Updates — IS Partners</a></li>
-        <li>8. <a href="https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build AI Audit Trails That Stand Up to Regulatory Scrutiny — CX Today</a></li>
-        <li>9. <a href="https://lawrence-emenike.medium.com/audit-trails-and-explainability-for-compliance-building-the-transparency-layer-financial-services-d24961bad987" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Trails and Explainability for Compliance — Lawrence Emenike</a></li>
-        <li>10. <a href="https://hacken.io/discover/llm-security-frameworks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM Security Frameworks: A CISO's Guide — Hacken</a></li>
+        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI Risk Management Framework (AI RMF 1.0)</a></li>
+        <li><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI 600-1 — Generative AI Profile</a></li>
+        <li><a href="https://galileo.ai/blog/ai-agent-compliance-governance-audit-trails-risk-management" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Agent Compliance & Governance — Galileo</a></li>
+        <li><a href="https://underdefense.com/blog/ai-data-governance/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">AI Data Governance in 2026 — UnderDefense</a></li>
+        <li><a href="https://artificialintelligenceact.eu/article/13/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU AI Act, Article 13 — Transparency and Provision of Information to Deployers</a></li>
+        <li><a href="https://www.euaiact.com/key-issue/5" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">EU AI Act Key Issue 5 — Transparency Obligations</a></li>
+        <li><a href="https://www.ispartnersllc.com/blog/nist-ai-rmf-2025-updates-what-you-need-to-know-about-the-latest-framework-changes/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST AI RMF 2025 Updates — IS Partners</a></li>
+        <li><a href="https://www.cxtoday.com/security-privacy-compliance/ai-audit-trail-regulatory-scrutiny/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">How to Build AI Audit Trails That Stand Up to Regulatory Scrutiny — CX Today</a></li>
+        <li><a href="https://lawrence-emenike.medium.com/audit-trails-and-explainability-for-compliance-building-the-transparency-layer-financial-services-d24961bad987" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Audit Trails and Explainability for Compliance — Lawrence Emenike</a></li>
+        <li><a href="https://hacken.io/discover/llm-security-frameworks/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">LLM Security Frameworks: A CISO's Guide — Hacken</a></li>
     </ol>
 
 </article>

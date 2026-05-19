@@ -134,9 +134,9 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Collect only what your feature requires.</strong> If your document review tool needs to classify documents by type, it does not need to index the full text of every exhibit.</li>
-        <li>2. <strong class="text-ink">Retain only as long as necessary.</strong> Define retention periods per data category. Case data may need to be retained for the statute of limitations period. Audit logs may have a different retention schedule. Activity analytics should expire after months, not years.</li>
-        <li>3. <strong class="text-ink">Delete completely when the period expires.</strong> This means database records, search indices, backups, caches, log files, and &mdash; as we discussed in Episode 29 &mdash; crypto-shredding of encrypted data by destroying its encryption keys.</li>
+        <li><strong class="text-ink">Collect only what your feature requires.</strong> If your document review tool needs to classify documents by type, it does not need to index the full text of every exhibit.</li>
+        <li><strong class="text-ink">Retain only as long as necessary.</strong> Define retention periods per data category. Case data may need to be retained for the statute of limitations period. Audit logs may have a different retention schedule. Activity analytics should expire after months, not years.</li>
+        <li><strong class="text-ink">Delete completely when the period expires.</strong> This means database records, search indices, backups, caches, log files, and &mdash; as we discussed in Episode 29 &mdash; crypto-shredding of encrypted data by destroying its encryption keys.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Pseudonymisation vs. Anonymisation: The Difference Matters</h2>
@@ -185,10 +185,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tokenisation</strong> addresses this. The application:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Tokenises PII at ingestion (replacing &quot;Jane Smith&quot; with a deterministic token derived from a keyed hash).</li>
-        <li>2. Stores the token in the search index alongside non-PII metadata.</li>
-        <li>3. At search time, applies the same tokenisation function to the search query, so the lawyer searching for &quot;Jane Smith&quot; generates the same token and matches the indexed records.</li>
-        <li>4. The display layer de-tokenises for authorised users, showing the original name.</li>
+        <li>Tokenises PII at ingestion (replacing &quot;Jane Smith&quot; with a deterministic token derived from a keyed hash).</li>
+        <li>Stores the token in the search index alongside non-PII metadata.</li>
+        <li>At search time, applies the same tokenisation function to the search query, so the lawyer searching for &quot;Jane Smith&quot; generates the same token and matches the indexed records.</li>
+        <li>The display layer de-tokenises for authorised users, showing the original name.</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The search index never contains raw PII. The tokenisation key is managed through the key management infrastructure covered in Episode 29. If the tokenisation key is destroyed, the search index becomes permanently unlinkable &mdash; another form of crypto-shredding.</p>
@@ -197,10 +197,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Under GDPR, individuals have the right to request access to their personal data (<a href="https://gdpr-info.eu/art-15-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 15</a>), correction (<a href="https://gdpr-info.eu/art-16-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 16</a>), and deletion (<a href="https://gdpr-info.eu/art-17-gdpr/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Article 17</a>). For legal SaaS platforms, this means you need a technical architecture that can:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Discover</strong> all PII for a given individual across all systems (database, search index, backups, logs, third-party integrations).</li>
-        <li>2. <strong class="text-ink">Export</strong> that data in a portable format (Article 20 &mdash; data portability).</li>
-        <li>3. <strong class="text-ink">Delete</strong> it completely, or document why deletion is legally excluded (e.g., legal hold, regulatory retention requirement).</li>
-        <li>4. <strong class="text-ink">Respond within 30 days</strong> (extendable to 90 for complex requests).</li>
+        <li><strong class="text-ink">Discover</strong> all PII for a given individual across all systems (database, search index, backups, logs, third-party integrations).</li>
+        <li><strong class="text-ink">Export</strong> that data in a portable format (Article 20 &mdash; data portability).</li>
+        <li><strong class="text-ink">Delete</strong> it completely, or document why deletion is legally excluded (e.g., legal hold, regulatory retention requirement).</li>
+        <li><strong class="text-ink">Respond within 30 days</strong> (extendable to 90 for complex requests).</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This requires a <strong class="text-ink">PII inventory</strong> &mdash; a mapping of every data store that contains personal data, what PII fields it holds, and how to query it for a specific individual. Without this inventory, DSAR fulfilment becomes a manual, error-prone scramble across dozens of systems.</p>

@@ -188,8 +188,8 @@ Data Encryption Key (DEK)
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The flow:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. To encrypt data: generate a new DEK → encrypt the data with the DEK → encrypt the DEK with the Master Key → store the encrypted DEK alongside the encrypted data</li>
-        <li>2. To decrypt data: retrieve the encrypted DEK → send it to the KMS to decrypt using the Master Key → use the decrypted DEK to decrypt the data → discard the DEK from memory</li>
+        <li>To encrypt data: generate a new DEK → encrypt the data with the DEK → encrypt the DEK with the Master Key → store the encrypted DEK alongside the encrypted data</li>
+        <li>To decrypt data: retrieve the encrypted DEK → send it to the KMS to decrypt using the Master Key → use the decrypted DEK to decrypt the data → discard the DEK from memory</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The Master Key never leaves the hardware security module. The DEK is only in memory briefly during encryption/decryption operations. Even if an attacker steals the entire database &mdash; encrypted data and encrypted DEKs &mdash; they cannot decrypt anything without access to the KMS.</p>

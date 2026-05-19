@@ -151,10 +151,10 @@ cyclonedx-py requirements --format json -o sbom.json
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A practical dependency scanning policy:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Automated PR updates</strong> &mdash; tools like Dependabot create pull requests for dependency updates. Review and merge them promptly.</li>
-        <li>2. <strong class="text-ink">Vulnerability thresholds</strong> &mdash; block deployments with critical or high CVEs. Set deadlines for medium CVEs.</li>
-        <li>3. <strong class="text-ink">Licence scanning</strong> &mdash; flag dependencies with incompatible licences before they reach production.</li>
-        <li>4. <strong class="text-ink">Transitive dependency auditing</strong> &mdash; don&#39;t just scan your direct dependencies. Scan the full tree. Log4Shell was a transitive dependency in most affected applications.</li>
+        <li><strong class="text-ink">Automated PR updates</strong> &mdash; tools like Dependabot create pull requests for dependency updates. Review and merge them promptly.</li>
+        <li><strong class="text-ink">Vulnerability thresholds</strong> &mdash; block deployments with critical or high CVEs. Set deadlines for medium CVEs.</li>
+        <li><strong class="text-ink">Licence scanning</strong> &mdash; flag dependencies with incompatible licences before they reach production.</li>
+        <li><strong class="text-ink">Transitive dependency auditing</strong> &mdash; don&#39;t just scan your direct dependencies. Scan the full tree. Log4Shell was a transitive dependency in most affected applications.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Lock Files and Reproducible Builds</h2>
@@ -217,18 +217,18 @@ cyclonedx-py requirements --format json -o sbom.json
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we look at environment configuration and secure defaults &mdash; how to ensure that the difference between your staging and production environments is credentials and scale, not security controls.</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <a href="https://faithforgelabs.com/blog_supplychain_security_2025.php" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Supply Chain Security in 2025: SBOMs, SLSA & Sigstore — Faith Forge Labs</a></li>
-        <li>2. <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-44228" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2021-44228 (Log4Shell) — National Vulnerability Database</a></li>
-        <li>3. <a href="https://www.nist.gov/itl/executive-order-14028-improving-nations-cybersecurity" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Executive Order 14028 — Improving the Nation's Cybersecurity — NIST</a></li>
-        <li>4. <a href="https://www.cisa.gov/sbom" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Bill of Materials — CISA</a></li>
-        <li>5. <a href="https://github.com/dependabot" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependabot — GitHub</a></li>
-        <li>6. <a href="https://snyk.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Snyk — Developer-First Security</a></li>
-        <li>7. <a href="https://osv.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OSV — Open Source Vulnerabilities</a></li>
-        <li>8. <a href="https://www.practical-devsecops.com/sbom-vs-slsa-software-supply-chain-security-comparison/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SBOM vs SLSA: Software Supply Chain Security Comparison — Practical DevSecOps</a></li>
-        <li>9. <a href="https://slsa.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA — Supply-chain Levels for Software Artifacts</a></li>
-        <li>10. <a href="https://docs.sigstore.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Sigstore Documentation</a></li>
-        <li>11. <a href="https://www.softwareseni.com/software-supply-chain-security-after-solarwinds-and-xz-utils/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Supply Chain Security After SolarWinds and XZ Utils — SoftwareSeni</a></li>
-        <li>12. <a href="https://www.practical-devsecops.com/slsa-framework-guide-software-supply-chain-security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA Framework: The Definitive Guide — Practical DevSecOps</a></li>
+        <li><a href="https://faithforgelabs.com/blog_supplychain_security_2025.php" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Supply Chain Security in 2025: SBOMs, SLSA & Sigstore — Faith Forge Labs</a></li>
+        <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2021-44228" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CVE-2021-44228 (Log4Shell) — National Vulnerability Database</a></li>
+        <li><a href="https://www.nist.gov/itl/executive-order-14028-improving-nations-cybersecurity" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Executive Order 14028 — Improving the Nation's Cybersecurity — NIST</a></li>
+        <li><a href="https://www.cisa.gov/sbom" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Bill of Materials — CISA</a></li>
+        <li><a href="https://github.com/dependabot" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Dependabot — GitHub</a></li>
+        <li><a href="https://snyk.io/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Snyk — Developer-First Security</a></li>
+        <li><a href="https://osv.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OSV — Open Source Vulnerabilities</a></li>
+        <li><a href="https://www.practical-devsecops.com/sbom-vs-slsa-software-supply-chain-security-comparison/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SBOM vs SLSA: Software Supply Chain Security Comparison — Practical DevSecOps</a></li>
+        <li><a href="https://slsa.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA — Supply-chain Levels for Software Artifacts</a></li>
+        <li><a href="https://docs.sigstore.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Sigstore Documentation</a></li>
+        <li><a href="https://www.softwareseni.com/software-supply-chain-security-after-solarwinds-and-xz-utils/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Software Supply Chain Security After SolarWinds and XZ Utils — SoftwareSeni</a></li>
+        <li><a href="https://www.practical-devsecops.com/slsa-framework-guide-software-supply-chain-security/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SLSA Framework: The Definitive Guide — Practical DevSecOps</a></li>
     </ol>
 
 </article>

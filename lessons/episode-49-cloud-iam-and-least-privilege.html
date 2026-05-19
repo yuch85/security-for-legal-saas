@@ -253,11 +253,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Automated remediation approaches</a> [1] can automatically revoke unused permissions, tighten overly broad IAM policies, or trigger JIT access workflows. The pattern:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Operator requests elevated access through a ticketing system</li>
-        <li>2. Approval workflow (peer review, manager approval, or automated policy check)</li>
-        <li>3. Temporary role granted &mdash; typically 1-4 hours</li>
-        <li>4. All actions during the elevated session are logged</li>
-        <li>5. Role automatically revokes at expiration</li>
+        <li>Operator requests elevated access through a ticketing system</li>
+        <li>Approval workflow (peer review, manager approval, or automated policy check)</li>
+        <li>Temporary role granted &mdash; typically 1-4 hours</li>
+        <li>All actions during the elevated session are logged</li>
+        <li>Role automatically revokes at expiration</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This eliminates standing privileges &mdash; permissions that are always active, waiting to be exploited. For legal SaaS platforms handling privileged communications, JIT access is both a security control and an audit trail for regulator inquiries: who had admin access, when, for how long, and what did they do?</p>
@@ -269,18 +269,18 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Next episode, we shift from infrastructure to the people who build on it &mdash; developer workstation security. Your production servers are hardened. Your developer&#39;s laptop has Slack, Chrome, and an SSH key to every environment.</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <a href="https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Rolling Out/Enforcing Least Privilege in AWS/GCP/Azure — P0 Security</a></li>
-        <li>2. <a href="https://docs.cloud.google.com/iam/docs/best-practices-service-accounts" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Best Practices for Using Service Accounts Securely — Google Cloud</a></li>
-        <li>3. <a href="https://cyscale.com/blog/iam-best-practices-from-aws-azure-gcp/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Best Practices for AWS, Google Cloud, and Azure — Cyscale</a></li>
-        <li>4. <a href="https://cloud.google.com/iam/docs/workload-identity-federation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Workload Identity Federation — Google Cloud</a></li>
-        <li>5. <a href="https://inventivehq.com/blog/principle-of-least-privilege" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Principle of Least Privilege: A Complete Guide for Cloud Security — Inventive HQ</a></li>
-        <li>6. <a href="https://securityboulevard.com/2025/10/dont-let-your-cloud-security-catch-a-bad-case-of-permission-creep/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Don't Let Your Cloud Security Catch a Bad Case of Permission Creep — Security Boulevard</a></li>
-        <li>7. <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Access Analyzer — AWS Documentation</a></li>
-        <li>8. <a href="https://cloud.google.com/iam/docs/recommender-overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Recommender — Google Cloud</a></li>
-        <li>9. <a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/recommendations-reference-identity-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Identity and Access Security Recommendations — Microsoft Defender for Cloud</a></li>
-        <li>10. <a href="https://www.gocodeo.com/post/implementing-least-privilege-in-cloud-and-devops-workflows" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Implementing Least Privilege in Cloud and DevOps Workflows — GoCodeo</a></li>
-        <li>11. <a href="https://ambacia.eu/careers-post/cloud-security-in-aws-azure-and-gcp-what-they-wont-tell-you-about-the-shared-responsibility-model/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud Security: The Shared Responsibility Model — Ambacia</a></li>
-        <li>12. <a href="https://learn.microsoft.com/en-us/security/benchmark/azure/mcsb-privileged-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Cloud Security Benchmark — Privileged Access</a></li>
+        <li><a href="https://p0.dev/resource/rolling-out-enforcing-least-privilege-in-practice-in-aws-gcp-azure/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Rolling Out/Enforcing Least Privilege in AWS/GCP/Azure — P0 Security</a></li>
+        <li><a href="https://docs.cloud.google.com/iam/docs/best-practices-service-accounts" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Best Practices for Using Service Accounts Securely — Google Cloud</a></li>
+        <li><a href="https://cyscale.com/blog/iam-best-practices-from-aws-azure-gcp/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Best Practices for AWS, Google Cloud, and Azure — Cyscale</a></li>
+        <li><a href="https://cloud.google.com/iam/docs/workload-identity-federation" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Workload Identity Federation — Google Cloud</a></li>
+        <li><a href="https://inventivehq.com/blog/principle-of-least-privilege" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Principle of Least Privilege: A Complete Guide for Cloud Security — Inventive HQ</a></li>
+        <li><a href="https://securityboulevard.com/2025/10/dont-let-your-cloud-security-catch-a-bad-case-of-permission-creep/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Don't Let Your Cloud Security Catch a Bad Case of Permission Creep — Security Boulevard</a></li>
+        <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Access Analyzer — AWS Documentation</a></li>
+        <li><a href="https://cloud.google.com/iam/docs/recommender-overview" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">IAM Recommender — Google Cloud</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/recommendations-reference-identity-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Identity and Access Security Recommendations — Microsoft Defender for Cloud</a></li>
+        <li><a href="https://www.gocodeo.com/post/implementing-least-privilege-in-cloud-and-devops-workflows" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Implementing Least Privilege in Cloud and DevOps Workflows — GoCodeo</a></li>
+        <li><a href="https://ambacia.eu/careers-post/cloud-security-in-aws-azure-and-gcp-what-they-wont-tell-you-about-the-shared-responsibility-model/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Cloud Security: The Shared Responsibility Model — Ambacia</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/security/benchmark/azure/mcsb-privileged-access" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Microsoft Cloud Security Benchmark — Privileged Access</a></li>
     </ol>
 
 </article>

@@ -169,10 +169,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP SAML Security Cheat Sheet</a> identifies several critical mitigations:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Validate the XML schema before verifying the signature</strong> &mdash; reject malformed documents before processing</li>
-        <li>2. <strong class="text-ink">Use secure key selectors</strong> that ignore `KeyInfo` elements from the XML message itself</li>
-        <li>3. <strong class="text-ink">Apply absolute XPath expressions</strong> for signature scope verification</li>
-        <li>4. <strong class="text-ink">Never accept `alg=none`</strong> for any cryptographic operation</li>
+        <li><strong class="text-ink">Validate the XML schema before verifying the signature</strong> &mdash; reject malformed documents before processing</li>
+        <li><strong class="text-ink">Use secure key selectors</strong> that ignore `KeyInfo` elements from the XML message itself</li>
+        <li><strong class="text-ink">Apply absolute XPath expressions</strong> for signature scope verification</li>
+        <li><strong class="text-ink">Never accept `alg=none`</strong> for any cryptographic operation</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SCIM: Automated User Lifecycle</h2>
@@ -191,10 +191,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a multi-tenant legal SaaS platform &mdash; where multiple firms share the same application infrastructure &mdash; each firm needs its own SSO configuration. This is called <strong class="text-ink">IdP-per-tenant routing</strong>, and it typically works by email domain:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. User enters their email address on your login page</li>
-        <li>2. Your application extracts the domain (e.g., `@bakermckenzie.com`)</li>
-        <li>3. A lookup table maps that domain to the firm&#39;s specific IdP configuration</li>
-        <li>4. The user is redirected to their firm&#39;s IdP for authentication</li>
+        <li>User enters their email address on your login page</li>
+        <li>Your application extracts the domain (e.g., `@bakermckenzie.com`)</li>
+        <li>A lookup table maps that domain to the firm&#39;s specific IdP configuration</li>
+        <li>The user is redirected to their firm&#39;s IdP for authentication</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means your application must maintain a separate SAML or OIDC configuration for each enterprise client &mdash; including their IdP metadata URL, certificates, and attribute mappings. A configuration error in one tenant&#39;s SSO setup must never affect another tenant&#39;s authentication. We&#39;ll cover the broader multi-tenancy isolation challenge in Episode 27.</p>

@@ -162,10 +162,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The retrieval pipeline should enforce document-level permissions before returning results to the model:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">User queries the AI.</strong> The query is converted to an embedding.</li>
-        <li>2. <strong class="text-ink">Vector similarity search returns candidate documents.</strong> These are the mathematically closest embeddings to the query.</li>
-        <li>3. <strong class="text-ink">Permission filter.</strong> Before any candidate is included in the model&#39;s context, the system checks: does this user have access to this document? This requires mapping each embedding back to its source document and checking the document&#39;s access control list (ACL).</li>
-        <li>4. <strong class="text-ink">Filtered results go to the model.</strong> Only documents the user is authorised to see are included in the generation context.</li>
+        <li><strong class="text-ink">User queries the AI.</strong> The query is converted to an embedding.</li>
+        <li><strong class="text-ink">Vector similarity search returns candidate documents.</strong> These are the mathematically closest embeddings to the query.</li>
+        <li><strong class="text-ink">Permission filter.</strong> Before any candidate is included in the model&#39;s context, the system checks: does this user have access to this document? This requires mapping each embedding back to its source document and checking the document&#39;s access control list (ACL).</li>
+        <li><strong class="text-ink">Filtered results go to the model.</strong> Only documents the user is authorised to see are included in the generation context.</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Without step 3, a junior associate asking a question could inadvertently retrieve &mdash; and the model could reveal &mdash; content from a partner-only matter, a different client&#39;s case, or a document under a restricted access protocol.</p>
@@ -212,11 +212,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A minimal secure embedding pipeline for multi-tenant legal SaaS:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Embed locally.</strong> Use self-hosted models for privileged content. Cloud APIs only for non-sensitive content with appropriate DPAs.</li>
-        <li>2. <strong class="text-ink">Isolate per tenant.</strong> Separate vector collections or namespaces per tenant. Never store multiple tenants in a single flat collection with metadata filtering as the sole isolation mechanism.</li>
-        <li>3. <strong class="text-ink">Enforce permissions at retrieval.</strong> Check document-level ACLs before returning any result to the model.</li>
-        <li>4. <strong class="text-ink">Audit retrieval operations.</strong> Log every vector query: who queried, what was returned, which tenant&#39;s data was accessed. Ship logs to your SIEM (from Episode 7).</li>
-        <li>5. <strong class="text-ink">Rotate embedding keys.</strong> If using API-based embedding services, rotate API keys regularly through your secrets manager (Episode 30).</li>
+        <li><strong class="text-ink">Embed locally.</strong> Use self-hosted models for privileged content. Cloud APIs only for non-sensitive content with appropriate DPAs.</li>
+        <li><strong class="text-ink">Isolate per tenant.</strong> Separate vector collections or namespaces per tenant. Never store multiple tenants in a single flat collection with metadata filtering as the sole isolation mechanism.</li>
+        <li><strong class="text-ink">Enforce permissions at retrieval.</strong> Check document-level ACLs before returning any result to the model.</li>
+        <li><strong class="text-ink">Audit retrieval operations.</strong> Log every vector query: who queried, what was returned, which tenant&#39;s data was accessed. Ship logs to your SIEM (from Episode 7).</li>
+        <li><strong class="text-ink">Rotate embedding keys.</strong> If using API-based embedding services, rotate API keys regularly through your secrets manager (Episode 30).</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>

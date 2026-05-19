@@ -120,10 +120,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Legal AI deployments face specific risks that make API key isolation critical:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">High-value prompts.</strong> Legal prompts contain privileged information, case strategy, client names, and confidential deal terms. A stolen key doesn&#39;t just cost money &mdash; it exposes every prompt and response flowing through it.</li>
-        <li>2. <strong class="text-ink">Long-lived keys.</strong> Many firms set up API keys once and forget them. Unlike passwords, API keys rarely expire by default, and few organisations rotate them regularly.</li>
-        <li>3. <strong class="text-ink">Shared across environments.</strong> Development, staging, and production environments often share a single API key &mdash; meaning a key leaked from a developer&#39;s laptop compromises the production system.</li>
-        <li>4. <strong class="text-ink">Embedded in code.</strong> Despite decades of warnings, API keys still appear in source code, configuration files, and CI/CD pipelines. GitHub&#39;s secret scanning detects <a href="https://github.blog/security/secret-scanning/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">millions of leaked secrets annually</a>.</li>
+        <li><strong class="text-ink">High-value prompts.</strong> Legal prompts contain privileged information, case strategy, client names, and confidential deal terms. A stolen key doesn&#39;t just cost money &mdash; it exposes every prompt and response flowing through it.</li>
+        <li><strong class="text-ink">Long-lived keys.</strong> Many firms set up API keys once and forget them. Unlike passwords, API keys rarely expire by default, and few organisations rotate them regularly.</li>
+        <li><strong class="text-ink">Shared across environments.</strong> Development, staging, and production environments often share a single API key &mdash; meaning a key leaked from a developer&#39;s laptop compromises the production system.</li>
+        <li><strong class="text-ink">Embedded in code.</strong> Despite decades of warnings, API keys still appear in source code, configuration files, and CI/CD pipelines. GitHub&#39;s secret scanning detects <a href="https://github.blog/security/secret-scanning/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">millions of leaked secrets annually</a>.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Per-Environment Key Isolation</h2>
@@ -235,11 +235,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The gateway architecture makes key rotation simple. The process:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Generate a new API key from the provider</li>
-        <li>2. Add the new key to the gateway&#39;s configuration (both old and new keys are valid)</li>
-        <li>3. Verify the new key works by routing a percentage of traffic through it</li>
-        <li>4. Remove the old key from the gateway</li>
-        <li>5. Revoke the old key at the provider</li>
+        <li>Generate a new API key from the provider</li>
+        <li>Add the new key to the gateway&#39;s configuration (both old and new keys are valid)</li>
+        <li>Verify the new key works by routing a percentage of traffic through it</li>
+        <li>Remove the old key from the gateway</li>
+        <li>Revoke the old key at the provider</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">At no point does the application need to change. It authenticates to the gateway with its internal credentials, which remain stable. The provider key rotation is entirely transparent.</p>

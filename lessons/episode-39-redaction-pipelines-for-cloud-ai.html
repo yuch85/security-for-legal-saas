@@ -314,12 +314,12 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal SaaS platform using cloud AI:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Inference gateway</strong> (Episode 38) intercepts every outbound prompt</li>
-        <li>2. <strong class="text-ink">NER pipeline</strong> scans the prompt, generates a redaction map, and redacts the text</li>
-        <li>3. <strong class="text-ink">Redacted prompt</strong> is forwarded to the cloud LLM provider</li>
-        <li>4. <strong class="text-ink">Response</strong> is received and re-hydrated using the redaction map</li>
-        <li>5. <strong class="text-ink">Redaction map</strong> is stored encrypted, access-controlled, and retained per your data retention policy</li>
-        <li>6. <strong class="text-ink">Audit log</strong> records what was redacted, when, and which provider received the redacted version</li>
+        <li><strong class="text-ink">Inference gateway</strong> (Episode 38) intercepts every outbound prompt</li>
+        <li><strong class="text-ink">NER pipeline</strong> scans the prompt, generates a redaction map, and redacts the text</li>
+        <li><strong class="text-ink">Redacted prompt</strong> is forwarded to the cloud LLM provider</li>
+        <li><strong class="text-ink">Response</strong> is received and re-hydrated using the redaction map</li>
+        <li><strong class="text-ink">Redaction map</strong> is stored encrypted, access-controlled, and retained per your data retention policy</li>
+        <li><strong class="text-ink">Audit log</strong> records what was redacted, when, and which provider received the redacted version</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This pipeline adds latency &mdash; typically 100-500ms for NER processing depending on document length and model complexity. For most legal workflows (contract review, research, drafting), this latency is imperceptible.</p>

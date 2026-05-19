@@ -183,9 +183,9 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The trust tier must be enforced <strong class="text-ink">at retrieval time</strong>, not just at display time. When the model asks for relevant documents, the retrieval layer should:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. Filter by the maximum trust tier appropriate for the query context.</li>
-        <li>2. Never mix Tier 4 content with Tier 1 context in the same retrieval result set.</li>
-        <li>3. Include provenance metadata in the context provided to the model: &quot;Source: firm precedent library, authored by [partner name], dated [date]&quot; vs. &quot;Source: external web content, unverified.&quot;</li>
+        <li>Filter by the maximum trust tier appropriate for the query context.</li>
+        <li>Never mix Tier 4 content with Tier 1 context in the same retrieval result set.</li>
+        <li>Include provenance metadata in the context provided to the model: &quot;Source: firm precedent library, authored by [partner name], dated [date]&quot; vs. &quot;Source: external web content, unverified.&quot;</li>
     </ol>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This ensures the model has information about the reliability of its sources &mdash; even if it cannot perfectly act on that information, the provenance is available for human review.</p>
@@ -206,11 +206,11 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A minimal trust-aware RAG architecture for legal SaaS:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Ingest pipeline with classification.</strong> Every document is assigned a trust tier at ingestion based on its source. Client uploads go through validation (authenticated upload, verified client identity). External sources go through integrity checks (hash verification, source authentication).</li>
-        <li>2. <strong class="text-ink">Separate vector collections per tier.</strong> Tier 1 and Tier 4 documents live in different vector database collections (or namespaces). This prevents similarity search from accidentally returning poisoned content alongside authoritative precedent.</li>
-        <li>3. <strong class="text-ink">Query-time tier enforcement.</strong> The retrieval API accepts a maximum trust tier parameter. Queries about firm precedent search only Tier 1. Queries about opposing party documents search Tier 2-4 with provenance labels.</li>
-        <li>4. <strong class="text-ink">Output provenance injection.</strong> Every AI response includes citations with trust tier labels visible to the reviewing lawyer.</li>
-        <li>5. <strong class="text-ink">Anomaly detection on retrieval patterns.</strong> Monitor for sudden changes in which documents are being retrieved, new documents appearing with suspicious metadata, or retrieval patterns that diverge from historical norms.</li>
+        <li><strong class="text-ink">Ingest pipeline with classification.</strong> Every document is assigned a trust tier at ingestion based on its source. Client uploads go through validation (authenticated upload, verified client identity). External sources go through integrity checks (hash verification, source authentication).</li>
+        <li><strong class="text-ink">Separate vector collections per tier.</strong> Tier 1 and Tier 4 documents live in different vector database collections (or namespaces). This prevents similarity search from accidentally returning poisoned content alongside authoritative precedent.</li>
+        <li><strong class="text-ink">Query-time tier enforcement.</strong> The retrieval API accepts a maximum trust tier parameter. Queries about firm precedent search only Tier 1. Queries about opposing party documents search Tier 2-4 with provenance labels.</li>
+        <li><strong class="text-ink">Output provenance injection.</strong> Every AI response includes citations with trust tier labels visible to the reviewing lawyer.</li>
+        <li><strong class="text-ink">Anomaly detection on retrieval patterns.</strong> Monitor for sudden changes in which documents are being retrieved, new documents appearing with suspicious metadata, or retrieval patterns that diverge from historical norms.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>

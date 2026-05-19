@@ -222,10 +222,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Mitigation strategies:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>1. <strong class="text-ink">Multi-region key replication.</strong> AWS KMS supports <a href="https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">multi-region keys</a> that replicate cryptographic material across regions. If one region fails, the replica can decrypt.</li>
-        <li>2. <strong class="text-ink">Key escrow.</strong> Store encrypted copies of key material in a separate, offline system (e.g., a physical HSM in a vault). This is the nuclear option &mdash; use only for catastrophic recovery.</li>
-        <li>3. <strong class="text-ink">Dual-control procedures.</strong> Require multiple administrators to authorise key deletion, preventing a single compromised or rogue admin from destroying keys.</li>
-        <li>4. <strong class="text-ink">Deletion scheduling.</strong> AWS KMS enforces a minimum 7-day waiting period before key deletion takes effect, providing a window to cancel accidental deletions.</li>
+        <li><strong class="text-ink">Multi-region key replication.</strong> AWS KMS supports <a href="https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">multi-region keys</a> that replicate cryptographic material across regions. If one region fails, the replica can decrypt.</li>
+        <li><strong class="text-ink">Key escrow.</strong> Store encrypted copies of key material in a separate, offline system (e.g., a physical HSM in a vault). This is the nuclear option &mdash; use only for catastrophic recovery.</li>
+        <li><strong class="text-ink">Dual-control procedures.</strong> Require multiple administrators to authorise key deletion, preventing a single compromised or rogue admin from destroying keys.</li>
+        <li><strong class="text-ink">Deletion scheduling.</strong> AWS KMS enforces a minimum 7-day waiting period before key deletion takes effect, providing a window to cancel accidental deletions.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Real-World Failures</h2>
