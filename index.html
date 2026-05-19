@@ -978,20 +978,33 @@ fetch('./search-index.json').then(r=>r.json()).then(data=>{
     const input = document.getElementById('search-input');
     const box = document.getElementById('search-results');
 
+    function esc(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
     function snippet(text, indices, pad) {
         if (!indices || !indices.length) return '';
         pad = pad || 60;
-        const [start, end] = indices[0];
+        // Find the longest match span
+        let best = indices[0];
+        for (const pair of indices) {
+            if ((pair[1] - pair[0]) > (best[1] - best[0])) best = pair;
+        }
+        const start = best[0], end = best[1];
         const from = Math.max(0, start - pad);
         const to = Math.min(text.length, end + pad + 1);
-        const pre = (from > 0 ? '...' : '') + esc(text.slice(from, start));
+        const pre = (from > 0 ? '&hellip;' : '') + esc(text.slice(from, start));
         const match = text.slice(start, end + 1);
-        const post = esc(text.slice(end + 1, to)) + (to < text.length ? '...' : '');
-        return pre + '<mark class="bg-red/10 text-red font-medium px-0.5 rounded">' + esc(match) + '</mark>' + post;
+        const post = esc(text.slice(end + 1, to)) + (to < text.length ? '&hellip;' : '');
+        return pre + '<mark style="background:#fef2f2;color:#991B1B;padding:1px 3px;border-radius:2px;font-weight:500;">' + esc(match) + '</mark>' + post;
     }
 
-    function esc(s) {
-        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    function getSnippet(h) {
+        if (!h.matches) return '';
+        // Prefer text match, fall back to description
+        const m = h.matches.find(x => x.key === 'text') || h.matches.find(x => x.key === 'description');
+        if (!m || !m.indices || !m.indices.length) return '';
+        return snippet(m.value, m.indices, 60);
     }
 
     input.addEventListener('input', function() {
@@ -1004,8 +1017,7 @@ fetch('./search-index.json').then(r=>r.json()).then(data=>{
             return;
         }
         box.innerHTML = hits.map(h => {
-            const textMatch = h.matches && h.matches.find(m => m.key === 'text');
-            const ctx = textMatch ? snippet(textMatch.value, textMatch.indices[0] ? [textMatch.indices[0]] : textMatch.indices, 60) : '';
+            const ctx = getSnippet(h);
             return `<a href="${h.item.url}" class="block px-4 py-3 border-b border-rule hover:bg-white/50 transition-colors">
                 <p class="font-sans text-xs tracking-widest uppercase text-red">Episode ${h.item.ep} &middot; ${h.item.module}</p>
                 <p class="font-medium mt-1">${esc(h.item.title)}</p>
