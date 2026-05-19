@@ -190,6 +190,27 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">The SameSite cookie attribute</a> has dramatically improved the baseline &mdash; Chrome, Firefox, and Edge all default to <code>Lax</code>. But explicit CSRF tokens remain necessary for older browser support and defence-in-depth.</p>
 
+    <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">How CSRF Actually Works</h3>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The attack exploits two facts about how browsers handle cookies. First, when you log into a site, your browser stores a session cookie and <strong class="text-ink">automatically attaches it to every subsequent request</strong> to that domain &mdash; you don&rsquo;t re-authenticate on each click. Second, the target server <strong class="text-ink">blindly trusts</strong> any request bearing a valid cookie, assuming you intentionally initiated it.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Here&rsquo;s the sequence: you log into bank.com and your session cookie is active. In a separate tab, you visit a malicious page. That page contains a hidden HTML form pointing at <code>bank.com/transfer</code> with pre-filled values (recipient: attacker, amount: $1,000). A tiny script auto-submits the form the instant the page loads. Your browser fires the POST request to bank.com &mdash; and because the destination is bank.com, it <strong class="text-ink">automatically glues your login cookie onto the request</strong>. The bank receives an authentic-looking request with your valid session, processes the transfer, and you never saw a thing.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The attacker&rsquo;s payload is trivially simple &mdash; a hidden form with a JavaScript one-liner to submit it:</p>
+
+    <div class="my-6 bg-ink rounded-lg overflow-hidden">
+        <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">html</div>
+    <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">&lt;form id=&quot;csrfForm&quot; action=&quot;https://bank.com/transfer&quot; method=&quot;POST&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;toAccount&quot; value=&quot;hacker_123&quot; /&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;amount&quot; value=&quot;1000&quot; /&gt;
+&lt;/form&gt;
+&lt;script&gt;document.getElementById('csrfForm').submit();&lt;/script&gt;</code></pre>
+    </div>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A common misconception is that browser tab isolation should prevent this. The browser&rsquo;s <strong class="text-ink">Same-Origin Policy</strong> does block a malicious site from <em>reading</em> data from another tab. But it does not stop it from <em>sending</em> data. CSRF only needs to send a blind command &mdash; it doesn&rsquo;t care about the response. That&rsquo;s the loophole.</p>
+
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The two primary defences close this gap. <strong class="text-ink">Anti-CSRF tokens</strong> embed a server-generated random value in legitimate forms; the attacker cannot read it cross-origin, so forged submissions fail validation. <strong class="text-ink">SameSite cookie attributes</strong> (<code>Lax</code> or <code>Strict</code>) instruct the browser to strip cookies from cross-site requests entirely, removing the automatic attachment that makes the attack possible.</p>
+
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Content Security Policy (CSP)</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CSP tells the browser exactly which sources of content are permitted</a> &mdash; scripts, styles, images, fonts, frames, and more. A strict CSP is the most effective defence against Cross-Site Scripting (XSS).</p>
