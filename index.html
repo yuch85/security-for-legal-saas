@@ -968,23 +968,57 @@
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
 <script>
 fetch('./search-index.json').then(r=>r.json()).then(data=>{
-    const fuse = new Fuse(data, {keys:['title','description','module'], threshold:0.4, includeMatches:true});
+    const fuse = new Fuse(data, {
+        keys:[
+            {name:'title', weight:2},
+            {name:'description', weight:1.5},
+            {name:'module', weight:1},
+            {name:'text', weight:0.8}
+        ],
+        threshold:0.3,
+        includeMatches:true,
+        minMatchCharLength:3
+    });
     const input = document.getElementById('search-input');
-    const results = document.getElementById('search-results');
+    const box = document.getElementById('search-results');
+
+    function snippet(text, indices, pad) {
+        if (!indices || !indices.length) return '';
+        pad = pad || 60;
+        const [start, end] = indices[0];
+        const from = Math.max(0, start - pad);
+        const to = Math.min(text.length, end + pad + 1);
+        const pre = (from > 0 ? '...' : '') + esc(text.slice(from, start));
+        const match = text.slice(start, end + 1);
+        const post = esc(text.slice(end + 1, to)) + (to < text.length ? '...' : '');
+        return pre + '<mark class="bg-red/10 text-red font-medium px-0.5 rounded">' + esc(match) + '</mark>' + post;
+    }
+
+    function esc(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
     input.addEventListener('input', function() {
         const q = this.value.trim();
-        if (q.length < 2) { results.classList.add('hidden'); return; }
+        if (q.length < 2) { box.classList.add('hidden'); return; }
         const hits = fuse.search(q).slice(0, 8);
-        if (!hits.length) { results.innerHTML = '<p class="px-4 py-3 text-sm text-ink-muted font-sans">No matches</p>'; results.classList.remove('hidden'); return; }
-        results.innerHTML = hits.map(h =>
-            `<a href="${h.item.url}" class="block px-4 py-3 border-b border-rule hover:bg-white/50 transition-colors">
+        if (!hits.length) {
+            box.innerHTML = '<p class="px-4 py-3 text-sm text-ink-muted font-sans">No matches</p>';
+            box.classList.remove('hidden');
+            return;
+        }
+        box.innerHTML = hits.map(h => {
+            const textMatch = h.matches && h.matches.find(m => m.key === 'text');
+            const ctx = textMatch ? snippet(textMatch.value, textMatch.indices[0] ? [textMatch.indices[0]] : textMatch.indices, 60) : '';
+            return `<a href="${h.item.url}" class="block px-4 py-3 border-b border-rule hover:bg-white/50 transition-colors">
                 <p class="font-sans text-xs tracking-widest uppercase text-red">Episode ${h.item.ep} &middot; ${h.item.module}</p>
-                <p class="font-medium mt-1">${h.item.title}</p>
-            </a>`
-        ).join('');
-        results.classList.remove('hidden');
+                <p class="font-medium mt-1">${esc(h.item.title)}</p>
+                ${ctx ? '<p class="text-sm text-ink-light mt-1 font-sans leading-relaxed">' + ctx + '</p>' : ''}
+            </a>`;
+        }).join('');
+        box.classList.remove('hidden');
     });
-    document.addEventListener('click', e => { if (!e.target.closest('#search-input') && !e.target.closest('#search-results')) results.classList.add('hidden'); });
+    document.addEventListener('click', e => { if (!e.target.closest('#search-input') && !e.target.closest('#search-results')) box.classList.add('hidden'); });
 });
 </script>
 </body>
