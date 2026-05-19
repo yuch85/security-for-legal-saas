@@ -67,7 +67,7 @@
 
 <!-- Description -->
 <div class="py-12 border-b border-rule">
-    <p class="text-lg leading-relaxed italic text-ink-light">In Episode 41, we designed audit logs that capture who did what, when, and to which resource. This episode adds the critical property that makes those logs trustworthy: tamper evidence. Specifically, we&#39;ll implement hash chains &mdash; a technique where each log entry is mathematically linked to every entry before it, so that modifying any single entry breaks a chain that is trivially detectable.</p>
+    <p class="text-lg leading-relaxed italic text-ink-light">In Episode 41, we designed audit logs that capture who did what, when, and to which resource. This episode adds the critical property that makes those logs trustworthy: tamper evidence. Specifically, we&#39;ll implement hash chains &mdash; a technique where each log entry is mathematically linked to every entry before it, so that modifying any single entry breaks a chain that is trivially detectable. A hash chain gives you a guarantee that append-only storage alone cannot: not just that entries should not be modified, but that if they were modified, you would know.</p>
 </div>
 
 <!-- Article -->
