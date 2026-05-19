@@ -80,7 +80,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your legal SaaS platform stores data for 50 law firms. Firm A&#39;s privileged litigation strategy. Firm B&#39;s M&amp;A deal terms. Firm C&#39;s client communications about a pending regulatory investigation. If Firm A ever sees Firm B&#39;s documents, you don&#39;t have a bug &mdash; you have a lawsuit, a breach notification obligation, and likely the end of your company.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Multi-tenant data isolation is the architectural foundation that prevents this. In Episode 25, we covered ethical walls &mdash; information barriers within a single firm. Multi-tenancy is the inter-firm equivalent: every firm&#39;s data must be completely invisible to every other firm, with no possibility of cross-contamination.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Multi-tenant data isolation is the architectural foundation that prevents this. In <a href="episode-25-ethical-walls-and-matterscoped-access.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 25</a>, we covered ethical walls &mdash; information barriers within a single firm. Multi-tenancy is the inter-firm equivalent: every firm&#39;s data must be completely invisible to every other firm, with no possibility of cross-contamination.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Three Isolation Models</h2>
 
@@ -116,7 +116,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">PostgreSQL RLS</strong> &mdash; which we introduced in Episode 8 &mdash; is the critical safety net here. RLS policies run at the database engine level, below the application code:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">PostgreSQL RLS</strong> &mdash; which we introduced in <a href="episode-08-episode-8.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a> &mdash; is the critical safety net here. RLS policies run at the database engine level, below the application code:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
     <div class="my-6 bg-ink rounded-lg overflow-hidden">
         <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">sql</div>
     <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
@@ -126,7 +126,7 @@ CREATE POLICY tenant_isolation ON documents
 </code></pre>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With this policy active, even a query that omits the `WHERE tenant_id = ...` clause will only return rows belonging to the current tenant. The database enforces isolation regardless of application bugs &mdash; a defence-in-depth pattern from Episode 4.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With this policy active, even a query that omits the `WHERE tenant_id = ...` clause will only return rows belonging to the current tenant. The database enforces isolation regardless of application bugs &mdash; a defence-in-depth pattern from <a href="episode-04-episode-4.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 4</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Schema-Per-Tenant (Bridge Model)</h3>
 
@@ -273,12 +273,12 @@ def test_cross_tenant_isolation():
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The lesson for multi-tenant SaaS is twofold:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Tenant-level security policy enforcement matters.</strong> If your platform allows tenants to opt out of MFA, some will &mdash; and those are the accounts that get breached. Enforce baseline security requirements across all tenants.</li>
-        <li><strong class="text-ink">Credential hygiene is a multi-tenant concern.</strong> Even with perfect data isolation, a compromised tenant account gives the attacker access to that tenant&#39;s data. Combine isolation with strong authentication (Episode 21) and SSO (Episode 22).<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></li>
+        <li><strong class="text-ink">Credential hygiene is a multi-tenant concern.</strong> Even with perfect data isolation, a compromised tenant account gives the attacker access to that tenant&#39;s data. Combine isolation with strong authentication (<a href="episode-21-multifactor-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 21</a>) and SSO (<a href="episode-22-sso-saml-and-enterprise-identity.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 22</a>).<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Ethical Walls vs. Multi-Tenancy: The Complete Picture</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With Episode 25 fresh in memory, here&#39;s the complete access control picture for legal SaaS:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With <a href="episode-25-ethical-walls-and-matterscoped-access.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 25</a> fresh in memory, here&#39;s the complete access control picture for legal SaaS:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">

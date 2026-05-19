@@ -153,10 +153,10 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">SAST (Static Application Security Testing) analyses source code without executing it, looking for patterns that indicate vulnerabilities. <a href="https://techspective.net/2026/03/16/is-sast-still-relevant-in-2026-rethinking-static-code-analysis/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Modern SAST tools</a> integrate directly into developers&#39; editors, flagging issues as code is written &mdash; before it even reaches a pull request.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Tools like <a href="https://semgrep.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Semgrep</a> (open-source, rule-based pattern matching), <a href="https://codeql.github.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CodeQL</a> (GitHub&#39;s code analysis engine, which we mentioned in Episode 8), and SonarQube scan for:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Tools like <a href="https://semgrep.dev/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Semgrep</a> (open-source, rule-based pattern matching), <a href="https://codeql.github.com/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CodeQL</a> (GitHub&#39;s code analysis engine, which we mentioned in <a href="episode-08-episode-8.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>), and SonarQube scan for:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">SQL injection patterns</strong> &mdash; string concatenation in database queries instead of parameterised queries</li>
-        <li><strong class="text-ink">XSS vulnerabilities</strong> &mdash; unescaped output in templates, use of `dangerouslySetInnerHTML` (as covered in Episode 9)</li>
+        <li><strong class="text-ink">XSS vulnerabilities</strong> &mdash; unescaped output in templates, use of `dangerouslySetInnerHTML` (as covered in <a href="episode-09-episode-9.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 9</a>)</li>
         <li><strong class="text-ink">Insecure cryptographic operations</strong> &mdash; weak algorithms, hardcoded keys, missing TLS verification</li>
         <li><strong class="text-ink">Taint tracking</strong> &mdash; following untrusted input from an API endpoint through to a sensitive operation like a database query or file write</li>
     </ul>
@@ -171,9 +171,9 @@
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Where SAST finds &quot;this code builds a SQL query unsafely,&quot; DAST finds &quot;this endpoint actually returns data it shouldn&#39;t when I manipulate the request.&quot; DAST catches:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Authentication bypasses</strong> visible only when testing the full request/response cycle</li>
-        <li><strong class="text-ink">Security header misconfigurations</strong> &mdash; missing HSTS (as covered in Episode 12), CSP, X-Frame-Options</li>
+        <li><strong class="text-ink">Security header misconfigurations</strong> &mdash; missing HSTS (as covered in <a href="episode-12-browser-security-headers.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 12</a>), CSP, X-Frame-Options</li>
         <li><strong class="text-ink">Server information leakage</strong> &mdash; error messages exposing stack traces, database versions, internal paths</li>
-        <li><strong class="text-ink">CORS misconfigurations</strong> that allow cross-origin data theft (as covered in Episode 12)</li>
+        <li><strong class="text-ink">CORS misconfigurations</strong> that allow cross-origin data theft (as covered in <a href="episode-12-browser-security-headers.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 12</a>)</li>
     </ul>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Run DAST against your staging environment (a copy of your application that mirrors production but uses test data) on every deployment. Tools like OWASP ZAP (open-source), Burp Suite (commercial), and <a href="https://blog.securelayer7.net/dast-tools/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">SecureLayer7</a> provide DAST capabilities ranging from free to enterprise-grade.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
@@ -186,7 +186,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every third-party library in your application is code you didn&#39;t write, didn&#39;t review, and might contain known vulnerabilities. SCA (Software Composition Analysis) tools continuously scan your dependencies against vulnerability databases.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">As we discussed in Episode 51, AI-generated code exacerbates this risk by suggesting vulnerable package versions. Automated dependency scanning catches these before deployment:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">As we discussed in <a href="episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 51</a>, AI-generated code exacerbates this risk by suggesting vulnerable package versions. Automated dependency scanning catches these before deployment:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">`npm audit`</strong> / <strong class="text-ink">`pip audit`</strong> &mdash; built-in vulnerability scanning for Node.js and Python</li>
         <li><strong class="text-ink">Snyk</strong> &mdash; commercial SCA with automated pull requests for vulnerable dependencies</li>
@@ -194,7 +194,7 @@
         <li><strong class="text-ink">OWASP Dependency-Check</strong> &mdash; <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">open-source SCA tool</a> maintaining the National Vulnerability Database (NVD) feed<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configure your CI pipeline to <strong class="text-ink">fail the build</strong> when a dependency has a known critical or high-severity CVE (Common Vulnerabilities and Exposures &mdash; the standardised identifier for publicly known security vulnerabilities, as covered in Episode 8). A red build for a vulnerable dependency forces the issue to be addressed before deployment.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configure your CI pipeline to <strong class="text-ink">fail the build</strong> when a dependency has a known critical or high-severity CVE (Common Vulnerabilities and Exposures &mdash; the standardised identifier for publicly known security vulnerabilities, as covered in <a href="episode-08-episode-8.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>). A red build for a vulnerable dependency forces the issue to be addressed before deployment.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Penetration Testing: The Expert Assessment</h2>
 

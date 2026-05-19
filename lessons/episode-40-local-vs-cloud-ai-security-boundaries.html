@@ -78,7 +78,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Your Data Never Leaves. But &quot;Local&quot; Has Its Own Risks.</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 39, we built a redaction pipeline to strip sensitive data before sending prompts to cloud AI. This episode asks the next logical question: what if you skip the cloud entirely and run the AI model on your own hardware?</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In <a href="episode-39-redaction-pipelines-for-cloud-ai.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 39</a>, we built a redaction pipeline to strip sensitive data before sending prompts to cloud AI. This episode asks the next logical question: what if you skip the cloud entirely and run the AI model on your own hardware?</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Local AI deployment &mdash; running large language models on servers you own and control &mdash; is increasingly practical. Models like Llama, Mistral, Qwen, and Gemma can run on consumer-grade GPUs. For legal AI handling the most sensitive data &mdash; privileged communications, litigation strategy, government investigation materials &mdash; keeping everything within your network perimeter can eliminate entire categories of risk. But &quot;local&quot; introduces a different threat surface, and understanding the tradeoffs is the difference between genuine security and security theatre.</p>
 
@@ -230,7 +230,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Network Isolation</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The local model endpoint should not be accessible from the public internet. Deploy it in an isolated network segment &mdash; the same principle we covered in Episode 15 on network segmentation. Only your application servers should be able to reach the model API. Use mTLS (mutual TLS, from Episode 15) to authenticate clients connecting to the model endpoint.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The local model endpoint should not be accessible from the public internet. Deploy it in an isolated network segment &mdash; the same principle we covered in <a href="episode-15-servicetoservice-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a> on network segmentation. Only your application servers should be able to reach the model API. Use mTLS (mutual TLS, from Episode 15) to authenticate clients connecting to the model endpoint.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Access Controls</h3>
 

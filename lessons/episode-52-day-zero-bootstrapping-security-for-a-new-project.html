@@ -80,7 +80,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Day one is too late. The security posture of your legal SaaS platform is largely determined by decisions made before the first feature is built: which framework, which authentication library, which hosting provider, how secrets are stored, whether logging exists. These choices compound. A good foundation makes every subsequent security decision easier. A poor one creates debt that grows faster than feature code &mdash; because every feature built on an insecure foundation inherits its weaknesses.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Secure by Design Framework</a> formalises this principle: security controls should be embedded at the design phase, not bolted on after deployment.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> The framework&#39;s checklist covers trust boundaries (the points where data crosses from one trust level to another, as we introduced in Episode 1), encryption requirements, authentication and authorisation design, and incident readiness &mdash; all before a single line of application code is written.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://owasp.org/www-project-secure-by-design-framework/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Secure by Design Framework</a> formalises this principle: security controls should be embedded at the design phase, not bolted on after deployment.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> The framework&#39;s checklist covers trust boundaries (the points where data crosses from one trust level to another, as we introduced in <a href="episode-01-episode-1.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 1</a>), encryption requirements, authentication and authorisation design, and incident readiness &mdash; all before a single line of application code is written.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For a legal tech team bootstrapping a new case management system, contract review tool, or e-filing platform, the question isn&#39;t &quot;when do we add security?&quot; It&#39;s &quot;which security decisions do we make right now so we don&#39;t have to rewrite everything in six months?&quot;</p>
 
@@ -102,7 +102,7 @@
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">ORM vs raw SQL</strong></td>
-                <td class="py-3 px-4">ORM (Object-Relational Mapper &mdash; a library that generates database queries from code, as covered in Episode 7) with parameterised queries by default</td>
+                <td class="py-3 px-4">ORM (Object-Relational Mapper &mdash; a library that generates database queries from code, as covered in <a href="episode-07-episode-7.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 7</a>) with parameterised queries by default</td>
                 <td class="py-3 px-4">Raw SQL string concatenation</td>
             </tr>
             <tr class="border-b border-rule">
@@ -117,7 +117,7 @@
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Secrets management</strong></td>
-                <td class="py-3 px-4">Dedicated secrets manager (AWS Secrets Manager, HashiCorp Vault, as covered in Episode 15)</td>
+                <td class="py-3 px-4">Dedicated secrets manager (AWS Secrets Manager, HashiCorp Vault, as covered in <a href="episode-30-secrets-management.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 30</a>)</td>
                 <td class="py-3 px-4">`.env` files committed to version control</td>
             </tr>
         </tbody>
@@ -141,15 +141,15 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. HTTPS Everywhere</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">TLS (Transport Layer Security, as covered in Episode 13) must be active from the first deployment. Not &quot;we&#39;ll add it before launch&quot; &mdash; from the first time anyone accesses the application. <a href="https://letsencrypt.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Let's Encrypt</a> provides free, automated certificates. Most modern hosting platforms (Vercel, Railway, Fly.io, AWS App Runner) provide TLS by default. There is no excuse for HTTP in 2026.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">TLS (Transport Layer Security, as covered in <a href="episode-13-tls-and-https-from-scratch.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 13</a>) must be active from the first deployment. Not &quot;we&#39;ll add it before launch&quot; &mdash; from the first time anyone accesses the application. <a href="https://letsencrypt.org/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Let's Encrypt</a> provides free, automated certificates. Most modern hosting platforms (Vercel, Railway, Fly.io, AWS App Runner) provide TLS by default. There is no excuse for HTTP in 2026.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">3. Authentication Library, Not Custom Code</h3>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Do not build your own authentication system. Use an established, well-audited library or service. For legal SaaS specifically, choose one that supports:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Multi-factor authentication (as covered in Episode 21)</li>
-        <li>OAuth 2.0 / OpenID Connect for enterprise SSO (as covered in Episode 20)</li>
-        <li>Session management with proper expiry and re-keying (as covered in Episode 19)</li>
+        <li>Multi-factor authentication (as covered in <a href="episode-21-multifactor-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 21</a>)</li>
+        <li>OAuth 2.0 / OpenID Connect for enterprise SSO (as covered in <a href="episode-20-oauth-20-and-openid-connect.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 20</a>)</li>
+        <li>Session management with proper expiry and re-keying (as covered in <a href="episode-19-session-management.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 19</a>)</li>
         <li>Audit logging of all authentication events</li>
     </ul>
 
@@ -163,7 +163,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">6. Dependency Scanning in CI</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Add dependency scanning to your CI/CD pipeline (the automated system that builds and deploys your code, as we covered in Episode 12) from the first pull request. Tools like `npm audit`, `pip audit`, Snyk, or Dependabot continuously check your dependencies for known vulnerabilities. <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Software Composition Analysis (SCA)</a> project provides open-source options.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Add dependency scanning to your CI/CD pipeline (the automated system that builds and deploys your code, as we covered in <a href="episode-46-cicd-pipeline-security.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 46</a>) from the first pull request. Tools like `npm audit`, `pip audit`, Snyk, or Dependabot continuously check your dependencies for known vulnerabilities. <a href="https://owasp.org/www-project-dependency-check/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP's Software Composition Analysis (SCA)</a> project provides open-source options.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Minimum Viable Security Posture</h2>
 

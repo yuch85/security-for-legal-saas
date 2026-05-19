@@ -133,7 +133,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Attackers don&#39;t need sophisticated exploits when developers hand them the keys. Common credential theft patterns include:</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Keyloggers and clipboard access.</strong> Malware that records keystrokes or monitors the clipboard captures passwords, TOTP codes (as we covered in Episode 21), and even SSH passphrases as developers type them.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Keyloggers and clipboard access.</strong> Malware that records keystrokes or monitors the clipboard captures passwords, TOTP codes (as we covered in <a href="episode-21-multifactor-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 21</a>), and even SSH passphrases as developers type them.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Browser session hijacking.</strong> Modern browsers keep users logged into cloud consoles for days or weeks. Malware that extracts browser cookies &mdash; stored in SQLite databases on disk &mdash; can replay those sessions from any machine without needing passwords or MFA.</p>
 
@@ -164,7 +164,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Hardware Security Keys for Authentication</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Replace SSH key files with hardware-backed keys. FIDO2 security keys (as we discussed in Episode 21) can store SSH keys in tamper-resistant hardware. The private key never touches the filesystem. Even if the workstation is fully compromised, the attacker cannot extract the SSH key &mdash; they&#39;d need to physically steal the hardware token.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Replace SSH key files with hardware-backed keys. FIDO2 security keys (as we discussed in <a href="episode-21-multifactor-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 21</a>) can store SSH keys in tamper-resistant hardware. The private key never touches the filesystem. Even if the workstation is fully compromised, the attacker cannot extract the SSH key &mdash; they&#39;d need to physically steal the hardware token.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Credential Helpers Over Plaintext</h3>
 

@@ -114,7 +114,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These principles extend the defence-in-depth concept we covered in Episode 4. Defence in depth layers multiple security controls. Zero Trust makes each layer verify independently &mdash; no layer assumes a previous layer already checked.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">These principles extend the defence-in-depth concept we covered in <a href="episode-04-episode-4.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 4</a>. Defence in depth layers multiple security controls. Zero Trust makes each layer verify independently &mdash; no layer assumes a previous layer already checked.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">NIST SP 800-207: The Architecture</h2>
 
@@ -130,7 +130,7 @@
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Policy Engine (PE)</strong></td>
                 <td class="py-3 px-4">Makes access decisions based on policies, identity, device state, and context</td>
-                <td class="py-3 px-4">Could be a policy engine like OPA or Cedar (from Episode 24)</td>
+                <td class="py-3 px-4">Could be a policy engine like OPA or Cedar (from <a href="episode-24-abac-and-policy-engines.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 24</a>)</td>
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Policy Administrator (PA)</strong></td>
@@ -161,12 +161,12 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Zero Trust, <strong class="text-ink">identity is the new perimeter</strong>. Every request carries proof of identity and authorisation &mdash; not just a session cookie created at login, but continuously verified credentials. This connects directly to the authentication and authorisation stack we&#39;ve built across Episodes 17-25:</p>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Authentication</strong> (Episodes 17-22): Passwords, MFA, SSO, SAML &mdash; proving who the user is</li>
-        <li><strong class="text-ink">Authorisation</strong> (Episodes 23-25): RBAC, ABAC, ethical walls &mdash; deciding what they can do</li>
+        <li><strong class="text-ink">Authentication</strong> (<a href="episode-22-sso-saml-and-enterprise-identity.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episodes 17-22</a>): Passwords, MFA, SSO, SAML &mdash; proving who the user is</li>
+        <li><strong class="text-ink">Authorisation</strong> (<a href="episode-25-ethical-walls-and-matterscoped-access.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episodes 23-25</a>): RBAC, ABAC, ethical walls &mdash; deciding what they can do</li>
         <li><strong class="text-ink">Continuous verification</strong>: Re-evaluating both on every request, not just at session start</li>
     </ul>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means the JWT token or session (from Episode 18) should carry not just identity but context &mdash; device compliance status, network location, authentication strength &mdash; and the authorisation layer should evaluate all of it on every API call.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For legal SaaS, this means the JWT token or session (from <a href="episode-18-jwt-anatomy-and-pitfalls.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 18</a>) should carry not just identity but context &mdash; device compliance status, network location, authentication strength &mdash; and the authorisation layer should evaluate all of it on every API call.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Microsegmentation</h2>
 
@@ -194,7 +194,7 @@
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Search service</strong></td>
                 <td class="py-3 px-4">Full-text index, matter metadata</td>
-                <td class="py-3 px-4">Only the search API, filtered by ethical walls (Episode 25)</td>
+                <td class="py-3 px-4">Only the search API, filtered by ethical walls (<a href="episode-25-ethical-walls-and-matterscoped-access.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 25</a>)</td>
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Database</strong></td>
@@ -274,29 +274,29 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 1: Identity Foundation (Weeks 1-4)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Enforce MFA for all users (Episode 21)</li>
-        <li>Implement SSO with SAML/OIDC (Episode 22)</li>
-        <li>Short-lived sessions with automatic token refresh (Episode 19)</li>
+        <li>Enforce MFA for all users (<a href="episode-21-multifactor-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 21</a>)</li>
+        <li>Implement SSO with SAML/OIDC (<a href="episode-22-sso-saml-and-enterprise-identity.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 22</a>)</li>
+        <li>Short-lived sessions with automatic token refresh (<a href="episode-19-session-management.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 19</a>)</li>
     </ul>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 2: API-Level Enforcement (Weeks 5-8)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li>Every API endpoint checks authorisation &mdash; no implicit trust (Episode 23)</li>
-        <li>Deploy a policy engine for ABAC decisions (Episode 24)</li>
+        <li>Every API endpoint checks authorisation &mdash; no implicit trust (<a href="episode-23-rbac-roles-permissions-and-scopes.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 23</a>)</li>
+        <li>Deploy a policy engine for ABAC decisions (<a href="episode-24-abac-and-policy-engines.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 24</a>)</li>
         <li>Log all access decisions with immutable audit trails</li>
     </ul>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 3: Network Segmentation (Weeks 9-12)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li>Database never directly accessible from the internet</li>
-        <li>Service-to-service authentication (mTLS, from Episode 15)</li>
+        <li>Service-to-service authentication (mTLS, from <a href="episode-15-servicetoservice-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a>)</li>
         <li>Separate network segments for different service tiers</li>
     </ul>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Phase 4: Continuous Verification (Ongoing)</h3>
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li>Device compliance checking at access time</li>
-        <li>Anomaly detection &mdash; unusual access patterns trigger step-up authentication (Episode 19)</li>
+        <li>Anomaly detection &mdash; unusual access patterns trigger step-up authentication (<a href="episode-19-session-management.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 19</a>)</li>
         <li>Risk-adaptive policies that tighten access when risk indicators increase</li>
     </ul>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">The 80/20 rule:</strong> Phases 1 and 2 deliver most of the security benefit. If you do nothing else, enforce MFA, implement SSO, and check authorisation on every API request. That alone moves you from a perimeter-based model to an identity-based one.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></blockquote>

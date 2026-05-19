@@ -136,7 +136,7 @@
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Collect only what your feature requires.</strong> If your document review tool needs to classify documents by type, it does not need to index the full text of every exhibit.</li>
         <li><strong class="text-ink">Retain only as long as necessary.</strong> Define retention periods per data category. Case data may need to be retained for the statute of limitations period. Audit logs may have a different retention schedule. Activity analytics should expire after months, not years.</li>
-        <li><strong class="text-ink">Delete completely when the period expires.</strong> This means database records, search indices, backups, caches, log files, and &mdash; as we discussed in Episode 29 &mdash; crypto-shredding of encrypted data by destroying its encryption keys.</li>
+        <li><strong class="text-ink">Delete completely when the period expires.</strong> This means database records, search indices, backups, caches, log files, and &mdash; as we discussed in <a href="episode-29-key-management-and-rotation.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 29</a> &mdash; crypto-shredding of encrypted data by destroying its encryption keys.</li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Pseudonymisation vs. Anonymisation: The Difference Matters</h2>
@@ -191,7 +191,7 @@
         <li>The display layer de-tokenises for authorised users, showing the original name.</li>
     </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The search index never contains raw PII. The tokenisation key is managed through the key management infrastructure covered in Episode 29. If the tokenisation key is destroyed, the search index becomes permanently unlinkable &mdash; another form of crypto-shredding.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The search index never contains raw PII. The tokenisation key is managed through the key management infrastructure covered in <a href="episode-29-key-management-and-rotation.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 29</a>. If the tokenisation key is destroyed, the search index becomes permanently unlinkable &mdash; another form of crypto-shredding.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-7" class="hover:text-red-soft">7</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Data Subject Access Requests: The Technical Architecture</h2>
 

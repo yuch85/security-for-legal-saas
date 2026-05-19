@@ -80,13 +80,13 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This episode begins a new module focused on security threats unique to AI-powered legal technology. Over the next several episodes, we will cover prompt injection, RAG poisoning, embedding security, model inversion, and governed writes. We start with the vulnerability that the <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP Top 10 for LLM Applications</a> ranks as the number one risk: <strong class="text-ink">prompt injection</strong>.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We first introduced prompt injection in Episode 1 as part of the threat modelling overview. Now we go deep &mdash; because if you are building AI features into legal SaaS, this is the attack that keeps security researchers awake at night.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We first introduced prompt injection in <a href="episode-01-episode-1.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 1</a> as part of the threat modelling overview. Now we go deep &mdash; because if you are building AI features into legal SaaS, this is the attack that keeps security researchers awake at night.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What Is Prompt Injection</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A large language model (LLM) follows instructions written in natural language. A prompt injection attack occurs when an attacker crafts input that causes the model to follow the attacker&#39;s instructions instead of the developer&#39;s. The model cannot reliably distinguish between legitimate instructions from the system prompt and adversarial instructions embedded in user-supplied content.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is fundamentally different from SQL injection, which we covered in Episode 8. SQL injection has a clean architectural fix: parameterised queries separate code from data at the protocol level. Prompt injection has no equivalent. The model processes instructions and data in the same channel &mdash; natural language &mdash; with no reliable mechanism to enforce a boundary between them.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This is fundamentally different from SQL injection, which we covered in <a href="episode-08-episode-8.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>. SQL injection has a clean architectural fix: parameterised queries separate code from data at the protocol level. Prompt injection has no equivalent. The model processes instructions and data in the same channel &mdash; natural language &mdash; with no reliable mechanism to enforce a boundary between them.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Direct vs. Indirect Prompt Injection</h2>
 
@@ -140,7 +140,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Why There Is No Parameterised Query for Prompt Injection</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 8, we showed that SQL injection is solved architecturally: parameterised queries send code and data through separate channels, making injection structurally impossible. Developers often ask: &quot;Why can&#39;t we do the same for prompts?&quot;</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In <a href="episode-08-episode-8.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>, we showed that SQL injection is solved architecturally: parameterised queries send code and data through separate channels, making injection structurally impossible. Developers often ask: &quot;Why can&#39;t we do the same for prompts?&quot;</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The answer is that LLMs process everything as natural language tokens. There is no separate channel for instructions versus data. The model&#39;s instruction-following capability &mdash; the very thing that makes it useful &mdash; is the same mechanism that makes it vulnerable. Every attempt to mark certain text as &quot;data only&quot; relies on conventions (delimiters, XML tags, system prompt framing) that the model is not architecturally guaranteed to respect.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-5" class="hover:text-red-soft">5</a></sup></p>
 
@@ -164,7 +164,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The model should have the minimum capabilities necessary for its task. A contract review AI does not need the ability to send emails, modify database records, or access the internet. If the model&#39;s tool-use permissions are restricted, a successful injection has a smaller blast radius.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This maps directly to the principle of least privilege from Episode 8 &mdash; applied to AI capabilities instead of database accounts.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This maps directly to the principle of least privilege from <a href="episode-08-episode-8.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a> &mdash; applied to AI capabilities instead of database accounts.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">4. Human-in-the-Loop</h3>
 
@@ -180,14 +180,14 @@
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Strip hidden content.</strong> Remove white-on-white text, hidden metadata, invisible Unicode characters, and comment fields.</li>
         <li><strong class="text-ink">Convert to plain text.</strong> Render PDFs and Word documents to plain text before AI processing, discarding formatting that could hide instructions.</li>
-        <li><strong class="text-ink">Classify by trust tier.</strong> Firm-authored documents, client-provided documents, and opposing party documents should carry different trust labels &mdash; a concept we will develop further in Episode 34.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></li>
+        <li><strong class="text-ink">Classify by trust tier.</strong> Firm-authored documents, client-provided documents, and opposing party documents should carry different trust labels &mdash; a concept we will develop further in <a href="episode-34-rag-poisoning-and-document-trust-tiers.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 34</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></li>
     </ol>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The State of the Art: Imperfect and Honest About It</h2>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The honest assessment as of 2026: prompt injection is an unsolved problem. No defence provides complete protection. The field is improving &mdash; better system prompt architectures, instruction hierarchy fine-tuning, and formal verification research are all advancing &mdash; but any vendor claiming their AI is &quot;immune to prompt injection&quot; is either uninformed or misleading.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The responsible approach is defence in depth: assume any individual layer will fail, and design the system so that no single failure is catastrophic. This is the same philosophy we introduced in Episode 1 and Episode 4 &mdash; applied to a new and particularly challenging domain.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The responsible approach is defence in depth: assume any individual layer will fail, and design the system so that no single failure is catastrophic. This is the same philosophy we introduced in <a href="episode-01-episode-1.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 1</a> and <a href="episode-04-episode-4.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 4</a> &mdash; applied to a new and particularly challenging domain.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 

@@ -80,7 +80,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">When a 200-lawyer firm evaluates your legal SaaS platform, Single Sign-On is rarely optional. SSO &mdash; the ability to log in once through the firm&#39;s own identity provider and gain access to every connected application &mdash; is a security requirement, not a convenience feature. And from a vendor&#39;s perspective, saying yes to SSO is one of the smartest security decisions you can make, because it shifts authentication management to the client&#39;s own IT team.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 20, we covered OAuth 2.0 and OpenID Connect &mdash; the protocols that power consumer-facing &quot;Sign in with Google&quot; flows. Enterprise SSO builds on those concepts but uses a different set of protocols and a fundamentally different trust model. Where OAuth delegates access, enterprise SSO federates identity: the client&#39;s directory becomes the authoritative source of who works there, what access they should have, and &mdash; critically &mdash; when they should lose it.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In <a href="episode-20-oauth-20-and-openid-connect.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 20</a>, we covered OAuth 2.0 and OpenID Connect &mdash; the protocols that power consumer-facing &quot;Sign in with Google&quot; flows. Enterprise SSO builds on those concepts but uses a different set of protocols and a fundamentally different trust model. Where OAuth delegates access, enterprise SSO federates identity: the client&#39;s directory becomes the authoritative source of who works there, what access they should have, and &mdash; critically &mdash; when they should lose it.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SAML: The Enterprise Standard</h2>
 
@@ -114,13 +114,13 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">The SSO Flow</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a <strong class="text-ink">Service Provider-initiated (SP-initiated)</strong> flow &mdash; the most common pattern &mdash; the user navigates to your application, which redirects them to their firm&#39;s IdP. The user authenticates there (using whatever MFA the firm enforces, as we discussed in Episode 21), and the IdP sends a signed XML document called a <strong class="text-ink">SAML assertion</strong> back to your application. This assertion contains the user&#39;s identity attributes: email address, name, group memberships, and any custom attributes the firm chooses to share.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In a <strong class="text-ink">Service Provider-initiated (SP-initiated)</strong> flow &mdash; the most common pattern &mdash; the user navigates to your application, which redirects them to their firm&#39;s IdP. The user authenticates there (using whatever MFA the firm enforces, as we discussed in <a href="episode-21-multifactor-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 21</a>), and the IdP sends a signed XML document called a <strong class="text-ink">SAML assertion</strong> back to your application. This assertion contains the user&#39;s identity attributes: email address, name, group memberships, and any custom attributes the firm chooses to share.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In an <strong class="text-ink">IdP-initiated flow</strong>, the user starts at the firm&#39;s identity portal and clicks your application&#39;s icon. This skips the initial redirect but introduces a security consideration: without an SP-generated authentication request to bind to, IdP-initiated flows are more vulnerable to replay attacks. The <a href="https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">OWASP SAML Security Cheat Sheet</a> recommends SP-initiated flows wherever possible.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">SAML vs. OpenID Connect</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For new implementations, the industry is increasingly moving toward <strong class="text-ink">OpenID Connect (OIDC)</strong> &mdash; the JSON-based identity layer built on OAuth 2.0 that we covered in Episode 20. OIDC is lighter, easier to implement, and better suited to modern web and mobile architectures. But SAML is not going away:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">For new implementations, the industry is increasingly moving toward <strong class="text-ink">OpenID Connect (OIDC)</strong> &mdash; the JSON-based identity layer built on OAuth 2.0 that we covered in <a href="episode-20-oauth-20-and-openid-connect.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 20</a>. OIDC is lighter, easier to implement, and better suited to modern web and mobile architectures. But SAML is not going away:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -197,7 +197,7 @@
         <li>The user is redirected to their firm&#39;s IdP for authentication</li>
     </ol>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means your application must maintain a separate SAML or OIDC configuration for each enterprise client &mdash; including their IdP metadata URL, certificates, and attribute mappings. A configuration error in one tenant&#39;s SSO setup must never affect another tenant&#39;s authentication. We&#39;ll cover the broader multi-tenancy isolation challenge in Episode 27.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">This means your application must maintain a separate SAML or OIDC configuration for each enterprise client &mdash; including their IdP metadata URL, certificates, and attribute mappings. A configuration error in one tenant&#39;s SSO setup must never affect another tenant&#39;s authentication. We&#39;ll cover the broader multi-tenancy isolation challenge in <a href="episode-27-multitenant-data-isolation.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 27</a>.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The SSO Tax &mdash; and Why It&#39;s Worth Paying</h2>
 
@@ -235,7 +235,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most legal SaaS platforms operate at FAL1, with signed SAML assertions over TLS (which we covered in Episode 13). Firms handling government contracts or national security matters may require FAL2, where the assertion is cryptographically bound to the user&#39;s session.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Most legal SaaS platforms operate at FAL1, with signed SAML assertions over TLS (which we covered in <a href="episode-13-tls-and-https-from-scratch.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 13</a>). Firms handling government contracts or national security matters may require FAL2, where the assertion is cryptographically bound to the user&#39;s session.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">What&#39;s Next</h2>
 

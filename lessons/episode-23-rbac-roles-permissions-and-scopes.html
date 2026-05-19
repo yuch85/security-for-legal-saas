@@ -78,7 +78,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The Authorization Problem</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Authentication answers &quot;who are you?&quot; Authorization answers &quot;what are you allowed to do?&quot; In Episode 22, we covered how SSO and SAML let firms manage who can log in. But once a user is authenticated, your application must decide what they can see, edit, delete, and administer. Get this wrong, and a junior paralegal can access partner-level billing data &mdash; or worse, a client can view another client&#39;s privileged litigation strategy.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Authentication answers &quot;who are you?&quot; Authorization answers &quot;what are you allowed to do?&quot; In <a href="episode-22-sso-saml-and-enterprise-identity.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 22</a>, we covered how SSO and SAML let firms manage who can log in. But once a user is authenticated, your application must decide what they can see, edit, delete, and administer. Get this wrong, and a junior paralegal can access partner-level billing data &mdash; or worse, a client can view another client&#39;s privileged litigation strategy.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Broken access control is the <a href="https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">#1 vulnerability in the OWASP Top 10</a>, found in 94% of applications tested.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> It&#39;s not exotic. It&#39;s the most common security failure in web applications, and legal SaaS &mdash; with its complex hierarchy of firms, departments, matters, and privilege levels &mdash; is particularly exposed.</p>
 
@@ -210,7 +210,7 @@ users:manage      (admin role only)
 </code></pre>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions should be <strong class="text-ink">resource-type scoped</strong> (documents, matters, billing) with <strong class="text-ink">CRUD actions</strong> (create, read, update, delete), and the application enforces <strong class="text-ink">matter-level scoping</strong> to ensure users only access matters they&#39;re assigned to. The matter-scoping layer is where RBAC meets the specific needs of legal software &mdash; we&#39;ll explore this in depth in Episode 25 when we cover ethical walls.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Permissions should be <strong class="text-ink">resource-type scoped</strong> (documents, matters, billing) with <strong class="text-ink">CRUD actions</strong> (create, read, update, delete), and the application enforces <strong class="text-ink">matter-level scoping</strong> to ensure users only access matters they&#39;re assigned to. The matter-scoping layer is where RBAC meets the specific needs of legal software &mdash; we&#39;ll explore this in depth in <a href="episode-25-ethical-walls-and-matterscoped-access.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 25</a> when we cover ethical walls.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">API Scopes: Consistent Enforcement</h2>
 
@@ -221,7 +221,7 @@ users:manage      (admin role only)
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">The pattern:</strong></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li>Define permissions as API scopes: `documents:read`, `documents:write`, `matters:admin`</li>
-        <li>When a user authenticates (via SSO from Episode 22), their session or JWT token (from Episode 18) includes the scopes their role grants</li>
+        <li>When a user authenticates (via SSO from <a href="episode-22-sso-saml-and-enterprise-identity.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 22</a>), their session or JWT token (from <a href="episode-18-jwt-anatomy-and-pitfalls.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 18</a>) includes the scopes their role grants</li>
         <li>Every API endpoint checks the token&#39;s scopes before executing &mdash; middleware that runs before any business logic</li>
         <li>The UI reads the same scopes to show or hide interface elements &mdash; but this is cosmetic, not security</li>
     </ol>
@@ -231,7 +231,7 @@ users:manage      (admin role only)
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">1. Role Explosion</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Starting with three roles (Admin, Editor, Viewer) and gradually adding &quot;Senior Editor,&quot; &quot;Junior Admin,&quot; &quot;Billing Viewer,&quot; &quot;Matter-Specific Editor&quot; until you have 47 roles and nobody knows which does what. Keep roles aligned to job functions, not individual needs. If a specific user needs an exception, that&#39;s an attribute-based decision &mdash; covered in Episode 24.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Starting with three roles (Admin, Editor, Viewer) and gradually adding &quot;Senior Editor,&quot; &quot;Junior Admin,&quot; &quot;Billing Viewer,&quot; &quot;Matter-Specific Editor&quot; until you have 47 roles and nobody knows which does what. Keep roles aligned to job functions, not individual needs. If a specific user needs an exception, that&#39;s an attribute-based decision &mdash; covered in <a href="episode-24-abac-and-policy-engines.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 24</a>.</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">2. Permission Creep</h3>
 
@@ -271,7 +271,7 @@ users:manage      (admin role only)
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Quarterly:</strong> Review all role assignments against current org charts</li>
         <li><strong class="text-ink">On role change:</strong> When an employee changes departments or seniority, update roles immediately</li>
-        <li><strong class="text-ink">On departure:</strong> Revoke all roles immediately (automated via SCIM, as covered in Episode 22)</li>
+        <li><strong class="text-ink">On departure:</strong> Revoke all roles immediately (automated via SCIM, as covered in <a href="episode-22-sso-saml-and-enterprise-identity.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 22</a>)</li>
         <li><strong class="text-ink">On incident:</strong> After any security event, audit whether existing permissions enabled it</li>
     </ul>
 

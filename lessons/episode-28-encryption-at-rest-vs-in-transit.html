@@ -114,7 +114,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In practice, most systems use both: asymmetric encryption to securely exchange a symmetric key, then symmetric encryption for the actual data. This is exactly how TLS works, as we covered in Episode 13.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In practice, most systems use both: asymmetric encryption to securely exchange a symmetric key, then symmetric encryption for the actual data. This is exactly how TLS works, as we covered in <a href="episode-13-tls-and-https-from-scratch.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 13</a>.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">AES-256</strong> (Advanced Encryption Standard with 256-bit keys) is the industry standard for symmetric encryption. NIST approved it for protecting classified information up to the Secret level. No successful attack against AES-256&#39;s core algorithm has ever been demonstrated in over two decades of cryptographic analysis.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></p>
 
@@ -166,7 +166,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">With application-layer encryption, even a database administrator with full access sees only ciphertext. The decryption key never exists in the database &mdash; it&#39;s held in a separate key management system.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tradeoff:</strong> Application-layer encryption breaks database features that need to read the plaintext &mdash; full-text search, sorting, range queries, and indexing on encrypted fields. For legal SaaS, this means you may need a separate, encrypted search index (like we discussed in Episode 25 for ethical walls) or selective encryption that protects the most sensitive fields while leaving searchable metadata unencrypted.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><strong class="text-ink">Tradeoff:</strong> Application-layer encryption breaks database features that need to read the plaintext &mdash; full-text search, sorting, range queries, and indexing on encrypted fields. For legal SaaS, this means you may need a separate, encrypted search index (like we discussed in <a href="episode-25-ethical-walls-and-matterscoped-access.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 25</a> for ethical walls) or selective encryption that protects the most sensitive fields while leaving searchable metadata unencrypted.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-6" class="hover:text-red-soft">6</a></sup></p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Envelope Encryption: The Key Management Pattern</h2>
 
@@ -197,7 +197,7 @@ Data Encryption Key (DEK)
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Encryption in Transit</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered TLS in depth in Episode 13. The key points for this discussion:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">We covered TLS in depth in <a href="episode-13-tls-and-https-from-scratch.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 13</a>. The key points for this discussion:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -219,7 +219,7 @@ Data Encryption Key (DEK)
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4"><strong class="text-ink">Internal traffic</strong></td>
-                <td class="py-3 px-4">mTLS between microservices (covered in Episode 15)</td>
+                <td class="py-3 px-4">mTLS between microservices (covered in <a href="episode-15-servicetoservice-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a>)</td>
             </tr>
         </tbody>
     </table>
@@ -229,10 +229,10 @@ Data Encryption Key (DEK)
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Browser to server:</strong> HTTPS (TLS) for all client-facing traffic &mdash; no exceptions, no mixed content</li>
         <li><strong class="text-ink">Server to database:</strong> TLS-encrypted database connections. Most cloud databases enforce this by default</li>
-        <li><strong class="text-ink">Service to service:</strong> mTLS between microservices, as covered in Episode 15</li>
+        <li><strong class="text-ink">Service to service:</strong> mTLS between microservices, as covered in <a href="episode-15-servicetoservice-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a></li>
         <li><strong class="text-ink">Server to external APIs:</strong> TLS for all outbound connections (e-filing systems, court APIs, document services)</li>
     </ul>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Callout: Don&#39;t forget internal traffic.</strong> Many teams encrypt browser-to-server traffic but leave internal service-to-service communication unencrypted. In a zero-trust architecture (Episode 26), all traffic is encrypted &mdash; there is no &quot;trusted internal network.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Callout: Don&#39;t forget internal traffic.</strong> Many teams encrypt browser-to-server traffic but leave internal service-to-service communication unencrypted. In a zero-trust architecture (<a href="episode-26-zero-trust-architecture.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 26</a>), all traffic is encrypted &mdash; there is no &quot;trusted internal network.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Legal Requirements</h2>
 

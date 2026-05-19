@@ -78,13 +78,13 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">If Someone Can Edit the Audit Log, You Don&#39;t Have an Audit Log</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 41, we designed audit logs that capture who did what, when, and to which resource. This episode adds the critical property that makes those logs trustworthy: tamper evidence. Specifically, we&#39;ll implement hash chains &mdash; a technique where each log entry is mathematically linked to every entry before it, so that modifying any single entry breaks a chain that is trivially detectable.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In <a href="episode-41-audit-log-design.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 41</a>, we designed audit logs that capture who did what, when, and to which resource. This episode adds the critical property that makes those logs trustworthy: tamper evidence. Specifically, we&#39;ll implement hash chains &mdash; a technique where each log entry is mathematically linked to every entry before it, so that modifying any single entry breaks a chain that is trivially detectable.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A hash chain gives you a guarantee that append-only storage alone cannot: not just that entries <em>should not</em> be modified, but that if they <em>were</em> modified, you would know.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Hash Functions: A Quick Primer</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A hash function &mdash; which we first covered in Episode 17 in the context of password storage &mdash; is a one-way mathematical transformation that takes an input of any size and produces a fixed-length output (the &quot;hash&quot; or &quot;digest&quot;). Two properties matter here:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">A hash function &mdash; which we first covered in <a href="episode-17-password-hashing-done-right.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 17</a> in the context of password storage &mdash; is a one-way mathematical transformation that takes an input of any size and produces a fixed-length output (the &quot;hash&quot; or &quot;digest&quot;). Two properties matter here:<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup></p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Deterministic</strong>: The same input always produces the same hash</li>
         <li><strong class="text-ink">Collision-resistant</strong>: It is computationally infeasible to find two different inputs that produce the same hash</li>

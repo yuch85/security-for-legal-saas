@@ -117,17 +117,17 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">On AWS, this means placing your RDS instance in a VPC (Virtual Private Cloud &mdash; an isolated private network, as we covered in Episode 11) with no public accessibility. On GCP, Cloud SQL instances should use private IP only. Security groups (AWS) or firewall rules (GCP) should restrict inbound connections to only the IP addresses or security groups of your application servers &mdash; not `0.0.0.0/0`, which means &quot;anywhere.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">On AWS, this means placing your RDS instance in a VPC (Virtual Private Cloud &mdash; an isolated private network, as we covered in <a href="episode-11-webhook-security-and-ssrf.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 11</a>) with no public accessibility. On GCP, Cloud SQL instances should use private IP only. Security groups (AWS) or firewall rules (GCP) should restrict inbound connections to only the IP addresses or security groups of your application servers &mdash; not `0.0.0.0/0`, which means &quot;anywhere.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-2" class="hover:text-red-soft">2</a></sup></p>
     <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Legal SaaS reality check:</strong> Halcyon tracked over 200 ransomware incidents targeting law firms between 2025 and early 2026. The INC Ransom group specifically exploits known vulnerabilities in remote access tools to reach internal databases. Network isolation is not theoretical &mdash; it is the primary barrier against these attacks.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-3" class="hover:text-red-soft">3</a></sup></blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Connection Security: TLS Required, Always</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every connection between your application and the database must be encrypted using TLS (Transport Layer Security, which we covered in Episode 13). PostgreSQL supports TLS natively, but it is <strong class="text-ink">not enabled by default</strong> in many configurations.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every connection between your application and the database must be encrypted using TLS (Transport Layer Security, which we covered in <a href="episode-13-tls-and-https-from-scratch.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 13</a>). PostgreSQL supports TLS natively, but it is <strong class="text-ink">not enabled by default</strong> in many configurations.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Configuration requirements:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li><strong class="text-ink">Set `sslmode=verify-full` on the client.</strong> This ensures the client verifies the server&#39;s TLS certificate and checks that the hostname matches. Weaker modes like `sslmode=prefer` will silently fall back to unencrypted connections if TLS negotiation fails &mdash; which is exactly what a man-in-the-middle attacker causes.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-4" class="hover:text-red-soft">4</a></sup></li>
-        <li><strong class="text-ink">Use certificates from your internal CA or cloud provider.</strong> AWS RDS provides managed certificates. For self-hosted PostgreSQL, generate certificates through your PKI (public key infrastructure, from Episode 15) or HashiCorp Vault&#39;s PKI secrets engine.</li>
+        <li><strong class="text-ink">Use certificates from your internal CA or cloud provider.</strong> AWS RDS provides managed certificates. For self-hosted PostgreSQL, generate certificates through your PKI (public key infrastructure, from <a href="episode-15-servicetoservice-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a>) or HashiCorp Vault&#39;s PKI secrets engine.</li>
         <li><strong class="text-ink">Reject unencrypted connections.</strong> In `pg_hba.conf`, use `hostssl` instead of `host` to require TLS for all connections.</li>
     </ol>
 
@@ -137,12 +137,12 @@
     <ul class="list-disc list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
         <li>The pooler (e.g., PgBouncer, built-in pool in your ORM) needs database credentials.</li>
         <li>Those credentials must be rotated without dropping active connections.</li>
-        <li>Dynamic secrets from a secrets manager (as covered in Episode 30) are ideal: the pool authenticates with short-lived credentials that are automatically rotated.</li>
+        <li>Dynamic secrets from a secrets manager (as covered in <a href="episode-30-secrets-management.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 30</a>) are ideal: the pool authenticates with short-lived credentials that are automatically rotated.</li>
     </ul>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Principle of Least Privilege: Minimal Permissions</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your application&#39;s database account should have the minimum permissions necessary for its function. In Episode 8, we introduced this concept in the context of SQL injection. Here it applies to the database account itself:</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Your application&#39;s database account should have the minimum permissions necessary for its function. In <a href="episode-08-episode-8.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>, we introduced this concept in the context of SQL injection. Here it applies to the database account itself:</p>
     <div class="overflow-x-auto my-6">
     <table class="w-full text-sm text-ink-light border-collapse">
         <thead><tr class="border-b-2 border-rule-dark">
@@ -179,7 +179,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Row-Level Security Revisited</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 8, we covered PostgreSQL&#39;s Row-Level Security (RLS) as a defence against SQL injection escalation. RLS is equally critical for multi-tenant legal SaaS: every query is automatically filtered by the current tenant&#39;s identifier, enforced by the database engine &mdash; not by application code that might have a bug.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In <a href="episode-08-episode-8.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>, we covered PostgreSQL&#39;s Row-Level Security (RLS) as a defence against SQL injection escalation. RLS is equally critical for multi-tenant legal SaaS: every query is automatically filtered by the current tenant&#39;s identifier, enforced by the database engine &mdash; not by application code that might have a bug.</p>
     <div class="my-6 bg-ink rounded-lg overflow-hidden">
         <div class="px-4 py-2 text-xs font-sans text-ink-muted bg-ink/80 border-b border-white/10">sql</div>
     <pre class="p-4 overflow-x-auto text-sm leading-relaxed"><code class="text-green-400 font-mono">-- Enable RLS on the documents table
@@ -226,7 +226,7 @@ CREATE POLICY tenant_isolation ON documents
     </div>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The <a href="https://www.cisecurity.org/benchmark/postgresql" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">CIS PostgreSQL Benchmark</a> &mdash; a prescriptive collection of security controls from the Center for Internet Security &mdash; mandates enabling `log_connections` as a baseline requirement. It also recommends configuring `log_statement = &#39;ddl&#39;` at minimum to capture schema changes.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
-    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Storage and retention:</strong> Audit logs must be shipped to a separate system (a SIEM &mdash; Security Information and Event Management, as we introduced in Episode 7) where they cannot be tampered with by someone who compromises the database server. If the attacker can delete the logs, the audit trail is worthless.</blockquote>
+    <blockquote class="border-l-4 border-rule-dark bg-white/50 pl-4 py-3 my-4 text-base leading-relaxed text-ink-light italic"><strong class="text-ink">Storage and retention:</strong> Audit logs must be shipped to a separate system (a SIEM &mdash; Security Information and Event Management, as we introduced in <a href="episode-07-episode-7.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 7</a>) where they cannot be tampered with by someone who compromises the database server. If the attacker can delete the logs, the audit trail is worthless.</blockquote>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Backup Encryption and Access Controls</h2>
 
@@ -234,7 +234,7 @@ CREATE POLICY tenant_isolation ON documents
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Requirements:</p>
     <ol class="list-decimal list-inside space-y-2 my-4 text-base leading-relaxed text-ink-light">
-        <li><strong class="text-ink">Encrypt backups at rest.</strong> AWS RDS supports automated encrypted backups using KMS keys (from Episode 29). For self-hosted databases, use `pg_basebackup` with output piped through encryption.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></li>
+        <li><strong class="text-ink">Encrypt backups at rest.</strong> AWS RDS supports automated encrypted backups using KMS keys (from <a href="episode-29-key-management-and-rotation.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 29</a>). For self-hosted databases, use `pg_basebackup` with output piped through encryption.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-9" class="hover:text-red-soft">9</a></sup></li>
         <li><strong class="text-ink">Restrict backup access.</strong> The IAM roles or accounts that can access backup storage should be separate from those that access the production database.</li>
         <li><strong class="text-ink">Test restore procedures.</strong> An encrypted backup you cannot restore is not a backup. Regularly test that you can decrypt and restore from backups &mdash; including with rotated keys.</li>
         <li><strong class="text-ink">Apply the same network isolation to backup storage.</strong> S3 buckets (or equivalent) holding database backups should not be publicly accessible. Enable S3 Block Public Access and use VPC endpoints for access.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-10" class="hover:text-red-soft">10</a></sup></li>

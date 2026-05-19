@@ -78,9 +78,9 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">One Key to Rule Them All &mdash; and That&#39;s the Problem</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In Episode 37, we established that AI should draft and humans should approve. This episode focuses on the infrastructure connecting your legal AI to the cloud providers that power it &mdash; specifically, the API keys that authenticate every request and the gateways that should sit between your application and those providers.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">In <a href="episode-37-governed-writes-and-humanintheloop.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 37</a>, we established that AI should draft and humans should approve. This episode focuses on the infrastructure connecting your legal AI to the cloud providers that power it &mdash; specifically, the API keys that authenticate every request and the gateways that should sit between your application and those providers.</p>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An API key &mdash; which we introduced back in Episode 3 as a programmatic credential that proves your application&#39;s identity to a service &mdash; is the single token that authorises your application to call an LLM provider like OpenAI, Anthropic, or Google. If that key is stolen, the attacker has everything they need to run up your bill, exfiltrate your prompts and responses, and potentially access any data flowing through the API.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">An API key &mdash; a programmatic credential that proves your application&#39;s identity to a service &mdash; is the single token that authorises your application to call an LLM provider like OpenAI, Anthropic, or Google. If that key is stolen, the attacker has everything they need to run up your bill, exfiltrate your prompts and responses, and potentially access any data flowing through the API.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">The LLMjacking Threat</h2>
 
@@ -218,7 +218,7 @@
     </table>
     </div>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The critical architectural point: your application code never holds the LLM provider&#39;s API key. It authenticates to the gateway using internal credentials (a service token, mTLS certificate, or OAuth client credentials &mdash; patterns we covered in Episode 15 and Episode 20). The gateway holds and manages the provider key. If your application is compromised, the attacker gets an internal token that only works through your gateway &mdash; not a raw OpenAI key they can use from anywhere.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">The critical architectural point: your application code never holds the LLM provider&#39;s API key. It authenticates to the gateway using internal credentials (a service token, mTLS certificate, or OAuth client credentials &mdash; patterns we covered in <a href="episode-15-servicetoservice-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a> and <a href="episode-20-oauth-20-and-openid-connect.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 20</a>). The gateway holds and manages the provider key. If your application is compromised, the attacker gets an internal token that only works through your gateway &mdash; not a raw OpenAI key they can use from anywhere.<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-8" class="hover:text-red-soft">8</a></sup></p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Budget Controls and Anomaly Detection</h3>
 

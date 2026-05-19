@@ -78,7 +78,7 @@
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">If Nobody Sees the Alert, It Didn&#39;t Fire</h2>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">You&#39;ve built your legal SaaS platform with secure authentication, encrypted transport, input validation, and proper access controls. But security is not a static property &mdash; it&#39;s a continuous process. Attackers don&#39;t announce themselves. A credential stuffing attack (automated login attempts using leaked passwords, as covered in Episode 14) generates thousands of failed login events over minutes. A data exfiltration attempt looks like normal API calls until you notice the volume. Without monitoring, you won&#39;t detect the attack until a client calls asking why their documents are on the internet.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">You&#39;ve built your legal SaaS platform with secure authentication, encrypted transport, input validation, and proper access controls. But security is not a static property &mdash; it&#39;s a continuous process. Attackers don&#39;t announce themselves. A credential stuffing attack (automated login attempts using leaked passwords, as covered in <a href="episode-14-api-gateway-patterns-and-rate-limiting.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 14</a>) generates thousands of failed login events over minutes. A data exfiltration attempt looks like normal API calls until you notice the volume. Without monitoring, you won&#39;t detect the attack until a client calls asking why their documents are on the internet.</p>
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light"><a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST Cybersecurity Framework 2.0</a> organises cybersecurity into six core functions: Govern, Identify, Protect, Detect, Respond, and Recover. The <strong class="text-ink">Detect</strong> function specifically requires &quot;continuous monitoring capabilities to monitor cybersecurity events and verify the effectiveness of protective measures.&quot;<sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup> Everything we&#39;ve covered in this series until now falls under Protect. Starting this episode, we shift to Detect, Respond, and Recover.</p>
 
@@ -108,7 +108,7 @@
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Multiple MFA failures before a success</td>
-                <td class="py-3 px-4">MFA fatigue attack (as covered in Episode 21)</td>
+                <td class="py-3 px-4">MFA fatigue attack (as covered in <a href="episode-21-multifactor-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 21</a>)</td>
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Login outside business hours with privileged actions</td>
@@ -120,7 +120,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Authorisation Violations</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every time a user tries to access a resource they don&#39;t have permission for, that&#39;s a data point. One occurrence is probably a UI bug or a misclick. Ten occurrences from the same user in a minute, targeting different client records, is likely an attacker probing for IDOR vulnerabilities (Insecure Direct Object Reference &mdash; accessing other users&#39; data by changing identifiers in requests, as covered in Episode 6).</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Every time a user tries to access a resource they don&#39;t have permission for, that&#39;s a data point. One occurrence is probably a UI bug or a misclick. Ten occurrences from the same user in a minute, targeting different client records, is likely an attacker probing for IDOR vulnerabilities (Insecure Direct Object Reference &mdash; accessing other users&#39; data by changing identifiers in requests, as covered in <a href="episode-06-episode-6.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 6</a>).</p>
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">Data Access Patterns</h3>
 
@@ -128,7 +128,7 @@
 
     <h3 style="margin-top:2rem;margin-bottom:0.75rem;" class="text-xl font-bold">API Abuse</h3>
 
-    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Rate limit violations (as covered in Episode 14), unusual API call patterns, requests to endpoints that don&#39;t exist (reconnaissance), and sudden spikes in traffic from a single source all warrant monitoring.</p>
+    <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">Rate limit violations (as covered in <a href="episode-14-api-gateway-patterns-and-rate-limiting.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 14</a>), unusual API call patterns, requests to endpoints that don&#39;t exist (reconnaissance), and sudden spikes in traffic from a single source all warrant monitoring.</p>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Alert Fatigue: The Silent Killer</h2>
 

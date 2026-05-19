@@ -88,7 +88,7 @@
 
     <p style="margin-bottom:1rem;" class="text-base leading-relaxed text-ink-light">But containers are not virtual machines. They share the host operating system&#39;s kernel. This means a vulnerability in the kernel can affect every container on the host. <a href="https://csrc.nist.gov/pubs/sp/800-190/final" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">NIST SP 800-190, the Application Container Security Guide</a> <sup class="text-red font-sans text-xs ml-0.5"><a href="#fn-1" class="hover:text-red-soft">1</a></sup>, identifies this shared kernel as the fundamental security consideration: &quot;Containers provide less isolation than virtual machines since they share the host OS kernel.&quot;</p>
     <div class="border-l-4 border-red bg-red-50/60 pl-4 py-3 my-6 text-base leading-relaxed text-ink-light">
-        <p><strong>Critical mindset:</strong> A container is not a security boundary. But a well-configured container is a useful speed bump &mdash; it limits what an attacker can do if they compromise your application. The goal is defence in depth (layering multiple independent controls, as we covered in <a href="/lessons/ep04/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 4</a>), not relying on any single layer.</p>
+        <p><strong>Critical mindset:</strong> A container is not a security boundary. But a well-configured container is a useful speed bump &mdash; it limits what an attacker can do if they compromise your application. The goal is defence in depth (layering multiple independent controls, as we covered in <a href="episode-04-episode-4.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 4</a>), not relying on any single layer.</p>
     </div>
 
     <h2 style="margin-top:2.5rem;margin-bottom:1rem;" class="text-2xl font-bold">Base Image Selection &mdash; Your Foundation Matters</h2>
@@ -124,7 +124,7 @@
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Scan before deployment</td>
-                <td class="py-3 px-4">Catch known CVEs (Common Vulnerabilities and Exposures &mdash; standardised vulnerability identifiers, introduced in <a href="/lessons/ep08/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 8</a>) before they reach production</td>
+                <td class="py-3 px-4">Catch known CVEs (Common Vulnerabilities and Exposures &mdash; standardised vulnerability identifiers) before they reach production</td>
             </tr>
         </tbody>
     </table>
@@ -209,7 +209,7 @@ USER appuser
             </tr>
             <tr class="border-b border-rule">
                 <td class="py-3 px-4">Vault integration</td>
-                <td class="py-3 px-4">Application fetches secrets from HashiCorp Vault (introduced in <a href="/lessons/ep15/" target="_blank" rel="noopener" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a>) at startup</td>
+                <td class="py-3 px-4">Application fetches secrets from HashiCorp Vault (introduced in <a href="episode-15-servicetoservice-authentication.html" class="text-red hover:text-red-soft border-b border-red/40 hover:border-red transition">Episode 15</a>) at startup</td>
                 <td class="py-3 px-4">Best &mdash; secrets are short-lived, rotated, audited</td>
             </tr>
         </tbody>
