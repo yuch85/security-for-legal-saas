@@ -1,0 +1,436 @@
+[
+  {
+    "ep": 1,
+    "title": "What Is a Threat Model?",
+    "module": "Foundations",
+    "description": "\"We'll add security later.\"",
+    "url": "./lessons/episode-01-what-is-a-threat-model.html"
+  },
+  {
+    "ep": 2,
+    "title": "The STRIDE Framework",
+    "module": "Foundations",
+    "description": "STRIDE is a threat classification framework created by Loren Kohnfelder and Praerit Garg at Microsoft in 1999 [1] as part of the Security Development Lifecycle. The acronym encodes six categories of t",
+    "url": "./lessons/episode-02-the-stride-framework.html"
+  },
+  {
+    "ep": 3,
+    "title": "Attack Surfaces in Legal Tech",
+    "module": "Foundations",
+    "description": "An attack surface is the sum total of all points where an unauthorised user can attempt to enter or extract data from a system. OWASP defines it as \"all of the different points where an attacker could",
+    "url": "./lessons/episode-03-attack-surfaces-in-legal-tech.html"
+  },
+  {
+    "ep": 4,
+    "title": "Defence in Depth",
+    "module": "Foundations",
+    "description": "Medieval castle builders understood something that modern software architects routinely forget: a single barrier, no matter how impressive, will eventually fall. The castle approach to defence \u2014 geogr",
+    "url": "./lessons/episode-04-defence-in-depth.html"
+  },
+  {
+    "ep": 5,
+    "title": "The CIA Triad Meets Legal Privilege",
+    "module": "Foundations",
+    "description": "Confidentiality, integrity, and availability \u2014 the CIA triad \u2014 is the foundational model of information security. NIST defines these as the three objectives that any security programme must protect [1",
+    "url": "./lessons/episode-05-the-cia-triad-meets-legal-privilege.html"
+  },
+  {
+    "ep": 6,
+    "title": "How Web Apps Actually Work",
+    "module": "How the Web Works",
+    "description": "Every time a lawyer clicks \"Open Case File\" in their practice management system, an invisible conversation happens. The browser sends a request across the internet, a server processes it, and a respon",
+    "url": "./lessons/episode-06-how-web-apps-actually-work.html"
+  },
+  {
+    "ep": 7,
+    "title": "Input Validation and Sanitisation",
+    "module": "App Security",
+    "description": "Every piece of data that enters your legal SaaS application arrives through a gate. A form field, an API parameter, a file upload, a webhook payload. Input validation is the practice of ensuring that ",
+    "url": "./lessons/episode-07-input-validation-and-sanitisation.html"
+  },
+  {
+    "ep": 8,
+    "title": "SQL Injection and ORM Safety",
+    "module": "App Security",
+    "description": "SQL injection was first documented in 1998. Twenty-eight years later, it remains OWASP's A03 (Injection) [1] and continues to cause catastrophic breaches. The MOVEit breach of 2023 \u2014 CVE-2023-34362, C",
+    "url": "./lessons/episode-08-sql-injection-and-orm-safety.html"
+  },
+  {
+    "ep": 9,
+    "title": "Cross-Site Scripting (XSS)",
+    "module": "App Security",
+    "description": "Cross-Site Scripting (XSS) is the injection of malicious scripts into web pages viewed by other users. Unlike SQL injection \u2014 which targets your server \u2014 XSS targets your users' browsers. OWASP ranks ",
+    "url": "./lessons/episode-09-crosssite-scripting-xss.html"
+  },
+  {
+    "ep": 10,
+    "title": "File Upload Security",
+    "module": "App Security",
+    "description": "File uploads are the most dangerous feature in any web application. A file is an opaque blob of bytes that your server must receive, store, and potentially process. OWASP identifies unrestricted file ",
+    "url": "./lessons/episode-10-file-upload-security.html"
+  },
+  {
+    "ep": 11,
+    "title": "Webhook Security and SSRF",
+    "module": "App Security",
+    "description": "Webhooks are how modern SaaS integrations communicate \u2014 your e-filing system notifies your case management platform that a submission was accepted, your payment processor confirms a retainer deposit, ",
+    "url": "./lessons/episode-11-webhook-security-and-ssrf.html"
+  },
+  {
+    "ep": 12,
+    "title": "Browser Security Headers",
+    "module": "App Security",
+    "description": "Your legal SaaS application runs in your users' browsers. Those browsers will happily execute JavaScript from any origin, embed your pages in iframes, and send credentials to any domain \u2014 unless you e",
+    "url": "./lessons/episode-12-browser-security-headers.html"
+  },
+  {
+    "ep": 13,
+    "title": "TLS and HTTPS from Scratch",
+    "module": "Transport Security",
+    "description": "Every developer knows their application needs HTTPS. Few understand what that actually means at a protocol level \u2014 which cipher suites are negotiated, how certificate validation works, what happens wh",
+    "url": "./lessons/episode-13-tls-and-https-from-scratch.html"
+  },
+  {
+    "ep": 14,
+    "title": "API Gateway Patterns and Rate Limiting",
+    "module": "Transport Security",
+    "description": "As your legal SaaS grows from a monolith to multiple services, security logic scatters. Authentication checks in every microservice \u2014 each small, independently deployed backend service. Rate limiting ",
+    "url": "./lessons/episode-14-api-gateway-patterns-and-rate-limiting.html"
+  },
+  {
+    "ep": 15,
+    "title": "Service-to-Service Authentication",
+    "module": "Transport Security",
+    "description": "Your API gateway authenticates external users. But what about the services behind it? When your document service calls your search index, when your billing service queries your matter database, when y",
+    "url": "./lessons/episode-15-servicetoservice-authentication.html"
+  },
+  {
+    "ep": 16,
+    "title": "Email Security for SaaS",
+    "module": "Authentication & Identity",
+    "description": "Email remains the primary attack vector for breaching organisations. The FBI's IC3 reported $2.9 billion in losses from business email compromise (BEC) in 2023 alone [1]. For legal SaaS platforms that",
+    "url": "./lessons/episode-16-email-security-for-saas.html"
+  },
+  {
+    "ep": 17,
+    "title": "Password Hashing Done Right",
+    "module": "Authentication & Identity",
+    "description": "When someone says their passwords are stored \"encrypted,\" alarm bells should ring. Encryption is reversible \u2014 if you can decrypt, so can an attacker who obtains your key. The 2012 LinkedIn breach expo",
+    "url": "./lessons/episode-17-password-hashing-done-right.html"
+  },
+  {
+    "ep": 18,
+    "title": "JWT Anatomy and Pitfalls",
+    "module": "Authentication & Identity",
+    "description": "JSON Web Tokens transformed how web applications handle authentication. Instead of server-side session storage, a JWT encodes identity claims into a self-contained, cryptographically signed token that",
+    "url": "./lessons/episode-18-jwt-anatomy-and-pitfalls.html"
+  },
+  {
+    "ep": 19,
+    "title": "Session Management",
+    "module": "Authentication & Identity",
+    "description": "Every interaction a user has with your legal SaaS platform happens within a session. The session is the container that holds authentication state, tracks activity, and enforces timeout policies. OWASP",
+    "url": "./lessons/episode-19-session-management.html"
+  },
+  {
+    "ep": 20,
+    "title": "OAuth 2.0 and OpenID Connect",
+    "module": "Authentication & Identity",
+    "description": "Every law firm already has an identity provider (IdP) \u2014 the system that manages user accounts and authenticates logins. Active Directory, Google Workspace, Okta, Azure AD. When your legal SaaS platfor",
+    "url": "./lessons/episode-20-oauth-20-and-openid-connect.html"
+  },
+  {
+    "ep": 21,
+    "title": "Multi-Factor Authentication",
+    "module": "Authentication & Identity",
+    "description": "In Episode 17, we examined how passwords are stored securely using hashing algorithms like bcrypt and Argon2id. But even a perfectly hashed password has a fundamental limitation: it is a single factor",
+    "url": "./lessons/episode-21-multifactor-authentication.html"
+  },
+  {
+    "ep": 22,
+    "title": "SSO, SAML and Enterprise Identity",
+    "module": "Authentication & Identity",
+    "description": "When a 200-lawyer firm evaluates your legal SaaS platform, Single Sign-On is rarely optional. SSO \u2014 the ability to log in once through the firm's own identity provider and gain access to every connect",
+    "url": "./lessons/episode-22-sso-saml-and-enterprise-identity.html"
+  },
+  {
+    "ep": 23,
+    "title": "RBAC \u2014 Roles, Permissions and Scopes",
+    "module": "Authorization & Access Control",
+    "description": "Authentication answers \"who are you?\" Authorization answers \"what are you allowed to do?\" In Episode 22, we covered how SSO and SAML let firms manage who can log in. But once a user is authenticated, ",
+    "url": "./lessons/episode-23-rbac-roles-permissions-and-scopes.html"
+  },
+  {
+    "ep": 24,
+    "title": "ABAC and Policy Engines",
+    "module": "Authorization & Access Control",
+    "description": "In Episode 23, we built a role-based access control model with five or six roles: Firm Admin, Partner, Associate, Paralegal, Client Viewer. That covers 80% of access decisions. This episode is about t",
+    "url": "./lessons/episode-24-abac-and-policy-engines.html"
+  },
+  {
+    "ep": 25,
+    "title": "Ethical Walls and Matter-Scoped Access",
+    "module": "Authorization & Access Control",
+    "description": "Two partners at the same firm. One advises the acquiring company. The other advises the target. Same firm, opposite sides of the same transaction. If either partner sees the other's client communicati",
+    "url": "./lessons/episode-25-ethical-walls-and-matterscoped-access.html"
+  },
+  {
+    "ep": 26,
+    "title": "Zero Trust Architecture",
+    "module": "Authorization & Access Control",
+    "description": "For decades, network security operated on a simple assumption: everything inside the corporate network is trusted, everything outside is not. The firewall was the castle wall. If you were inside \u2014 phy",
+    "url": "./lessons/episode-26-zero-trust-architecture.html"
+  },
+  {
+    "ep": 27,
+    "title": "Multi-Tenant Data Isolation",
+    "module": "Authorization & Access Control",
+    "description": "Your legal SaaS platform stores data for 50 law firms. Firm A's privileged litigation strategy. Firm B's M&A deal terms. Firm C's client communications about a pending regulatory investigation. If Fir",
+    "url": "./lessons/episode-27-multitenant-data-isolation.html"
+  },
+  {
+    "ep": 28,
+    "title": "Encryption at Rest vs. in Transit",
+    "module": "Data Protection",
+    "description": "Data exists in two states: at rest (stored on a disk, in a database, on a backup tape) and in transit (moving between your browser and a server, between microservices, between data centres). Each stat",
+    "url": "./lessons/episode-28-encryption-at-rest-vs-in-transit.html"
+  },
+  {
+    "ep": 29,
+    "title": "Key Management and Rotation",
+    "module": "Data Protection",
+    "description": "In Episode 28, we covered encryption at rest and in transit \u2014 the two fundamental layers that protect legal data from eavesdroppers and stolen disks. But encryption without proper key management is th",
+    "url": "./lessons/episode-29-key-management-and-rotation.html"
+  },
+  {
+    "ep": 30,
+    "title": "Secrets Management",
+    "module": "Data Protection",
+    "description": "In Episode 29, we covered cryptographic key management \u2014 the infrastructure protecting your encryption keys. But encryption keys are only one type of secret your application depends on. Every legal Sa",
+    "url": "./lessons/episode-30-secrets-management.html"
+  },
+  {
+    "ep": 31,
+    "title": "PII Handling and Anonymisation",
+    "module": "Data Protection",
+    "description": "Most SaaS platforms handle personally identifiable information (PII) \u2014 names, email addresses, phone numbers. Legal SaaS platforms handle PII that is often simultaneously legally privileged. A client'",
+    "url": "./lessons/episode-31-pii-handling-and-anonymisation.html"
+  },
+  {
+    "ep": 32,
+    "title": "Database Security Hardening",
+    "module": "Data Protection",
+    "description": "Every security control we have discussed in this series \u2014 authentication, encryption, input validation, access control \u2014 exists to protect the data that ultimately lives in your database. Client commu",
+    "url": "./lessons/episode-32-database-security-hardening.html"
+  },
+  {
+    "ep": 33,
+    "title": "Prompt Injection Attacks",
+    "module": "AI Security",
+    "description": "This episode begins a new module focused on security threats unique to AI-powered legal technology. Over the next several episodes, we will cover prompt injection, RAG poisoning, embedding security, m",
+    "url": "./lessons/episode-33-prompt-injection-attacks.html"
+  },
+  {
+    "ep": 34,
+    "title": "RAG Poisoning and Document Trust Tiers",
+    "module": "AI Security",
+    "description": "Retrieval-Augmented Generation (RAG) is the most common architecture for AI-powered legal tools. Instead of relying solely on the model's training data, a RAG system retrieves relevant documents from ",
+    "url": "./lessons/episode-34-rag-poisoning-and-document-trust-tiers.html"
+  },
+  {
+    "ep": 35,
+    "title": "Embedding Security and Vector Database Isolation",
+    "module": "AI Security",
+    "description": "In Episode 8, we covered Row-Level Security (RLS) in PostgreSQL \u2014 the database engine automatically filtering queries so that Tenant A can never see Tenant B's data. In Episode 32, we hardened the dat",
+    "url": "./lessons/episode-35-embedding-security-and-vector-database-isolation.html"
+  },
+  {
+    "ep": 36,
+    "title": "Model Inversion and Membership Inference",
+    "module": "AI Security",
+    "description": "In Episode 35, we explored how vector databases can leak tenant data through embedding similarity queries. This episode moves one layer deeper: what happens when the model itself becomes the leak?",
+    "url": "./lessons/episode-36-model-inversion-and-membership-inference.html"
+  },
+  {
+    "ep": 37,
+    "title": "Governed Writes and Human-in-the-Loop",
+    "module": "AI Security",
+    "description": "In Episode 36, we examined how models can leak training data through inference attacks. This episode addresses a different risk entirely: what happens when AI doesn't just analyse \u2014 it acts.",
+    "url": "./lessons/episode-37-governed-writes-and-humanintheloop.html"
+  },
+  {
+    "ep": 38,
+    "title": "LLM API Key Isolation and Inference Gateways",
+    "module": "AI Security",
+    "description": "In Episode 37, we established that AI should draft and humans should approve. This episode focuses on the infrastructure connecting your legal AI to the cloud providers that power it \u2014 specifically, t",
+    "url": "./lessons/episode-38-llm-api-key-isolation-and-inference-gateways.html"
+  },
+  {
+    "ep": 39,
+    "title": "Redaction Pipelines for Cloud AI",
+    "module": "AI Security",
+    "description": "In Episode 38, we built the inference gateway that controls access to cloud AI providers. This episode addresses what flows through that gateway: the actual content of your prompts. Before you send a ",
+    "url": "./lessons/episode-39-redaction-pipelines-for-cloud-ai.html"
+  },
+  {
+    "ep": 40,
+    "title": "Local vs. Cloud AI \u2014 Security Boundaries",
+    "module": "AI Security",
+    "description": "In Episode 39, we built a redaction pipeline to strip sensitive data before sending prompts to cloud AI. This episode asks the next logical question: what if you skip the cloud entirely and run the AI",
+    "url": "./lessons/episode-40-local-vs-cloud-ai-security-boundaries.html"
+  },
+  {
+    "ep": 41,
+    "title": "Audit Log Design",
+    "module": "Audit & Logging",
+    "description": "Welcome to Module 9 \u2014 Audit, Logging, and Provenance. Every security control we've discussed across 40 episodes depends on one thing: a reliable record of what happened. If you can't prove a human rev",
+    "url": "./lessons/episode-41-audit-log-design.html"
+  },
+  {
+    "ep": 42,
+    "title": "Hash-Chained Immutable Logs",
+    "module": "Audit & Logging",
+    "description": "In Episode 41, we designed audit logs that capture who did what, when, and to which resource. This episode adds the critical property that makes those logs trustworthy: tamper evidence. Specifically, ",
+    "url": "./lessons/episode-42-hashchained-immutable-logs.html"
+  },
+  {
+    "ep": 43,
+    "title": "Provenance Chains for AI Outputs",
+    "module": "Audit & Logging",
+    "description": "Legal technology is moving fast. Contract review tools suggest edits. Research platforms summarise case law. Document automation systems draft entire clauses. But when a lawyer sends that AI-generated",
+    "url": "./lessons/episode-43-provenance-chains-for-ai-outputs.html"
+  },
+  {
+    "ep": 44,
+    "title": "Correlation IDs and Distributed Tracing",
+    "module": "Audit & Logging",
+    "description": "A lawyer using your legal SaaS platform clicks \"Generate Summary\" on a 200-page disclosure bundle. The spinner runs for thirty seconds. Then an error: \"Something went wrong. Please try again.\" The law",
+    "url": "./lessons/episode-44-correlation-ids-and-distributed-tracing.html"
+  },
+  {
+    "ep": 45,
+    "title": "Docker Security and Container Hardening",
+    "module": "Infrastructure",
+    "description": "Welcome to Module 10. For the next several episodes, we shift from application-level security to the infrastructure your application runs on \u2014 the containers, pipelines, dependencies, configuration, a",
+    "url": "./lessons/episode-45-docker-security-and-container-hardening.html"
+  },
+  {
+    "ep": 46,
+    "title": "CI/CD Pipeline Security",
+    "module": "Infrastructure",
+    "description": "CI/CD \u2014 Continuous Integration and Continuous Deployment \u2014 is the automated pipeline that takes your source code, builds it, tests it, and deploys it to production. Every time a developer pushes a cod",
+    "url": "./lessons/episode-46-cicd-pipeline-security.html"
+  },
+  {
+    "ep": 47,
+    "title": "Supply Chain Security \u2014 Dependencies, SBOM and Build Provenance",
+    "module": "Infrastructure",
+    "description": "A modern legal SaaS platform \u2014 a contract review tool, a case management system, a document automation service \u2014 is built on hundreds or thousands of open-source packages. The Express web framework. R",
+    "url": "./lessons/episode-47-supply-chain-security-dependencies-sbom-and-build-provenance.html"
+  },
+  {
+    "ep": 48,
+    "title": "Environment Configuration and Secure Defaults",
+    "module": "Infrastructure",
+    "description": "Your legal SaaS platform runs in multiple environments. Development, where engineers build and test features. Staging, where the team validates before release. Production, where real law firms use the",
+    "url": "./lessons/episode-48-environment-configuration-and-secure-defaults.html"
+  },
+  {
+    "ep": 49,
+    "title": "Cloud IAM and Least Privilege",
+    "module": "Infrastructure",
+    "description": "Every cloud resource your legal SaaS platform depends on \u2014 databases, storage buckets, message queues, AI services, compute instances \u2014 is protected by an Identity and Access Management (IAM) system. ",
+    "url": "./lessons/episode-49-cloud-iam-and-least-privilege.html"
+  },
+  {
+    "ep": 50,
+    "title": "Developer Workstation Security",
+    "module": "Infrastructure",
+    "description": "Your production servers sit behind firewalls, intrusion detection systems (IDS \u2014 software that monitors network traffic for suspicious activity), and strict access controls. Your staging environment m",
+    "url": "./lessons/episode-50-developer-workstation-security.html"
+  },
+  {
+    "ep": 51,
+    "title": "Trusting the AI Developer \u2014 Verifying Agent-Generated Code",
+    "module": "Infrastructure",
+    "description": "AI coding agents \u2014 tools like GitHub Copilot, Cursor, Claude Code, and Amazon Q Developer \u2014 have fundamentally changed how software is written. Developers describe what they want in natural language, ",
+    "url": "./lessons/episode-51-trusting-the-ai-developer-verifying-agentgenerated-code.html"
+  },
+  {
+    "ep": 52,
+    "title": "Day Zero \u2014 Bootstrapping Security for a New Project",
+    "module": "Infrastructure",
+    "description": "Day one is too late. The security posture of your legal SaaS platform is largely determined by decisions made before the first feature is built: which framework, which authentication library, which ho",
+    "url": "./lessons/episode-52-day-zero-bootstrapping-security-for-a-new-project.html"
+  },
+  {
+    "ep": 53,
+    "title": "Monitoring and Alerting Design",
+    "module": "Monitoring & Incident Response",
+    "description": "You've built your legal SaaS platform with secure authentication, encrypted transport, input validation, and proper access controls. But security is not a static property \u2014 it's a continuous process. ",
+    "url": "./lessons/episode-53-monitoring-and-alerting-design.html"
+  },
+  {
+    "ep": 54,
+    "title": "Incident Response Playbooks",
+    "module": "Monitoring & Incident Response",
+    "description": "The worst time to figure out what to do during a security incident is during the incident. Adrenaline is high, information is incomplete, and every minute of delay means more data exposed or more syst",
+    "url": "./lessons/episode-54-incident-response-playbooks.html"
+  },
+  {
+    "ep": 55,
+    "title": "Disaster Recovery and Business Continuity",
+    "module": "Monitoring & Incident Response",
+    "description": "On a Monday morning, the cloud region hosting your legal SaaS platform experiences a catastrophic failure. Power outage, network partition, natural disaster \u2014 the cause doesn't matter. What matters is",
+    "url": "./lessons/episode-55-disaster-recovery-and-business-continuity.html"
+  },
+  {
+    "ep": 56,
+    "title": "Security Testing in Your Development Process",
+    "module": "Monitoring & Incident Response",
+    "description": "If your security testing happens once a year in a penetration test, you're finding bugs 364 days too late. Every vulnerability that exists in production between pen tests is a vulnerability an attacke",
+    "url": "./lessons/episode-56-security-testing-in-your-development-process.html"
+  },
+  {
+    "ep": 57,
+    "title": "Access Reviews and Least Privilege Audits",
+    "module": "Monitoring & Incident Response",
+    "description": "Every legal SaaS platform accumulates permissions like a law firm accumulates filing cabinets \u2014 slowly, silently, and with nobody tracking what went in six months ago. A contract developer gets databa",
+    "url": "./lessons/episode-57-access-reviews-and-least-privilege-audits.html"
+  },
+  {
+    "ep": 58,
+    "title": "Insider Threats and Employee Access",
+    "module": "Monitoring & Incident Response",
+    "description": "External attackers must find a vulnerability, exploit it, and establish persistence. An insider skips all three steps. They have a valid account, they know where the data lives, and they pass every pe",
+    "url": "./lessons/episode-58-insider-threats-and-employee-access.html"
+  },
+  {
+    "ep": 59,
+    "title": "GDPR, PDPA and Data Protection Compliance",
+    "module": "Compliance & Governance",
+    "description": "You can have excellent security and fail a data protection audit. You can pass a data protection audit and have terrible security. The two overlap substantially but are not the same thing. Data protec",
+    "url": "./lessons/episode-59-gdpr-pdpa-and-data-protection-compliance.html"
+  },
+  {
+    "ep": 60,
+    "title": "SOC 2, Penetration Testing and Security Certification",
+    "module": "Compliance & Governance",
+    "description": "You have implemented access controls, encrypted data at rest and in transit, deployed audit logging, and built an incident response plan. Your system is genuinely secure. Now a prospective client \u2014 a ",
+    "url": "./lessons/episode-60-soc-2-penetration-testing-and-security-certification.html"
+  },
+  {
+    "ep": 61,
+    "title": "Customer Trust and Security Reviews",
+    "module": "Compliance & Governance",
+    "description": "It arrives in your inbox at 4:47pm on a Friday. A 300-question security questionnaire from the procurement team at a firm you've been courting for six months. Your answers \u2014 and how fast you deliver t",
+    "url": "./lessons/episode-61-customer-trust-and-security-reviews.html"
+  },
+  {
+    "ep": 62,
+    "title": "Security Roadmapping \u2014 From Here to Production (Series Finale)",
+    "module": "Compliance & Governance",
+    "description": "Over the course of this series, we have covered threat modelling (Episode 1), the CIA triad (Episode 5), defence in depth (Episode 4), input validation (Episode 7), SQL injection (Episode 8), XSS (Epi",
+    "url": "./lessons/episode-62-security-roadmapping-from-here-to-production-series-finale.html"
+  }
+]
