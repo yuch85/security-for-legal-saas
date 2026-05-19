@@ -971,9 +971,10 @@ fetch('./search-index.json').then(r=>r.json()).then(data=>{
             {name:'module', weight:1},
             {name:'text', weight:0.8}
         ],
-        threshold:0.3,
+        threshold:0.4,
         includeMatches:true,
-        minMatchCharLength:3
+        minMatchCharLength:2,
+        ignoreLocation:true
     });
     const input = document.getElementById('search-input');
     const box = document.getElementById('search-results');
